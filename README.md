@@ -48,7 +48,7 @@ The workload generator has the following configuration parameters:
 
 The generated data as well as the existing workload data will be tested against different TSDB implementations and the storage performance will be measured.
 For this purpose, the benchmark to be developed shall implement client adapters for different TSDBs via a uniform and extensible adapter concept.
-Dies soll ermöglichen, einheitliche bzw. identische Workload-Daten gegen verschiedene TSDBs Implementierungen zu testen.
+This should enable uniform or identical workload data to be tested against different TSDBs implementations.
 The adapter concept provides the following interface operations which have to be implemented partially and depending on the TSDB:
 
 - Prepare or connect the client adapter before the benchmark `setup`.
