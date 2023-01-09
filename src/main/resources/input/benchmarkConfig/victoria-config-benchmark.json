@@ -1,0 +1,20 @@
+{
+  "mode" : "config",
+  "configOutputFolder" : "src/main/resources/output/benchmarkConfig",
+  "configPrefix" : "victoria-benchmark",
+  "resultOutputFolder" : "src/main/resources/output/benchmarkResult",
+  "resultPrefix" : "victoria-result",
+  "workloadGeneratorConfig" : {
+    "recordCount" : 100,
+    "keyCountPerRecord" : 2,
+    "minKeyLength" : 3,
+    "maxKeyLength" : 3,
+    "minValue" : 1,
+    "maxValue" : 10
+  },
+  "tsdbAdapterConfig" : {
+    "victoriaMetricsUrl" : "http://127.0.0.1:8428"
+  },
+  "threadCount" : 20,
+  "cleanStorage" : true
+}

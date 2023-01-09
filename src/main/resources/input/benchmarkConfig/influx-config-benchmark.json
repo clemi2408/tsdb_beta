@@ -1,0 +1,25 @@
+{
+  "mode" : "config",
+  "configOutputFolder" : "src/main/resources/output/benchmarkConfig",
+  "configPrefix" : "influx-benchmark",
+  "resultOutputFolder" : "src/main/resources/output/benchmarkResult",
+  "resultPrefix" : "influx-result",
+  "workloadGeneratorConfig" : {
+    "recordCount" : 100,
+    "keyCountPerRecord" : 2,
+    "minKeyLength" : 3,
+    "maxKeyLength" : 3,
+    "minValue" : 1,
+    "maxValue" : 10
+  },
+  "tsdbAdapterConfig" : {
+    "influxDbUrl" : "http://127.0.0.1:8086",
+    "username" : "admin",
+    "password" : "adminadmin",
+    "organisation" : "testorg",
+    "bucket" : "testbucket",
+    "bucketId" : null
+  },
+  "threadCount" : 20,
+  "cleanStorage" : true
+}

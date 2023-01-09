@@ -1,0 +1,1003 @@
+{
+  "results" : [ {
+    "record" : {
+      "Qdj" : 1.960476144443882,
+      "TPj" : 7.232322999157199
+    },
+    "startDate" : 1673194856749,
+    "endDate" : 1673194857038,
+    "taskName" : "Record 1",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 289
+  }, {
+    "record" : {
+      "Qdj" : 6.856204274880158,
+      "TPj" : 5.207633659575728
+    },
+    "startDate" : 1673194856750,
+    "endDate" : 1673194857035,
+    "taskName" : "Record 2",
+    "threadName" : "pool-1-thread-2",
+    "durationInMs" : 285
+  }, {
+    "record" : {
+      "Qdj" : 5.029847876997184,
+      "TPj" : 6.423024746906184
+    },
+    "startDate" : 1673194856750,
+    "endDate" : 1673194857035,
+    "taskName" : "Record 3",
+    "threadName" : "pool-1-thread-3",
+    "durationInMs" : 285
+  }, {
+    "record" : {
+      "Qdj" : 9.022872611104718,
+      "TPj" : 6.70761836797653
+    },
+    "startDate" : 1673194856761,
+    "endDate" : 1673194857036,
+    "taskName" : "Record 4",
+    "threadName" : "pool-1-thread-4",
+    "durationInMs" : 275
+  }, {
+    "record" : {
+      "Qdj" : 2.6004518114557538,
+      "TPj" : 4.055006850606223
+    },
+    "startDate" : 1673194856762,
+    "endDate" : 1673194857036,
+    "taskName" : "Record 5",
+    "threadName" : "pool-1-thread-5",
+    "durationInMs" : 274
+  }, {
+    "record" : {
+      "Qdj" : 3.4778271355451635,
+      "TPj" : 7.922235393273416
+    },
+    "startDate" : 1673194856762,
+    "endDate" : 1673194857037,
+    "taskName" : "Record 6",
+    "threadName" : "pool-1-thread-6",
+    "durationInMs" : 275
+  }, {
+    "record" : {
+      "Qdj" : 8.325007148731832,
+      "TPj" : 1.5136184748586912
+    },
+    "startDate" : 1673194856763,
+    "endDate" : 1673194857035,
+    "taskName" : "Record 7",
+    "threadName" : "pool-1-thread-7",
+    "durationInMs" : 272
+  }, {
+    "record" : {
+      "Qdj" : 5.324176825020111,
+      "TPj" : 3.7593000334204474
+    },
+    "startDate" : 1673194856764,
+    "endDate" : 1673194857036,
+    "taskName" : "Record 8",
+    "threadName" : "pool-1-thread-8",
+    "durationInMs" : 272
+  }, {
+    "record" : {
+      "Qdj" : 8.686566849734355,
+      "TPj" : 4.474669348353151
+    },
+    "startDate" : 1673194856812,
+    "endDate" : 1673194857037,
+    "taskName" : "Record 9",
+    "threadName" : "pool-1-thread-9",
+    "durationInMs" : 225
+  }, {
+    "record" : {
+      "Qdj" : 9.116943265995817,
+      "TPj" : 8.642937851465318
+    },
+    "startDate" : 1673194856817,
+    "endDate" : 1673194857035,
+    "taskName" : "Record 10",
+    "threadName" : "pool-1-thread-10",
+    "durationInMs" : 218
+  }, {
+    "record" : {
+      "Qdj" : 7.975762877343207,
+      "TPj" : 2.2011348645271323
+    },
+    "startDate" : 1673194856817,
+    "endDate" : 1673194857037,
+    "taskName" : "Record 11",
+    "threadName" : "pool-1-thread-11",
+    "durationInMs" : 220
+  }, {
+    "record" : {
+      "Qdj" : 2.0159900405379094,
+      "TPj" : 4.009352488766038
+    },
+    "startDate" : 1673194856817,
+    "endDate" : 1673194857036,
+    "taskName" : "Record 12",
+    "threadName" : "pool-1-thread-12",
+    "durationInMs" : 219
+  }, {
+    "record" : {
+      "Qdj" : 8.951246398893167,
+      "TPj" : 1.5522960363360792
+    },
+    "startDate" : 1673194856817,
+    "endDate" : 1673194857036,
+    "taskName" : "Record 13",
+    "threadName" : "pool-1-thread-13",
+    "durationInMs" : 219
+  }, {
+    "record" : {
+      "Qdj" : 3.585236384735986,
+      "TPj" : 5.1471881506129
+    },
+    "startDate" : 1673194856818,
+    "endDate" : 1673194857035,
+    "taskName" : "Record 14",
+    "threadName" : "pool-1-thread-14",
+    "durationInMs" : 217
+  }, {
+    "record" : {
+      "Qdj" : 4.843141183533987,
+      "TPj" : 5.127102782789245
+    },
+    "startDate" : 1673194856818,
+    "endDate" : 1673194857036,
+    "taskName" : "Record 15",
+    "threadName" : "pool-1-thread-15",
+    "durationInMs" : 218
+  }, {
+    "record" : {
+      "Qdj" : 2.2910398435780834,
+      "TPj" : 6.326243139401481
+    },
+    "startDate" : 1673194856819,
+    "endDate" : 1673194857035,
+    "taskName" : "Record 16",
+    "threadName" : "pool-1-thread-16",
+    "durationInMs" : 216
+  }, {
+    "record" : {
+      "Qdj" : 5.809529650705709,
+      "TPj" : 6.734048142361548
+    },
+    "startDate" : 1673194856820,
+    "endDate" : 1673194857036,
+    "taskName" : "Record 17",
+    "threadName" : "pool-1-thread-17",
+    "durationInMs" : 216
+  }, {
+    "record" : {
+      "Qdj" : 5.155957093256836,
+      "TPj" : 3.0069198083197617
+    },
+    "startDate" : 1673194856827,
+    "endDate" : 1673194857035,
+    "taskName" : "Record 18",
+    "threadName" : "pool-1-thread-18",
+    "durationInMs" : 208
+  }, {
+    "record" : {
+      "Qdj" : 6.562428539238392,
+      "TPj" : 1.5566051504069254
+    },
+    "startDate" : 1673194856828,
+    "endDate" : 1673194857037,
+    "taskName" : "Record 19",
+    "threadName" : "pool-1-thread-19",
+    "durationInMs" : 209
+  }, {
+    "record" : {
+      "Qdj" : 2.0836598810897815,
+      "TPj" : 6.677688118068665
+    },
+    "startDate" : 1673194856830,
+    "endDate" : 1673194857036,
+    "taskName" : "Record 20",
+    "threadName" : "pool-1-thread-20",
+    "durationInMs" : 206
+  }, {
+    "record" : {
+      "Qdj" : 8.64241501199384,
+      "TPj" : 5.966280328075217
+    },
+    "startDate" : 1673194857038,
+    "endDate" : 1673194857042,
+    "taskName" : "Record 21",
+    "threadName" : "pool-1-thread-9",
+    "durationInMs" : 4
+  }, {
+    "record" : {
+      "Qdj" : 9.086602593591484,
+      "TPj" : 5.52896335269564
+    },
+    "startDate" : 1673194857038,
+    "endDate" : 1673194857042,
+    "taskName" : "Record 22",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 4
+  }, {
+    "record" : {
+      "Qdj" : 2.7400003926800416,
+      "TPj" : 8.92460255118434
+    },
+    "startDate" : 1673194857038,
+    "endDate" : 1673194857053,
+    "taskName" : "Record 23",
+    "threadName" : "pool-1-thread-11",
+    "durationInMs" : 15
+  }, {
+    "record" : {
+      "Qdj" : 1.0201125233955504,
+      "TPj" : 2.7391852723619348
+    },
+    "startDate" : 1673194857039,
+    "endDate" : 1673194857051,
+    "taskName" : "Record 24",
+    "threadName" : "pool-1-thread-20",
+    "durationInMs" : 12
+  }, {
+    "record" : {
+      "Qdj" : 3.5370535910877052,
+      "TPj" : 2.3108641288338663
+    },
+    "startDate" : 1673194857042,
+    "endDate" : 1673194857047,
+    "taskName" : "Record 25",
+    "threadName" : "pool-1-thread-9",
+    "durationInMs" : 5
+  }, {
+    "record" : {
+      "Qdj" : 4.454888579430159,
+      "TPj" : 7.622522371520082
+    },
+    "startDate" : 1673194857042,
+    "endDate" : 1673194857057,
+    "taskName" : "Record 26",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 15
+  }, {
+    "record" : {
+      "Qdj" : 1.7730121937067704,
+      "TPj" : 5.314201383516766
+    },
+    "startDate" : 1673194857046,
+    "endDate" : 1673194857052,
+    "taskName" : "Record 27",
+    "threadName" : "pool-1-thread-4",
+    "durationInMs" : 6
+  }, {
+    "record" : {
+      "Qdj" : 5.0044693567901435,
+      "TPj" : 9.267499973491917
+    },
+    "startDate" : 1673194857047,
+    "endDate" : 1673194857061,
+    "taskName" : "Record 28",
+    "threadName" : "pool-1-thread-9",
+    "durationInMs" : 14
+  }, {
+    "record" : {
+      "Qdj" : 9.628321851858882,
+      "TPj" : 1.2365964732200823
+    },
+    "startDate" : 1673194857051,
+    "endDate" : 1673194857056,
+    "taskName" : "Record 29",
+    "threadName" : "pool-1-thread-20",
+    "durationInMs" : 5
+  }, {
+    "record" : {
+      "Qdj" : 6.765047438885391,
+      "TPj" : 5.581990912457325
+    },
+    "startDate" : 1673194857052,
+    "endDate" : 1673194857057,
+    "taskName" : "Record 30",
+    "threadName" : "pool-1-thread-4",
+    "durationInMs" : 5
+  }, {
+    "record" : {
+      "Qdj" : 2.061486362376804,
+      "TPj" : 6.667649984148878
+    },
+    "startDate" : 1673194857053,
+    "endDate" : 1673194857126,
+    "taskName" : "Record 31",
+    "threadName" : "pool-1-thread-6",
+    "durationInMs" : 73
+  }, {
+    "record" : {
+      "Qdj" : 8.522082856584516,
+      "TPj" : 2.85238664807319
+    },
+    "startDate" : 1673194857053,
+    "endDate" : 1673194857066,
+    "taskName" : "Record 32",
+    "threadName" : "pool-1-thread-11",
+    "durationInMs" : 13
+  }, {
+    "record" : {
+      "Qdj" : 1.4363052516290962,
+      "TPj" : 4.012477801665746
+    },
+    "startDate" : 1673194857056,
+    "endDate" : 1673194857071,
+    "taskName" : "Record 33",
+    "threadName" : "pool-1-thread-20",
+    "durationInMs" : 15
+  }, {
+    "record" : {
+      "Qdj" : 1.031481441995871,
+      "TPj" : 1.0233986397167074
+    },
+    "startDate" : 1673194857057,
+    "endDate" : 1673194857061,
+    "taskName" : "Record 34",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 4
+  }, {
+    "record" : {
+      "Qdj" : 6.63232529042658,
+      "TPj" : 6.780842164175234
+    },
+    "startDate" : 1673194857057,
+    "endDate" : 1673194857066,
+    "taskName" : "Record 35",
+    "threadName" : "pool-1-thread-4",
+    "durationInMs" : 9
+  }, {
+    "record" : {
+      "Qdj" : 9.992680746766942,
+      "TPj" : 4.909827090675931
+    },
+    "startDate" : 1673194857061,
+    "endDate" : 1673194857066,
+    "taskName" : "Record 36",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 5
+  }, {
+    "record" : {
+      "Qdj" : 9.844222969348557,
+      "TPj" : 4.878637765765943
+    },
+    "startDate" : 1673194857061,
+    "endDate" : 1673194857077,
+    "taskName" : "Record 37",
+    "threadName" : "pool-1-thread-9",
+    "durationInMs" : 16
+  }, {
+    "record" : {
+      "Qdj" : 7.296803508788299,
+      "TPj" : 6.462761334790795
+    },
+    "startDate" : 1673194857066,
+    "endDate" : 1673194857108,
+    "taskName" : "Record 38",
+    "threadName" : "pool-1-thread-4",
+    "durationInMs" : 42
+  }, {
+    "record" : {
+      "Qdj" : 3.4447818398825993,
+      "TPj" : 6.3821105812733
+    },
+    "startDate" : 1673194857066,
+    "endDate" : 1673194857071,
+    "taskName" : "Record 39",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 5
+  }, {
+    "record" : {
+      "Qdj" : 7.755109758004544,
+      "TPj" : 1.0300642344211077
+    },
+    "startDate" : 1673194857066,
+    "endDate" : 1673194857071,
+    "taskName" : "Record 40",
+    "threadName" : "pool-1-thread-11",
+    "durationInMs" : 5
+  }, {
+    "record" : {
+      "Qdj" : 5.611327082616437,
+      "TPj" : 7.9206916195896815
+    },
+    "startDate" : 1673194857071,
+    "endDate" : 1673194857089,
+    "taskName" : "Record 41",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 18
+  }, {
+    "record" : {
+      "Qdj" : 5.791296443808313,
+      "TPj" : 8.274620397401296
+    },
+    "startDate" : 1673194857071,
+    "endDate" : 1673194857172,
+    "taskName" : "Record 42",
+    "threadName" : "pool-1-thread-20",
+    "durationInMs" : 101
+  }, {
+    "record" : {
+      "Qdj" : 6.896918300165522,
+      "TPj" : 8.846091869245123
+    },
+    "startDate" : 1673194857071,
+    "endDate" : 1673194857168,
+    "taskName" : "Record 43",
+    "threadName" : "pool-1-thread-8",
+    "durationInMs" : 97
+  }, {
+    "record" : {
+      "Qdj" : 7.515768135618512,
+      "TPj" : 9.043716527728069
+    },
+    "startDate" : 1673194857071,
+    "endDate" : 1673194857183,
+    "taskName" : "Record 44",
+    "threadName" : "pool-1-thread-11",
+    "durationInMs" : 112
+  }, {
+    "record" : {
+      "Qdj" : 8.565304891777867,
+      "TPj" : 9.823307363281014
+    },
+    "startDate" : 1673194857071,
+    "endDate" : 1673194857076,
+    "taskName" : "Record 45",
+    "threadName" : "pool-1-thread-2",
+    "durationInMs" : 5
+  }, {
+    "record" : {
+      "Qdj" : 1.1908210201173837,
+      "TPj" : 7.019050610665595
+    },
+    "startDate" : 1673194857072,
+    "endDate" : 1673194857078,
+    "taskName" : "Record 46",
+    "threadName" : "pool-1-thread-14",
+    "durationInMs" : 6
+  }, {
+    "record" : {
+      "Qdj" : 6.302585603225051,
+      "TPj" : 6.343442260820577
+    },
+    "startDate" : 1673194857072,
+    "endDate" : 1673194857078,
+    "taskName" : "Record 47",
+    "threadName" : "pool-1-thread-18",
+    "durationInMs" : 6
+  }, {
+    "record" : {
+      "Qdj" : 2.342748848335341,
+      "TPj" : 7.419250722776201
+    },
+    "startDate" : 1673194857076,
+    "endDate" : 1673194857081,
+    "taskName" : "Record 48",
+    "threadName" : "pool-1-thread-2",
+    "durationInMs" : 5
+  }, {
+    "record" : {
+      "Qdj" : 3.8687174143938146,
+      "TPj" : 4.9287673537539956
+    },
+    "startDate" : 1673194857077,
+    "endDate" : 1673194857089,
+    "taskName" : "Record 49",
+    "threadName" : "pool-1-thread-9",
+    "durationInMs" : 12
+  }, {
+    "record" : {
+      "Qdj" : 3.6802068161519004,
+      "TPj" : 5.375419223116936
+    },
+    "startDate" : 1673194857078,
+    "endDate" : 1673194857084,
+    "taskName" : "Record 50",
+    "threadName" : "pool-1-thread-14",
+    "durationInMs" : 6
+  }, {
+    "record" : {
+      "Qdj" : 2.3584547638821665,
+      "TPj" : 9.477187837620729
+    },
+    "startDate" : 1673194857078,
+    "endDate" : 1673194857083,
+    "taskName" : "Record 51",
+    "threadName" : "pool-1-thread-18",
+    "durationInMs" : 5
+  }, {
+    "record" : {
+      "Qdj" : 5.537733184723457,
+      "TPj" : 4.855096413298405
+    },
+    "startDate" : 1673194857082,
+    "endDate" : 1673194857088,
+    "taskName" : "Record 52",
+    "threadName" : "pool-1-thread-2",
+    "durationInMs" : 6
+  }, {
+    "record" : {
+      "Qdj" : 5.00400549758245,
+      "TPj" : 8.27630129117948
+    },
+    "startDate" : 1673194857083,
+    "endDate" : 1673194857098,
+    "taskName" : "Record 53",
+    "threadName" : "pool-1-thread-18",
+    "durationInMs" : 15
+  }, {
+    "record" : {
+      "Qdj" : 3.779153707397999,
+      "TPj" : 5.171176080977666
+    },
+    "startDate" : 1673194857084,
+    "endDate" : 1673194857098,
+    "taskName" : "Record 54",
+    "threadName" : "pool-1-thread-14",
+    "durationInMs" : 14
+  }, {
+    "record" : {
+      "Qdj" : 8.870628120438061,
+      "TPj" : 4.7064876738476835
+    },
+    "startDate" : 1673194857088,
+    "endDate" : 1673194857093,
+    "taskName" : "Record 55",
+    "threadName" : "pool-1-thread-2",
+    "durationInMs" : 5
+  }, {
+    "record" : {
+      "Qdj" : 2.967659839713156,
+      "TPj" : 3.1796828765323073
+    },
+    "startDate" : 1673194857089,
+    "endDate" : 1673194857094,
+    "taskName" : "Record 56",
+    "threadName" : "pool-1-thread-9",
+    "durationInMs" : 5
+  }, {
+    "record" : {
+      "Qdj" : 2.3715919447178404,
+      "TPj" : 4.547976240668705
+    },
+    "startDate" : 1673194857089,
+    "endDate" : 1673194857097,
+    "taskName" : "Record 57",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 8
+  }, {
+    "record" : {
+      "Qdj" : 2.137677178670873,
+      "TPj" : 5.243957796263361
+    },
+    "startDate" : 1673194857093,
+    "endDate" : 1673194857098,
+    "taskName" : "Record 58",
+    "threadName" : "pool-1-thread-2",
+    "durationInMs" : 5
+  }, {
+    "record" : {
+      "Qdj" : 7.260368176530959,
+      "TPj" : 5.10859581809053
+    },
+    "startDate" : 1673194857094,
+    "endDate" : 1673194857179,
+    "taskName" : "Record 59",
+    "threadName" : "pool-1-thread-9",
+    "durationInMs" : 85
+  }, {
+    "record" : {
+      "Qdj" : 8.688203880746453,
+      "TPj" : 3.9226797464558576
+    },
+    "startDate" : 1673194857097,
+    "endDate" : 1673194857175,
+    "taskName" : "Record 60",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 78
+  }, {
+    "record" : {
+      "Qdj" : 6.645615730795107,
+      "TPj" : 3.0969229447845628
+    },
+    "startDate" : 1673194857098,
+    "endDate" : 1673194857130,
+    "taskName" : "Record 61",
+    "threadName" : "pool-1-thread-2",
+    "durationInMs" : 32
+  }, {
+    "record" : {
+      "Qdj" : 4.758128376437263,
+      "TPj" : 3.1252841418470445
+    },
+    "startDate" : 1673194857098,
+    "endDate" : 1673194857121,
+    "taskName" : "Record 62",
+    "threadName" : "pool-1-thread-18",
+    "durationInMs" : 23
+  }, {
+    "record" : {
+      "Qdj" : 5.618468199483662,
+      "TPj" : 2.2797962894450077
+    },
+    "startDate" : 1673194857098,
+    "endDate" : 1673194857152,
+    "taskName" : "Record 63",
+    "threadName" : "pool-1-thread-14",
+    "durationInMs" : 54
+  }, {
+    "record" : {
+      "Qdj" : 4.941095725096638,
+      "TPj" : 4.170721737857126
+    },
+    "startDate" : 1673194857099,
+    "endDate" : 1673194857136,
+    "taskName" : "Record 64",
+    "threadName" : "pool-1-thread-7",
+    "durationInMs" : 37
+  }, {
+    "record" : {
+      "Qdj" : 2.281825294788166,
+      "TPj" : 3.4836783865913645
+    },
+    "startDate" : 1673194857099,
+    "endDate" : 1673194857136,
+    "taskName" : "Record 65",
+    "threadName" : "pool-1-thread-3",
+    "durationInMs" : 37
+  }, {
+    "record" : {
+      "Qdj" : 4.350820927031046,
+      "TPj" : 5.7841329447673635
+    },
+    "startDate" : 1673194857099,
+    "endDate" : 1673194857127,
+    "taskName" : "Record 66",
+    "threadName" : "pool-1-thread-13",
+    "durationInMs" : 28
+  }, {
+    "record" : {
+      "Qdj" : 5.327800431521483,
+      "TPj" : 7.426099647490303
+    },
+    "startDate" : 1673194857101,
+    "endDate" : 1673194857120,
+    "taskName" : "Record 67",
+    "threadName" : "pool-1-thread-17",
+    "durationInMs" : 19
+  }, {
+    "record" : {
+      "Qdj" : 8.857312573302586,
+      "TPj" : 1.5709004906351196
+    },
+    "startDate" : 1673194857102,
+    "endDate" : 1673194857127,
+    "taskName" : "Record 68",
+    "threadName" : "pool-1-thread-5",
+    "durationInMs" : 25
+  }, {
+    "record" : {
+      "Qdj" : 6.8221631611613285,
+      "TPj" : 2.1964294244576967
+    },
+    "startDate" : 1673194857102,
+    "endDate" : 1673194857153,
+    "taskName" : "Record 69",
+    "threadName" : "pool-1-thread-15",
+    "durationInMs" : 51
+  }, {
+    "record" : {
+      "Qdj" : 6.780293093267714,
+      "TPj" : 2.9186683832038978
+    },
+    "startDate" : 1673194857104,
+    "endDate" : 1673194857127,
+    "taskName" : "Record 70",
+    "threadName" : "pool-1-thread-10",
+    "durationInMs" : 23
+  }, {
+    "record" : {
+      "Qdj" : 4.523572037018461,
+      "TPj" : 2.9444776592534674
+    },
+    "startDate" : 1673194857105,
+    "endDate" : 1673194857140,
+    "taskName" : "Record 71",
+    "threadName" : "pool-1-thread-16",
+    "durationInMs" : 35
+  }, {
+    "record" : {
+      "Qdj" : 6.448171290318845,
+      "TPj" : 3.5953036868262074
+    },
+    "startDate" : 1673194857105,
+    "endDate" : 1673194857121,
+    "taskName" : "Record 72",
+    "threadName" : "pool-1-thread-12",
+    "durationInMs" : 16
+  }, {
+    "record" : {
+      "Qdj" : 1.8905759196595595,
+      "TPj" : 2.4809345749484555
+    },
+    "startDate" : 1673194857108,
+    "endDate" : 1673194857171,
+    "taskName" : "Record 73",
+    "threadName" : "pool-1-thread-4",
+    "durationInMs" : 63
+  }, {
+    "record" : {
+      "Qdj" : 1.8092411174555028,
+      "TPj" : 2.5344100983422937
+    },
+    "startDate" : 1673194857113,
+    "endDate" : 1673194857171,
+    "taskName" : "Record 74",
+    "threadName" : "pool-1-thread-19",
+    "durationInMs" : 58
+  }, {
+    "record" : {
+      "Qdj" : 7.910819613009597,
+      "TPj" : 6.0454190571211885
+    },
+    "startDate" : 1673194857120,
+    "endDate" : 1673194857146,
+    "taskName" : "Record 75",
+    "threadName" : "pool-1-thread-17",
+    "durationInMs" : 26
+  }, {
+    "record" : {
+      "Qdj" : 9.716356989817585,
+      "TPj" : 2.4298813581573846
+    },
+    "startDate" : 1673194857121,
+    "endDate" : 1673194857146,
+    "taskName" : "Record 76",
+    "threadName" : "pool-1-thread-12",
+    "durationInMs" : 25
+  }, {
+    "record" : {
+      "Qdj" : 8.02457557940271,
+      "TPj" : 9.455908697965485
+    },
+    "startDate" : 1673194857121,
+    "endDate" : 1673194857153,
+    "taskName" : "Record 77",
+    "threadName" : "pool-1-thread-18",
+    "durationInMs" : 32
+  }, {
+    "record" : {
+      "Qdj" : 4.597148903492506,
+      "TPj" : 5.7971195688225885
+    },
+    "startDate" : 1673194857126,
+    "endDate" : 1673194857170,
+    "taskName" : "Record 78",
+    "threadName" : "pool-1-thread-6",
+    "durationInMs" : 44
+  }, {
+    "record" : {
+      "Qdj" : 5.70867285551362,
+      "TPj" : 7.217587403529492
+    },
+    "startDate" : 1673194857127,
+    "endDate" : 1673194857151,
+    "taskName" : "Record 79",
+    "threadName" : "pool-1-thread-5",
+    "durationInMs" : 24
+  }, {
+    "record" : {
+      "Qdj" : 8.968915307415049,
+      "TPj" : 5.100924163431509
+    },
+    "startDate" : 1673194857127,
+    "endDate" : 1673194857146,
+    "taskName" : "Record 80",
+    "threadName" : "pool-1-thread-13",
+    "durationInMs" : 19
+  }, {
+    "record" : {
+      "Qdj" : 1.7370898803354433,
+      "TPj" : 3.939649336853501
+    },
+    "startDate" : 1673194857127,
+    "endDate" : 1673194857146,
+    "taskName" : "Record 81",
+    "threadName" : "pool-1-thread-10",
+    "durationInMs" : 19
+  }, {
+    "record" : {
+      "Qdj" : 8.660651964759488,
+      "TPj" : 7.398688677950059
+    },
+    "startDate" : 1673194857130,
+    "endDate" : 1673194857171,
+    "taskName" : "Record 82",
+    "threadName" : "pool-1-thread-2",
+    "durationInMs" : 41
+  }, {
+    "record" : {
+      "Qdj" : 3.740921226389143,
+      "TPj" : 7.5853617094581995
+    },
+    "startDate" : 1673194857136,
+    "endDate" : 1673194857158,
+    "taskName" : "Record 83",
+    "threadName" : "pool-1-thread-7",
+    "durationInMs" : 22
+  }, {
+    "record" : {
+      "Qdj" : 8.664242551203388,
+      "TPj" : 3.7024309383919647
+    },
+    "startDate" : 1673194857136,
+    "endDate" : 1673194857166,
+    "taskName" : "Record 84",
+    "threadName" : "pool-1-thread-3",
+    "durationInMs" : 30
+  }, {
+    "record" : {
+      "Qdj" : 5.45312657222983,
+      "TPj" : 7.66368792536054
+    },
+    "startDate" : 1673194857140,
+    "endDate" : 1673194857161,
+    "taskName" : "Record 85",
+    "threadName" : "pool-1-thread-16",
+    "durationInMs" : 21
+  }, {
+    "record" : {
+      "Qdj" : 8.25266099166339,
+      "TPj" : 1.9243073907485644
+    },
+    "startDate" : 1673194857146,
+    "endDate" : 1673194857162,
+    "taskName" : "Record 86",
+    "threadName" : "pool-1-thread-17",
+    "durationInMs" : 16
+  }, {
+    "record" : {
+      "Qdj" : 8.942411195783565,
+      "TPj" : 3.4600426330518435
+    },
+    "startDate" : 1673194857146,
+    "endDate" : 1673194857161,
+    "taskName" : "Record 87",
+    "threadName" : "pool-1-thread-13",
+    "durationInMs" : 15
+  }, {
+    "record" : {
+      "Qdj" : 4.37510245296801,
+      "TPj" : 6.837650230316646
+    },
+    "startDate" : 1673194857146,
+    "endDate" : 1673194857164,
+    "taskName" : "Record 88",
+    "threadName" : "pool-1-thread-10",
+    "durationInMs" : 18
+  }, {
+    "record" : {
+      "Qdj" : 8.21578783613256,
+      "TPj" : 3.7992448153353284
+    },
+    "startDate" : 1673194857150,
+    "endDate" : 1673194857175,
+    "taskName" : "Record 89",
+    "threadName" : "pool-1-thread-12",
+    "durationInMs" : 25
+  }, {
+    "record" : {
+      "Qdj" : 7.367280752718869,
+      "TPj" : 5.9591983544103915
+    },
+    "startDate" : 1673194857151,
+    "endDate" : 1673194857175,
+    "taskName" : "Record 90",
+    "threadName" : "pool-1-thread-5",
+    "durationInMs" : 24
+  }, {
+    "record" : {
+      "Qdj" : 2.8008091789468823,
+      "TPj" : 2.63550376545501
+    },
+    "startDate" : 1673194857152,
+    "endDate" : 1673194857175,
+    "taskName" : "Record 91",
+    "threadName" : "pool-1-thread-14",
+    "durationInMs" : 23
+  }, {
+    "record" : {
+      "Qdj" : 3.6997036414160593,
+      "TPj" : 3.6380739917066545
+    },
+    "startDate" : 1673194857153,
+    "endDate" : 1673194857175,
+    "taskName" : "Record 92",
+    "threadName" : "pool-1-thread-18",
+    "durationInMs" : 22
+  }, {
+    "record" : {
+      "Qdj" : 7.3061628759389,
+      "TPj" : 9.972272879320963
+    },
+    "startDate" : 1673194857154,
+    "endDate" : 1673194857182,
+    "taskName" : "Record 93",
+    "threadName" : "pool-1-thread-15",
+    "durationInMs" : 28
+  }, {
+    "record" : {
+      "Qdj" : 6.827552432287051,
+      "TPj" : 8.923191785295622
+    },
+    "startDate" : 1673194857158,
+    "endDate" : 1673194857178,
+    "taskName" : "Record 94",
+    "threadName" : "pool-1-thread-7",
+    "durationInMs" : 20
+  }, {
+    "record" : {
+      "Qdj" : 9.503257541304082,
+      "TPj" : 6.229069958465864
+    },
+    "startDate" : 1673194857161,
+    "endDate" : 1673194857179,
+    "taskName" : "Record 95",
+    "threadName" : "pool-1-thread-13",
+    "durationInMs" : 18
+  }, {
+    "record" : {
+      "Qdj" : 7.202866225520048,
+      "TPj" : 3.973167005380765
+    },
+    "startDate" : 1673194857161,
+    "endDate" : 1673194857179,
+    "taskName" : "Record 96",
+    "threadName" : "pool-1-thread-16",
+    "durationInMs" : 18
+  }, {
+    "record" : {
+      "Qdj" : 4.17163197161069,
+      "TPj" : 9.192866026773507
+    },
+    "startDate" : 1673194857162,
+    "endDate" : 1673194857179,
+    "taskName" : "Record 97",
+    "threadName" : "pool-1-thread-17",
+    "durationInMs" : 17
+  }, {
+    "record" : {
+      "Qdj" : 8.163052369594595,
+      "TPj" : 1.871427986648478
+    },
+    "startDate" : 1673194857164,
+    "endDate" : 1673194857179,
+    "taskName" : "Record 98",
+    "threadName" : "pool-1-thread-10",
+    "durationInMs" : 15
+  }, {
+    "record" : {
+      "Qdj" : 7.8074585893926,
+      "TPj" : 9.118404279807855
+    },
+    "startDate" : 1673194857166,
+    "endDate" : 1673194857182,
+    "taskName" : "Record 99",
+    "threadName" : "pool-1-thread-3",
+    "durationInMs" : 16
+  }, {
+    "record" : {
+      "Qdj" : 2.7193095305902975,
+      "TPj" : 3.7141121599425997
+    },
+    "startDate" : 1673194857168,
+    "endDate" : 1673194857184,
+    "taskName" : "Record 100",
+    "threadName" : "pool-1-thread-8",
+    "durationInMs" : 16
+  } ]
+}

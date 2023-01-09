@@ -1,0 +1,1003 @@
+{
+  "results" : [ {
+    "record" : {
+      "Vw3" : 9.975381947953617,
+      "fpa" : 7.225000399607808
+    },
+    "startDate" : 1673194732787,
+    "endDate" : 1673194733337,
+    "taskName" : "Record 1",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 550
+  }, {
+    "record" : {
+      "Vw3" : 2.365680963923934,
+      "fpa" : 9.791617303407648
+    },
+    "startDate" : 1673194732787,
+    "endDate" : 1673194733295,
+    "taskName" : "Record 2",
+    "threadName" : "pool-1-thread-2",
+    "durationInMs" : 508
+  }, {
+    "record" : {
+      "Vw3" : 3.616649826015545,
+      "fpa" : 4.668019889200012
+    },
+    "startDate" : 1673194732787,
+    "endDate" : 1673194733358,
+    "taskName" : "Record 3",
+    "threadName" : "pool-1-thread-3",
+    "durationInMs" : 571
+  }, {
+    "record" : {
+      "Vw3" : 9.978125257512028,
+      "fpa" : 9.968179640914455
+    },
+    "startDate" : 1673194732787,
+    "endDate" : 1673194733258,
+    "taskName" : "Record 4",
+    "threadName" : "pool-1-thread-4",
+    "durationInMs" : 471
+  }, {
+    "record" : {
+      "Vw3" : 8.99075048504698,
+      "fpa" : 9.9856883730497
+    },
+    "startDate" : 1673194732787,
+    "endDate" : 1673194733316,
+    "taskName" : "Record 5",
+    "threadName" : "pool-1-thread-5",
+    "durationInMs" : 529
+  }, {
+    "record" : {
+      "Vw3" : 8.548681666831206,
+      "fpa" : 6.153055095949128
+    },
+    "startDate" : 1673194732787,
+    "endDate" : 1673194733315,
+    "taskName" : "Record 6",
+    "threadName" : "pool-1-thread-6",
+    "durationInMs" : 528
+  }, {
+    "record" : {
+      "Vw3" : 6.233960432725256,
+      "fpa" : 2.552664207679327
+    },
+    "startDate" : 1673194732788,
+    "endDate" : 1673194733275,
+    "taskName" : "Record 7",
+    "threadName" : "pool-1-thread-7",
+    "durationInMs" : 487
+  }, {
+    "record" : {
+      "Vw3" : 4.656105453705408,
+      "fpa" : 8.256781445506714
+    },
+    "startDate" : 1673194732788,
+    "endDate" : 1673194733315,
+    "taskName" : "Record 8",
+    "threadName" : "pool-1-thread-8",
+    "durationInMs" : 527
+  }, {
+    "record" : {
+      "Vw3" : 9.560791816769873,
+      "fpa" : 5.925973747997975
+    },
+    "startDate" : 1673194732789,
+    "endDate" : 1673194733275,
+    "taskName" : "Record 9",
+    "threadName" : "pool-1-thread-9",
+    "durationInMs" : 486
+  }, {
+    "record" : {
+      "Vw3" : 3.071673460219129,
+      "fpa" : 8.86551824844461
+    },
+    "startDate" : 1673194732789,
+    "endDate" : 1673194733258,
+    "taskName" : "Record 10",
+    "threadName" : "pool-1-thread-10",
+    "durationInMs" : 469
+  }, {
+    "record" : {
+      "Vw3" : 2.3270237163074015,
+      "fpa" : 3.2537817115862024
+    },
+    "startDate" : 1673194732789,
+    "endDate" : 1673194733277,
+    "taskName" : "Record 11",
+    "threadName" : "pool-1-thread-11",
+    "durationInMs" : 488
+  }, {
+    "record" : {
+      "Vw3" : 1.0860778817154695,
+      "fpa" : 2.406763846861072
+    },
+    "startDate" : 1673194732789,
+    "endDate" : 1673194733368,
+    "taskName" : "Record 12",
+    "threadName" : "pool-1-thread-12",
+    "durationInMs" : 579
+  }, {
+    "record" : {
+      "Vw3" : 7.367537133831827,
+      "fpa" : 7.636236958680583
+    },
+    "startDate" : 1673194732789,
+    "endDate" : 1673194733316,
+    "taskName" : "Record 13",
+    "threadName" : "pool-1-thread-13",
+    "durationInMs" : 527
+  }, {
+    "record" : {
+      "Vw3" : 8.494075891501424,
+      "fpa" : 7.668042340797001
+    },
+    "startDate" : 1673194732789,
+    "endDate" : 1673194733275,
+    "taskName" : "Record 14",
+    "threadName" : "pool-1-thread-14",
+    "durationInMs" : 486
+  }, {
+    "record" : {
+      "Vw3" : 5.841895448440577,
+      "fpa" : 2.4005773354673363
+    },
+    "startDate" : 1673194732790,
+    "endDate" : 1673194733315,
+    "taskName" : "Record 15",
+    "threadName" : "pool-1-thread-15",
+    "durationInMs" : 525
+  }, {
+    "record" : {
+      "Vw3" : 3.3140686886888124,
+      "fpa" : 4.455451403516774
+    },
+    "startDate" : 1673194732790,
+    "endDate" : 1673194733317,
+    "taskName" : "Record 16",
+    "threadName" : "pool-1-thread-16",
+    "durationInMs" : 527
+  }, {
+    "record" : {
+      "Vw3" : 7.891899399220259,
+      "fpa" : 1.9724140718535828
+    },
+    "startDate" : 1673194732790,
+    "endDate" : 1673194733277,
+    "taskName" : "Record 17",
+    "threadName" : "pool-1-thread-17",
+    "durationInMs" : 487
+  }, {
+    "record" : {
+      "Vw3" : 6.281710527600984,
+      "fpa" : 7.164321278199898
+    },
+    "startDate" : 1673194732790,
+    "endDate" : 1673194733318,
+    "taskName" : "Record 18",
+    "threadName" : "pool-1-thread-18",
+    "durationInMs" : 528
+  }, {
+    "record" : {
+      "Vw3" : 5.517883935577966,
+      "fpa" : 7.526083341634683
+    },
+    "startDate" : 1673194732790,
+    "endDate" : 1673194733295,
+    "taskName" : "Record 19",
+    "threadName" : "pool-1-thread-19",
+    "durationInMs" : 505
+  }, {
+    "record" : {
+      "Vw3" : 3.649797869544857,
+      "fpa" : 9.30083302321392
+    },
+    "startDate" : 1673194732790,
+    "endDate" : 1673194733275,
+    "taskName" : "Record 20",
+    "threadName" : "pool-1-thread-20",
+    "durationInMs" : 485
+  }, {
+    "record" : {
+      "Vw3" : 7.214318863381698,
+      "fpa" : 5.87918605862823
+    },
+    "startDate" : 1673194733280,
+    "endDate" : 1673194733360,
+    "taskName" : "Record 21",
+    "threadName" : "pool-1-thread-4",
+    "durationInMs" : 80
+  }, {
+    "record" : {
+      "Vw3" : 4.851113278560543,
+      "fpa" : 7.541296681936232
+    },
+    "startDate" : 1673194733280,
+    "endDate" : 1673194733359,
+    "taskName" : "Record 22",
+    "threadName" : "pool-1-thread-9",
+    "durationInMs" : 79
+  }, {
+    "record" : {
+      "Vw3" : 2.070304540204556,
+      "fpa" : 8.159910511251182
+    },
+    "startDate" : 1673194733280,
+    "endDate" : 1673194733360,
+    "taskName" : "Record 23",
+    "threadName" : "pool-1-thread-14",
+    "durationInMs" : 80
+  }, {
+    "record" : {
+      "Vw3" : 1.136559974648956,
+      "fpa" : 5.744890034163107
+    },
+    "startDate" : 1673194733281,
+    "endDate" : 1673194733395,
+    "taskName" : "Record 24",
+    "threadName" : "pool-1-thread-17",
+    "durationInMs" : 114
+  }, {
+    "record" : {
+      "Vw3" : 4.236855078356627,
+      "fpa" : 4.62045675901229
+    },
+    "startDate" : 1673194733282,
+    "endDate" : 1673194733402,
+    "taskName" : "Record 25",
+    "threadName" : "pool-1-thread-7",
+    "durationInMs" : 120
+  }, {
+    "record" : {
+      "Vw3" : 9.38783272855042,
+      "fpa" : 5.446013852004783
+    },
+    "startDate" : 1673194733282,
+    "endDate" : 1673194733358,
+    "taskName" : "Record 26",
+    "threadName" : "pool-1-thread-11",
+    "durationInMs" : 76
+  }, {
+    "record" : {
+      "Vw3" : 8.890386991526118,
+      "fpa" : 1.595865678767397
+    },
+    "startDate" : 1673194733282,
+    "endDate" : 1673194733377,
+    "taskName" : "Record 27",
+    "threadName" : "pool-1-thread-20",
+    "durationInMs" : 95
+  }, {
+    "record" : {
+      "Vw3" : 4.92204338122284,
+      "fpa" : 5.7440167227708985
+    },
+    "startDate" : 1673194733284,
+    "endDate" : 1673194733359,
+    "taskName" : "Record 28",
+    "threadName" : "pool-1-thread-10",
+    "durationInMs" : 75
+  }, {
+    "record" : {
+      "Vw3" : 8.08063434569631,
+      "fpa" : 7.0147730048021515
+    },
+    "startDate" : 1673194733296,
+    "endDate" : 1673194733396,
+    "taskName" : "Record 29",
+    "threadName" : "pool-1-thread-19",
+    "durationInMs" : 100
+  }, {
+    "record" : {
+      "Vw3" : 6.255123316900745,
+      "fpa" : 7.180896937402715
+    },
+    "startDate" : 1673194733297,
+    "endDate" : 1673194733395,
+    "taskName" : "Record 30",
+    "threadName" : "pool-1-thread-2",
+    "durationInMs" : 98
+  }, {
+    "record" : {
+      "Vw3" : 8.141238201046127,
+      "fpa" : 4.057091036710948
+    },
+    "startDate" : 1673194733321,
+    "endDate" : 1673194733395,
+    "taskName" : "Record 31",
+    "threadName" : "pool-1-thread-15",
+    "durationInMs" : 74
+  }, {
+    "record" : {
+      "Vw3" : 1.4714979937119907,
+      "fpa" : 4.151689544340012
+    },
+    "startDate" : 1673194733321,
+    "endDate" : 1673194733395,
+    "taskName" : "Record 32",
+    "threadName" : "pool-1-thread-5",
+    "durationInMs" : 74
+  }, {
+    "record" : {
+      "Vw3" : 6.662555799768209,
+      "fpa" : 4.523346971401956
+    },
+    "startDate" : 1673194733322,
+    "endDate" : 1673194733399,
+    "taskName" : "Record 33",
+    "threadName" : "pool-1-thread-18",
+    "durationInMs" : 77
+  }, {
+    "record" : {
+      "Vw3" : 5.0594370150056545,
+      "fpa" : 3.627599738512465
+    },
+    "startDate" : 1673194733326,
+    "endDate" : 1673194733415,
+    "taskName" : "Record 34",
+    "threadName" : "pool-1-thread-16",
+    "durationInMs" : 89
+  }, {
+    "record" : {
+      "Vw3" : 9.378769501095196,
+      "fpa" : 6.231380939579136
+    },
+    "startDate" : 1673194733326,
+    "endDate" : 1673194733435,
+    "taskName" : "Record 35",
+    "threadName" : "pool-1-thread-6",
+    "durationInMs" : 109
+  }, {
+    "record" : {
+      "Vw3" : 1.8146518841256336,
+      "fpa" : 8.488540576238451
+    },
+    "startDate" : 1673194733327,
+    "endDate" : 1673194733435,
+    "taskName" : "Record 36",
+    "threadName" : "pool-1-thread-8",
+    "durationInMs" : 108
+  }, {
+    "record" : {
+      "Vw3" : 8.705165262444005,
+      "fpa" : 1.2883336207092768
+    },
+    "startDate" : 1673194733333,
+    "endDate" : 1673194733435,
+    "taskName" : "Record 37",
+    "threadName" : "pool-1-thread-13",
+    "durationInMs" : 102
+  }, {
+    "record" : {
+      "Vw3" : 3.689120263014868,
+      "fpa" : 2.5595922205511514
+    },
+    "startDate" : 1673194733341,
+    "endDate" : 1673194733458,
+    "taskName" : "Record 38",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 117
+  }, {
+    "record" : {
+      "Vw3" : 9.076492698149856,
+      "fpa" : 5.399334383100893
+    },
+    "startDate" : 1673194733364,
+    "endDate" : 1673194733457,
+    "taskName" : "Record 39",
+    "threadName" : "pool-1-thread-14",
+    "durationInMs" : 93
+  }, {
+    "record" : {
+      "Vw3" : 8.267790425606345,
+      "fpa" : 1.5249933646580014
+    },
+    "startDate" : 1673194733364,
+    "endDate" : 1673194733457,
+    "taskName" : "Record 40",
+    "threadName" : "pool-1-thread-10",
+    "durationInMs" : 93
+  }, {
+    "record" : {
+      "Vw3" : 3.6836013448261062,
+      "fpa" : 5.469020019937519
+    },
+    "startDate" : 1673194733366,
+    "endDate" : 1673194733457,
+    "taskName" : "Record 41",
+    "threadName" : "pool-1-thread-4",
+    "durationInMs" : 91
+  }, {
+    "record" : {
+      "Vw3" : 4.892722963755706,
+      "fpa" : 9.253633999278488
+    },
+    "startDate" : 1673194733367,
+    "endDate" : 1673194733461,
+    "taskName" : "Record 42",
+    "threadName" : "pool-1-thread-9",
+    "durationInMs" : 94
+  }, {
+    "record" : {
+      "Vw3" : 2.6830933896186617,
+      "fpa" : 5.627997345348245
+    },
+    "startDate" : 1673194733372,
+    "endDate" : 1673194733457,
+    "taskName" : "Record 43",
+    "threadName" : "pool-1-thread-12",
+    "durationInMs" : 85
+  }, {
+    "record" : {
+      "Vw3" : 3.3223978267479213,
+      "fpa" : 7.711614387523425
+    },
+    "startDate" : 1673194733375,
+    "endDate" : 1673194733458,
+    "taskName" : "Record 44",
+    "threadName" : "pool-1-thread-11",
+    "durationInMs" : 83
+  }, {
+    "record" : {
+      "Vw3" : 1.4635200486319984,
+      "fpa" : 9.473585634650531
+    },
+    "startDate" : 1673194733375,
+    "endDate" : 1673194733475,
+    "taskName" : "Record 45",
+    "threadName" : "pool-1-thread-3",
+    "durationInMs" : 100
+  }, {
+    "record" : {
+      "Vw3" : 8.213326096635324,
+      "fpa" : 1.5602929333198277
+    },
+    "startDate" : 1673194733379,
+    "endDate" : 1673194733475,
+    "taskName" : "Record 46",
+    "threadName" : "pool-1-thread-20",
+    "durationInMs" : 96
+  }, {
+    "record" : {
+      "Vw3" : 5.091683991330924,
+      "fpa" : 5.752652562466409
+    },
+    "startDate" : 1673194733400,
+    "endDate" : 1673194733515,
+    "taskName" : "Record 47",
+    "threadName" : "pool-1-thread-15",
+    "durationInMs" : 115
+  }, {
+    "record" : {
+      "Vw3" : 2.6417705295497713,
+      "fpa" : 4.742338888169817
+    },
+    "startDate" : 1673194733401,
+    "endDate" : 1673194733516,
+    "taskName" : "Record 48",
+    "threadName" : "pool-1-thread-17",
+    "durationInMs" : 115
+  }, {
+    "record" : {
+      "Vw3" : 9.633906165040123,
+      "fpa" : 6.934085619958622
+    },
+    "startDate" : 1673194733401,
+    "endDate" : 1673194733495,
+    "taskName" : "Record 49",
+    "threadName" : "pool-1-thread-19",
+    "durationInMs" : 94
+  }, {
+    "record" : {
+      "Vw3" : 2.3452925361437473,
+      "fpa" : 1.8436673933198937
+    },
+    "startDate" : 1673194733404,
+    "endDate" : 1673194733515,
+    "taskName" : "Record 50",
+    "threadName" : "pool-1-thread-5",
+    "durationInMs" : 111
+  }, {
+    "record" : {
+      "Vw3" : 1.6496479418911871,
+      "fpa" : 6.119412333662448
+    },
+    "startDate" : 1673194733405,
+    "endDate" : 1673194733535,
+    "taskName" : "Record 51",
+    "threadName" : "pool-1-thread-18",
+    "durationInMs" : 130
+  }, {
+    "record" : {
+      "Vw3" : 9.357008346441528,
+      "fpa" : 8.785726649282338
+    },
+    "startDate" : 1673194733406,
+    "endDate" : 1673194733516,
+    "taskName" : "Record 52",
+    "threadName" : "pool-1-thread-7",
+    "durationInMs" : 110
+  }, {
+    "record" : {
+      "Vw3" : 6.788674303800177,
+      "fpa" : 6.5223170798693655
+    },
+    "startDate" : 1673194733408,
+    "endDate" : 1673194733518,
+    "taskName" : "Record 53",
+    "threadName" : "pool-1-thread-2",
+    "durationInMs" : 110
+  }, {
+    "record" : {
+      "Vw3" : 3.229849582309045,
+      "fpa" : 8.450464776700109
+    },
+    "startDate" : 1673194733416,
+    "endDate" : 1673194733516,
+    "taskName" : "Record 54",
+    "threadName" : "pool-1-thread-16",
+    "durationInMs" : 100
+  }, {
+    "record" : {
+      "Vw3" : 6.087976659416835,
+      "fpa" : 4.311270520061871
+    },
+    "startDate" : 1673194733436,
+    "endDate" : 1673194733556,
+    "taskName" : "Record 55",
+    "threadName" : "pool-1-thread-13",
+    "durationInMs" : 120
+  }, {
+    "record" : {
+      "Vw3" : 6.103789513560107,
+      "fpa" : 7.169403041899284
+    },
+    "startDate" : 1673194733437,
+    "endDate" : 1673194733535,
+    "taskName" : "Record 56",
+    "threadName" : "pool-1-thread-8",
+    "durationInMs" : 98
+  }, {
+    "record" : {
+      "Vw3" : 8.260969258571256,
+      "fpa" : 4.954221190460344
+    },
+    "startDate" : 1673194733437,
+    "endDate" : 1673194733517,
+    "taskName" : "Record 57",
+    "threadName" : "pool-1-thread-6",
+    "durationInMs" : 80
+  }, {
+    "record" : {
+      "Vw3" : 5.455907586559532,
+      "fpa" : 1.6185943688485116
+    },
+    "startDate" : 1673194733459,
+    "endDate" : 1673194733555,
+    "taskName" : "Record 58",
+    "threadName" : "pool-1-thread-12",
+    "durationInMs" : 96
+  }, {
+    "record" : {
+      "Vw3" : 7.999007565226332,
+      "fpa" : 6.3302704720119225
+    },
+    "startDate" : 1673194733459,
+    "endDate" : 1673194733555,
+    "taskName" : "Record 59",
+    "threadName" : "pool-1-thread-11",
+    "durationInMs" : 96
+  }, {
+    "record" : {
+      "Vw3" : 6.491333993442717,
+      "fpa" : 8.55284407056832
+    },
+    "startDate" : 1673194733459,
+    "endDate" : 1673194733535,
+    "taskName" : "Record 60",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 76
+  }, {
+    "record" : {
+      "Vw3" : 8.064068608345918,
+      "fpa" : 9.78048122392244
+    },
+    "startDate" : 1673194733463,
+    "endDate" : 1673194733576,
+    "taskName" : "Record 61",
+    "threadName" : "pool-1-thread-14",
+    "durationInMs" : 113
+  }, {
+    "record" : {
+      "Vw3" : 4.78252163807416,
+      "fpa" : 6.985431478104813
+    },
+    "startDate" : 1673194733463,
+    "endDate" : 1673194733556,
+    "taskName" : "Record 62",
+    "threadName" : "pool-1-thread-9",
+    "durationInMs" : 93
+  }, {
+    "record" : {
+      "Vw3" : 8.7414703155792,
+      "fpa" : 9.958445921158875
+    },
+    "startDate" : 1673194733463,
+    "endDate" : 1673194733556,
+    "taskName" : "Record 63",
+    "threadName" : "pool-1-thread-4",
+    "durationInMs" : 93
+  }, {
+    "record" : {
+      "Vw3" : 9.944966233459946,
+      "fpa" : 5.873657329640325
+    },
+    "startDate" : 1673194733466,
+    "endDate" : 1673194733558,
+    "taskName" : "Record 64",
+    "threadName" : "pool-1-thread-10",
+    "durationInMs" : 92
+  }, {
+    "record" : {
+      "Vw3" : 6.042798132641575,
+      "fpa" : 6.810968765643769
+    },
+    "startDate" : 1673194733476,
+    "endDate" : 1673194733575,
+    "taskName" : "Record 65",
+    "threadName" : "pool-1-thread-3",
+    "durationInMs" : 99
+  }, {
+    "record" : {
+      "Vw3" : 8.849403175119338,
+      "fpa" : 4.105907659663535
+    },
+    "startDate" : 1673194733477,
+    "endDate" : 1673194733576,
+    "taskName" : "Record 66",
+    "threadName" : "pool-1-thread-20",
+    "durationInMs" : 99
+  }, {
+    "record" : {
+      "Vw3" : 4.901745331556038,
+      "fpa" : 9.270188152061614
+    },
+    "startDate" : 1673194733496,
+    "endDate" : 1673194733575,
+    "taskName" : "Record 67",
+    "threadName" : "pool-1-thread-19",
+    "durationInMs" : 79
+  }, {
+    "record" : {
+      "Vw3" : 3.1136764157896515,
+      "fpa" : 9.602519670502677
+    },
+    "startDate" : 1673194733519,
+    "endDate" : 1673194733594,
+    "taskName" : "Record 68",
+    "threadName" : "pool-1-thread-7",
+    "durationInMs" : 75
+  }, {
+    "record" : {
+      "Vw3" : 7.489360995715709,
+      "fpa" : 3.270697826106779
+    },
+    "startDate" : 1673194733519,
+    "endDate" : 1673194733594,
+    "taskName" : "Record 69",
+    "threadName" : "pool-1-thread-17",
+    "durationInMs" : 75
+  }, {
+    "record" : {
+      "Vw3" : 9.391886407741339,
+      "fpa" : 9.64058362048167
+    },
+    "startDate" : 1673194733520,
+    "endDate" : 1673194733614,
+    "taskName" : "Record 70",
+    "threadName" : "pool-1-thread-16",
+    "durationInMs" : 94
+  }, {
+    "record" : {
+      "Vw3" : 5.690242103455825,
+      "fpa" : 8.518698970712121
+    },
+    "startDate" : 1673194733521,
+    "endDate" : 1673194733594,
+    "taskName" : "Record 71",
+    "threadName" : "pool-1-thread-5",
+    "durationInMs" : 73
+  }, {
+    "record" : {
+      "Vw3" : 9.284093215746825,
+      "fpa" : 5.091926109890193
+    },
+    "startDate" : 1673194733521,
+    "endDate" : 1673194733575,
+    "taskName" : "Record 72",
+    "threadName" : "pool-1-thread-15",
+    "durationInMs" : 54
+  }, {
+    "record" : {
+      "Vw3" : 1.7274913445415698,
+      "fpa" : 1.0349401455969556
+    },
+    "startDate" : 1673194733523,
+    "endDate" : 1673194733617,
+    "taskName" : "Record 73",
+    "threadName" : "pool-1-thread-6",
+    "durationInMs" : 94
+  }, {
+    "record" : {
+      "Vw3" : 8.526757153920016,
+      "fpa" : 1.123861296694443
+    },
+    "startDate" : 1673194733525,
+    "endDate" : 1673194733615,
+    "taskName" : "Record 74",
+    "threadName" : "pool-1-thread-2",
+    "durationInMs" : 90
+  }, {
+    "record" : {
+      "Vw3" : 1.9018041090630204,
+      "fpa" : 8.869184192884884
+    },
+    "startDate" : 1673194733537,
+    "endDate" : 1673194733616,
+    "taskName" : "Record 75",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 79
+  }, {
+    "record" : {
+      "Vw3" : 9.49227132874939,
+      "fpa" : 5.053904408829172
+    },
+    "startDate" : 1673194733538,
+    "endDate" : 1673194733615,
+    "taskName" : "Record 76",
+    "threadName" : "pool-1-thread-18",
+    "durationInMs" : 77
+  }, {
+    "record" : {
+      "Vw3" : 9.41883642739644,
+      "fpa" : 8.541160655888184
+    },
+    "startDate" : 1673194733538,
+    "endDate" : 1673194733616,
+    "taskName" : "Record 77",
+    "threadName" : "pool-1-thread-8",
+    "durationInMs" : 78
+  }, {
+    "record" : {
+      "Vw3" : 4.9253493108291195,
+      "fpa" : 6.472492165012144
+    },
+    "startDate" : 1673194733558,
+    "endDate" : 1673194733634,
+    "taskName" : "Record 78",
+    "threadName" : "pool-1-thread-12",
+    "durationInMs" : 76
+  }, {
+    "record" : {
+      "Vw3" : 4.319044670566132,
+      "fpa" : 5.701444554532082
+    },
+    "startDate" : 1673194733558,
+    "endDate" : 1673194733634,
+    "taskName" : "Record 79",
+    "threadName" : "pool-1-thread-9",
+    "durationInMs" : 76
+  }, {
+    "record" : {
+      "Vw3" : 2.2746977302796547,
+      "fpa" : 1.4518544791632928
+    },
+    "startDate" : 1673194733560,
+    "endDate" : 1673194733634,
+    "taskName" : "Record 80",
+    "threadName" : "pool-1-thread-4",
+    "durationInMs" : 74
+  }, {
+    "record" : {
+      "Vw3" : 2.5954745920930704,
+      "fpa" : 4.225427000400261
+    },
+    "startDate" : 1673194733560,
+    "endDate" : 1673194733657,
+    "taskName" : "Record 81",
+    "threadName" : "pool-1-thread-11",
+    "durationInMs" : 97
+  }, {
+    "record" : {
+      "Vw3" : 9.940315825701463,
+      "fpa" : 2.64453633500015
+    },
+    "startDate" : 1673194733563,
+    "endDate" : 1673194733656,
+    "taskName" : "Record 82",
+    "threadName" : "pool-1-thread-13",
+    "durationInMs" : 93
+  }, {
+    "record" : {
+      "Vw3" : 1.68752253408182,
+      "fpa" : 9.454518029539079
+    },
+    "startDate" : 1673194733565,
+    "endDate" : 1673194733658,
+    "taskName" : "Record 83",
+    "threadName" : "pool-1-thread-10",
+    "durationInMs" : 93
+  }, {
+    "record" : {
+      "Vw3" : 3.2499292497977335,
+      "fpa" : 1.3416672483824712
+    },
+    "startDate" : 1673194733577,
+    "endDate" : 1673194733657,
+    "taskName" : "Record 84",
+    "threadName" : "pool-1-thread-3",
+    "durationInMs" : 80
+  }, {
+    "record" : {
+      "Vw3" : 7.672472935430256,
+      "fpa" : 9.580951071165199
+    },
+    "startDate" : 1673194733577,
+    "endDate" : 1673194733656,
+    "taskName" : "Record 85",
+    "threadName" : "pool-1-thread-19",
+    "durationInMs" : 79
+  }, {
+    "record" : {
+      "Vw3" : 4.002480527883025,
+      "fpa" : 7.108929684880733
+    },
+    "startDate" : 1673194733577,
+    "endDate" : 1673194733657,
+    "taskName" : "Record 86",
+    "threadName" : "pool-1-thread-14",
+    "durationInMs" : 80
+  }, {
+    "record" : {
+      "Vw3" : 5.641661027179585,
+      "fpa" : 6.236034010983982
+    },
+    "startDate" : 1673194733578,
+    "endDate" : 1673194733657,
+    "taskName" : "Record 87",
+    "threadName" : "pool-1-thread-15",
+    "durationInMs" : 79
+  }, {
+    "record" : {
+      "Vw3" : 3.972259991493372,
+      "fpa" : 9.447279122218326
+    },
+    "startDate" : 1673194733579,
+    "endDate" : 1673194733674,
+    "taskName" : "Record 88",
+    "threadName" : "pool-1-thread-20",
+    "durationInMs" : 95
+  }, {
+    "record" : {
+      "Vw3" : 1.9443956509305425,
+      "fpa" : 9.186418006368005
+    },
+    "startDate" : 1673194733596,
+    "endDate" : 1673194733698,
+    "taskName" : "Record 89",
+    "threadName" : "pool-1-thread-17",
+    "durationInMs" : 102
+  }, {
+    "record" : {
+      "Vw3" : 6.854176144304107,
+      "fpa" : 1.0358160688021076
+    },
+    "startDate" : 1673194733596,
+    "endDate" : 1673194733694,
+    "taskName" : "Record 90",
+    "threadName" : "pool-1-thread-5",
+    "durationInMs" : 98
+  }, {
+    "record" : {
+      "Vw3" : 1.2103185725327634,
+      "fpa" : 1.6689316648352295
+    },
+    "startDate" : 1673194733596,
+    "endDate" : 1673194733694,
+    "taskName" : "Record 91",
+    "threadName" : "pool-1-thread-7",
+    "durationInMs" : 98
+  }, {
+    "record" : {
+      "Vw3" : 1.748831249887722,
+      "fpa" : 2.505819827322917
+    },
+    "startDate" : 1673194733617,
+    "endDate" : 1673194733694,
+    "taskName" : "Record 92",
+    "threadName" : "pool-1-thread-18",
+    "durationInMs" : 77
+  }, {
+    "record" : {
+      "Vw3" : 8.31966302429321,
+      "fpa" : 6.3017582598656965
+    },
+    "startDate" : 1673194733618,
+    "endDate" : 1673194733695,
+    "taskName" : "Record 93",
+    "threadName" : "pool-1-thread-16",
+    "durationInMs" : 77
+  }, {
+    "record" : {
+      "Vw3" : 5.435475865779981,
+      "fpa" : 9.367797633734153
+    },
+    "startDate" : 1673194733618,
+    "endDate" : 1673194733694,
+    "taskName" : "Record 94",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 76
+  }, {
+    "record" : {
+      "Vw3" : 1.7809159553610452,
+      "fpa" : 5.698200967629386
+    },
+    "startDate" : 1673194733619,
+    "endDate" : 1673194733714,
+    "taskName" : "Record 95",
+    "threadName" : "pool-1-thread-8",
+    "durationInMs" : 95
+  }, {
+    "record" : {
+      "Vw3" : 7.361587079982089,
+      "fpa" : 5.6675074265615315
+    },
+    "startDate" : 1673194733619,
+    "endDate" : 1673194733694,
+    "taskName" : "Record 96",
+    "threadName" : "pool-1-thread-6",
+    "durationInMs" : 75
+  }, {
+    "record" : {
+      "Vw3" : 3.2966739341215625,
+      "fpa" : 9.879021606266733
+    },
+    "startDate" : 1673194733621,
+    "endDate" : 1673194733734,
+    "taskName" : "Record 97",
+    "threadName" : "pool-1-thread-2",
+    "durationInMs" : 113
+  }, {
+    "record" : {
+      "Vw3" : 7.489724121645263,
+      "fpa" : 8.182265303078129
+    },
+    "startDate" : 1673194733635,
+    "endDate" : 1673194733734,
+    "taskName" : "Record 98",
+    "threadName" : "pool-1-thread-12",
+    "durationInMs" : 99
+  }, {
+    "record" : {
+      "Vw3" : 4.651027787514121,
+      "fpa" : 7.330300815775091
+    },
+    "startDate" : 1673194733636,
+    "endDate" : 1673194733755,
+    "taskName" : "Record 99",
+    "threadName" : "pool-1-thread-9",
+    "durationInMs" : 119
+  }, {
+    "record" : {
+      "Vw3" : 2.8854813973873727,
+      "fpa" : 5.485448892733216
+    },
+    "startDate" : 1673194733636,
+    "endDate" : 1673194733774,
+    "taskName" : "Record 100",
+    "threadName" : "pool-1-thread-4",
+    "durationInMs" : 138
+  } ]
+}

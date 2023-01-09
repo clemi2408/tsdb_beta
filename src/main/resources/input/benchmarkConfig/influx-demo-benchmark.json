@@ -1,0 +1,17 @@
+{
+  "mode" : "demo",
+  "configOutputFolder" : "src/main/resources/output/benchmarkConfig",
+  "configPrefix" : "influx-benchmark",
+  "resultOutputFolder" : "src/main/resources/output/benchmarkResult",
+  "resultPrefix" : "influx-result",
+  "tsdbAdapterConfig" : {
+    "influxDbUrl" : "http://127.0.0.1:8086",
+    "username" : "admin",
+    "password" : "adminadmin",
+    "organisation" : "testorg",
+    "bucket" : "testbucket",
+    "bucketId" : null
+  },
+  "threadCount" : 20,
+  "cleanStorage" : true
+}
