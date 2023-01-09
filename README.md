@@ -132,16 +132,19 @@ Not yet considered:
 ### Trade off (DRAFT)
 
 __Relevance: Interact with the TSDB in realistic way__ 
+
 Understandability is preferred to relevance (Realism of Application, Understandability vs. Relevance).
 The benchmark to be implemented tests the performance in the PUSH procedure, in practice metrics are also collected in the PULL procedure.
 For simplicity reasons a scraping proxy to support PULL is not implemented.
 
 __Relevance: Longevity of the Benchmark__
+
 Understandability is preferred over relevance (Realism of Application, Understandability vs. Relevance).
 The longevity of the benchmark depends on the generator configuration and the amount of generated data.
 A cron-like execution of the periodic or timed measurement is not implemented.
 
 __Fairness: Multi Quality assessment__
+
 Portability is preferred to fairness (Misuse of Services, Portability vs. Fairness).
 A multi quality assessment is not implemented.
 Only the quality performance for the `write` operation is measured via the latency.
