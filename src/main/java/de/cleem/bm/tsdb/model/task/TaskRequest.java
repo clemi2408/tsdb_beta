@@ -1,6 +1,6 @@
 package de.cleem.bm.tsdb.model.task;
 
-import de.cleem.bm.tsdb.common.exception.TsdbBenchmarkException;
+import de.cleem.bm.tsdb.common.exception.TSDBBenchmarkException;
 import de.cleem.bm.tsdb.executor.BaseConnector;
 import de.cleem.bm.tsdb.model.config.TSDBConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
 
 
 
-    public TaskRequest(final TSDBConfig config, final String taskName, final HashMap<String,Number> record) throws TsdbBenchmarkException {
+    public TaskRequest(final TSDBConfig config, final String taskName, final HashMap<String,Number> record) throws TSDBBenchmarkException {
 
          this.record = record;
          this.taskName=taskName;

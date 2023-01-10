@@ -1,7 +1,9 @@
-package de.cleem.bm.tsdb.adapter.common;
+package de.cleem.bm.tsdb.common.lineprotocolformat;
 
+import de.cleem.bm.tsdb.adapter.exception.TSDBAdapterException;
 import lombok.Builder;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +14,7 @@ public class LineProtocolFormat {
     private String labelKey;
     private String labelValue;
 
-    public String getLine(HashMap<String, Number> record) throws TSDBAdapterException {
+    public String getLine(HashMap<String, Number> record, Instant time) throws TSDBAdapterException {
 
         if (record == null) {
             throw new TSDBAdapterException("Can not write to Storage - record is NULL");
@@ -44,6 +46,11 @@ public class LineProtocolFormat {
             lineStringBuilder.append(entry.getValue());
             counter++;
 
+        }
+
+        if(time!=null){
+            lineStringBuilder.append(" ");
+            lineStringBuilder.append(time.toEpochMilli());
         }
 
         return lineStringBuilder.toString();

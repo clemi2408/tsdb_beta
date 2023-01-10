@@ -317,11 +317,9 @@
   },
   "tsdbAdapterConfig" : {
     "influxDbUrl" : "http://127.0.0.1:8086",
-    "username" : "admin",
-    "password" : "adminadmin",
+    "token" : "YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==",
     "organisation" : "testorg",
-    "bucket" : "testbucket",
-    "bucketId" : null
+    "bucket" : "testbucket"
   },
   "threadCount" : 20,
   "cleanStorage" : true
