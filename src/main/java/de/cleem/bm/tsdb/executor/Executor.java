@@ -1,6 +1,6 @@
 package de.cleem.bm.tsdb.executor;
 
-import de.cleem.bm.tsdb.common.exception.TsdbBenchmarkException;
+import de.cleem.bm.tsdb.common.exception.TSDBBenchmarkException;
 import de.cleem.bm.tsdb.model.config.TSDBConfig;
 import de.cleem.bm.tsdb.model.result.BenchmarkResult;
 import de.cleem.bm.tsdb.model.task.TaskRequest;
@@ -28,7 +28,7 @@ public class Executor extends BaseConnector {
 
 
 
-    public Executor(final TSDBConfig config) throws TsdbBenchmarkException {
+    public Executor(final TSDBConfig config) throws TSDBBenchmarkException {
 
         log.info("Constructing: "+this.getClass().getSimpleName());
         this.config = config;
@@ -41,7 +41,7 @@ public class Executor extends BaseConnector {
 
 
 
-    public void execute() throws TsdbBenchmarkException {
+    public void execute() throws TSDBBenchmarkException {
 
 
         log.info("Creating ThreadPool using "+config.getThreadCount()+" Threads");
@@ -75,7 +75,7 @@ public class Executor extends BaseConnector {
 
     }
 
-    public void shutdown() throws TsdbBenchmarkException {
+    public void shutdown() throws TSDBBenchmarkException {
 
         log.info("Shutting down ThreadPool");
 

@@ -1,4 +1,4 @@
-package de.cleem.bm.tsdb.adapter.common;
+package de.cleem.bm.tsdb.model.config;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -12,7 +12,10 @@ import lombok.experimental.SuperBuilder;
 @Data
 @NoArgsConstructor
 @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
-@JsonSubTypes({ @JsonSubTypes.Type(InfluxDbAdapterConfig.class),@JsonSubTypes.Type(VictoriaMetricsAdapterConfig.class) })
+@JsonSubTypes({
+        @JsonSubTypes.Type(InfluxDbAdapterConfig.class),
+        @JsonSubTypes.Type(VictoriaMetricsAdapterConfig.class)
+})
 public class TSDBAdapterConfig {
 
 

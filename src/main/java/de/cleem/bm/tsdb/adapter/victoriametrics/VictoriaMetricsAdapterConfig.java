@@ -1,6 +1,6 @@
 package de.cleem.bm.tsdb.adapter.victoriametrics;
 
-import de.cleem.bm.tsdb.adapter.common.TSDBAdapterConfig;
+import de.cleem.bm.tsdb.model.config.TSDBAdapterConfig;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

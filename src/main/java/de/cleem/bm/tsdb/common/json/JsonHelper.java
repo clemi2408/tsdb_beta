@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import de.cleem.bm.tsdb.common.date.DateHelper;
-import de.cleem.bm.tsdb.common.exception.TsdbBenchmarkException;
+import de.cleem.bm.tsdb.common.exception.TSDBBenchmarkException;
 import de.cleem.bm.tsdb.common.file.FileHelper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -72,7 +72,7 @@ public class JsonHelper {
 
     }
 
-    public static <T> void writeToTimestampFile(T instance, String filePrefix, String folderPath, String suffix) throws TsdbBenchmarkException {
+    public static <T> void writeToTimestampFile(T instance, String filePrefix, String folderPath, String suffix) throws TSDBBenchmarkException {
 
         final byte[] jsonByteArray = toByteArray(instance,true);
         final String outputFileName = filePrefix+"-"+ DateHelper.getTimestamp()+suffix;

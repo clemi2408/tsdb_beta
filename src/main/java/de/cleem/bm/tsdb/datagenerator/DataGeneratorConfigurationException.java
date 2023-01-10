@@ -1,11 +1,11 @@
 package de.cleem.bm.tsdb.datagenerator;
 
-import de.cleem.bm.tsdb.common.exception.TsdbBenchmarkException;
+import de.cleem.bm.tsdb.common.exception.TSDBBenchmarkException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DataGeneratorConfigurationException extends TsdbBenchmarkException {
+public class DataGeneratorConfigurationException extends TSDBBenchmarkException {
 
     private ArrayList<String> nullFields;
     private HashMap<String,Integer> invalidFields;
