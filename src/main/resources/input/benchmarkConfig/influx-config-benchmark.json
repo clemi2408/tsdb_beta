@@ -5,12 +5,53 @@
   "resultOutputFolder" : "src/main/resources/output/benchmarkResult",
   "resultPrefix" : "influx-result",
   "workloadGeneratorConfig" : {
-    "recordCount" : 100,
-    "keyCountPerRecord" : 2,
-    "minKeyLength" : 3,
-    "maxKeyLength" : 3,
-    "minValue" : 1,
-    "maxValue" : 10
+    "recordCount" : 10,
+    "recordConfigList" : [ {
+      "minKeyLength" : 2,
+      "maxKeyLength" : 5,
+      "valueDistribution" : "uniform",
+      "minValue" : 0,
+      "maxValue" : 100,
+      "valueType" : "java.lang.Integer"
+    }, {
+      "keyValue" : "uniform-int",
+      "valueDistribution" : "uniform",
+      "minValue" : 0,
+      "maxValue" : 100,
+      "valueType" : "java.lang.Integer"
+    }, {
+      "keyValue" : "uniform-double",
+      "valueDistribution" : "uniform",
+      "minValue" : 5.5,
+      "maxValue" : 55.3,
+      "valueType" : "java.lang.Double"
+    }, {
+      "keyValue" : "triangle-int",
+      "valueDistribution" : "triangle",
+      "minValue" : 0,
+      "maxValue" : 100,
+      "valueType" : "java.lang.Integer",
+      "triangleSpike" : 50
+    }, {
+      "keyValue" : "triangle-double",
+      "valueDistribution" : "triangle",
+      "minValue" : 5.5,
+      "maxValue" : 55.3,
+      "valueType" : "java.lang.Double",
+      "triangleSpike" : 10.0
+    }, {
+      "keyValue" : "gaussian-int",
+      "valueDistribution" : "gaussian",
+      "valueType" : "java.lang.Integer",
+      "gaussMiddle" : 10,
+      "gaussRange" : 30
+    }, {
+      "keyValue" : "gaussian-double",
+      "valueDistribution" : "gaussian",
+      "valueType" : "java.lang.Double",
+      "gaussMiddle" : 10.0,
+      "gaussRange" : 30.0
+    } ]
   },
   "tsdbAdapterConfig" : {
     "influxDbUrl" : "http://127.0.0.1:8086",

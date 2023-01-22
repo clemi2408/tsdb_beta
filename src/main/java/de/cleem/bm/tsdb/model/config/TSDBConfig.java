@@ -1,7 +1,7 @@
 package de.cleem.bm.tsdb.model.config;
 
-import de.cleem.bm.tsdb.datagenerator.GeneratedWorkload;
-import de.cleem.bm.tsdb.datagenerator.WorkloadGeneratorConfig;
+import de.cleem.bm.tsdb.model.datagenerator.WorkloadData;
+import de.cleem.bm.tsdb.model.datagenerator.WorkloadGeneratorConfig;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,13 +25,13 @@ public class TSDBConfig {
 
     private WorkloadGeneratorConfig workloadGeneratorConfig;
 
-    private GeneratedWorkload workload;
+    private WorkloadData workload;
 
     private TSDBAdapterConfig tsdbAdapterConfig;
 
-    int threadCount;
+    private int threadCount;
 
-    boolean cleanStorage;
+    private boolean cleanStorage = false;
 
 
 }

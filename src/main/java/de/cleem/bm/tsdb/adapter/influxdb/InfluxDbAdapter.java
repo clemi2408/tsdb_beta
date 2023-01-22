@@ -7,6 +7,7 @@ import de.cleem.bm.tsdb.common.lineprotocolformat.LineProtocolFormat;
 import de.cleem.bm.tsdb.model.config.TSDBAdapterConfig;
 import de.cleem.bm.tsdb.adapter.exception.TSDBAdapterException;
 import de.cleem.bm.tsdb.adapter.TSDBAdapterIF;
+import de.cleem.bm.tsdb.model.datagenerator.WorkloadRecord;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -104,7 +105,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
     }
 
     @Override
-    public void write(final HashMap<String, Number> record) throws TSDBBenchmarkException {
+    public void write(final WorkloadRecord record) throws TSDBBenchmarkException {
 
         if (config.getBucketId() == null) {
             throw new TSDBAdapterException("Can not write to Storage - bucketId is NULL - "+getConnectionInfo());
