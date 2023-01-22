@@ -1,12 +1,11 @@
-package de.cleem.bm.tsdb.model.task;
+package de.cleem.bm.tsdb.model.result;
 
-import de.cleem.bm.tsdb.model.datagenerator.WorkloadRecord;
+import de.cleem.bm.tsdb.model.config.workload.WorkloadRecord;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.UUID;
 
 @Builder

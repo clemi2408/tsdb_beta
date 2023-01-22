@@ -5,11 +5,11 @@ import de.cleem.bm.tsdb.common.exception.TSDBBenchmarkException;
 import de.cleem.bm.tsdb.common.file.FileHelper;
 import de.cleem.bm.tsdb.common.json.JsonHelper;
 import de.cleem.bm.tsdb.datagenerator.WorkloadGenerator;
-import de.cleem.bm.tsdb.model.datagenerator.Distribution;
-import de.cleem.bm.tsdb.model.datagenerator.RecordConfig;
-import de.cleem.bm.tsdb.model.datagenerator.WorkloadGeneratorConfig;
 import de.cleem.bm.tsdb.executor.Executor;
 import de.cleem.bm.tsdb.model.config.TSDBConfig;
+import de.cleem.bm.tsdb.model.config.datagenerator.Distribution;
+import de.cleem.bm.tsdb.model.config.datagenerator.RecordConfig;
+import de.cleem.bm.tsdb.model.config.datagenerator.WorkloadGeneratorConfig;
 import de.cleem.bm.tsdb.model.result.BenchmarkResult;
 import lombok.extern.slf4j.Slf4j;
 

@@ -3,7 +3,11 @@ package de.cleem.bm.tsdb.datagenerator;
 import de.cleem.bm.tsdb.common.exception.TSDBBenchmarkException;
 import de.cleem.bm.tsdb.common.random.RandomHelper;
 import de.cleem.bm.tsdb.common.random.RandomValueGenerationException;
-import de.cleem.bm.tsdb.model.datagenerator.*;
+import de.cleem.bm.tsdb.model.config.datagenerator.RecordConfig;
+import de.cleem.bm.tsdb.model.config.datagenerator.WorkloadGeneratorConfig;
+import de.cleem.bm.tsdb.model.config.workload.KvPair;
+import de.cleem.bm.tsdb.model.config.workload.WorkloadData;
+import de.cleem.bm.tsdb.model.config.workload.WorkloadRecord;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.LinkedList;

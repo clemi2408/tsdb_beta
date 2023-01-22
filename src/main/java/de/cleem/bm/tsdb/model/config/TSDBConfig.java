@@ -1,7 +1,8 @@
 package de.cleem.bm.tsdb.model.config;
 
-import de.cleem.bm.tsdb.model.datagenerator.WorkloadData;
-import de.cleem.bm.tsdb.model.datagenerator.WorkloadGeneratorConfig;
+import de.cleem.bm.tsdb.model.config.adapter.TSDBAdapterConfig;
+import de.cleem.bm.tsdb.model.config.datagenerator.WorkloadGeneratorConfig;
+import de.cleem.bm.tsdb.model.config.workload.WorkloadData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -2,15 +2,14 @@ package de.cleem.bm.tsdb.executor;
 
 import de.cleem.bm.tsdb.common.exception.TSDBBenchmarkException;
 import de.cleem.bm.tsdb.model.config.TSDBConfig;
-import de.cleem.bm.tsdb.model.datagenerator.WorkloadRecord;
+import de.cleem.bm.tsdb.model.config.workload.WorkloadRecord;
+import de.cleem.bm.tsdb.model.request.TaskRequest;
 import de.cleem.bm.tsdb.model.result.BenchmarkResult;
-import de.cleem.bm.tsdb.model.task.TaskRequest;
-import de.cleem.bm.tsdb.model.task.TaskResult;
+import de.cleem.bm.tsdb.model.result.TaskResult;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

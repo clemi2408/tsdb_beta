@@ -1,4 +1,4 @@
-package de.cleem.bm.tsdb.model.datagenerator;
+package de.cleem.bm.tsdb.model.config.datagenerator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

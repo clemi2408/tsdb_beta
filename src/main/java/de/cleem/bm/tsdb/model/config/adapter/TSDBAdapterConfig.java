@@ -1,4 +1,4 @@
-package de.cleem.bm.tsdb.model.config;
+package de.cleem.bm.tsdb.model.config.adapter;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

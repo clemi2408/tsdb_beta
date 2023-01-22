@@ -1,13 +1,13 @@
-package de.cleem.bm.tsdb.model.task;
+package de.cleem.bm.tsdb.model.request;
 
 import de.cleem.bm.tsdb.common.exception.TSDBBenchmarkException;
 import de.cleem.bm.tsdb.executor.BaseConnector;
 import de.cleem.bm.tsdb.model.config.TSDBConfig;
-import de.cleem.bm.tsdb.model.datagenerator.WorkloadRecord;
+import de.cleem.bm.tsdb.model.config.workload.WorkloadRecord;
+import de.cleem.bm.tsdb.model.result.TaskResult;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 @Slf4j

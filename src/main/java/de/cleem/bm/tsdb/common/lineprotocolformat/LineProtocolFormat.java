@@ -1,13 +1,11 @@
 package de.cleem.bm.tsdb.common.lineprotocolformat;
 
 import de.cleem.bm.tsdb.adapter.exception.TSDBAdapterException;
-import de.cleem.bm.tsdb.model.datagenerator.KvPair;
-import de.cleem.bm.tsdb.model.datagenerator.WorkloadRecord;
+import de.cleem.bm.tsdb.model.config.workload.KvPair;
+import de.cleem.bm.tsdb.model.config.workload.WorkloadRecord;
 import lombok.Builder;
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
 
 @Builder
 public class LineProtocolFormat {

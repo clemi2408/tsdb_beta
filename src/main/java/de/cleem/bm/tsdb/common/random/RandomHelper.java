@@ -3,8 +3,8 @@ package de.cleem.bm.tsdb.common.random;
 import de.cleem.bm.tsdb.common.random.distributed.RandomGaussHelper;
 import de.cleem.bm.tsdb.common.random.distributed.RandomTriangleHelper;
 import de.cleem.bm.tsdb.common.random.distributed.RandomUniformHelper;
-import de.cleem.bm.tsdb.model.datagenerator.Distribution;
-import de.cleem.bm.tsdb.model.datagenerator.RecordConfig;
+import de.cleem.bm.tsdb.model.config.datagenerator.Distribution;
+import de.cleem.bm.tsdb.model.config.datagenerator.RecordConfig;
 
 import java.nio.charset.Charset;
 import java.util.Random;
