@@ -1,12 +1,13 @@
 package de.cleem.bm.tsdb.adapter.victoriametrics;
 
 
+import de.cleem.bm.tsdb.adapter.TSDBAdapterIF;
+import de.cleem.bm.tsdb.adapter.exception.TSDBAdapterException;
 import de.cleem.bm.tsdb.common.exception.TSDBBenchmarkException;
 import de.cleem.bm.tsdb.common.http.HttpHelper;
 import de.cleem.bm.tsdb.common.lineprotocolformat.LineProtocolFormat;
-import de.cleem.bm.tsdb.model.config.TSDBAdapterConfig;
-import de.cleem.bm.tsdb.adapter.exception.TSDBAdapterException;
-import de.cleem.bm.tsdb.adapter.TSDBAdapterIF;
+import de.cleem.bm.tsdb.model.config.adapter.TSDBAdapterConfig;
+import de.cleem.bm.tsdb.model.config.workload.WorkloadRecord;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -95,7 +96,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     }
 
     @Override
-    public void write(final HashMap<String, Number> record) throws TSDBBenchmarkException {
+    public void write(final WorkloadRecord record) throws TSDBBenchmarkException {
 
         final URI writeUri = URI.create(config.getVictoriaMetricsUrl() + WRITE_ENDPOINT);
 

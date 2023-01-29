@@ -34,17 +34,84 @@ The general benchmark configuration contains:
 - Workload generation configuration `workloadGeneratorConfig`.
 - Workload `workload`.
 - Number of client threads `threadCount`.
-- Boolean value to enable cleanup functionality after benchmark `cleanStorage`.
+- Boolean value to enable cleanup functionality after benchmark `cleanStorage`
 
 For repeatability of the benchmark, the Benchmark Configuration holding the configuration of the workload generator and the generated workload is persisted.
 The workload generator has the following configuration parameters:
 
 - Number of records `recordCount`.
-- Key-Value (KV) pairs per record `kvPairsPerRecord`.
-- minimum string key length of a KV pair key `minKeyLength`.
-- Maximum string key length of a KV pair key `maxKeyLength`.
-- Minimum numeric value of a KV-Pair value `minValueSize`.
-- Maximum numeric value of a KV-Pair value `maxValueSize`.
+- List of `RecordConfig` entries `recordConfigList`. 
+
+With the definition of `RecordConfig` elements the record to be generated can be described.
+A record can consist of several KV pairs.
+Each `RecordConfig` element describes a KV pair of the record to be generated.
+With respect to the key, the following key strategies are possible:
+
+- Key strategy A: Assignment of a predefined key.
+- Key strategy B: Generation of a key by defining a minimum and maximum length.
+
+The `RecordConfig` has the following key-specific parameters:
+
+- Default value of the key `keyValue` (key strategy A).
+- Minimum length of the key of the KV pair `minKeyLength` (key strategy B).
+- Maximum length of the key of the KV pair `maxKeyLength` (key strategy B).
+
+With respect to the generated value, the following generation strategies are possible `valueDistribution`:
+
+- Value Strategy A: Generation of the value with normal distribution `uniform`.
+- Value Strategy B: Generation of the value with Gaussian distribution `gaussian`.
+- Value Strategy C: Generation of the value with triangular distribution `triangle`.
+
+Depending on the selected generation strategy, the following configuration parameters are required:
+
+- Minimum value `minValue` (value strategy A and C)
+- Maximum value `minValue` (value strategy A and C)
+- Value spike of the distribution `triangleSpike` (value strategy C)
+- Middle of the distribution `gaussMiddle` (value strategy B)
+- Range of the distribution `gaussRange` (value strategy B)
+
+Independent of the generation strategy it is possible to generate the following data types `valueType`:
+
+- double-precision 64-bit IEEE 754 floating point `java.lang.Double`.
+- 32-bit signed two's complement integer `java.lang.Integer`.
+
+Example `RecordConfig` with generated key and integer value to be generated with the value strategy `uniform`:
+
+```
+{
+  "minKeyLength" : 2,
+  "maxKeyLength" : 5,
+  "valueDistribution" : "uniform",
+  "minValue" : 100,
+  "maxValue" : 1000,
+  "valueType" : "java.lang.Integer"
+}
+```
+
+Example `RecordConfig` with defined key and double value to be generated with the value strategy `gaussian`:
+
+```
+{
+  "keyValue" : "gaussian-double",
+  "valueDistribution" : "gaussian",
+  "valueType" : "java.lang.Double",
+  "gaussMiddle" : 10,
+  "gaussRange" : 30
+}
+```
+
+Example `RecordConfig` with defined key and integer value to be generated with the value strategy `triangle`:
+
+```
+{
+  "keyValue" : "triangle-int",
+  "valueDistribution" : "triangle",
+  "minValue" : 0,
+  "maxValue" : 100,
+  "valueType" : "java.lang.Integer",
+  "triangleSpike" : 50
+}
+```
 
 The generated data as well as the existing workload data will be tested against different TSDB implementations and the storage performance will be measured.
 For this purpose, the benchmark to be developed shall implement client adapters for different TSDBs via a uniform and extensible adapter concept.

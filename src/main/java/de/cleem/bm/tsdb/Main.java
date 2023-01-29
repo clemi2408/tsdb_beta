@@ -5,13 +5,17 @@ import de.cleem.bm.tsdb.common.exception.TSDBBenchmarkException;
 import de.cleem.bm.tsdb.common.file.FileHelper;
 import de.cleem.bm.tsdb.common.json.JsonHelper;
 import de.cleem.bm.tsdb.datagenerator.WorkloadGenerator;
-import de.cleem.bm.tsdb.datagenerator.WorkloadGeneratorConfig;
 import de.cleem.bm.tsdb.executor.Executor;
 import de.cleem.bm.tsdb.model.config.TSDBConfig;
+import de.cleem.bm.tsdb.model.config.datagenerator.Distribution;
+import de.cleem.bm.tsdb.model.config.datagenerator.RecordConfig;
+import de.cleem.bm.tsdb.model.config.datagenerator.WorkloadGeneratorConfig;
 import de.cleem.bm.tsdb.model.result.BenchmarkResult;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public class Main {
@@ -53,14 +57,51 @@ public class Main {
 
                 log.info("Loading demo workload generation workloadGeneratorConfig");
 
-                config.setWorkloadGeneratorConfig(WorkloadGeneratorConfig.builder()
-                        .recordCount(200)
-                        .keyCountPerRecord(2)
-                        .minKeyLength(3)
-                        .maxKeyLength(3)
-                        .minValue(1d)
-                        .maxValue(10d)
+
+                final List<RecordConfig> recordConfig = new ArrayList<>();
+
+                recordConfig.add(RecordConfig.builder()
+                        .valueDistribution(Distribution.UNIFORM)
+                        .maxKeyLength(5)
+                        .minKeyLength(2)
+                        .valueType(Integer.class)
+                        .minValue(0)
+                        .maxValue(100)
                         .build());
+
+                recordConfig.add(RecordConfig.builder()
+                        .valueDistribution(Distribution.UNIFORM)
+                        .keyValue("uniform-double")
+                        .valueType(Double.class)
+                        .minValue(5.5d)
+                        .maxValue(55.3d)
+                        .build());
+
+                recordConfig.add(RecordConfig.builder()
+                        .valueDistribution(Distribution.TRIANGLE)
+                        .keyValue("triangle-int")
+                        .valueType(Integer.class)
+                        .triangleSpike(50)
+                        .minValue(0)
+                        .maxValue(100)
+                        .build());
+
+                recordConfig.add(RecordConfig.builder()
+                        .valueDistribution(Distribution.GAUSS)
+                        .keyValue("gaussian-double")
+                        .valueType(Double.class)
+                        .gaussMiddle(10d)
+                        .gaussRange(30d)
+                        .build());
+
+
+                final WorkloadGeneratorConfig workloadGeneratorConfig = WorkloadGeneratorConfig.builder()
+                        .recordCount(10)
+                        .recordConfigList(recordConfig)
+                        .build();
+
+
+               config.setWorkloadGeneratorConfig(workloadGeneratorConfig);
 
                 config.setWorkload(WorkloadGenerator.builder()
                         .workloadGeneratorConfig(config.getWorkloadGeneratorConfig())

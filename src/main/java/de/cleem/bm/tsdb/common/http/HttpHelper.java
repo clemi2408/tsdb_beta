@@ -1,7 +1,5 @@
 package de.cleem.bm.tsdb.common.http;
 
-import de.cleem.bm.tsdb.adapter.exception.TSDBAdapterException;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;

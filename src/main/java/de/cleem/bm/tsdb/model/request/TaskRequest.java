@@ -1,23 +1,24 @@
-package de.cleem.bm.tsdb.model.task;
+package de.cleem.bm.tsdb.model.request;
 
 import de.cleem.bm.tsdb.common.exception.TSDBBenchmarkException;
 import de.cleem.bm.tsdb.executor.BaseConnector;
 import de.cleem.bm.tsdb.model.config.TSDBConfig;
+import de.cleem.bm.tsdb.model.config.workload.WorkloadRecord;
+import de.cleem.bm.tsdb.model.result.TaskResult;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 @Slf4j
 public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
 
     private String taskName;
-    private HashMap<String,Number> record;
+    private WorkloadRecord record;
 
 
 
-    public TaskRequest(final TSDBConfig config, final String taskName, final HashMap<String,Number> record) throws TSDBBenchmarkException {
+    public TaskRequest(final TSDBConfig config, final String taskName, final WorkloadRecord record) throws TSDBBenchmarkException {
 
          this.record = record;
          this.taskName=taskName;
@@ -47,6 +48,7 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
                 .taskName(taskName)
                 .threadName(threadName)
                 .record(record)
+                .recordId(record.getRecordId())
                 .startDate(startDate)
                 .endDate(endDate)
                 .durationInMs(durationInMs)

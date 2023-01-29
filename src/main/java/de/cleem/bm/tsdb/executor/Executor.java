@@ -2,14 +2,14 @@ package de.cleem.bm.tsdb.executor;
 
 import de.cleem.bm.tsdb.common.exception.TSDBBenchmarkException;
 import de.cleem.bm.tsdb.model.config.TSDBConfig;
+import de.cleem.bm.tsdb.model.config.workload.WorkloadRecord;
+import de.cleem.bm.tsdb.model.request.TaskRequest;
 import de.cleem.bm.tsdb.model.result.BenchmarkResult;
-import de.cleem.bm.tsdb.model.task.TaskRequest;
-import de.cleem.bm.tsdb.model.task.TaskResult;
+import de.cleem.bm.tsdb.model.result.TaskResult;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -51,14 +51,14 @@ public class Executor extends BaseConnector {
         ArrayList<TaskRequest> taskRequests = new ArrayList<>();
 
         int recordCount = 0;
-        for(HashMap<String,Number> currentRecord: config.getWorkload().getData()){
+       for(WorkloadRecord workloadRecord: config.getWorkload().getRecords()){
             recordCount++;
 
             if(recordCount%10==0){
-                log.info("Created Task: "+recordCount+"/"+config.getWorkload().getData().size());
+                log.info("Created Task: "+recordCount+"/"+config.getWorkload().getRecords().size());
             }
 
-            taskRequests.add(new TaskRequest(config,"Record "+recordCount,currentRecord));
+            taskRequests.add(new TaskRequest(config,"Record "+recordCount,workloadRecord));
 
         }
 

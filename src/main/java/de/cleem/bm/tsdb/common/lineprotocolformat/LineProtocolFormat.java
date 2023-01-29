@@ -1,11 +1,11 @@
 package de.cleem.bm.tsdb.common.lineprotocolformat;
 
 import de.cleem.bm.tsdb.adapter.exception.TSDBAdapterException;
+import de.cleem.bm.tsdb.model.config.workload.KvPair;
+import de.cleem.bm.tsdb.model.config.workload.WorkloadRecord;
 import lombok.Builder;
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
 
 @Builder
 public class LineProtocolFormat {
@@ -14,13 +14,13 @@ public class LineProtocolFormat {
     private String labelKey;
     private String labelValue;
 
-    public String getLine(HashMap<String, Number> record, Instant time) throws TSDBAdapterException {
+    public String getLine(final WorkloadRecord record, final Instant time) throws TSDBAdapterException {
 
         if (record == null) {
             throw new TSDBAdapterException("Can not write to Storage - record is NULL");
         }
 
-        if (record.size() == 0) {
+        if (record.getKvPairs().size() == 0) {
             throw new TSDBAdapterException("Can not write to Storage - record is Empty");
         }
 
@@ -34,16 +34,17 @@ public class LineProtocolFormat {
         lineStringBuilder.append(labelValue);
         lineStringBuilder.append(" ");
 
+
         int counter = 0;
-        for(Map.Entry<String, Number> entry : record.entrySet()){
+        for(KvPair kvPair : record.getKvPairs()){
 
             if(counter!=0){
                 lineStringBuilder.append(",");
             }
 
-            lineStringBuilder.append(entry.getKey());
+            lineStringBuilder.append(kvPair.getKey());
             lineStringBuilder.append("=");
-            lineStringBuilder.append(entry.getValue());
+            lineStringBuilder.append(kvPair.getValue());
             counter++;
 
         }

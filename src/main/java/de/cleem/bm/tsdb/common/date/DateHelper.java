@@ -1,7 +1,6 @@
 package de.cleem.bm.tsdb.common.date;
 
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.Date;
 
 public class DateHelper {
