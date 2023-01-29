@@ -33,9 +33,6 @@ public class RecordConfig {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Number maxValue;
 
-    // value type, supported: Integer, Double and Float
-    private Class valueType;
-
     // spike value for triangle distribution
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Number triangleSpike;
@@ -47,5 +44,8 @@ public class RecordConfig {
     // range value for gauss distribution
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Number gaussRange;
+
+    // value type, supported: Integer, Double and Float
+    private Class valueType;
 
 }
