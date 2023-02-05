@@ -1,11 +1,6 @@
 {
-  "mode" : "data",
-  "configOutputFolder" : "src/main/resources/output/benchmarkConfig",
-  "configPrefix" : "influx-benchmark",
-  "resultOutputFolder" : "src/main/resources/output/benchmarkResult",
-  "resultPrefix" : "influx-result",
-  "workload" : {
-    "records" : [ {
+  "results" : [ {
+    "record" : {
       "kvPairs" : [ {
         "key" : "yT",
         "value" : [ "DCY" ]
@@ -53,7 +48,15 @@
         "value" : [ 14.239407475742887 ]
       } ],
       "recordId" : "da9af1ad-dbf7-4b1e-b946-ad61997bdc74"
-    }, {
+    },
+    "recordId" : "da9af1ad-dbf7-4b1e-b946-ad61997bdc74",
+    "startDate" : 1675616031772,
+    "endDate" : 1675616032351,
+    "taskName" : "Record 1",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 579
+  }, {
+    "record" : {
       "kvPairs" : [ {
         "key" : "F",
         "value" : [ "v" ]
@@ -101,14 +104,12 @@
         "value" : [ 21.23359243597139 ]
       } ],
       "recordId" : "9052212c-a235-45e7-9a2c-444602c7e31b"
-    } ]
-  },
-  "tsdbAdapterConfig" : {
-    "influxDbUrl" : "http://127.0.0.1:8086",
-    "token" : "YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==",
-    "organisation" : "testorg",
-    "bucket" : "testbucket"
-  },
-  "threadCount" : 20,
-  "cleanStorage" : true
+    },
+    "recordId" : "9052212c-a235-45e7-9a2c-444602c7e31b",
+    "startDate" : 1675616031772,
+    "endDate" : 1675616032351,
+    "taskName" : "Record 2",
+    "threadName" : "pool-1-thread-2",
+    "durationInMs" : 579
+  } ]
 }

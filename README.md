@@ -92,7 +92,7 @@ Example `RecordConfig` with defined key and double value to be generated with th
 
 ```
 {
-  "keyValue" : "gaussian-double",
+  "keyValue" : "gaussianDouble",
   "valueDistribution" : "gaussian",
   "valueType" : "java.lang.Double",
   "gaussMiddle" : 10,
@@ -104,7 +104,7 @@ Example `RecordConfig` with defined key and integer value to be generated with t
 
 ```
 {
-  "keyValue" : "triangle-int",
+  "keyValue" : "triangleInteger",
   "valueDistribution" : "triangle",
   "minValue" : 0,
   "maxValue" : 100,

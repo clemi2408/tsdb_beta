@@ -1,0 +1,233 @@
+{
+  "results" : [ {
+    "record" : {
+      "kvPairs" : [ {
+        "key" : "KstmT",
+        "value" : [ 17 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 39.112980367796645 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 17 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ -0.5854280922262767 ]
+      } ],
+      "recordId" : "4953e319-92bb-4320-bbe4-09e8f7fb46ef"
+    },
+    "recordId" : "4953e319-92bb-4320-bbe4-09e8f7fb46ef",
+    "startDate" : 1675616070574,
+    "endDate" : 1675616070992,
+    "taskName" : "Record 1",
+    "threadName" : "pool-1-thread-1",
+    "durationInMs" : 418
+  }, {
+    "record" : {
+      "kvPairs" : [ {
+        "key" : "sd",
+        "value" : [ 60 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 54.976074800807154 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 34 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 1.7358062883887104 ]
+      } ],
+      "recordId" : "24b87e4b-3d15-4e03-aa2f-d8f2cfce0eba"
+    },
+    "recordId" : "24b87e4b-3d15-4e03-aa2f-d8f2cfce0eba",
+    "startDate" : 1675616070574,
+    "endDate" : 1675616070992,
+    "taskName" : "Record 2",
+    "threadName" : "pool-1-thread-2",
+    "durationInMs" : 418
+  }, {
+    "record" : {
+      "kvPairs" : [ {
+        "key" : "rTxq",
+        "value" : [ 21 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 35.29239192502433 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 49 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 18.83551882540444 ]
+      } ],
+      "recordId" : "bb84db11-e615-4a18-bccf-c2d94e05cd55"
+    },
+    "recordId" : "bb84db11-e615-4a18-bccf-c2d94e05cd55",
+    "startDate" : 1675616070574,
+    "endDate" : 1675616070991,
+    "taskName" : "Record 3",
+    "threadName" : "pool-1-thread-3",
+    "durationInMs" : 417
+  }, {
+    "record" : {
+      "kvPairs" : [ {
+        "key" : "sb",
+        "value" : [ 23 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 54.62107504902535 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 53 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 11.861636771263997 ]
+      } ],
+      "recordId" : "0f1f723f-cc0e-4b03-b441-7fdf7192f3aa"
+    },
+    "recordId" : "0f1f723f-cc0e-4b03-b441-7fdf7192f3aa",
+    "startDate" : 1675616070579,
+    "endDate" : 1675616070991,
+    "taskName" : "Record 4",
+    "threadName" : "pool-1-thread-4",
+    "durationInMs" : 412
+  }, {
+    "record" : {
+      "kvPairs" : [ {
+        "key" : "ToS",
+        "value" : [ 33 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 18.676754474101642 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 70 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 18.76192124028505 ]
+      } ],
+      "recordId" : "8a08f9d3-7c6a-44c0-a7eb-3a7b6cc99106"
+    },
+    "recordId" : "8a08f9d3-7c6a-44c0-a7eb-3a7b6cc99106",
+    "startDate" : 1675616070580,
+    "endDate" : 1675616070992,
+    "taskName" : "Record 5",
+    "threadName" : "pool-1-thread-5",
+    "durationInMs" : 412
+  }, {
+    "record" : {
+      "kvPairs" : [ {
+        "key" : "M7B",
+        "value" : [ 97 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 38.31602313088202 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 54 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ -4.803365512694539 ]
+      } ],
+      "recordId" : "e7c51e02-493c-4b15-b77c-1b4ac9ef789c"
+    },
+    "recordId" : "e7c51e02-493c-4b15-b77c-1b4ac9ef789c",
+    "startDate" : 1675616070583,
+    "endDate" : 1675616070972,
+    "taskName" : "Record 6",
+    "threadName" : "pool-1-thread-6",
+    "durationInMs" : 389
+  }, {
+    "record" : {
+      "kvPairs" : [ {
+        "key" : "drw9",
+        "value" : [ 1 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 11.477394771248115 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 57 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 12.24300871997245 ]
+      } ],
+      "recordId" : "d3b4703f-9724-4129-8d10-fbd6e90024ad"
+    },
+    "recordId" : "d3b4703f-9724-4129-8d10-fbd6e90024ad",
+    "startDate" : 1675616070584,
+    "endDate" : 1675616070972,
+    "taskName" : "Record 7",
+    "threadName" : "pool-1-thread-7",
+    "durationInMs" : 388
+  }, {
+    "record" : {
+      "kvPairs" : [ {
+        "key" : "HYK",
+        "value" : [ 15 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 16.731326644942882 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 56 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ -1.493613578119552 ]
+      } ],
+      "recordId" : "94b2c8c0-d5a3-422f-b0e1-098967c2fd49"
+    },
+    "recordId" : "94b2c8c0-d5a3-422f-b0e1-098967c2fd49",
+    "startDate" : 1675616070587,
+    "endDate" : 1675616070972,
+    "taskName" : "Record 8",
+    "threadName" : "pool-1-thread-8",
+    "durationInMs" : 385
+  }, {
+    "record" : {
+      "kvPairs" : [ {
+        "key" : "xVM",
+        "value" : [ 42 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 13.572776214469382 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 55 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 3.964374831690381 ]
+      } ],
+      "recordId" : "cbba8ad4-75b6-4fac-8cc9-da21afde7040"
+    },
+    "recordId" : "cbba8ad4-75b6-4fac-8cc9-da21afde7040",
+    "startDate" : 1675616070587,
+    "endDate" : 1675616070991,
+    "taskName" : "Record 9",
+    "threadName" : "pool-1-thread-9",
+    "durationInMs" : 404
+  }, {
+    "record" : {
+      "kvPairs" : [ {
+        "key" : "oq",
+        "value" : [ 78 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 9.941849974295012 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 62 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 6.238087332648196 ]
+      } ],
+      "recordId" : "f8bd1146-cdd6-4992-98de-2d7fd5e2d4fa"
+    },
+    "recordId" : "f8bd1146-cdd6-4992-98de-2d7fd5e2d4fa",
+    "startDate" : 1675616070587,
+    "endDate" : 1675616070972,
+    "taskName" : "Record 10",
+    "threadName" : "pool-1-thread-10",
+    "durationInMs" : 385
+  } ]
+}

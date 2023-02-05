@@ -51,7 +51,7 @@ public class Executor extends BaseConnector {
         ArrayList<TaskRequest> taskRequests = new ArrayList<>();
 
         int recordCount = 0;
-       for(WorkloadRecord workloadRecord: config.getWorkload().getRecords()){
+        for(WorkloadRecord workloadRecord: config.getWorkload().getRecords()){
             recordCount++;
 
             if(recordCount%10==0){

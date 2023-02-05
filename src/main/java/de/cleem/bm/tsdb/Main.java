@@ -24,10 +24,10 @@ public class Main {
 
         //final File tsdbBenchmarkConfigFile = new File("src/main/resources/input/benchmarkConfig/influx-data-benchmark.json");
         //final File tsdbBenchmarkConfigFile = new File("src/main/resources/input/benchmarkConfig/influx-config-benchmark.json");
-        //final File tsdbBenchmarkConfigFile = new File("src/main/resources/input/benchmarkConfig/influx-demo-benchmark.json");
+        final File tsdbBenchmarkConfigFile = new File("src/main/resources/input/benchmarkConfig/influx-demo-benchmark.json");
 
         //final File tsdbBenchmarkConfigFile = new File("src/main/resources/input/benchmarkConfig/victoria-data-benchmark.json");
-        final File tsdbBenchmarkConfigFile = new File("src/main/resources/input/benchmarkConfig/victoria-config-benchmark.json");
+        //final File tsdbBenchmarkConfigFile = new File("src/main/resources/input/benchmarkConfig/victoria-config-benchmark.json");
         //final File tsdbBenchmarkConfigFile = new File("src/main/resources/input/benchmarkConfig/victoria-demo-benchmark.json");
 
 
@@ -49,7 +49,7 @@ public class Main {
 
                 config.setWorkload(WorkloadGenerator.builder()
                         .workloadGeneratorConfig(config.getWorkloadGeneratorConfig())
-                        .build());
+                        .generate());
 
                 break;
 
@@ -64,23 +64,23 @@ public class Main {
                         .valueDistribution(Distribution.UNIFORM)
                         .maxKeyLength(5)
                         .minKeyLength(2)
-                        .valueType(Integer.class)
+                        .valueType("integer")
                         .minValue(0)
                         .maxValue(100)
                         .build());
 
                 recordConfig.add(RecordConfig.builder()
                         .valueDistribution(Distribution.UNIFORM)
-                        .keyValue("uniform-double")
-                        .valueType(Double.class)
+                        .keyValue("uniformDouble")
+                        .valueType("double")
                         .minValue(5.5d)
                         .maxValue(55.3d)
                         .build());
 
                 recordConfig.add(RecordConfig.builder()
                         .valueDistribution(Distribution.TRIANGLE)
-                        .keyValue("triangle-int")
-                        .valueType(Integer.class)
+                        .keyValue("triangleInteger")
+                        .valueType("integer")
                         .triangleSpike(50)
                         .minValue(0)
                         .maxValue(100)
@@ -88,8 +88,8 @@ public class Main {
 
                 recordConfig.add(RecordConfig.builder()
                         .valueDistribution(Distribution.GAUSS)
-                        .keyValue("gaussian-double")
-                        .valueType(Double.class)
+                        .keyValue("gaussianDouble")
+                        .valueType("double")
                         .gaussMiddle(10d)
                         .gaussRange(30d)
                         .build());
@@ -105,7 +105,7 @@ public class Main {
 
                 config.setWorkload(WorkloadGenerator.builder()
                         .workloadGeneratorConfig(config.getWorkloadGeneratorConfig())
-                        .build());
+                        .generate());
 
                 break;
 

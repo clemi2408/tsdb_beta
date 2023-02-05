@@ -4,6 +4,7 @@
   "configPrefix" : "influx-benchmark",
   "resultOutputFolder" : "src/main/resources/output/benchmarkResult",
   "resultPrefix" : "influx-result",
+  "workloadGeneratorConfig" : null,
   "workload" : {
     "records" : [ {
       "kvPairs" : [ {
@@ -107,7 +108,9 @@
     "influxDbUrl" : "http://127.0.0.1:8086",
     "token" : "YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==",
     "organisation" : "testorg",
-    "bucket" : "testbucket"
+    "bucket" : "testbucket",
+    "organisationId" : null,
+    "bucketId" : null
   },
   "threadCount" : 20,
   "cleanStorage" : true

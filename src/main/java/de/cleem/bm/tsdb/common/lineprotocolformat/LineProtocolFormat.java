@@ -1,13 +1,16 @@
 package de.cleem.bm.tsdb.common.lineprotocolformat;
 
 import de.cleem.bm.tsdb.adapter.exception.TSDBAdapterException;
+import de.cleem.bm.tsdb.model.config.datagenerator.ValueTypes;
 import de.cleem.bm.tsdb.model.config.workload.KvPair;
 import de.cleem.bm.tsdb.model.config.workload.WorkloadRecord;
 import lombok.Builder;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.Instant;
 
 @Builder
+@Slf4j
 public class LineProtocolFormat {
 
     private String measurementName;
@@ -44,7 +47,7 @@ public class LineProtocolFormat {
 
             lineStringBuilder.append(kvPair.getKey());
             lineStringBuilder.append("=");
-            lineStringBuilder.append(kvPair.getValue());
+            lineStringBuilder.append(extractValue(kvPair));
             counter++;
 
         }
@@ -54,9 +57,57 @@ public class LineProtocolFormat {
             lineStringBuilder.append(time.toEpochMilli());
         }
 
-        return lineStringBuilder.toString();
+        final String line = lineStringBuilder.toString();
 
+        log.info("Created line: "+line);
+        return line;
     }
 
+    private String extractValue(final KvPair kvPair) throws TSDBAdapterException {
+
+        final Object[] values = kvPair.getValue();
+
+        final Class elementClass = values[0].getClass();
+        final ValueTypes valueType = ValueTypes.get(elementClass);
+
+        if(valueType==ValueTypes.STRING){
+
+            final StringBuffer buffer = new StringBuffer();
+
+            buffer.append("\"");
+            Object value;
+            for(int i=0;i<values.length;i++){
+
+                if(i!=0){
+                    buffer.append(",");
+                }
+                value=values[i];
+
+                buffer.append((String)value);
+
+
+            }
+            buffer.append("\"");
+
+            return buffer.toString();
+
+        }
+
+        else if(valueType==ValueTypes.INTEGER || valueType==ValueTypes.DOUBLE || valueType==ValueTypes.NUMBER){
+
+            if(values.length>1){
+
+                throw new TSDBAdapterException("Multiple values not supported for type "+valueType);
+
+            }
+
+            return values[0].toString();
+
+        }
+        else{
+                throw new TSDBAdapterException("Value Type not supported: "+valueType);
+        }
+
+    }
 
 }

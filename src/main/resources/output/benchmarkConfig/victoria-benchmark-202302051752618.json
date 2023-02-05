@@ -4,159 +4,154 @@
   "configPrefix" : "victoria-benchmark",
   "resultOutputFolder" : "src/main/resources/output/benchmarkResult",
   "resultPrefix" : "victoria-result",
+  "workloadGeneratorConfig" : null,
   "workload" : {
     "records" : [ {
-      "kvPairs" : [
-        {
-          "key": "uniformDouble2",
-          "value": [
-            38.881823844379895
-          ]
-        },
-        {
-          "key" : "DD",
-          "value" : [ "PE" ]
-        }, {
-          "key" : "aString",
-          "value" : [ "mu6T" ]
-        }, {
-          "key" : "AsASLC",
-          "value" : [ "W" ]
-        }, {
-          "key" : "bString",
-          "value" : [ "rPo", "pLm" ]
-        }, {
-          "key" : "XRh6GSW5SL",
-          "value" : [ "s-val1", "s-val2" ]
-        }, {
-          "key" : "aString",
-          "value" : [ "s-val1", "s-val2" ]
-        }, {
-          "key" : "WfJjlOWfVz9yr",
-          "value" : [ "s-val0" ]
-        }, {
-          "key" : "aString",
-          "value" : [ "s-val0" ]
-        }, {
-          "key" : "loG",
-          "value" : [ 57 ]
-        }, {
-          "key" : "uniformInteger",
-          "value" : [ 84 ]
-        }, {
-          "key" : "uniformDouble",
-          "value" : [ 38.881823844379895 ]
-        }, {
-          "key" : "triangleInteger",
-          "value" : [ 30 ]
-        }, {
-          "key" : "triangleDouble",
-          "value" : [ 10.722069295952164 ]
-        }, {
-          "key" : "gaussianInteger",
-          "value" : [ 16 ]
-        }, {
-          "key" : "gaussianDouble",
-          "value" : [ 8.6154499285258 ]
-        } ],
+      "kvPairs" : [ {
+        "key" : "uniformDouble2",
+        "value" : [ 38.881823844379895 ]
+      }, {
+        "key" : "DD",
+        "value" : [ "PE" ]
+      }, {
+        "key" : "aString",
+        "value" : [ "mu6T" ]
+      }, {
+        "key" : "AsASLC",
+        "value" : [ "W" ]
+      }, {
+        "key" : "bString",
+        "value" : [ "rPo", "pLm" ]
+      }, {
+        "key" : "XRh6GSW5SL",
+        "value" : [ "s-val1", "s-val2" ]
+      }, {
+        "key" : "aString",
+        "value" : [ "s-val1", "s-val2" ]
+      }, {
+        "key" : "WfJjlOWfVz9yr",
+        "value" : [ "s-val0" ]
+      }, {
+        "key" : "aString",
+        "value" : [ "s-val0" ]
+      }, {
+        "key" : "loG",
+        "value" : [ 57 ]
+      }, {
+        "key" : "uniformInteger",
+        "value" : [ 84 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 38.881823844379895 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 30 ]
+      }, {
+        "key" : "triangleDouble",
+        "value" : [ 10.722069295952164 ]
+      }, {
+        "key" : "gaussianInteger",
+        "value" : [ 16 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 8.6154499285258 ]
+      } ],
       "recordId" : "6ce443d8-f980-47ec-9317-71d053add328"
     }, {
-      "kvPairs" : [
-        {
-          "key" : "Qy",
-          "value" : [ "uxq" ]
-        }, {
-          "key" : "aString",
-          "value" : [ "7MC8" ]
-        }, {
-          "key" : "eezm266",
-          "value" : [ "twd" ]
-        }, {
-          "key" : "bString",
-          "value" : [ "85i" ]
-        }, {
-          "key" : "zCsFme3wXeu",
-          "value" : [ "s-val1", "s-val2" ]
-        }, {
-          "key" : "aString",
-          "value" : [ "s-val1", "s-val2" ]
-        }, {
-          "key" : "L7ocF3Bobiy6",
-          "value" : [ "s-val0" ]
-        }, {
-          "key" : "aString",
-          "value" : [ "s-val0" ]
-        }, {
-          "key" : "UuHH",
-          "value" : [ 84 ]
-        }, {
-          "key" : "uniformInteger",
-          "value" : [ 86 ]
-        }, {
-          "key" : "uniformDouble",
-          "value" : [ 30.07804887633893 ]
-        }, {
-          "key" : "triangleInteger",
-          "value" : [ 50 ]
-        }, {
-          "key" : "triangleDouble",
-          "value" : [ 19.29974822720049 ]
-        }, {
-          "key" : "gaussianInteger",
-          "value" : [ 10 ]
-        }, {
-          "key" : "gaussianDouble",
-          "value" : [ -4.70769431035586 ]
-        } ],
+      "kvPairs" : [ {
+        "key" : "Qy",
+        "value" : [ "uxq" ]
+      }, {
+        "key" : "aString",
+        "value" : [ "7MC8" ]
+      }, {
+        "key" : "eezm266",
+        "value" : [ "twd" ]
+      }, {
+        "key" : "bString",
+        "value" : [ "85i" ]
+      }, {
+        "key" : "zCsFme3wXeu",
+        "value" : [ "s-val1", "s-val2" ]
+      }, {
+        "key" : "aString",
+        "value" : [ "s-val1", "s-val2" ]
+      }, {
+        "key" : "L7ocF3Bobiy6",
+        "value" : [ "s-val0" ]
+      }, {
+        "key" : "aString",
+        "value" : [ "s-val0" ]
+      }, {
+        "key" : "UuHH",
+        "value" : [ 84 ]
+      }, {
+        "key" : "uniformInteger",
+        "value" : [ 86 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 30.07804887633893 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 50 ]
+      }, {
+        "key" : "triangleDouble",
+        "value" : [ 19.29974822720049 ]
+      }, {
+        "key" : "gaussianInteger",
+        "value" : [ 10 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ -4.70769431035586 ]
+      } ],
       "recordId" : "26d5e129-41f9-4988-983b-bf4fd707d939"
     }, {
-      "kvPairs" : [
-        {
-          "key" : "oZ",
-          "value" : [ "Q" ]
-        }, {
-          "key" : "aString",
-          "value" : [ "emTgW" ]
-        }, {
-          "key" : "nCCJMH",
-          "value" : [ "el0", "M8S", "8w9", "7", "h8Y" ]
-        }, {
-          "key" : "bString",
-          "value" : [ "YC", "wzP", "TV", "qd", "qJ" ]
-        }, {
-          "key" : "IEz6nhpkO",
-          "value" : [ "s-val1", "s-val2" ]
-        }, {
-          "key" : "aString",
-          "value" : [ "s-val1", "s-val2" ]
-        }, {
-          "key" : "8DWcvJj40oXz",
-          "value" : [ "s-val0" ]
-        }, {
-          "key" : "aString",
-          "value" : [ "s-val0" ]
-        }, {
-          "key" : "qHH1",
-          "value" : [ 4 ]
-        }, {
-          "key" : "uniformInteger",
-          "value" : [ 54 ]
-        }, {
-          "key" : "uniformDouble",
-          "value" : [ 15.661003265877742 ]
-        }, {
-          "key" : "triangleInteger",
-          "value" : [ 41 ]
-        }, {
-          "key" : "triangleDouble",
-          "value" : [ 18.559775786511533 ]
-        }, {
-          "key" : "gaussianInteger",
-          "value" : [ 7 ]
-        }, {
-          "key" : "gaussianDouble",
-          "value" : [ 8.018678131224325 ]
-        } ],
+      "kvPairs" : [ {
+        "key" : "oZ",
+        "value" : [ "Q" ]
+      }, {
+        "key" : "aString",
+        "value" : [ "emTgW" ]
+      }, {
+        "key" : "nCCJMH",
+        "value" : [ "el0", "M8S", "8w9", "7", "h8Y" ]
+      }, {
+        "key" : "bString",
+        "value" : [ "YC", "wzP", "TV", "qd", "qJ" ]
+      }, {
+        "key" : "IEz6nhpkO",
+        "value" : [ "s-val1", "s-val2" ]
+      }, {
+        "key" : "aString",
+        "value" : [ "s-val1", "s-val2" ]
+      }, {
+        "key" : "8DWcvJj40oXz",
+        "value" : [ "s-val0" ]
+      }, {
+        "key" : "aString",
+        "value" : [ "s-val0" ]
+      }, {
+        "key" : "qHH1",
+        "value" : [ 4 ]
+      }, {
+        "key" : "uniformInteger",
+        "value" : [ 54 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 15.661003265877742 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 41 ]
+      }, {
+        "key" : "triangleDouble",
+        "value" : [ 18.559775786511533 ]
+      }, {
+        "key" : "gaussianInteger",
+        "value" : [ 7 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 8.018678131224325 ]
+      } ],
       "recordId" : "14df02c7-da1f-437e-b643-e1e78bffaaae"
     }, {
       "kvPairs" : [ {

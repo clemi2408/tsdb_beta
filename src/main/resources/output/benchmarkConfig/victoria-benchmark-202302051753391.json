@@ -1,0 +1,195 @@
+{
+  "mode" : "demo",
+  "configOutputFolder" : "src/main/resources/output/benchmarkConfig",
+  "configPrefix" : "victoria-benchmark",
+  "resultOutputFolder" : "src/main/resources/output/benchmarkResult",
+  "resultPrefix" : "victoria-result",
+  "workloadGeneratorConfig" : {
+    "recordCount" : 10,
+    "recordConfigList" : [ {
+      "minKeyLength" : 2,
+      "maxKeyLength" : 5,
+      "valueDistribution" : "uniform",
+      "minValue" : 0,
+      "maxValue" : 100,
+      "valueType" : "integer"
+    }, {
+      "keyValue" : "uniformDouble",
+      "valueDistribution" : "uniform",
+      "minValue" : 5.5,
+      "maxValue" : 55.3,
+      "valueType" : "double"
+    }, {
+      "keyValue" : "triangleInteger",
+      "valueDistribution" : "triangle",
+      "minValue" : 0,
+      "maxValue" : 100,
+      "triangleSpike" : 50,
+      "valueType" : "integer"
+    }, {
+      "keyValue" : "gaussianDouble",
+      "valueDistribution" : "gaussian",
+      "gaussMiddle" : 10.0,
+      "gaussRange" : 30.0,
+      "valueType" : "double"
+    } ]
+  },
+  "workload" : {
+    "records" : [ {
+      "kvPairs" : [ {
+        "key" : "aC",
+        "value" : [ 54 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 56.02025480902431 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 30 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 11.792904749197215 ]
+      } ],
+      "recordId" : "8130fb03-39e1-47bd-bbb0-3d7a35a6e227"
+    }, {
+      "kvPairs" : [ {
+        "key" : "jM",
+        "value" : [ 60 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 24.85016179288073 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 61 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 4.738303675947244 ]
+      } ],
+      "recordId" : "9912106d-c0e6-4efb-8d75-9c1bb7b82b32"
+    }, {
+      "kvPairs" : [ {
+        "key" : "Ui",
+        "value" : [ 29 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 53.5019840816736 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 18 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 12.711431479846137 ]
+      } ],
+      "recordId" : "5f553a8e-dddc-49c8-b224-a2619d7b31d6"
+    }, {
+      "kvPairs" : [ {
+        "key" : "vEB",
+        "value" : [ 63 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 44.42359262335939 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 68 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 12.596062755714355 ]
+      } ],
+      "recordId" : "51dce1dc-479c-4e1c-a62f-91b4cd9baed6"
+    }, {
+      "kvPairs" : [ {
+        "key" : "G4tl3",
+        "value" : [ 100 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 24.716755272939423 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 34 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 12.335905636103988 ]
+      } ],
+      "recordId" : "42e6d6d0-3367-472f-8dcf-f6cfe00915c6"
+    }, {
+      "kvPairs" : [ {
+        "key" : "srib",
+        "value" : [ 38 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 31.02573653404998 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 25 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 2.8778888840283656 ]
+      } ],
+      "recordId" : "780ee173-993c-41eb-84e5-1859e47d4fdc"
+    }, {
+      "kvPairs" : [ {
+        "key" : "zpdj",
+        "value" : [ 95 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 55.090457158343376 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 61 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 11.077011920436362 ]
+      } ],
+      "recordId" : "f0ab387c-eaa0-466c-b48c-325c0bfc0240"
+    }, {
+      "kvPairs" : [ {
+        "key" : "T9",
+        "value" : [ 0 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 43.15116643572091 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 30 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 6.799745885984992 ]
+      } ],
+      "recordId" : "bff778ee-8c1d-464b-9094-a79b3c88beae"
+    }, {
+      "kvPairs" : [ {
+        "key" : "ywomE",
+        "value" : [ 48 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 11.750345636783125 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 25 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 23.977467953108867 ]
+      } ],
+      "recordId" : "248fa83c-8090-4a54-83e2-72c6f4f68259"
+    }, {
+      "kvPairs" : [ {
+        "key" : "sAlV",
+        "value" : [ 6 ]
+      }, {
+        "key" : "uniformDouble",
+        "value" : [ 39.19857274488839 ]
+      }, {
+        "key" : "triangleInteger",
+        "value" : [ 66 ]
+      }, {
+        "key" : "gaussianDouble",
+        "value" : [ 7.5137124958576536 ]
+      } ],
+      "recordId" : "bfb09c9e-15c1-40c6-aead-5cf97ceb3a51"
+    } ]
+  },
+  "tsdbAdapterConfig" : {
+    "victoriaMetricsUrl" : "http://127.0.0.1:8428"
+  },
+  "threadCount" : 20,
+  "cleanStorage" : true
+}

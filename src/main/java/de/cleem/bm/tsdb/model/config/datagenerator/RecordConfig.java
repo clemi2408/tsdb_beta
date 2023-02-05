@@ -22,8 +22,8 @@ public class RecordConfig {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String keyValue;
 
-    // Distribution type, defaulted to uniform distribution
-    private Distribution valueDistribution = Distribution.UNIFORM;
+    // Distribution type
+    private Distribution valueDistribution;
 
     // min value for uniform and triangle distribution
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -45,7 +45,33 @@ public class RecordConfig {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Number gaussRange;
 
-    // value type, supported: Integer, Double and Float
-    private Class valueType;
+    // value type, supported: Integer, Double and String
+    private String valueType;
+
+
+/// STRING
+
+    // Min String Value Length Value / alternative to pre-defined stringEnumValues
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer minStringValueLength;
+
+    // Max String Value Length Value / alternative to pre-defined stringEnumValues
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer maxStringValueLength;
+
+    // Min String Enum Value count / alternative to pre-defined stringEnumValues
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer minStringEnumValues;
+
+    // Max String Enum Value count / alternative to pre-defined stringEnumValues
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer maxStringEnumValues;
+
+    // Pre-defined stringEnumValues / alternative to Max/Min String Enum Value count with Min/Max String Value Length
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String[] stringEnumValues;
+
+
+
 
 }
