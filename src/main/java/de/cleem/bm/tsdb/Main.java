@@ -22,9 +22,9 @@ public class Main {
 
     public static void main(String[] args) throws TSDBBenchmarkException {
 
-        //final File tsdbBenchmarkConfigFile = new File("src/main/resources/input/benchmarkConfig/influx-data-benchmark.json");
+        final File tsdbBenchmarkConfigFile = new File("src/main/resources/input/benchmarkConfig/influx-data-benchmark.json");
         //final File tsdbBenchmarkConfigFile = new File("src/main/resources/input/benchmarkConfig/influx-config-benchmark.json");
-        final File tsdbBenchmarkConfigFile = new File("src/main/resources/input/benchmarkConfig/influx-demo-benchmark.json");
+        //final File tsdbBenchmarkConfigFile = new File("src/main/resources/input/benchmarkConfig/influx-demo-benchmark.json");
 
         //final File tsdbBenchmarkConfigFile = new File("src/main/resources/input/benchmarkConfig/victoria-data-benchmark.json");
         //final File tsdbBenchmarkConfigFile = new File("src/main/resources/input/benchmarkConfig/victoria-config-benchmark.json");
@@ -47,7 +47,7 @@ public class Main {
 
                 log.info("Using workload generation config from file: "+tsdbBenchmarkConfigFile.getAbsolutePath());
 
-                config.setWorkload(WorkloadGenerator.builder()
+                config.setInputWorkload(WorkloadGenerator.builder()
                         .workloadGeneratorConfig(config.getWorkloadGeneratorConfig())
                         .generate());
 
@@ -103,7 +103,7 @@ public class Main {
 
                config.setWorkloadGeneratorConfig(workloadGeneratorConfig);
 
-                config.setWorkload(WorkloadGenerator.builder()
+                config.setInputWorkload(WorkloadGenerator.builder()
                         .workloadGeneratorConfig(config.getWorkloadGeneratorConfig())
                         .generate());
 
@@ -117,7 +117,6 @@ public class Main {
 
         }
 
-           JsonHelper.writeToTimestampFile(config, config.getConfigPrefix(), config.getConfigOutputFolder(), ".json");
 
            final Executor parallelExecutor = new Executor(config);
 
@@ -127,9 +126,12 @@ public class Main {
 
          //   parallelExecutor.printResults();
 
-            final BenchmarkResult benchmarkResult = parallelExecutor.getBenchmarkResult();
 
-            JsonHelper.writeToTimestampFile(benchmarkResult, config.getResultPrefix(), config.getResultOutputFolder(), ".json");
+
+        JsonHelper.writeToTimestampFile(parallelExecutor.getTsdbConfig(), config.getConfigPrefix(), config.getConfigOutputFolder(), ".json");
+
+
+        JsonHelper.writeToTimestampFile(parallelExecutor.getBenchmarkResult(), config.getResultPrefix(), config.getResultOutputFolder(), ".json");
 
 
     }

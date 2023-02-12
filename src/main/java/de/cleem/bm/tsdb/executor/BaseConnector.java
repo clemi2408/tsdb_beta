@@ -7,34 +7,36 @@ import de.cleem.bm.tsdb.adapter.victoriametrics.VictoriaMetricsAdapter;
 import de.cleem.bm.tsdb.adapter.victoriametrics.VictoriaMetricsAdapterConfig;
 import de.cleem.bm.tsdb.common.exception.TSDBBenchmarkException;
 import de.cleem.bm.tsdb.model.config.TSDBConfig;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class BaseConnector {
 
-    protected TSDBConfig config;
+    @Getter
+    protected TSDBConfig tsdbConfig;
 
     protected TSDBAdapterIF tsdbInterface;
 
     protected void setStorageAdapter() throws TSDBBenchmarkException {
 
-         if(config.getTsdbAdapterConfig() instanceof InfluxDbAdapterConfig){
+         if(tsdbConfig.getTsdbAdapterConfig() instanceof InfluxDbAdapterConfig){
 
             tsdbInterface = new InfluxDbAdapter();
-            tsdbInterface.setup(config.getTsdbAdapterConfig());
+            tsdbInterface.setup(tsdbConfig.getTsdbAdapterConfig());
 
         }
 
-        else if(config.getTsdbAdapterConfig() instanceof VictoriaMetricsAdapterConfig){
+        else if(tsdbConfig.getTsdbAdapterConfig() instanceof VictoriaMetricsAdapterConfig){
 
             tsdbInterface = new VictoriaMetricsAdapter();
-            tsdbInterface.setup(config.getTsdbAdapterConfig());
+            tsdbInterface.setup(tsdbConfig.getTsdbAdapterConfig());
 
         }
 
 
         else{
-            throw new TSDBBenchmarkException("Invalid config: " + config.getTsdbAdapterConfig().getClass().getSimpleName());
+            throw new TSDBBenchmarkException("Invalid config: " + tsdbConfig.getTsdbAdapterConfig().getClass().getSimpleName());
 
         }
 

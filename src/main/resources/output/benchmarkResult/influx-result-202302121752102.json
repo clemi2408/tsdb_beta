@@ -9,16 +9,16 @@
         "value" : [ "m4p6" ]
       }, {
         "key" : "kjvg8gJJ",
-        "value" : [ "Zt", "O0p", "vJh" ]
+        "value" : [ "vJh" ]
       }, {
         "key" : "bString",
-        "value" : [ "YS", "pnL", "V", "c" ]
+        "value" : [ "YS" ]
       }, {
         "key" : "gGOm31v7u3G",
-        "value" : [ "s-val1", "s-val2" ]
+        "value" : [ "s-val2" ]
       }, {
         "key" : "aString",
-        "value" : [ "s-val1", "s-val2" ]
+        "value" : [ "s-val2" ]
       }, {
         "key" : "HdbSoqCraIyCp",
         "value" : [ "s-val0" ]
@@ -50,11 +50,11 @@
       "recordId" : "da9af1ad-dbf7-4b1e-b946-ad61997bdc74"
     },
     "recordId" : "da9af1ad-dbf7-4b1e-b946-ad61997bdc74",
-    "startDate" : 1675616031772,
-    "endDate" : 1675616032351,
+    "startDate" : 1676220776424,
+    "endDate" : 1676220776822,
     "taskName" : "Record 1",
     "threadName" : "pool-1-thread-1",
-    "durationInMs" : 579
+    "durationInMs" : 398
   }, {
     "record" : {
       "kvPairs" : [ {
@@ -65,16 +65,16 @@
         "value" : [ "U4B" ]
       }, {
         "key" : "Nyl7b1",
-        "value" : [ "V", "sR", "c04" ]
+        "value" : [ "V" ]
       }, {
         "key" : "bString",
-        "value" : [ "d", "0zV" ]
+        "value" : [ "0zV" ]
       }, {
         "key" : "XvwvVad3Hgd",
-        "value" : [ "s-val1", "s-val2" ]
+        "value" : [ "s-val2" ]
       }, {
         "key" : "aString",
-        "value" : [ "s-val1", "s-val2" ]
+        "value" : [ "s-val2" ]
       }, {
         "key" : "JUGodWYimwWTgQ",
         "value" : [ "s-val0" ]
@@ -106,10 +106,10 @@
       "recordId" : "9052212c-a235-45e7-9a2c-444602c7e31b"
     },
     "recordId" : "9052212c-a235-45e7-9a2c-444602c7e31b",
-    "startDate" : 1675616031772,
-    "endDate" : 1675616032351,
+    "startDate" : 1676220776424,
+    "endDate" : 1676220776822,
     "taskName" : "Record 2",
     "threadName" : "pool-1-thread-2",
-    "durationInMs" : 579
+    "durationInMs" : 398
   } ]
 }

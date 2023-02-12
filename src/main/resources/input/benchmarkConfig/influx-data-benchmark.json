@@ -4,7 +4,7 @@
   "configPrefix" : "influx-benchmark",
   "resultOutputFolder" : "src/main/resources/output/benchmarkResult",
   "resultPrefix" : "influx-result",
-  "workload" : {
+  "inputWorkload" : {
     "records" : [ {
       "kvPairs" : [ {
         "key" : "yT",

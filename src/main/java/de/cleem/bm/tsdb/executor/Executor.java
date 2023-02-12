@@ -1,7 +1,10 @@
 package de.cleem.bm.tsdb.executor;
 
 import de.cleem.bm.tsdb.common.exception.TSDBBenchmarkException;
+import de.cleem.bm.tsdb.common.random.values.numbers.RandomUniformHelper;
 import de.cleem.bm.tsdb.model.config.TSDBConfig;
+import de.cleem.bm.tsdb.model.config.workload.KvPair;
+import de.cleem.bm.tsdb.model.config.workload.WorkloadData;
 import de.cleem.bm.tsdb.model.config.workload.WorkloadRecord;
 import de.cleem.bm.tsdb.model.request.TaskRequest;
 import de.cleem.bm.tsdb.model.result.BenchmarkResult;
@@ -10,6 +13,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,10 +32,11 @@ public class Executor extends BaseConnector {
 
 
 
-    public Executor(final TSDBConfig config) throws TSDBBenchmarkException {
+    public Executor(final TSDBConfig tsdbConfig) throws TSDBBenchmarkException {
 
         log.info("Constructing: "+this.getClass().getSimpleName());
-        this.config = config;
+        this.tsdbConfig = tsdbConfig;
+        this.tsdbConfig.setBenchmarkWorkload(getBenchmarkWorkload());
 
         setStorageAdapter();
 
@@ -39,26 +44,76 @@ public class Executor extends BaseConnector {
 
     }
 
+    private WorkloadData getBenchmarkWorkload(){
+
+        final WorkloadData benchmarkWorkload = WorkloadData.builder().records(new LinkedList<>()).build();
+
+        WorkloadRecord benchmarkWorkloadRecord;
+        KvPair benchmarkWorkloadRecordKvPair;
+        Object[] benchmarkWorkloadRecordKvPairValues;
+
+        for(WorkloadRecord inputWorkloadRecord : tsdbConfig.getInputWorkload().getRecords()){
+
+            benchmarkWorkloadRecord = WorkloadRecord.builder()
+                    .recordId(inputWorkloadRecord.getRecordId())
+                    .kvPairs(new ArrayList<>())
+                    .build();
+
+            for(KvPair inputWorkloadRecordKvPair : inputWorkloadRecord.getKvPairs()){
+
+                if(inputWorkloadRecordKvPair.getValue().length==1){
+                    benchmarkWorkloadRecordKvPairValues = inputWorkloadRecordKvPair.getValue();
+                }
+                else{
+                    benchmarkWorkloadRecordKvPairValues = pickSingleValue(inputWorkloadRecordKvPair.getValue());
+                }
+
+                benchmarkWorkloadRecordKvPair = KvPair.builder()
+                        .key(inputWorkloadRecordKvPair.getKey())
+                        .value(benchmarkWorkloadRecordKvPairValues)
+                        .build();
+
+                benchmarkWorkloadRecord.getKvPairs().add(benchmarkWorkloadRecordKvPair);
+
+            }
+
+            benchmarkWorkload.getRecords().add(benchmarkWorkloadRecord);
+
+        }
+
+        return benchmarkWorkload;
+
+
+
+    }
+
+    private Object[] pickSingleValue(final Object[] multiValueArray) {
+
+        final int randomIndex = RandomUniformHelper.getInteger(0,multiValueArray.length-1);
+
+        return new Object[]{multiValueArray[randomIndex]};
+
+    }
 
 
     public void execute() throws TSDBBenchmarkException {
 
 
-        log.info("Creating ThreadPool using "+config.getThreadCount()+" Threads");
+        log.info("Creating ThreadPool using "+ tsdbConfig.getThreadCount()+" Threads");
 
-        executor = Executors.newFixedThreadPool(config.getThreadCount());
+        executor = Executors.newFixedThreadPool(tsdbConfig.getThreadCount());
 
         ArrayList<TaskRequest> taskRequests = new ArrayList<>();
 
         int recordCount = 0;
-        for(WorkloadRecord workloadRecord: config.getWorkload().getRecords()){
+        for(WorkloadRecord workloadRecord: tsdbConfig.getBenchmarkWorkload().getRecords()){
             recordCount++;
 
             if(recordCount%10==0){
-                log.info("Created Task: "+recordCount+"/"+config.getWorkload().getRecords().size());
+                log.info("Created Task: "+recordCount+"/"+ tsdbConfig.getInputWorkload().getRecords().size());
             }
 
-            taskRequests.add(new TaskRequest(config,"Record "+recordCount,workloadRecord));
+            taskRequests.add(new TaskRequest(tsdbConfig,"Record "+recordCount,workloadRecord));
 
         }
 
@@ -83,7 +138,7 @@ public class Executor extends BaseConnector {
 
         collectResults();
 
-        if(config.isCleanStorage()) {
+        if(tsdbConfig.isCleanStorage()) {
             tsdbInterface.cleanup();
         }
 

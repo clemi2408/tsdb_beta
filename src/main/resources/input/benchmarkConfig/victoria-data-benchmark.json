@@ -4,7 +4,7 @@
   "configPrefix" : "victoria-benchmark",
   "resultOutputFolder" : "src/main/resources/output/benchmarkResult",
   "resultPrefix" : "victoria-result",
-  "workload" : {
+  "inputWorkload" : {
     "records" : [ {
       "kvPairs" : [
         {

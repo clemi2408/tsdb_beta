@@ -78,7 +78,7 @@ public class WorkloadGenerator {
 
         }
 
-        final WorkloadData workload = new WorkloadData();
+        final WorkloadData workload = WorkloadData.builder().build();
         workload.setRecords(data);
 
         return workload;

@@ -22,7 +22,7 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
 
          this.record = record;
          this.taskName=taskName;
-         this.config=config;
+         this.tsdbConfig =config;
          setStorageAdapter();
 
     }

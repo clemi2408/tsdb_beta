@@ -1,7 +1,7 @@
 package de.cleem.bm.tsdb.common.lineprotocolformat;
 
 import de.cleem.bm.tsdb.adapter.exception.TSDBAdapterException;
-import de.cleem.bm.tsdb.model.config.datagenerator.ValueTypes;
+import de.cleem.bm.tsdb.common.random.values.numbers.RandomUniformHelper;
 import de.cleem.bm.tsdb.model.config.workload.KvPair;
 import de.cleem.bm.tsdb.model.config.workload.WorkloadRecord;
 import lombok.Builder;
@@ -13,6 +13,7 @@ import java.time.Instant;
 @Slf4j
 public class LineProtocolFormat {
 
+    private static final String STRING_OUTPUT_PATTERN="\"%s\"";
     private String measurementName;
     private String labelKey;
     private String labelValue;
@@ -62,50 +63,33 @@ public class LineProtocolFormat {
         log.info("Created line: "+line);
         return line;
     }
-
     private String extractValue(final KvPair kvPair) throws TSDBAdapterException {
 
         final Object[] values = kvPair.getValue();
+        final Object value = values[0];
 
-        final Class elementClass = values[0].getClass();
-        final ValueTypes valueType = ValueTypes.get(elementClass);
+        if(value instanceof String stringValue){
 
-        if(valueType==ValueTypes.STRING){
-
-            final StringBuffer buffer = new StringBuffer();
-
-            buffer.append("\"");
-            Object value;
-            for(int i=0;i<values.length;i++){
-
-                if(i!=0){
-                    buffer.append(",");
-                }
-                value=values[i];
-
-                buffer.append((String)value);
-
-
-            }
-            buffer.append("\"");
-
-            return buffer.toString();
+            return String.format(STRING_OUTPUT_PATTERN, stringValue);
 
         }
+        else if(value instanceof Integer integerValue){
 
-        else if(valueType==ValueTypes.INTEGER || valueType==ValueTypes.DOUBLE || valueType==ValueTypes.NUMBER){
+            return integerValue.toString();
 
-            if(values.length>1){
+        } else if(value instanceof Double doubleValue){
 
-                throw new TSDBAdapterException("Multiple values not supported for type "+valueType);
+            return doubleValue.toString();
 
-            }
+        } else if(value instanceof Number numberValue){
 
-            return values[0].toString();
+            return numberValue.toString();
 
         }
         else{
-                throw new TSDBAdapterException("Value Type not supported: "+valueType);
+
+            throw new TSDBAdapterException("Value Type not supported: "+value.getClass());
+
         }
 
     }

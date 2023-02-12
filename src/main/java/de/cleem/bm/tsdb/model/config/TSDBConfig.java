@@ -26,7 +26,9 @@ public class TSDBConfig {
 
     private WorkloadGeneratorConfig workloadGeneratorConfig;
 
-    private WorkloadData workload;
+    private WorkloadData inputWorkload;
+
+    private WorkloadData benchmarkWorkload;
 
     private TSDBAdapterConfig tsdbAdapterConfig;
 
