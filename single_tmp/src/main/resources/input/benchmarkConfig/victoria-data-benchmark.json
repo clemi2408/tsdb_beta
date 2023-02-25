@@ -1,0 +1,1027 @@
+{
+  "mode": "data",
+  "configOutputFolder": "src/main/resources/output/benchmarkConfig",
+  "configPrefix": "victoria-benchmark",
+  "resultOutputFolder": "src/main/resources/output/benchmarkResult",
+  "resultPrefix": "victoria-result",
+  "inputWorkload": {
+    "records": [
+      {
+        "kvPairs": [
+          {
+            "key": "uniformDouble2",
+            "value": [
+              38.881823844379895
+            ]
+          },
+          {
+            "key": "DD",
+            "value": [
+              "PE"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "mu6T"
+            ]
+          },
+          {
+            "key": "AsASLC",
+            "value": [
+              "W"
+            ]
+          },
+          {
+            "key": "bString",
+            "value": [
+              "rPo",
+              "pLm"
+            ]
+          },
+          {
+            "key": "XRh6GSW5SL",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "WfJjlOWfVz9yr",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "loG",
+            "value": [
+              57
+            ]
+          },
+          {
+            "key": "uniformInteger",
+            "value": [
+              84
+            ]
+          },
+          {
+            "key": "uniformDouble",
+            "value": [
+              38.881823844379895
+            ]
+          },
+          {
+            "key": "triangleInteger",
+            "value": [
+              30
+            ]
+          },
+          {
+            "key": "triangleDouble",
+            "value": [
+              10.722069295952164
+            ]
+          },
+          {
+            "key": "gaussianInteger",
+            "value": [
+              16
+            ]
+          },
+          {
+            "key": "gaussianDouble",
+            "value": [
+              8.6154499285258
+            ]
+          }
+        ],
+        "recordId": "6ce443d8-f980-47ec-9317-71d053add328"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "Qy",
+            "value": [
+              "uxq"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "7MC8"
+            ]
+          },
+          {
+            "key": "eezm266",
+            "value": [
+              "twd"
+            ]
+          },
+          {
+            "key": "bString",
+            "value": [
+              "85i"
+            ]
+          },
+          {
+            "key": "zCsFme3wXeu",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "L7ocF3Bobiy6",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "UuHH",
+            "value": [
+              84
+            ]
+          },
+          {
+            "key": "uniformInteger",
+            "value": [
+              86
+            ]
+          },
+          {
+            "key": "uniformDouble",
+            "value": [
+              30.07804887633893
+            ]
+          },
+          {
+            "key": "triangleInteger",
+            "value": [
+              50
+            ]
+          },
+          {
+            "key": "triangleDouble",
+            "value": [
+              19.29974822720049
+            ]
+          },
+          {
+            "key": "gaussianInteger",
+            "value": [
+              10
+            ]
+          },
+          {
+            "key": "gaussianDouble",
+            "value": [
+              -4.70769431035586
+            ]
+          }
+        ],
+        "recordId": "26d5e129-41f9-4988-983b-bf4fd707d939"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "oZ",
+            "value": [
+              "Q"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "emTgW"
+            ]
+          },
+          {
+            "key": "nCCJMH",
+            "value": [
+              "el0",
+              "M8S",
+              "8w9",
+              "7",
+              "h8Y"
+            ]
+          },
+          {
+            "key": "bString",
+            "value": [
+              "YC",
+              "wzP",
+              "TV",
+              "qd",
+              "qJ"
+            ]
+          },
+          {
+            "key": "IEz6nhpkO",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "8DWcvJj40oXz",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "qHH1",
+            "value": [
+              4
+            ]
+          },
+          {
+            "key": "uniformInteger",
+            "value": [
+              54
+            ]
+          },
+          {
+            "key": "uniformDouble",
+            "value": [
+              15.661003265877742
+            ]
+          },
+          {
+            "key": "triangleInteger",
+            "value": [
+              41
+            ]
+          },
+          {
+            "key": "triangleDouble",
+            "value": [
+              18.559775786511533
+            ]
+          },
+          {
+            "key": "gaussianInteger",
+            "value": [
+              7
+            ]
+          },
+          {
+            "key": "gaussianDouble",
+            "value": [
+              8.018678131224325
+            ]
+          }
+        ],
+        "recordId": "14df02c7-da1f-437e-b643-e1e78bffaaae"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "m",
+            "value": [
+              "FS"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "IZEx"
+            ]
+          },
+          {
+            "key": "pSgvKX",
+            "value": [
+              "CsL",
+              "Ru",
+              "5S0",
+              "AE",
+              "2"
+            ]
+          },
+          {
+            "key": "bString",
+            "value": [
+              "Re",
+              "z",
+              "F"
+            ]
+          },
+          {
+            "key": "orYXUiF8nB",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "C2q4DRX2erm5",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "r9PfB",
+            "value": [
+              28
+            ]
+          },
+          {
+            "key": "uniformInteger",
+            "value": [
+              38
+            ]
+          },
+          {
+            "key": "uniformDouble",
+            "value": [
+              24.150687659969208
+            ]
+          },
+          {
+            "key": "triangleInteger",
+            "value": [
+              39
+            ]
+          },
+          {
+            "key": "triangleDouble",
+            "value": [
+              13.676364713462675
+            ]
+          },
+          {
+            "key": "gaussianInteger",
+            "value": [
+              10
+            ]
+          },
+          {
+            "key": "gaussianDouble",
+            "value": [
+              11.679850681297626
+            ]
+          }
+        ],
+        "recordId": "7dcdf405-f726-49de-bd35-87b1dab9c9ef"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "xE",
+            "value": [
+              "t"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "e45g9"
+            ]
+          },
+          {
+            "key": "YDzVwu",
+            "value": [
+              "2c",
+              "GD",
+              "EQ",
+              "AjM",
+              "Ri"
+            ]
+          },
+          {
+            "key": "bString",
+            "value": [
+              "L"
+            ]
+          },
+          {
+            "key": "L1O5XYOYy",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "FeK1aNgLiGBT",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "ehz",
+            "value": [
+              25
+            ]
+          },
+          {
+            "key": "uniformInteger",
+            "value": [
+              79
+            ]
+          },
+          {
+            "key": "uniformDouble",
+            "value": [
+              47.44699958589245
+            ]
+          },
+          {
+            "key": "triangleInteger",
+            "value": [
+              31
+            ]
+          },
+          {
+            "key": "triangleDouble",
+            "value": [
+              8.317257240951543
+            ]
+          },
+          {
+            "key": "gaussianInteger",
+            "value": [
+              7
+            ]
+          },
+          {
+            "key": "gaussianDouble",
+            "value": [
+              14.421358225761711
+            ]
+          }
+        ],
+        "recordId": "9d54a370-57ed-45a0-ac1a-ac4633b4e94f"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "vX",
+            "value": [
+              "qQ"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "08DR"
+            ]
+          },
+          {
+            "key": "5mACgIx",
+            "value": [
+              "xl",
+              "j"
+            ]
+          },
+          {
+            "key": "bString",
+            "value": [
+              "m",
+              "0tY"
+            ]
+          },
+          {
+            "key": "fnoNnfdpPu",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "Fhb4mASQIrjfG0D",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "fU",
+            "value": [
+              47
+            ]
+          },
+          {
+            "key": "uniformInteger",
+            "value": [
+              21
+            ]
+          },
+          {
+            "key": "uniformDouble",
+            "value": [
+              7.124624020214649
+            ]
+          },
+          {
+            "key": "triangleInteger",
+            "value": [
+              55
+            ]
+          },
+          {
+            "key": "triangleDouble",
+            "value": [
+              19.273452817539845
+            ]
+          },
+          {
+            "key": "gaussianInteger",
+            "value": [
+              11
+            ]
+          },
+          {
+            "key": "gaussianDouble",
+            "value": [
+              18.908330872724306
+            ]
+          }
+        ],
+        "recordId": "97fcaddf-009c-4268-b9dc-b7a9326e6501"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "3",
+            "value": [
+              "eFR"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "yAZe3"
+            ]
+          },
+          {
+            "key": "xeM7MR5",
+            "value": [
+              "AJh",
+              "N6"
+            ]
+          },
+          {
+            "key": "bString",
+            "value": [
+              "OD",
+              "I"
+            ]
+          },
+          {
+            "key": "jiAnBKgdR",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "euGp7AEumse9Iy6",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "lLo",
+            "value": [
+              45
+            ]
+          },
+          {
+            "key": "uniformInteger",
+            "value": [
+              88
+            ]
+          },
+          {
+            "key": "uniformDouble",
+            "value": [
+              55.59316077364237
+            ]
+          },
+          {
+            "key": "triangleInteger",
+            "value": [
+              49
+            ]
+          },
+          {
+            "key": "triangleDouble",
+            "value": [
+              16.529600256180416
+            ]
+          },
+          {
+            "key": "gaussianInteger",
+            "value": [
+              -1
+            ]
+          },
+          {
+            "key": "gaussianDouble",
+            "value": [
+              31.175056606669916
+            ]
+          }
+        ],
+        "recordId": "30f78cce-e065-4e55-b718-3541904b3266"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "20",
+            "value": [
+              "0Gk"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "dpdY"
+            ]
+          },
+          {
+            "key": "W9N6Gm",
+            "value": [
+              "hQ5",
+              "o",
+              "Ryc",
+              "uS",
+              "ep5"
+            ]
+          },
+          {
+            "key": "bString",
+            "value": [
+              "r",
+              "GZ"
+            ]
+          },
+          {
+            "key": "xV8LAI638",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "JbyrgbUu9s0N",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "Q1YAs",
+            "value": [
+              100
+            ]
+          },
+          {
+            "key": "uniformInteger",
+            "value": [
+              34
+            ]
+          },
+          {
+            "key": "uniformDouble",
+            "value": [
+              14.61892606500875
+            ]
+          },
+          {
+            "key": "triangleInteger",
+            "value": [
+              67
+            ]
+          },
+          {
+            "key": "triangleDouble",
+            "value": [
+              20.21437775137967
+            ]
+          },
+          {
+            "key": "gaussianInteger",
+            "value": [
+              17
+            ]
+          },
+          {
+            "key": "gaussianDouble",
+            "value": [
+              8.20638893209778
+            ]
+          }
+        ],
+        "recordId": "d0e8aa76-1853-4f54-b56e-0ec897b65916"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "o",
+            "value": [
+              "X"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "S0eWO"
+            ]
+          },
+          {
+            "key": "pf1iOlHX",
+            "value": [
+              "T",
+              "5j1",
+              "3T3",
+              "4s1",
+              "Jzx"
+            ]
+          },
+          {
+            "key": "bString",
+            "value": [
+              "g8k"
+            ]
+          },
+          {
+            "key": "mokKxjOKS",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "IjiHNXlFqsnV8K",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "lDDQ",
+            "value": [
+              19
+            ]
+          },
+          {
+            "key": "uniformInteger",
+            "value": [
+              40
+            ]
+          },
+          {
+            "key": "uniformDouble",
+            "value": [
+              28.185373036927874
+            ]
+          },
+          {
+            "key": "triangleInteger",
+            "value": [
+              48
+            ]
+          },
+          {
+            "key": "triangleDouble",
+            "value": [
+              17.956639891467738
+            ]
+          },
+          {
+            "key": "gaussianInteger",
+            "value": [
+              0
+            ]
+          },
+          {
+            "key": "gaussianDouble",
+            "value": [
+              16.272928927745262
+            ]
+          }
+        ],
+        "recordId": "73989db4-3315-4c9a-8f8d-e37a32753d37"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "T",
+            "value": [
+              "5oD"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "WHr"
+            ]
+          },
+          {
+            "key": "5YoZOt",
+            "value": [
+              "75",
+              "0"
+            ]
+          },
+          {
+            "key": "bString",
+            "value": [
+              "U",
+              "3",
+              "m"
+            ]
+          },
+          {
+            "key": "YxOQyI5Jsz",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "DdOA5Jm6VS6Jpv7",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "b9A",
+            "value": [
+              32
+            ]
+          },
+          {
+            "key": "uniformInteger",
+            "value": [
+              45
+            ]
+          },
+          {
+            "key": "uniformDouble",
+            "value": [
+              9.770746810403914
+            ]
+          },
+          {
+            "key": "triangleInteger",
+            "value": [
+              28
+            ]
+          },
+          {
+            "key": "triangleDouble",
+            "value": [
+              20.097633150665526
+            ]
+          },
+          {
+            "key": "gaussianInteger",
+            "value": [
+              10
+            ]
+          },
+          {
+            "key": "gaussianDouble",
+            "value": [
+              19.700488889691368
+            ]
+          }
+        ],
+        "recordId": "b888e22d-c97e-47df-9d89-4883829b9f5d"
+      }
+    ]
+  },
+  "tsdbAdapterConfig": {
+    "victoriaMetricsUrl": "http://127.0.0.1:8428"
+  },
+  "threadCount": 20,
+  "cleanStorage": true
+}

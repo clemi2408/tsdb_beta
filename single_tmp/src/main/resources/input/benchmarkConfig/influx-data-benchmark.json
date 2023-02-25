@@ -1,0 +1,221 @@
+{
+  "mode": "data",
+  "configOutputFolder": "src/main/resources/output/benchmarkConfig",
+  "configPrefix": "influx-benchmark",
+  "resultOutputFolder": "src/main/resources/output/benchmarkResult",
+  "resultPrefix": "influx-result",
+  "inputWorkload": {
+    "records": [
+      {
+        "kvPairs": [
+          {
+            "key": "yT",
+            "value": [
+              "DCY"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "m4p6"
+            ]
+          },
+          {
+            "key": "kjvg8gJJ",
+            "value": [
+              "Zt",
+              "O0p",
+              "vJh"
+            ]
+          },
+          {
+            "key": "bString",
+            "value": [
+              "YS",
+              "pnL",
+              "V",
+              "c"
+            ]
+          },
+          {
+            "key": "gGOm31v7u3G",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "HdbSoqCraIyCp",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "rO",
+            "value": [
+              74
+            ]
+          },
+          {
+            "key": "uniformInteger",
+            "value": [
+              90
+            ]
+          },
+          {
+            "key": "uniformDouble",
+            "value": [
+              46.52544759981335
+            ]
+          },
+          {
+            "key": "triangleInteger",
+            "value": [
+              27
+            ]
+          },
+          {
+            "key": "triangleDouble",
+            "value": [
+              17.088706400108332
+            ]
+          },
+          {
+            "key": "gaussianInteger",
+            "value": [
+              13
+            ]
+          },
+          {
+            "key": "gaussianDouble",
+            "value": [
+              14.239407475742887
+            ]
+          }
+        ],
+        "recordId": "da9af1ad-dbf7-4b1e-b946-ad61997bdc74"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "F",
+            "value": [
+              "v"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "U4B"
+            ]
+          },
+          {
+            "key": "Nyl7b1",
+            "value": [
+              "V",
+              "sR",
+              "c04"
+            ]
+          },
+          {
+            "key": "bString",
+            "value": [
+              "d",
+              "0zV"
+            ]
+          },
+          {
+            "key": "XvwvVad3Hgd",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "JUGodWYimwWTgQ",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "aString",
+            "value": [
+              "s-val0"
+            ]
+          },
+          {
+            "key": "ciY",
+            "value": [
+              8
+            ]
+          },
+          {
+            "key": "uniformInteger",
+            "value": [
+              74
+            ]
+          },
+          {
+            "key": "uniformDouble",
+            "value": [
+              17.74648317812155
+            ]
+          },
+          {
+            "key": "triangleInteger",
+            "value": [
+              66
+            ]
+          },
+          {
+            "key": "triangleDouble",
+            "value": [
+              19.7441460786535
+            ]
+          },
+          {
+            "key": "gaussianInteger",
+            "value": [
+              16
+            ]
+          },
+          {
+            "key": "gaussianDouble",
+            "value": [
+              21.23359243597139
+            ]
+          }
+        ],
+        "recordId": "9052212c-a235-45e7-9a2c-444602c7e31b"
+      }
+    ]
+  },
+  "tsdbAdapterConfig": {
+    "influxDbUrl": "http://127.0.0.1:8086",
+    "token": "YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==",
+    "organisation": "testorg",
+    "bucket": "testbucket"
+  },
+  "threadCount": 20,
+  "cleanStorage": true
+}
