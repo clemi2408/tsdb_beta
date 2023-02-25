@@ -1,11 +1,6 @@
-# tsdbBenchmark BETA
+# Time Series Database (TSDB) Benchmark - Orchestrator
 
-[README](../../README.md)
-
-## Apps
-
-[README](../README.md)
-
-### Orchestrator
+[HOME](../../README.md)
+[APPS](../README.md)
 
 Main method class: `de.cleem.tub.tsdbb.apps.orchestrator.App`

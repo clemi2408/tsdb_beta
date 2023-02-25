@@ -1,4 +1,4 @@
-# Time Series Database (TSDB) Benchmark Beta
+# Time Series Database (TSDB) Benchmark
 
 ## Design
 

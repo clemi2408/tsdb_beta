@@ -1,11 +1,6 @@
-# tsdbBenchmark BETA
+# Time Series Database (TSDB) Benchmark - Worker
 
-[README](../../README.md)
-
-## Apps
-
-[README](../README.md)
-
-### Worker
+[HOME](../../README.md)
+[APPS](../README.md)
 
 Main method class: `de.cleem.tub.tsdbb.apps.worker.App`

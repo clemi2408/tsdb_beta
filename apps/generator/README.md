@@ -1,12 +1,7 @@
-# tsdbBenchmark BETA
+# Time Series Database (TSDB) Benchmark - Generator
 
-[README](../../README.md)
-
-## Apps
-
-[README](../README.md)
-
-### Generator
+[HOME](../../README.md)
+[APPS](../README.md)
 
 Main method class: `de.cleem.tub.tsdbb.apps.generator.App`
 
@@ -51,7 +46,7 @@ Independent of the generation strategy it is possible to generate the following 
 - 32-bit signed two's complement integer `java.lang.Integer`.
 - A collection of characters  `java.lang.String`.
 
-#### Examples
+## Examples
 
 Example `RecordConfig` with generated key with length in range `minKeyLength` to `maxKeyLength`.
 The `Integer` value is generated with the value strategy `uniform` in range `minValue` and `maxValue`.

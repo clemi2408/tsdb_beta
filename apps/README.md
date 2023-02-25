@@ -1,8 +1,6 @@
-# tsdbBenchmark BETA
+# Time Series Database (TSDB) Benchmark - Apps
 
-[README](../README.md)
-
-## Apps
+[HOME](../README.md)
 
 ```
 apps (de.cleem.tub.tsdbb.apps)
@@ -11,14 +9,14 @@ apps (de.cleem.tub.tsdbb.apps)
 ├── worker (de.cleem.tub.tsdbb.apps.worker)
 ```
 
-### Generator
+## Generator
 
-[README](generator/README.md)
+[Generator README](generator/README.md)
 
-### Orchestrator
+## Orchestrator
 
-[README](orchestrator/README.md)
+[Orchestrator README](orchestrator/README.md)
 
-### Worker
+## Worker
 
-[README](worker/README.md)
+[Worker README](worker/README.md)
