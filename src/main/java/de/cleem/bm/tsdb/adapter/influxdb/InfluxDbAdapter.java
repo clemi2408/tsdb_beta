@@ -111,6 +111,12 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not write to Storage - bucketId is NULL - "+getConnectionInfo());
         }
 
+        log.info("Processing record: "+record.toString());
+
+        final Instant instant = Instant.now();
+
+        final String metricLine = lineProtocolFormat.getLine(record, instant);
+
         // WRITE
         // curl -v --request POST \
         //"http://localhost:8086/api/v2/write?org=${INFLUX_ORG}&bucket=${INFLUX_BUCKET}&precision=s" \
@@ -119,16 +125,11 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
         final URI writeUri = URI.create(config.getInfluxDbUrl() + String.format(WRITE_ENDPOINT, config.getOrganisation(),config.getBucket(), WRITE_PRECISION));
 
-        final HashMap headerMap = getAuthHeaderMap();
+        final HashMap headers = getAuthHeaderMap();
 
-        final Instant instant = Instant.now();
+        HttpHelper.executePost(httpClient,writeUri,metricLine,headers,204);
 
-        final String metricLine = lineProtocolFormat.getLine(record, instant);
-
-        HttpHelper.executePost(httpClient,writeUri,metricLine,headerMap,204);
-
-        log.info("Wrote Data: "+instant.toEpochMilli()+" - "+getConnectionInfo()+" - "+record.toString());
-
+        log.info("Wrote Line: "+metricLine+" to: "+getConnectionInfo());
 
     }
 
@@ -152,6 +153,9 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         headerMap.put("Content-type","application/json");
 
         HttpHelper.executeDelete(httpClient,deleteBucketUri,null,headerMap,204);
+
+        log.info("Deleted bucket: " + config.getBucket() + " - " + getConnectionInfo());
+
 
     }
 

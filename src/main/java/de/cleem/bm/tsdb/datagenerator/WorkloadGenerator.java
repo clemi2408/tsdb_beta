@@ -1,8 +1,9 @@
 package de.cleem.bm.tsdb.datagenerator;
 
 import de.cleem.bm.tsdb.common.exception.TSDBBenchmarkException;
-import de.cleem.bm.tsdb.common.random.RandomHelper;
+import de.cleem.bm.tsdb.common.random.ValueGenerationHelper;
 import de.cleem.bm.tsdb.common.random.RandomValueGenerationException;
+import de.cleem.bm.tsdb.common.random.keys.KeyGenerationHelper;
 import de.cleem.bm.tsdb.model.config.datagenerator.RecordConfig;
 import de.cleem.bm.tsdb.model.config.datagenerator.WorkloadGeneratorConfig;
 import de.cleem.bm.tsdb.model.config.workload.KvPair;
@@ -15,7 +16,6 @@ import java.util.UUID;
 
 @Slf4j
 public class WorkloadGenerator {
-
     private WorkloadGeneratorConfig config;
     public WorkloadGenerator(){
 
@@ -34,92 +34,16 @@ public class WorkloadGenerator {
         return this;
 
     }
-
-    //////////////
-
-  /*  private HashMap<String,Number> generateRecord(final String[] keyArray, final int index, final int total){
-
-        final HashMap<String,Number> recordKv = new HashMap<>();
-
-
-
-        int randomValueStringLength;
-        double randomValue;
-        for(int i = 0; i < keyArray.length; i ++){
-
-           // randomValueStringLength = RandomHelper.getRandomIntInRange(config.getMinValueLength(), config.getMaxValueLength());
-           // randomValue = RandomHelper.getRandomDoubleInRange(config.getMinValue(),config.getMaxValue());
-
-            // recordKv.put(keyArray[i], randomValue);
-
-           // log.info("\tGenerated: "+keyArray[i]+" --> "+randomValue);
-
-        }
-
-        return recordKv;
-    }
-
-    private String[] generateKeyArray(){
-
-        log.info("Generating keyArray with "+config.getKeyCountPerRecord()+ " Keys per Record");
-
-        final String[] keyArray = new String[config.getKeyCountPerRecord()];
-
-        int randomKeyStringLength;
-        String randomKeyString;
-        for(int i = 0; i < config.getKeyCountPerRecord(); i++){
-
-            randomKeyStringLength = RandomHelper.getRandomIntInRange(config.getMinKeyLength(),config.getMaxKeyLength());
-            randomKeyString = RandomHelper.getRandomString(randomKeyStringLength);
-            keyArray[i] = randomKeyString;
-
-            log.info("\tGenerated Key "+(i+1)+": "+randomKeyString);
-
-        }
-
-        return keyArray;
-
-        return null;
-    }
-*/
-
-    private Number generateValue(final RecordConfig recordConfig) throws RandomValueGenerationException {
-
-        return RandomHelper.generateRandomValue(recordConfig);
-
-    }
-
-    private String generateKey(final RecordConfig recordConfig){
-
-        if(recordConfig.getKeyValue()!=null){
-
-            log.info("Using configured Key "+recordConfig.getKeyValue());
-
-            return recordConfig.getKeyValue();
-        }
-        else{
-
-            final String generatedString = RandomHelper.getRandomString(recordConfig.getMinKeyLength(),recordConfig.getMaxKeyLength());
-            log.info("Generated random Key '"+generatedString+"' with length between: "+recordConfig.getMinKeyLength()+"-"+recordConfig.getMaxKeyLength());
-
-            return generatedString;
-
-        }
-
-    }
-
     private KvPair generateKvPair(final RecordConfig recordConfig) throws RandomValueGenerationException {
 
         final KvPair pair = KvPair.builder()
-                .key(generateKey(recordConfig))
-                .value(generateValue(recordConfig))
+                .key(KeyGenerationHelper.generate(recordConfig))
+                .value(ValueGenerationHelper.generate(recordConfig))
                 .build();
 
         return pair;
 
     }
-
-
     private WorkloadRecord generateRecord(final int index) throws RandomValueGenerationException {
 
         log.info("Generating Record "+index+" of "+config.getRecordCount());
@@ -142,7 +66,6 @@ public class WorkloadGenerator {
         return workloadRecord;
 
     }
-
     private WorkloadData generateWorkload() throws RandomValueGenerationException {
 
         log.info("Generating Workload with "+config.getRecordCount()+ " Records");
@@ -155,14 +78,13 @@ public class WorkloadGenerator {
 
         }
 
-        final WorkloadData workload = new WorkloadData();
+        final WorkloadData workload = WorkloadData.builder().build();
         workload.setRecords(data);
 
         return workload;
 
     }
-
-    public WorkloadData build() throws TSDBBenchmarkException {
+    public WorkloadData generate() throws TSDBBenchmarkException {
 
         if(config==null){
             throw new DataGeneratorConfigurationException("Data generator config is NULL");
@@ -171,6 +93,5 @@ public class WorkloadGenerator {
         return generateWorkload();
 
     }
-
 
 }

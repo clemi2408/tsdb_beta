@@ -1,15 +1,19 @@
 package de.cleem.bm.tsdb.common.lineprotocolformat;
 
 import de.cleem.bm.tsdb.adapter.exception.TSDBAdapterException;
+import de.cleem.bm.tsdb.common.random.values.numbers.RandomUniformHelper;
 import de.cleem.bm.tsdb.model.config.workload.KvPair;
 import de.cleem.bm.tsdb.model.config.workload.WorkloadRecord;
 import lombok.Builder;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.Instant;
 
 @Builder
+@Slf4j
 public class LineProtocolFormat {
 
+    private static final String STRING_OUTPUT_PATTERN="\"%s\"";
     private String measurementName;
     private String labelKey;
     private String labelValue;
@@ -44,7 +48,7 @@ public class LineProtocolFormat {
 
             lineStringBuilder.append(kvPair.getKey());
             lineStringBuilder.append("=");
-            lineStringBuilder.append(kvPair.getValue());
+            lineStringBuilder.append(extractValue(kvPair));
             counter++;
 
         }
@@ -54,9 +58,40 @@ public class LineProtocolFormat {
             lineStringBuilder.append(time.toEpochMilli());
         }
 
-        return lineStringBuilder.toString();
+        final String line = lineStringBuilder.toString();
+
+        log.info("Created line: "+line);
+        return line;
+    }
+    private String extractValue(final KvPair kvPair) throws TSDBAdapterException {
+
+        final Object[] values = kvPair.getValue();
+        final Object value = values[0];
+
+        if(value instanceof String stringValue){
+
+            return String.format(STRING_OUTPUT_PATTERN, stringValue);
+
+        }
+        else if(value instanceof Integer integerValue){
+
+            return integerValue.toString();
+
+        } else if(value instanceof Double doubleValue){
+
+            return doubleValue.toString();
+
+        } else if(value instanceof Number numberValue){
+
+            return numberValue.toString();
+
+        }
+        else{
+
+            throw new TSDBAdapterException("Value Type not supported: "+value.getClass());
+
+        }
 
     }
-
 
 }

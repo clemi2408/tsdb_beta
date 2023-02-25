@@ -1,4 +1,4 @@
-package de.cleem.bm.tsdb.common.random.distributed;
+package de.cleem.bm.tsdb.common.random.values.numbers;
 
 import java.util.Random;
 

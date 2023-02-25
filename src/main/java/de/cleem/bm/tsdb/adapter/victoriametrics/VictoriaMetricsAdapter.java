@@ -98,16 +98,25 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     @Override
     public void write(final WorkloadRecord record) throws TSDBBenchmarkException {
 
-        final URI writeUri = URI.create(config.getVictoriaMetricsUrl() + WRITE_ENDPOINT);
+        log.info("Processing record: "+record.toString());
 
-        final String metricLine = lineProtocolFormat.getLine(record, Instant.now());
+        final Instant instant = Instant.now();
+
+        final String metricLine = lineProtocolFormat.getLine(record, instant);
+
+        // WRITE
+        // curl -X POST \
+        //'http://localhost:8428/write' \
+        //-d 'census,location=klamath,scientist=anderson bees=23 1673176214'
+
+
+        final URI writeUri = URI.create(config.getVictoriaMetricsUrl() + WRITE_ENDPOINT);
 
         final HashMap<String,String> headers = new HashMap<>();
 
-        // curl -d 'measurement,tag1=value1,tag2=value2 field1=123,field2=1.23' -X POST 'http://localhost:8428/write'
         HttpHelper.executePost(httpClient, writeUri, metricLine, headers,204);
 
-        log.info("Wrote Data - " + getConnectionInfo() + " - " + record.toString());
+        log.info("Wrote Line: "+metricLine+" to: "+getConnectionInfo());
 
     }
 

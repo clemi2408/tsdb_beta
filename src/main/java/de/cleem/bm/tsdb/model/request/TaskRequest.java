@@ -22,8 +22,8 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
 
          this.record = record;
          this.taskName=taskName;
-         this.config=config;
-        setStorageAdapter();
+         this.tsdbConfig =config;
+         setStorageAdapter();
 
     }
 
@@ -42,7 +42,6 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
         tsdbInterface.close();
 
         final String threadName = Thread.currentThread().getName();
-
 
         return TaskResult.builder()
                 .taskName(taskName)

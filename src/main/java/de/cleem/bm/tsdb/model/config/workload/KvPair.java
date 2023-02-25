@@ -7,11 +7,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class KvPair {
+public class KvPair<T> {
 
     private String key;
 
-    private Number value;
+    private Object[] value;
 
 
 }
