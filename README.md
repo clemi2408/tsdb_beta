@@ -144,8 +144,8 @@ tsdbBenchmark (de.cleem.tub.tsdbb)
 
 ## Commons
 
-[README](commons/README.md)
+[Commons README](commons/README.md)
 
 ## Apps
 
-[README](apps/README.md)
+[Apps README](apps/README.md)
