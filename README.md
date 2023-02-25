@@ -149,15 +149,3 @@ tsdbBenchmark (de.cleem.tub.tsdbb)
 ## Apps
 
 [README](apps/README.md)
-
-### Generator
-
-[README](generator/README.md)
-
-### Orchestrator
-
-[README](orchestrator/README.md)
-
-### Worker
-
-[README](worker/README.md)
