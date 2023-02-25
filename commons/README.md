@@ -1,5 +1,5 @@
-# # Time Series Database (TSDB) Benchmark - Commons
+# Time Series Database (TSDB) Benchmark - Commons
 
-[README](../README.md)
+[Home README](../README.md)
 
 

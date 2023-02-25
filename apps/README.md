@@ -1,6 +1,6 @@
 # Time Series Database (TSDB) Benchmark - Apps
 
-[HOME](../README.md)
+[Home README](../README.md)
 
 ```
 apps (de.cleem.tub.tsdbb.apps)
