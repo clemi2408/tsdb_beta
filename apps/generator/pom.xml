@@ -9,5 +9,75 @@
     <artifactId>generator</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <mainClass>de.cleem.tub.tsdbb.apps.generator.App</mainClass>
+        <openapi-server.spec>generator.yml</openapi-server.spec>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${openapi-server.specs-folder}/${openapi-server.spec}</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <output>${project.build.directory}/${openapi-server.code-output-folder}</output>
+                            <addCompileSourceRoot>true</addCompileSourceRoot>
+                            <generateApiDocumentation>false</generateApiDocumentation>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelDocumentation>false</generateModelDocumentation>
+                            <generateModelTests>false</generateModelTests>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <verbose>true</verbose>
+                            <configOptions>
+                                <apiPackage>${openapi-server.package-root}.${artifactId}.${openapi-server.server-package-part}.${openapi-server.api-package-suffix}</apiPackage>
+                                <modelPackage>${openapi-server.package-root}.${artifactId}.${openapi-server.server-package-part}.${openapi-server.model-package-suffix}</modelPackage>
+                                <library>spring-boot</library>
+                                <documentationProvider>none</documentationProvider>
+                                <annotationLibrary>none</annotationLibrary>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                <dateLibrary>java8</dateLibrary>
+                                <requestMappingMode>api_interface</requestMappingMode>
+                                <skipDefaultInterface>true</skipDefaultInterface>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useSpringController>true</useSpringController>
+                                <openApiNullable>false</openApiNullable>
+                                <unhandledException>true</unhandledException>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.swagger.codegen.v3</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>${swagger-codegen-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${openapi-server.specs-folder}/${openapi-server.spec}</inputSpec>
+                            <language>openapi-yaml</language>
+                            <output>${openapi-server.spec-output-folder}</output>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <configOptions>
+                                <outputFile>openapi.yml</outputFile>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -1,8 +1,8 @@
 package de.cleem.bm.tsdb.common.http;
 
-import de.cleem.tub.tsdbb.commons.exception.TSDBBException;
+import de.cleem.tub.tsdbb.commons.exception.BaseException;
 
-public class HttpException extends TSDBBException {
+public class HttpException extends BaseException {
 
 
     public HttpException(String message) {

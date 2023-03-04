@@ -1,0 +1,56 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+    "gaussMiddle" : {
+      "type" : "number"
+    },
+    "gaussRange" : {
+      "type" : "number"
+    },
+    "keyValue" : {
+      "type" : "string"
+    },
+    "maxKeyLength" : {
+      "type" : "integer"
+    },
+    "maxStringEnumValues" : {
+      "type" : "integer"
+    },
+    "maxStringValueLength" : {
+      "type" : "integer"
+    },
+    "maxValue" : {
+      "type" : "number"
+    },
+    "minKeyLength" : {
+      "type" : "integer"
+    },
+    "minStringEnumValues" : {
+      "type" : "integer"
+    },
+    "minStringValueLength" : {
+      "type" : "integer"
+    },
+    "minValue" : {
+      "type" : "number"
+    },
+    "stringEnumValues" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
+    },
+    "triangleSpike" : {
+      "type" : "number"
+    },
+    "valueDistribution" : {
+      "type" : "string",
+      "enum" : [ "UNIFORM", "GAUSS", "TRIANGLE" ]
+    },
+    "valueType" : {
+      "type" : "string"
+    }
+  },
+  "required": [ "valueType" ]
+}

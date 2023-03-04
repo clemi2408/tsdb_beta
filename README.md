@@ -129,22 +129,32 @@ implemented.
 ```
 tsdbBenchmark (de.cleem.tub.tsdbb)
 ├── commons (de.cleem.tub.tsdbb.commons)
+├── schema
 ├── apps (de.cleem.tub.tsdbb.apps)
 │   ├── generator (de.cleem.tub.tsdbb.apps.generator)
 │   ├── orchestrator (de.cleem.tub.tsdbb.apps.orchestrator)
 │   ├── worker (de.cleem.tub.tsdbb.apps.worker)
 ```
 
-### General Dependencies
+### Dependencies
 
-- org.projectlombok.lombok
-- org.slf4j.slf4j-simple
-- com.fasterxml.jackson.core.jackson-core
-- com.fasterxml.jackson.core.jackson-databind
+- org.projectlombok:lombok
+- com.fasterxml.jackson.core:jackson-core
+- com.fasterxml.jackson.core:jackson-databind
+- org.springframework.boot:spring-boot-starter-web
+- org.springframework.boot:spring-boot-starter-validation
+
+## Build Plugins
+
+- org.apache.maven.plugins:maven-compiler-plugin
 
 ## Commons
 
 [Commons README](commons/README.md)
+
+## Schema
+
+[Schema README](schema/README.md)
 
 ## Apps
 

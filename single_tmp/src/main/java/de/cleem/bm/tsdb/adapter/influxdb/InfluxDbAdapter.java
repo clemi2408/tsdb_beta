@@ -6,7 +6,7 @@ import de.cleem.bm.tsdb.common.http.HttpException;
 import de.cleem.bm.tsdb.common.http.HttpHelper;
 import de.cleem.bm.tsdb.common.lineprotocolformat.LineProtocolFormat;
 import de.cleem.bm.tsdb.model.config.adapter.TSDBAdapterConfig;
-import de.cleem.tub.tsdbb.commons.exception.TSDBBException;
+import de.cleem.tub.tsdbb.commons.exception.BaseException;
 import de.cleem.tub.tsdbb.commons.model.workload.Record;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -43,7 +43,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
     private URI healthUri;
 
     @Override
-    public void setup(final TSDBAdapterConfig tsdbAdapterConfig) throws TSDBBException {
+    public void setup(final TSDBAdapterConfig tsdbAdapterConfig) throws BaseException {
 
         if (!(tsdbAdapterConfig instanceof InfluxDbAdapterConfig)) {
 
@@ -78,7 +78,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
     }
 
     @Override
-    public void createStorage() throws TSDBBException {
+    public void createStorage() throws BaseException {
 
         // CREATE BUCKET
         // curl --request POST \
@@ -105,7 +105,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
     }
 
     @Override
-    public void write(final Record record) throws TSDBBException {
+    public void write(final Record record) throws BaseException {
 
         if (config.getBucketId() == null) {
             throw new TSDBAdapterException("Can not write to Storage - bucketId is NULL - " + getConnectionInfo());
@@ -134,7 +134,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
     }
 
     @Override
-    public void cleanup() throws TSDBBException {
+    public void cleanup() throws BaseException {
 
         if (config.getBucketId() == null) {
             throw new TSDBAdapterException("Can not delete to Storage " + config.getBucket() + " - bucketId is NULL - " + getConnectionInfo());
@@ -220,7 +220,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
     }
 
-    private String lookupId(final String type, final String name, final String response) throws TSDBBException {
+    private String lookupId(final String type, final String name, final String response) throws BaseException {
 
         final JSONObject orgList = new JSONObject(response);
 
@@ -238,7 +238,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
         }
 
-        throw new TSDBBException(type + " ID not found for: " + name);
+        throw new BaseException(type + " ID not found for: " + name);
 
     }
 

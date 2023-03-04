@@ -5,11 +5,9 @@ import de.cleem.tub.tsdbb.apps.generator.generators.key.KeyGenerator;
 import de.cleem.tub.tsdbb.apps.generator.generators.key.KeyGeneratorException;
 import de.cleem.tub.tsdbb.apps.generator.generators.value.ValueGenerator;
 import de.cleem.tub.tsdbb.apps.generator.generators.value.ValueGeneratorException;
-import de.cleem.tub.tsdbb.commons.model.generator.RecordConfig;
-import de.cleem.tub.tsdbb.commons.model.generator.GeneratorConfig;
-import de.cleem.tub.tsdbb.commons.model.workload.KvPair;
-import de.cleem.tub.tsdbb.commons.model.workload.Workload;
-import de.cleem.tub.tsdbb.commons.model.workload.Record;
+import de.cleem.tub.tsdbb.apps.generator.server.api.model.Record;
+import de.cleem.tub.tsdbb.apps.generator.server.api.model.*;
+import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
 import de.cleem.tub.tsdbb.commons.random.strings.StringGeneratorException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,12 +16,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Slf4j
-public class WorkloadGenerator {
+public class WorkloadGenerator extends BaseClass {
     private GeneratorConfig config;
 
     public WorkloadGenerator() {
 
-        log.info("Constructing: " + this.getClass().getSimpleName());
         config = new GeneratorConfig();
 
     }
@@ -47,10 +44,9 @@ public class WorkloadGenerator {
             throw new WorkloadGeneratorException("RecordConfig is NULL");
         }
 
-        return KvPair.builder()
+        return new KvPair()
                 .key(KeyGenerator.generate(recordConfig))
-                .value(ValueGenerator.generate(recordConfig))
-                .build();
+                .value(ValueGenerator.generate(recordConfig));
 
     }
 
@@ -58,7 +54,7 @@ public class WorkloadGenerator {
 
 
         if(index%100==0) {
-            log.info("Generating Record " + index + " of " + config.getRecordCount());
+            log.debug("Generating Record " + index + " of " + config.getRecordCount());
         }
 
         if(config.getRecordConfigs()==null){
@@ -77,10 +73,9 @@ public class WorkloadGenerator {
         }
 
 
-        return Record.builder()
+        return new Record()
                 .recordId(UUID.randomUUID())
-                .kvPairs(kvPairList)
-                .build();
+                .kvPairs(kvPairList);
 
     }
 
@@ -104,10 +99,9 @@ public class WorkloadGenerator {
 
         }
 
-        final Workload workload = Workload.builder().build();
-        workload.setRecords(data);
+        log.info("Generated Workload with " + data.size() + " Records");
 
-        return workload;
+        return new Workload().records(data);
 
     }
 

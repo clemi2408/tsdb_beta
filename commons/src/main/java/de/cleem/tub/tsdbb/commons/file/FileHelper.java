@@ -1,10 +1,12 @@
 package de.cleem.tub.tsdbb.commons.file;
 
+import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class FileHelper {
+public class FileHelper extends BaseClass {
 
     public static void write(final File file, final byte[] content) throws FileException {
 

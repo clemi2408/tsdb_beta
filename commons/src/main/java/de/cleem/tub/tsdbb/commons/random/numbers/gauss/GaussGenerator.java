@@ -1,8 +1,10 @@
 package de.cleem.tub.tsdbb.commons.random.numbers.gauss;
 
+import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
+
 import java.util.Random;
 
-public class GaussGenerator {
+public class GaussGenerator extends BaseClass {
 
     final static Random RANDOM = new Random();
 

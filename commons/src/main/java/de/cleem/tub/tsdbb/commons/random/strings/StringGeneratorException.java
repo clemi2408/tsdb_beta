@@ -1,11 +1,9 @@
 package de.cleem.tub.tsdbb.commons.random.strings;
 
 
-import de.cleem.tub.tsdbb.commons.exception.TSDBBException;
+import de.cleem.tub.tsdbb.commons.exception.BaseException;
 
-import java.io.IOException;
-
-public class StringGeneratorException extends TSDBBException {
+public class StringGeneratorException extends BaseException {
     public StringGeneratorException(final String message) {
 
         super(message);

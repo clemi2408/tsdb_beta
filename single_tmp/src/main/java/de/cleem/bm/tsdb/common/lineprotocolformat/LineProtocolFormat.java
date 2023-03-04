@@ -1,7 +1,6 @@
 package de.cleem.bm.tsdb.common.lineprotocolformat;
 
 import de.cleem.bm.tsdb.adapter.exception.TSDBAdapterException;
-
 import de.cleem.tub.tsdbb.commons.model.workload.KvPair;
 import de.cleem.tub.tsdbb.commons.model.workload.Record;
 import lombok.Builder;

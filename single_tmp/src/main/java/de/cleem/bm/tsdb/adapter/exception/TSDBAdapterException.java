@@ -1,9 +1,9 @@
 package de.cleem.bm.tsdb.adapter.exception;
 
 
-import de.cleem.tub.tsdbb.commons.exception.TSDBBException;
+import de.cleem.tub.tsdbb.commons.exception.BaseException;
 
-public class TSDBAdapterException extends TSDBBException {
+public class TSDBAdapterException extends BaseException {
 
 
     public TSDBAdapterException(String message) {

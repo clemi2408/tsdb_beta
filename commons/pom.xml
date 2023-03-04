@@ -8,5 +8,12 @@
     </parent>
     <artifactId>commons</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.dtmo.jfiglet</groupId>
+            <artifactId>jfiglet</artifactId>
+            <version>${jfiglet.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

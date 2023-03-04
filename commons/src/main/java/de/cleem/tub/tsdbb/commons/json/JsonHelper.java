@@ -3,6 +3,7 @@ package de.cleem.tub.tsdbb.commons.json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
 import de.cleem.tub.tsdbb.commons.date.DateException;
 import de.cleem.tub.tsdbb.commons.date.DateHelper;
 import de.cleem.tub.tsdbb.commons.file.FileException;
@@ -13,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 @Slf4j
-public class JsonHelper {
+public class JsonHelper extends BaseClass {
 
     public static <T> String toString(final T instance, final boolean indent) throws JsonException {
 

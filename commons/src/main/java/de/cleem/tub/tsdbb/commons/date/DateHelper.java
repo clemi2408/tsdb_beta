@@ -1,11 +1,13 @@
 package de.cleem.tub.tsdbb.commons.date;
 
+import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class DateHelper {
+public class DateHelper extends BaseClass {
 
     private static final String FILE_TIMESTAMP_PATTERN = "yyyyMMddHHmmSS";
 

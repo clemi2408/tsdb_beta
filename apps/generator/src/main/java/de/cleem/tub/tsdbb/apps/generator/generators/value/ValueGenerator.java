@@ -1,19 +1,21 @@
 package de.cleem.tub.tsdbb.apps.generator.generators.value;
 
 
-import de.cleem.tub.tsdbb.commons.model.generator.Distribution;
-import de.cleem.tub.tsdbb.commons.model.generator.RecordConfig;
-import de.cleem.tub.tsdbb.commons.model.generator.ValueTypes;
+import de.cleem.tub.tsdbb.apps.generator.generators.types.ValueTypes;
+import de.cleem.tub.tsdbb.apps.generator.server.api.model.RecordConfig;
 import de.cleem.tub.tsdbb.commons.random.numbers.gauss.GaussGenerator;
 import de.cleem.tub.tsdbb.commons.random.numbers.triangle.TriangleGenerator;
 import de.cleem.tub.tsdbb.commons.random.numbers.uniform.UniformGenerator;
 import de.cleem.tub.tsdbb.commons.random.strings.StringGenerator;
 import de.cleem.tub.tsdbb.commons.random.strings.StringGeneratorException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ValueGenerator {
 
     // Abstractions for specific numeric distribution Generators
-    private static Number[] generateUniform(final RecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
+    private static Number generateUniform(final RecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
 
         if (recordConfig == null) {
             throw new ValueGeneratorException("RecordConfig is NULL");
@@ -30,12 +32,12 @@ public class ValueGenerator {
 
         if (valueType == ValueTypes.DOUBLE) {
 
-            return new Number[]{UniformGenerator.getDouble(recordConfig.getMinValue(), recordConfig.getMaxValue())};
+            return UniformGenerator.getDouble(recordConfig.getMinValue(), recordConfig.getMaxValue());
 
 
         } else if (valueType == ValueTypes.INTEGER) {
 
-            return new Number[]{UniformGenerator.getInteger(recordConfig.getMinValue().intValue(), recordConfig.getMaxValue().intValue())};
+            return UniformGenerator.getInteger(recordConfig.getMinValue().intValue(), recordConfig.getMaxValue().intValue());
 
         }
 
@@ -43,7 +45,7 @@ public class ValueGenerator {
 
     }
 
-    private static Number[] generateTriangle(final RecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
+    private static Number generateTriangle(final RecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
 
         if (recordConfig == null) {
             throw new ValueGeneratorException("RecordConfig is NULL");
@@ -62,16 +64,16 @@ public class ValueGenerator {
         }
 
         if (valueType == ValueTypes.DOUBLE) {
-            return new Number[]{TriangleGenerator.getDouble(recordConfig.getMinValue(), recordConfig.getMaxValue(), recordConfig.getTriangleSpike())};
+            return TriangleGenerator.getDouble(recordConfig.getMinValue(), recordConfig.getMaxValue(), recordConfig.getTriangleSpike());
         } else if (valueType == ValueTypes.INTEGER) {
-            return new Number[]{TriangleGenerator.getInteger(recordConfig.getMinValue(), recordConfig.getMaxValue(), recordConfig.getTriangleSpike())};
+            return TriangleGenerator.getInteger(recordConfig.getMinValue(), recordConfig.getMaxValue(), recordConfig.getTriangleSpike());
         }
 
         throw new ValueGeneratorException("Can not generate triangle distributed value of type: " + valueType);
 
     }
 
-    private static Number[] generateGauss(final RecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
+    private static Number generateGauss(final RecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
 
         if (recordConfig == null) {
             throw new ValueGeneratorException("RecordConfig is NULL");
@@ -87,10 +89,10 @@ public class ValueGenerator {
         }
 
         if (valueType == ValueTypes.DOUBLE) {
-            return new Number[]{GaussGenerator.getDouble(recordConfig.getGaussMiddle(), recordConfig.getGaussRange())};
+            return GaussGenerator.getDouble(recordConfig.getGaussMiddle(), recordConfig.getGaussRange());
 
         } else if (valueType == ValueTypes.INTEGER) {
-            return new Number[]{GaussGenerator.getInteger(recordConfig.getGaussMiddle(), recordConfig.getGaussRange())};
+            return GaussGenerator.getInteger(recordConfig.getGaussMiddle(), recordConfig.getGaussRange());
 
         }
 
@@ -99,7 +101,7 @@ public class ValueGenerator {
     }
 
     // Abstractions for numeric generation
-    private static Number[] generateDistributedValue(final RecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
+    private static Number generateDistributedValue(final RecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
 
         if (recordConfig == null) {
             throw new ValueGeneratorException("RecordConfig is NULL");
@@ -111,17 +113,17 @@ public class ValueGenerator {
             throw new ValueGeneratorException("No value distribution provided");
         }
 
-        final Distribution valueDistribution = recordConfig.getValueDistribution();
+        final RecordConfig.ValueDistributionEnum valueDistribution = recordConfig.getValueDistribution();
 
-        if (valueDistribution.equals(Distribution.UNIFORM)) {
+        if (valueDistribution.equals(RecordConfig.ValueDistributionEnum.UNIFORM)) {
 
             return generateUniform(recordConfig, valueType);
 
-        } else if (valueDistribution.equals(Distribution.GAUSS)) {
+        } else if (valueDistribution.equals(RecordConfig.ValueDistributionEnum.GAUSS)) {
 
             return generateGauss(recordConfig, valueType);
 
-        } else if (valueDistribution.equals(Distribution.TRIANGLE)) {
+        } else if (valueDistribution.equals(RecordConfig.ValueDistributionEnum.TRIANGLE)) {
 
             return generateTriangle(recordConfig, valueType);
 
@@ -133,13 +135,13 @@ public class ValueGenerator {
     }
 
     // Abstractions for string generation
-    private static String[] generateStrings(final RecordConfig recordConfig) throws ValueGeneratorException, StringGeneratorException {
+    private static List<String> generateStrings(final RecordConfig recordConfig) throws ValueGeneratorException, StringGeneratorException {
 
         if (recordConfig == null) {
             throw new ValueGeneratorException("RecordConfig is NULL");
         }
 
-        if (recordConfig.getStringEnumValues() != null && recordConfig.getStringEnumValues().length > 0) {
+        if (recordConfig.getStringEnumValues() != null && recordConfig.getStringEnumValues().size() > 0) {
 
             return recordConfig.getStringEnumValues();
 
@@ -157,7 +159,7 @@ public class ValueGenerator {
 
         if (recordConfig.getMinStringEnumValues() == null && recordConfig.getMaxStringEnumValues() == null) {
 
-            return new String[]{StringGenerator.getRandomString(minStringLength, maxStringLength)};
+            return List.of(StringGenerator.getRandomString(minStringLength, maxStringLength));
 
         }
 
@@ -181,11 +183,11 @@ public class ValueGenerator {
             throw new ValueGeneratorException("randomStringCount must be greater than zero");
         }
 
-        final String[] outputStrings = new String[randomStringCount];
+        final List<String> outputStrings = new ArrayList<>();
 
-        for (int i = 0; i < outputStrings.length; i++) {
+        for (int i = 0; i < randomStringCount; i++) {
 
-            outputStrings[i] = StringGenerator.getRandomString(minStringLength, maxStringLength);
+            outputStrings.add(StringGenerator.getRandomString(minStringLength, maxStringLength));
 
 
         }
@@ -195,7 +197,7 @@ public class ValueGenerator {
     }
 
     // Abstraction for generation
-    public static Object[] generate(final RecordConfig recordConfig) throws ValueGeneratorException, StringGeneratorException {
+    public static List generate(final RecordConfig recordConfig) throws ValueGeneratorException, StringGeneratorException {
 
         final ValueTypes valueType = ValueTypes.get(recordConfig.getValueType());
 
@@ -209,7 +211,7 @@ public class ValueGenerator {
 
         } else if (valueType == ValueTypes.INTEGER || valueType == ValueTypes.DOUBLE) {
 
-            return generateDistributedValue(recordConfig, valueType);
+            return List.of(generateDistributedValue(recordConfig, valueType));
 
         }
 

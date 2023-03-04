@@ -1,8 +1,10 @@
 package de.cleem.tub.tsdbb.commons.random.numbers.uniform;
 
+import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
+
 import java.util.Random;
 
-public class UniformGenerator {
+public class UniformGenerator extends BaseClass {
 
     final static Random RANDOM = new Random();
 

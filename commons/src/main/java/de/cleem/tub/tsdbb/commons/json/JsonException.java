@@ -1,9 +1,9 @@
 package de.cleem.tub.tsdbb.commons.json;
 
 
-import de.cleem.tub.tsdbb.commons.exception.TSDBBException;
+import de.cleem.tub.tsdbb.commons.exception.BaseException;
 
-public class JsonException extends TSDBBException {
+public class JsonException extends BaseException {
 
 
     public JsonException(String message) {

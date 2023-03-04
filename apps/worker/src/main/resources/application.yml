@@ -1,0 +1,15 @@
+server:
+  port: 8082
+
+application:
+  banner:
+    title: TSDB Benchmark Worker Microservice
+    copyright: cleem
+    year: 2023
+  errors:
+    logStackTrace: true
+
+
+spring:
+  application:
+    name: worker

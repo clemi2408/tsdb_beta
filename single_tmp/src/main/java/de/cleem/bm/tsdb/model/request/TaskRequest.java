@@ -3,7 +3,7 @@ package de.cleem.bm.tsdb.model.request;
 import de.cleem.bm.tsdb.executor.BaseConnector;
 import de.cleem.bm.tsdb.model.config.TSDBConfig;
 import de.cleem.bm.tsdb.model.result.TaskResult;
-import de.cleem.tub.tsdbb.commons.exception.TSDBBException;
+import de.cleem.tub.tsdbb.commons.exception.BaseException;
 import de.cleem.tub.tsdbb.commons.model.workload.Record;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,7 +17,7 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
     private Record record;
 
 
-    public TaskRequest(final TSDBConfig config, final String taskName, final Record record) throws TSDBBException {
+    public TaskRequest(final TSDBConfig config, final String taskName, final Record record) throws BaseException {
 
         this.record = record;
         this.taskName = taskName;

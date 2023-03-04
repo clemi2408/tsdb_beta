@@ -1,0 +1,32 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Generator API
+  description: API to generate Workload
+  termsOfService: https://host.tld/terms/
+  contact:
+    name: Clemens Künzel
+    email: me@cleem.de
+    url: https://host.tld
+
+servers:
+  - url: http://localhost:8080
+  - url: https://host.tld
+paths:
+  /generate:
+    post:
+      description: Accepts GeneratorConfig Request and produces Workload Response
+      operationId: generate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "model/generatorConfig.json"
+      responses:
+        '200':
+          description: The Workload response
+          content:
+            application/json:
+              schema:
+                $ref: "model/workload.json"

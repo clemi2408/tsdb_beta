@@ -1,8 +1,10 @@
 package de.cleem.tub.tsdbb.commons.random.numbers.triangle;
 
+import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
+
 import java.util.Random;
 
-public class TriangleGenerator {
+public class TriangleGenerator extends BaseClass {
 
     // https://stackoverflow.com/questions/33220176/triangular-distribution-in-java/33220276#33220276
 

@@ -6,7 +6,7 @@ import de.cleem.bm.tsdb.adapter.exception.TSDBAdapterException;
 import de.cleem.bm.tsdb.common.http.HttpHelper;
 import de.cleem.bm.tsdb.common.lineprotocolformat.LineProtocolFormat;
 import de.cleem.bm.tsdb.model.config.adapter.TSDBAdapterConfig;
-import de.cleem.tub.tsdbb.commons.exception.TSDBBException;
+import de.cleem.tub.tsdbb.commons.exception.BaseException;
 import de.cleem.tub.tsdbb.commons.model.workload.Record;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -75,7 +75,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     }
 
     @Override
-    public void cleanup() throws TSDBBException {
+    public void cleanup() throws BaseException {
 
         try {
             // :(
@@ -96,7 +96,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     }
 
     @Override
-    public void write(final Record record) throws TSDBBException {
+    public void write(final Record record) throws BaseException {
 
         log.info("Processing record: " + record.toString());
 
@@ -121,7 +121,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     }
 
     ////
-    private String[] getSeriesByLabelKV(final String key, final String value) throws TSDBBException {
+    private String[] getSeriesByLabelKV(final String key, final String value) throws BaseException {
 
         final String requestBody = "match[]={__name__=~\".+\", " + key + "=\"" + value + "\"}";
 
@@ -157,7 +157,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
     }
 
-    private void deleteSeries(final String seriesName) throws TSDBBException {
+    private void deleteSeries(final String seriesName) throws BaseException {
 
         final URI deleteUri = URI.create(config.getVictoriaMetricsUrl() + String.format(DELETE_ENDPOINT, seriesName));
 

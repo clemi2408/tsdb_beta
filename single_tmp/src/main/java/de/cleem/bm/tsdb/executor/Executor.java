@@ -3,14 +3,13 @@ package de.cleem.bm.tsdb.executor;
 
 import de.cleem.bm.tsdb.common.random.values.numbers.RandomUniformHelper;
 import de.cleem.bm.tsdb.model.config.TSDBConfig;
-
 import de.cleem.bm.tsdb.model.request.TaskRequest;
 import de.cleem.bm.tsdb.model.result.BenchmarkResult;
 import de.cleem.bm.tsdb.model.result.TaskResult;
-import de.cleem.tub.tsdbb.commons.exception.TSDBBException;
+import de.cleem.tub.tsdbb.commons.exception.BaseException;
 import de.cleem.tub.tsdbb.commons.model.workload.KvPair;
-import de.cleem.tub.tsdbb.commons.model.workload.Workload;
 import de.cleem.tub.tsdbb.commons.model.workload.Record;
+import de.cleem.tub.tsdbb.commons.model.workload.Workload;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,7 +32,7 @@ public class Executor extends BaseConnector {
     private BenchmarkResult benchmarkResult;
 
 
-    public Executor(final TSDBConfig tsdbConfig) throws TSDBBException {
+    public Executor(final TSDBConfig tsdbConfig) throws BaseException {
 
         log.info("Constructing: " + this.getClass().getSimpleName());
         this.tsdbConfig = tsdbConfig;
@@ -95,7 +94,7 @@ public class Executor extends BaseConnector {
     }
 
 
-    public void execute() throws TSDBBException {
+    public void execute() throws BaseException {
 
 
         log.info("Creating ThreadPool using " + tsdbConfig.getThreadCount() + " Threads");
@@ -129,7 +128,7 @@ public class Executor extends BaseConnector {
 
     }
 
-    public void shutdown() throws TSDBBException {
+    public void shutdown() throws BaseException {
 
         log.info("Shutting down ThreadPool");
 

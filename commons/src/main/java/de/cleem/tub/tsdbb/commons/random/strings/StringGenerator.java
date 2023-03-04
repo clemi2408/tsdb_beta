@@ -1,12 +1,13 @@
 package de.cleem.tub.tsdbb.commons.random.strings;
 
 
+import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
 import de.cleem.tub.tsdbb.commons.random.numbers.uniform.UniformGenerator;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
-public class StringGenerator {
+public class StringGenerator extends BaseClass {
 
     final static Random RANDOM = new Random();
 

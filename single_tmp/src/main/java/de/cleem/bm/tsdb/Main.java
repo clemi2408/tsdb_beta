@@ -3,7 +3,7 @@ package de.cleem.bm.tsdb;
 
 import de.cleem.bm.tsdb.executor.Executor;
 import de.cleem.bm.tsdb.model.config.TSDBConfig;
-import de.cleem.tub.tsdbb.commons.exception.TSDBBException;
+import de.cleem.tub.tsdbb.commons.exception.BaseException;
 import de.cleem.tub.tsdbb.commons.json.JsonHelper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Main {
 
-    public static void main(String[] args) throws TSDBBException {
+    public static void main(String[] args) throws BaseException {
 
 
         TSDBConfig config = TSDBConfig.builder().build();

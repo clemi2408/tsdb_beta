@@ -1,9 +1,9 @@
 package de.cleem.bm.tsdb.executor;
 
 
-import de.cleem.tub.tsdbb.commons.exception.TSDBBException;
+import de.cleem.tub.tsdbb.commons.exception.BaseException;
 
-public class ExecutionException extends TSDBBException {
+public class ExecutionException extends BaseException {
 
 
     public ExecutionException(String message) {

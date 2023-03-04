@@ -6,7 +6,7 @@ import de.cleem.bm.tsdb.adapter.influxdb.InfluxDbAdapterConfig;
 import de.cleem.bm.tsdb.adapter.victoriametrics.VictoriaMetricsAdapter;
 import de.cleem.bm.tsdb.adapter.victoriametrics.VictoriaMetricsAdapterConfig;
 import de.cleem.bm.tsdb.model.config.TSDBConfig;
-import de.cleem.tub.tsdbb.commons.exception.TSDBBException;
+import de.cleem.tub.tsdbb.commons.exception.BaseException;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +18,7 @@ public class BaseConnector {
 
     protected TSDBAdapterIF tsdbInterface;
 
-    protected void setStorageAdapter() throws TSDBBException {
+    protected void setStorageAdapter() throws BaseException {
 
         if (tsdbConfig.getTsdbAdapterConfig() instanceof InfluxDbAdapterConfig) {
 
@@ -31,7 +31,7 @@ public class BaseConnector {
             tsdbInterface.setup(tsdbConfig.getTsdbAdapterConfig());
 
         } else {
-            throw new TSDBBException("Invalid config: " + tsdbConfig.getTsdbAdapterConfig().getClass().getSimpleName());
+            throw new BaseException("Invalid config: " + tsdbConfig.getTsdbAdapterConfig().getClass().getSimpleName());
 
         }
 
