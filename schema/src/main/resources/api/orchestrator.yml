@@ -1,8 +1,8 @@
 openapi: "3.0.0"
 info:
   version: 1.0.0
-  title: Generator API
-  description: API to generate Workload
+  title: Orchestrator API
+  description: API to control Benchmark Execution
   termsOfService: https://host.tld/terms/
   contact:
     name: Clemens Künzel
@@ -10,35 +10,34 @@ info:
     url: https://host.tld
 
 servers:
-  - url: http://localhost:8080
+  - url: http://localhost:8081
   - url: https://host.tld
 paths:
-  /rest/generate:
+  /rest/preload:
     post:
-      description: Accepts GeneratorConfig Request and produces Workload Response
-      operationId: generate
+      description: Accepts Preload Request
+      operationId: preload
       tags:
-        - GeneratorGenerate
+        - OrchestratorPreload
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "model/generatorConfig.json"
+              $ref: "model/preloadRequest.json"
       responses:
         '200':
-          description: The Workload response
+          description: The Preload response
           content:
             application/json:
               schema:
-                $ref: "model/workload.json"
-
+                $ref: "model/preloadResponse.json"
   /rest/ping:
     get:
       description: Returns Ping response (Pong)
       operationId: ping
       tags:
-        - GeneratorPing
+        - OrchestratorPing
       responses:
         '200':
           description: The Ping response (Pong)

@@ -2,7 +2,8 @@ package de.cleem.tub.tsdbb.apps.generator.generators.key;
 
 
 
-import de.cleem.tub.tsdbb.apps.generator.server.api.model.RecordConfig;
+
+import de.cleem.tub.tsdbb.api.model.RecordConfig;
 import de.cleem.tub.tsdbb.commons.random.strings.StringGenerator;
 import de.cleem.tub.tsdbb.commons.random.strings.StringGeneratorException;
 import lombok.extern.slf4j.Slf4j;

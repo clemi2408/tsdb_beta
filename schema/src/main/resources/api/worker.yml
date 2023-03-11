@@ -1,0 +1,29 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Worker API
+  description: API to control Worker Execution
+  termsOfService: https://host.tld/terms/
+  contact:
+    name: Clemens Künzel
+    email: me@cleem.de
+    url: https://host.tld
+
+servers:
+  - url: http://localhost:8082
+  - url: https://host.tld
+paths:
+
+  /rest/ping:
+    get:
+      description: Returns Ping response (Pong)
+      operationId: ping
+      tags:
+        - WorkerPing
+      responses:
+        '200':
+          description: The Ping response (Pong)
+          content:
+            application/json:
+              schema:
+                $ref: "model/pingResponse.json"

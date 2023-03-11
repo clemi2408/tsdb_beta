@@ -6,11 +6,14 @@
       "type" : "array",
       "items" : {
       "$ref": "kvPair.json"
-      }
+      },
+      "minItems": 1
     },
     "recordId" : {
       "type" : "string",
       "format": "uuid"
     }
-  }
+  },
+  "required": [ "recordId","kvPairs" ]
+
 }

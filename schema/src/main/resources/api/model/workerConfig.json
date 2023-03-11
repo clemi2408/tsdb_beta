@@ -2,14 +2,13 @@
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
   "properties" : {
-    "key" : {
+
+    "workerUrl" : {
       "type" : "string"
     },
-    "value" : {
-      "type" : "array",
-      "items" : { }
+    "tsdbConnection": {
+      "$ref": "tsdbConnection.json"
     }
   },
-  "required": [ "key","value" ]
-
+  "required": [ "workerUrl","tsdbConnection" ]
 }

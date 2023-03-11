@@ -1,12 +1,12 @@
 package de.cleem.tub.tsdbb.apps.generator.generators.workload;
 
 
+import de.cleem.tub.tsdbb.api.model.*;
+import de.cleem.tub.tsdbb.api.model.Record;
 import de.cleem.tub.tsdbb.apps.generator.generators.key.KeyGenerator;
 import de.cleem.tub.tsdbb.apps.generator.generators.key.KeyGeneratorException;
 import de.cleem.tub.tsdbb.apps.generator.generators.value.ValueGenerator;
 import de.cleem.tub.tsdbb.apps.generator.generators.value.ValueGeneratorException;
-import de.cleem.tub.tsdbb.apps.generator.server.api.model.Record;
-import de.cleem.tub.tsdbb.apps.generator.server.api.model.*;
 import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
 import de.cleem.tub.tsdbb.commons.random.strings.StringGeneratorException;
 import lombok.extern.slf4j.Slf4j;

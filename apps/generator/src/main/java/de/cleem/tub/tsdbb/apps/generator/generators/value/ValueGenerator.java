@@ -1,8 +1,8 @@
 package de.cleem.tub.tsdbb.apps.generator.generators.value;
 
 
+import de.cleem.tub.tsdbb.api.model.RecordConfig;
 import de.cleem.tub.tsdbb.apps.generator.generators.types.ValueTypes;
-import de.cleem.tub.tsdbb.apps.generator.server.api.model.RecordConfig;
 import de.cleem.tub.tsdbb.commons.random.numbers.gauss.GaussGenerator;
 import de.cleem.tub.tsdbb.commons.random.numbers.triangle.TriangleGenerator;
 import de.cleem.tub.tsdbb.commons.random.numbers.uniform.UniformGenerator;

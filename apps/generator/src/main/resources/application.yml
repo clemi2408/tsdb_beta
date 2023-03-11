@@ -9,7 +9,6 @@ application:
   errors:
     logStackTrace: true
 
-
 spring:
   application:
     name: generator

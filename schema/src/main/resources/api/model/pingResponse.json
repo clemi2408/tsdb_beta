@@ -2,14 +2,10 @@
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
   "properties" : {
-    "key" : {
+    "status" : {
       "type" : "string"
-    },
-    "value" : {
-      "type" : "array",
-      "items" : { }
     }
   },
-  "required": [ "key","value" ]
+  "required": [ "status" ]
 
 }

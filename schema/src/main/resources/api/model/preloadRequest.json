@@ -1,0 +1,21 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+
+    "generatorConfig" : {
+        "$ref": "generatorConfig.json"
+    },
+    "generatorUrl" : {
+      "type" : "string"
+    },
+    "workerConfigs" : {
+      "type" : "array",
+      "items" : {
+        "$ref": "workerConfig.json"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [ "generatorConfig","generatorUrl","workerConfigs" ]
+}
