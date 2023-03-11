@@ -67,8 +67,12 @@ public class OrchestratorService extends BaseSpringComponent {
         log.info("Got workload from generator with "+workload.getRecords().size()+" records");
 
 
+        final PreloadResponse preloadResponse = new PreloadResponse();
+        preloadResponse.setPreloadRequest(preloadRequest);
+        preloadResponse.setWorkload(workload);
 
-        return null;
+
+        return preloadResponse;
 
     }
 

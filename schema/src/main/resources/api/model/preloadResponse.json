@@ -3,22 +3,13 @@
   "type" : "object",
   "properties" : {
 
-    "generatorConfig" : {
-        "$ref": "generatorConfig.json"
+    "preloadRequest" : {
+      "$ref": "preloadRequest.json"
     },
-    "generatorUrl" : {
-      "type" : "string"
-    },
-    "workerConfigs" : {
-      "type" : "array",
-      "items" : {
-        "$ref": "workerConfig.json"
-      },
-      "minItems": 1
-    },
+
     "workload" : {
       "$ref": "workload.json"
     }
   },
-  "required": [ "generatorConfig","generatorUrl","workerConfigs" ]
+  "required": [ "workload","preloadRequest" ]
 }
