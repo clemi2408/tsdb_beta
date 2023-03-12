@@ -1,0 +1,31 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+    "tsdbType" : {
+      "type" : "string",
+      "nullable" : false
+    },
+    "host" : {
+      "type" : "string",
+      "nullable" : false
+    },
+    "port" : {
+      "type" : "integer",
+      "nullable" : false
+    },
+    "user" : {
+      "type" : "string",
+      "nullable" : true
+    },
+    "password" : {
+      "type" : "string",
+      "nullable" : true
+    },
+    "token" : {
+      "type" : "string",
+      "nullable" : true
+    }
+  },
+  "required": [ "tsdbType","host","port" ]
+}

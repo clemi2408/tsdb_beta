@@ -3,7 +3,7 @@ package de.cleem.tub.tsdbb.apps.generator.generators.key;
 
 
 
-import de.cleem.tub.tsdbb.api.model.RecordConfig;
+import de.cleem.tub.tsdbb.api.model.GeneratorRecordConfig;
 import de.cleem.tub.tsdbb.commons.random.strings.StringGenerator;
 import de.cleem.tub.tsdbb.commons.random.strings.StringGeneratorException;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class KeyGenerator {
 
-    public static String generate(final RecordConfig recordConfig) throws StringGeneratorException, KeyGeneratorException {
+    public static String generate(final GeneratorRecordConfig recordConfig) throws StringGeneratorException, KeyGeneratorException {
 
         if(recordConfig==null){
             throw new KeyGeneratorException("Record config is NULL");

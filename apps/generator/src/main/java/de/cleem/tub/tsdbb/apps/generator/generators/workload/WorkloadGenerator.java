@@ -1,8 +1,8 @@
 package de.cleem.tub.tsdbb.apps.generator.generators.workload;
 
 
-import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.api.model.Record;
+import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.apps.generator.generators.key.KeyGenerator;
 import de.cleem.tub.tsdbb.apps.generator.generators.key.KeyGeneratorException;
 import de.cleem.tub.tsdbb.apps.generator.generators.value.ValueGenerator;
@@ -17,28 +17,23 @@ import java.util.UUID;
 
 @Slf4j
 public class WorkloadGenerator extends BaseClass {
-    private GeneratorConfig config;
+    private GeneratorGenerateRequest generateRequest;
 
-    public WorkloadGenerator() {
-
-        config = new GeneratorConfig();
-
-    }
 
     public static WorkloadGenerator builder() {
 
         return new WorkloadGenerator();
     }
 
-    public WorkloadGenerator config(final GeneratorConfig generatorConfig) {
+    public WorkloadGenerator generateRequest(final GeneratorGenerateRequest generateRequest) {
 
-        config = generatorConfig;
+        this.generateRequest = generateRequest;
 
         return this;
 
     }
 
-    private KvPair generateKvPair(final RecordConfig recordConfig) throws ValueGeneratorException, StringGeneratorException, KeyGeneratorException, WorkloadGeneratorException {
+    private KvPair generateKvPair(final GeneratorRecordConfig recordConfig) throws ValueGeneratorException, StringGeneratorException, KeyGeneratorException, WorkloadGeneratorException {
 
         if(recordConfig==null){
             throw new WorkloadGeneratorException("RecordConfig is NULL");
@@ -54,19 +49,19 @@ public class WorkloadGenerator extends BaseClass {
 
 
         if(index%100==0) {
-            log.debug("Generating Record " + index + " of " + config.getRecordCount());
+            log.debug("Generating Record " + index + " of " + generateRequest.getRecordCount());
         }
 
-        if(config.getRecordConfigs()==null){
+        if(generateRequest.getRecordConfigs()==null){
             throw new WorkloadGeneratorException("RecordConfigList is NULL");
         }
-        if(config.getRecordConfigs().isEmpty()){
+        if(generateRequest.getRecordConfigs().isEmpty()){
             throw new WorkloadGeneratorException("RecordConfigList is Empty");
         }
 
         final List<KvPair> kvPairList = new LinkedList<>();
 
-        for (RecordConfig recordConfig : config.getRecordConfigs()) {
+        for (GeneratorRecordConfig recordConfig : generateRequest.getRecordConfigs()) {
 
             kvPairList.add(generateKvPair(recordConfig));
 
@@ -81,19 +76,19 @@ public class WorkloadGenerator extends BaseClass {
 
     public Workload generate() throws ValueGeneratorException, StringGeneratorException, KeyGeneratorException, WorkloadGeneratorException {
 
-        log.info("Generating Workload with " + config.getRecordCount() + " Records");
+        log.info("Generating Workload with " + generateRequest.getRecordCount() + " Records");
 
-        if(config.getRecordCount()==null){
+        if(generateRequest.getRecordCount()==null){
             throw new WorkloadGeneratorException("RecordCount is NULL");
         }
 
-        if(config.getRecordCount()<=0){
+        if(generateRequest.getRecordCount()<=0){
             throw new WorkloadGeneratorException("RecordCount is <=0");
         }
 
         final LinkedList<Record> data = new LinkedList<>();
 
-        for (int i = 1; i <= config.getRecordCount(); i++) {
+        for (int i = 1; i <= generateRequest.getRecordCount(); i++) {
 
             data.add(generateRecord(i));
 

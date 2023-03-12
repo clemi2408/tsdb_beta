@@ -15,7 +15,7 @@ servers:
 paths:
   /rest/generate:
     post:
-      description: Accepts GeneratorConfig Request and produces Workload Response
+      description: Accepts the generate request and produces the generate response
       operationId: generate
       tags:
         - GeneratorGenerate
@@ -24,14 +24,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "model/generatorConfig.json"
+              $ref: "model/generator/generatorGenerateRequest.json"
       responses:
         '200':
-          description: The Workload response
+          description: The generate response
           content:
             application/json:
               schema:
-                $ref: "model/workload.json"
+                $ref: "model/generator/generatorGenerateResponse.json"
 
   /rest/ping:
     get:

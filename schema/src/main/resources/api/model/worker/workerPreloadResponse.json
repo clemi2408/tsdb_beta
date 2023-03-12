@@ -1,0 +1,22 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+
+    "preloadRequest" : {
+      "$ref": "workerPreloadRequest.json",
+      "nullable" : false
+    },
+    "startTimestamp" : {
+      "type": "string",
+      "format": "date-time",
+      "nullable" : false
+    },
+    "endTimestamp" : {
+      "type": "string",
+      "format": "date-time",
+      "nullable" : false
+    }
+  },
+  "required": [ "startTimestamp","endTimestamp","preloadRequest" ]
+}

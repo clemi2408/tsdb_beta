@@ -1,7 +1,7 @@
 package de.cleem.tub.tsdbb.apps.generator.generators.value;
 
 
-import de.cleem.tub.tsdbb.api.model.RecordConfig;
+import de.cleem.tub.tsdbb.api.model.GeneratorRecordConfig;
 import de.cleem.tub.tsdbb.apps.generator.generators.types.ValueTypes;
 import de.cleem.tub.tsdbb.commons.random.numbers.gauss.GaussGenerator;
 import de.cleem.tub.tsdbb.commons.random.numbers.triangle.TriangleGenerator;
@@ -15,7 +15,7 @@ import java.util.List;
 public class ValueGenerator {
 
     // Abstractions for specific numeric distribution Generators
-    private static Number generateUniform(final RecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
+    private static Number generateUniform(final GeneratorRecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
 
         if (recordConfig == null) {
             throw new ValueGeneratorException("RecordConfig is NULL");
@@ -45,7 +45,7 @@ public class ValueGenerator {
 
     }
 
-    private static Number generateTriangle(final RecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
+    private static Number generateTriangle(final GeneratorRecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
 
         if (recordConfig == null) {
             throw new ValueGeneratorException("RecordConfig is NULL");
@@ -73,7 +73,7 @@ public class ValueGenerator {
 
     }
 
-    private static Number generateGauss(final RecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
+    private static Number generateGauss(final GeneratorRecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
 
         if (recordConfig == null) {
             throw new ValueGeneratorException("RecordConfig is NULL");
@@ -101,7 +101,7 @@ public class ValueGenerator {
     }
 
     // Abstractions for numeric generation
-    private static Number generateDistributedValue(final RecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
+    private static Number generateDistributedValue(final GeneratorRecordConfig recordConfig, final ValueTypes valueType) throws ValueGeneratorException {
 
         if (recordConfig == null) {
             throw new ValueGeneratorException("RecordConfig is NULL");
@@ -113,17 +113,17 @@ public class ValueGenerator {
             throw new ValueGeneratorException("No value distribution provided");
         }
 
-        final RecordConfig.ValueDistributionEnum valueDistribution = recordConfig.getValueDistribution();
+        final GeneratorRecordConfig.ValueDistributionEnum valueDistribution = recordConfig.getValueDistribution();
 
-        if (valueDistribution.equals(RecordConfig.ValueDistributionEnum.UNIFORM)) {
+        if (valueDistribution.equals(GeneratorRecordConfig.ValueDistributionEnum.UNIFORM)) {
 
             return generateUniform(recordConfig, valueType);
 
-        } else if (valueDistribution.equals(RecordConfig.ValueDistributionEnum.GAUSS)) {
+        } else if (valueDistribution.equals(GeneratorRecordConfig.ValueDistributionEnum.GAUSS)) {
 
             return generateGauss(recordConfig, valueType);
 
-        } else if (valueDistribution.equals(RecordConfig.ValueDistributionEnum.TRIANGLE)) {
+        } else if (valueDistribution.equals(GeneratorRecordConfig.ValueDistributionEnum.TRIANGLE)) {
 
             return generateTriangle(recordConfig, valueType);
 
@@ -135,7 +135,7 @@ public class ValueGenerator {
     }
 
     // Abstractions for string generation
-    private static List<String> generateStrings(final RecordConfig recordConfig) throws ValueGeneratorException, StringGeneratorException {
+    private static List<String> generateStrings(final GeneratorRecordConfig recordConfig) throws ValueGeneratorException, StringGeneratorException {
 
         if (recordConfig == null) {
             throw new ValueGeneratorException("RecordConfig is NULL");
@@ -197,7 +197,7 @@ public class ValueGenerator {
     }
 
     // Abstraction for generation
-    public static List generate(final RecordConfig recordConfig) throws ValueGeneratorException, StringGeneratorException {
+    public static List generate(final GeneratorRecordConfig recordConfig) throws ValueGeneratorException, StringGeneratorException {
 
         final ValueTypes valueType = ValueTypes.get(recordConfig.getValueType());
 

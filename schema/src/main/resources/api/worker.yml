@@ -13,6 +13,25 @@ servers:
   - url: http://localhost:8082
   - url: https://host.tld
 paths:
+  /rest/preload:
+    post:
+      description: Accepts Preload Request
+      operationId: preload
+      tags:
+        - WorkerPreload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "model/worker/workerPreloadRequest.json"
+      responses:
+        '200':
+          description: The Preload response
+          content:
+            application/json:
+              schema:
+                $ref: "model/worker/workerPreloadResponse.json"
 
   /rest/ping:
     get:

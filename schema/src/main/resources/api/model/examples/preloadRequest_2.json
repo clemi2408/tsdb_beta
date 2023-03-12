@@ -90,7 +90,7 @@
       "valueDistribution" : "GAUSS",
       "valueType" : "Double"
     } ],
-    "recordCount" : 1000
+    "recordCount" : 10
   },
   "generatorUrl" : "http://localhost:8080",
   "workerConfigs" : [ {

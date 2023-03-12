@@ -24,14 +24,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "model/preloadRequest.json"
+              $ref: "model/orchestrator/orchestratorPreloadRequest.json"
       responses:
         '200':
           description: The Preload response
           content:
             application/json:
               schema:
-                $ref: "model/preloadResponse.json"
+                $ref: "model/orchestrator/orchestratorPreloadResponse.json"
   /rest/ping:
     get:
       description: Returns Ping response (Pong)

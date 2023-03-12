@@ -1,0 +1,24 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+
+    "generateRequest" : {
+        "$ref": "../generator/generatorGenerateRequest.json",
+        "nullable" : false
+    },
+    "generatorUrl" : {
+      "type" : "string",
+      "nullable" : false
+    },
+    "workerConfigs" : {
+      "type" : "array",
+      "nullable" : false,
+      "items" : {
+        "$ref": "../worker/workerConfig.json"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [ "generateRequest","generatorUrl","workerConfigs" ]
+}

@@ -4,7 +4,7 @@
 
 [Apps README](../README.md)
 
-Main method class: `de.cleem.tub.tsdbb.apps.generator.App`
+Main method class: `de.cleem.tub.tsdbb.apps.generator.GeneratorApp`
 
 For repeatability of the benchmark, the `GeneratorConfig` holding the configuration of the `WorkloadGenerator` and
 the generated workload is persisted.

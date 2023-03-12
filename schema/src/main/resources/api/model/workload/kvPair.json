@@ -2,11 +2,17 @@
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
   "properties" : {
-    "status" : {
+    "key" : {
       "type" : "string",
       "nullable" : false
+    },
+    "value" : {
+      "type" : "array",
+      "nullable" : false,
+      "items" : { },
+      "minItems": 1
     }
   },
-  "required": [ "status" ]
+  "required": [ "key","value" ]
 
 }

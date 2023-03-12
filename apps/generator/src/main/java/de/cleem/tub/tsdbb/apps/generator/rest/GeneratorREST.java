@@ -2,16 +2,16 @@ package de.cleem.tub.tsdbb.apps.generator.rest;
 
 import de.cleem.tub.tsdbb.api.generator.server.GeneratorGenerateApi;
 import de.cleem.tub.tsdbb.api.generator.server.GeneratorPingApi;
-import de.cleem.tub.tsdbb.api.model.GeneratorConfig;
+import de.cleem.tub.tsdbb.api.model.GeneratorGenerateRequest;
+import de.cleem.tub.tsdbb.api.model.GeneratorGenerateResponse;
 import de.cleem.tub.tsdbb.api.model.PingResponse;
-import de.cleem.tub.tsdbb.api.model.Workload;
 import de.cleem.tub.tsdbb.apps.generator.generators.key.KeyGeneratorException;
 import de.cleem.tub.tsdbb.apps.generator.generators.value.ValueGeneratorException;
 import de.cleem.tub.tsdbb.apps.generator.generators.workload.WorkloadGeneratorException;
 import de.cleem.tub.tsdbb.apps.generator.service.GeneratorService;
 import de.cleem.tub.tsdbb.commons.random.strings.StringGeneratorException;
 import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
-import de.cleem.tub.tsdbb.commons.spring.ping.PingResponder;
+import de.cleem.tub.tsdbb.commons.spring.ping.PingHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -24,17 +24,19 @@ public class GeneratorREST extends BaseSpringComponent implements GeneratorGener
     private GeneratorService generatorService;
 
     @Override
-    public ResponseEntity<Workload> generate(GeneratorConfig generatorConfig) throws ValueGeneratorException, StringGeneratorException, WorkloadGeneratorException, KeyGeneratorException {
+    public ResponseEntity<GeneratorGenerateResponse> generate(final GeneratorGenerateRequest generatorGenerateRequest) throws ValueGeneratorException, StringGeneratorException, WorkloadGeneratorException, KeyGeneratorException {
 
-            return ResponseEntity.ok(generatorService.generate(generatorConfig));
+        return ResponseEntity.ok(generatorService.generate(generatorGenerateRequest));
 
     }
+
 
     @Override
     public ResponseEntity<PingResponse> ping() {
 
-        return PingResponder.pong(true);
+        return PingHelper.pong(true);
 
     }
+
 
 }

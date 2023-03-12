@@ -4,4 +4,4 @@
 
 [Apps README](../README.md)
 
-Main method class: `de.cleem.tub.tsdbb.apps.orchestrator.App`
+Main method class: `de.cleem.tub.tsdbb.apps.orchestrator.OrchestratorApp`

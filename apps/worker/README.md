@@ -4,4 +4,4 @@
 
 [Apps README](../README.md)
 
-Main method class: `de.cleem.tub.tsdbb.apps.worker.App`
+Main method class: `de.cleem.tub.tsdbb.apps.worker.WorkerApp`

@@ -1,0 +1,21 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+    "kvPairs" : {
+      "type" : "array",
+      "nullable" : false,
+      "items" : {
+      "$ref": "kvPair.json"
+      },
+      "minItems": 1
+    },
+    "recordId" : {
+      "type" : "string",
+      "format": "uuid",
+      "nullable" : false
+    }
+  },
+  "required": [ "recordId","kvPairs" ]
+
+}
