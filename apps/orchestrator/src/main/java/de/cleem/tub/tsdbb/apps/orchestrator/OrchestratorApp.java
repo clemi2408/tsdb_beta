@@ -8,6 +8,7 @@ import de.cleem.tub.tsdbb.commons.spring.base.app.BaseSpringApp;
 import de.cleem.tub.tsdbb.commons.spring.exceptionhandler.AppExceptionHandler;
 import de.cleem.tub.tsdbb.commons.spring.objectcache.SingleObjectInstanceCache;
 import de.cleem.tub.tsdbb.commons.spring.objectmapper.ObjectMapperConfig;
+import de.cleem.tub.tsdbb.commons.spring.pingresponder.PingResponderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,11 +21,11 @@ import org.springframework.context.annotation.ComponentScan;
         AppExceptionHandler.class,
         ApiClientService.class,
 
+        PingResponderService.class,
         SingleObjectInstanceCache.class,
 
         OrchestratorService.class,
         OrchestratorREST.class
-
 
 })
 

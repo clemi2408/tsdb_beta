@@ -21,11 +21,11 @@
       "type" : "array",
       "nullable" : true,
       "items" : {
-        "$ref": "startResponse.json"
+        "$ref": "startStopResponse.json"
       },
       "minItems": 0
     }
   },
-  "required": [ "cleared","errors","endTimestamp","startTimestamp" ]
+  "required": [ "status","endTimestamp","startTimestamp" ]
 
 }

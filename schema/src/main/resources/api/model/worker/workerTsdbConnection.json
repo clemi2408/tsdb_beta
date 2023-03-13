@@ -4,28 +4,26 @@
   "properties" : {
     "tsdbType" : {
       "type" : "string",
+      "enum": ["INFLUX", "VICTORIA"],
       "nullable" : false
     },
-    "host" : {
+    "url" : {
       "type" : "string",
-      "nullable" : false
-    },
-    "port" : {
-      "type" : "integer",
-      "nullable" : false
-    },
-    "user" : {
-      "type" : "string",
-      "nullable" : true
-    },
-    "password" : {
-      "type" : "string",
-      "nullable" : true
+      "nullable" : false,
+      "format": "uri",
+      "pattern": "^https?://"
     },
     "token" : {
       "type" : "string",
       "nullable" : true
+    },
+    "connectionProperties": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
     }
+
   },
-  "required": [ "tsdbType","host","port" ]
+  "required": [ "tsdbType","url" ]
 }

@@ -15,8 +15,8 @@ import de.cleem.tub.tsdbb.commons.spring.apiclient.ApiClientService;
 import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
 import de.cleem.tub.tsdbb.commons.spring.objectcache.SingleObjectInstanceCache;
 import de.cleem.tub.tsdbb.commons.spring.objectcache.SingleObjectInstanceCacheException;
-import de.cleem.tub.tsdbb.commons.spring.ping.PingException;
-import de.cleem.tub.tsdbb.commons.spring.ping.PingHelper;
+import de.cleem.tub.tsdbb.commons.spring.pingresponder.PingResponderException;
+import de.cleem.tub.tsdbb.commons.spring.pingresponder.PingResponderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,9 +38,12 @@ public class OrchestratorService extends BaseSpringComponent {
     private ApiClientService apiClientService;
 
     @Autowired
+    private PingResponderService pingResponderService;
+
+    @Autowired
     private SingleObjectInstanceCache cache;
 
-    public OrchestratorPreloadResponse preload(final OrchestratorPreloadRequest orchestratorPreloadRequest) throws ClientApiFacadeException, PingException, SingleObjectInstanceCacheException {
+    public OrchestratorPreloadResponse preload(final OrchestratorPreloadRequest orchestratorPreloadRequest) throws ClientApiFacadeException, PingResponderException, SingleObjectInstanceCacheException {
 
         final OrchestratorPreloadResponse orchestratorPreloadResponse = new OrchestratorPreloadResponse();
         orchestratorPreloadResponse.setStartTimestamp(OffsetDateTime.now());
@@ -70,12 +73,12 @@ public class OrchestratorService extends BaseSpringComponent {
 
 
     // PING METHODS
-    private void pingPeers(final OrchestratorPreloadRequest preloadRequest) throws ClientApiFacadeException, PingException {
+    private void pingPeers(final OrchestratorPreloadRequest preloadRequest) throws ClientApiFacadeException, PingResponderException {
 
         final GeneratorPingApi generatorPingApi = apiClientService.getApi(GeneratorPingApi.class,preloadRequest.getGeneratorUrl());
 
         log.info("Sending ping to generator: "+preloadRequest.getGeneratorUrl());
-        PingHelper.checkPingResponse(generatorPingApi.ping(),"generator",preloadRequest.getGeneratorUrl());
+        pingResponderService.checkPingResponse(generatorPingApi.ping(),"generator",preloadRequest.getGeneratorUrl());
 
         WorkerPingApi workerPingApi;
 
@@ -85,7 +88,7 @@ public class OrchestratorService extends BaseSpringComponent {
 
             log.info("Sending ping to worker: "+workerConfig.getWorkerUrl());
 
-            PingHelper.checkPingResponse(workerPingApi.ping(),"worker",workerConfig.getWorkerUrl());
+            pingResponderService.checkPingResponse(workerPingApi.ping(),"worker",workerConfig.getWorkerUrl());
 
         }
 

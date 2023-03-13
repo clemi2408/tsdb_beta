@@ -11,7 +11,7 @@ import de.cleem.tub.tsdbb.apps.generator.generators.workload.WorkloadGeneratorEx
 import de.cleem.tub.tsdbb.apps.generator.service.GeneratorService;
 import de.cleem.tub.tsdbb.commons.random.strings.StringGeneratorException;
 import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
-import de.cleem.tub.tsdbb.commons.spring.ping.PingHelper;
+import de.cleem.tub.tsdbb.commons.spring.pingresponder.PingResponderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -22,6 +22,9 @@ public class GeneratorREST extends BaseSpringComponent implements GeneratorGener
 
     @Autowired
     private GeneratorService generatorService;
+
+    @Autowired
+    private PingResponderService pingResponderService;
 
     @Override
     public ResponseEntity<GeneratorGenerateResponse> generate(final GeneratorGenerateRequest generatorGenerateRequest) throws ValueGeneratorException, StringGeneratorException, WorkloadGeneratorException, KeyGeneratorException {
@@ -34,7 +37,7 @@ public class GeneratorREST extends BaseSpringComponent implements GeneratorGener
     @Override
     public ResponseEntity<PingResponse> ping() {
 
-        return PingHelper.pong(true);
+        return pingResponderService.pong(true);
 
     }
 

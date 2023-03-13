@@ -1,0 +1,19 @@
+{
+  "status": "Cache cleared",
+  "cleared": [
+    "OrchestratorPreloadRequest",
+    "OrchestratorPreloadResponse"
+  ],
+  "startTimestamp": "2023-03-13T22:45:23.521404+01:00",
+  "endTimestamp": "2023-03-13T22:45:23.5224+01:00",
+  "nestedResponses": [
+    {
+      "status": "Cache cleared",
+      "cleared": [
+        "WorkerPreloadRequest"
+      ],
+      "startTimestamp": "2023-03-13T21:45:23.475548Z",
+      "endTimestamp": "2023-03-13T21:45:23.48045Z"
+    }
+  ]
+}

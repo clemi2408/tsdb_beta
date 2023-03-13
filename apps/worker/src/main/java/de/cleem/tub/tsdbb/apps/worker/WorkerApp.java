@@ -1,6 +1,7 @@
 package de.cleem.tub.tsdbb.apps.worker;
 
 import de.cleem.tub.tsdbb.apps.worker.rest.WorkerREST;
+import de.cleem.tub.tsdbb.apps.worker.service.RunService;
 import de.cleem.tub.tsdbb.apps.worker.service.WorkerService;
 import de.cleem.tub.tsdbb.commons.spring.objectcache.SingleObjectInstanceCache;
 import de.cleem.tub.tsdbb.commons.base.app.BaseAppException;
@@ -8,6 +9,7 @@ import de.cleem.tub.tsdbb.commons.spring.apiclient.ApiClientService;
 import de.cleem.tub.tsdbb.commons.spring.base.app.BaseSpringApp;
 import de.cleem.tub.tsdbb.commons.spring.exceptionhandler.AppExceptionHandler;
 import de.cleem.tub.tsdbb.commons.spring.objectmapper.ObjectMapperConfig;
+import de.cleem.tub.tsdbb.commons.spring.pingresponder.PingResponderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,10 +20,12 @@ import org.springframework.context.annotation.ComponentScan;
 
         ObjectMapperConfig.class,
         AppExceptionHandler.class,
+        PingResponderService.class,
         ApiClientService.class,
 
         SingleObjectInstanceCache.class,
 
+        RunService.class,
         WorkerService.class,
         WorkerREST.class
 

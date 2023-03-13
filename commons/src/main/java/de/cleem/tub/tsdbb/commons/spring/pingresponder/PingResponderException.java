@@ -1,12 +1,12 @@
-package de.cleem.tub.tsdbb.commons.spring.ping;
+package de.cleem.tub.tsdbb.commons.spring.pingresponder;
 
 
 import de.cleem.tub.tsdbb.commons.exception.BaseException;
 
-public class PingException extends BaseException {
+public class PingResponderException extends BaseException {
 
 
-    public PingException(final String message) {
+    public PingResponderException(final String message) {
 
         super(message);
 

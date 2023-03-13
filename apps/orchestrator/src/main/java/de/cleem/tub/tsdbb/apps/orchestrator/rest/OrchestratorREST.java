@@ -11,8 +11,8 @@ import de.cleem.tub.tsdbb.apps.orchestrator.service.OrchestratorService;
 import de.cleem.tub.tsdbb.commons.api.ClientApiFacadeException;
 import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
 import de.cleem.tub.tsdbb.commons.spring.objectcache.SingleObjectInstanceCacheException;
-import de.cleem.tub.tsdbb.commons.spring.ping.PingException;
-import de.cleem.tub.tsdbb.commons.spring.ping.PingHelper;
+import de.cleem.tub.tsdbb.commons.spring.pingresponder.PingResponderException;
+import de.cleem.tub.tsdbb.commons.spring.pingresponder.PingResponderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -24,8 +24,11 @@ public class OrchestratorREST extends BaseSpringComponent implements Orchestrato
     @Autowired
     private OrchestratorService orchestratorService;
 
+    @Autowired
+    private PingResponderService pingResponderService;
+
     @Override
-    public ResponseEntity<OrchestratorPreloadResponse> preload(final OrchestratorPreloadRequest orchestratorPreloadRequest) throws ClientApiFacadeException, PingException, SingleObjectInstanceCacheException {
+    public ResponseEntity<OrchestratorPreloadResponse> preload(final OrchestratorPreloadRequest orchestratorPreloadRequest) throws ClientApiFacadeException, PingResponderException, SingleObjectInstanceCacheException {
 
         return ResponseEntity.ok(orchestratorService.preload(orchestratorPreloadRequest));
 
@@ -34,7 +37,7 @@ public class OrchestratorREST extends BaseSpringComponent implements Orchestrato
     @Override
     public ResponseEntity<PingResponse> ping() {
 
-        return PingHelper.pong(true);
+        return pingResponderService.pong(true);
 
     }
 

@@ -80,6 +80,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${json.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.github.dtmo.jfiglet</groupId>
             <artifactId>jfiglet</artifactId>
             <version>${jfiglet.version}</version>

@@ -47,6 +47,34 @@ paths:
               schema:
                 $ref: "model/resetResponse.json"
 
+  /rest/start:
+    get:
+      description: Returns StartStop response
+      operationId: start
+      tags:
+        - OrchestratorStart
+      responses:
+        '200':
+          description: The orchestrator startStop response
+          content:
+            application/json:
+              schema:
+                $ref: "model/startStopResponse.json"
+
+  /rest/stop:
+    get:
+      description: Returns StartStop response
+      operationId: stop
+      tags:
+        - OrchestratorStop
+      responses:
+        '200':
+          description: The orchestrator startStop response
+          content:
+            application/json:
+              schema:
+                $ref: "model/startStopResponse.json"
+
   /rest/ping:
     get:
       description: Returns Ping response (Pong)

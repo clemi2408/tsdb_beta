@@ -1,4 +1,4 @@
-package de.cleem.tub.tsdbb.apps.worker;
+package de.cleem.tub.tsdbb.commons.examplejson;
 
 import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.commons.file.FileException;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class main {
+public class ExampleJsonGenerator {
 
     private static final String TARGET_FOLDER_STRING = "/Users/clemens/IdeaProjects/tsdb_beta/schema/src/main/resources/api/model/examples/generated";
     private static final String WORKLOAD_FILE_STRING = "/Users/clemens/IdeaProjects/tsdb_beta/schema/src/main/resources/api/model/examples/workload_1.json";

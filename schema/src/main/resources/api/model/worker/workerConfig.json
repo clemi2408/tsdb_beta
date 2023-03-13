@@ -15,6 +15,10 @@
       "$ref": "workerTsdbConnection.json",
       "nullable" : false
     },
+    "createStorage" : {
+      "type" : "boolean",
+      "nullable" : false
+    },
     "cleanupStorage" : {
       "type" : "boolean",
       "nullable" : false
