@@ -1,0 +1,99 @@
+{
+  "recordConfigs" : [ {
+    "maxKeyLength" : 1,
+    "maxStringValueLength" : 3,
+    "minKeyLength" : 1,
+    "minStringValueLength" : 1,
+    "valueType" : "String"
+  }, {
+    "keyValue" : "staticKeyDynStringValue",
+    "maxStringValueLength" : 5,
+    "minStringValueLength" : 3,
+    "valueType" : "String"
+  }, {
+    "maxKeyLength" : 8,
+    "maxStringEnumValues" : 5,
+    "maxStringValueLength" : 3,
+    "minKeyLength" : 6,
+    "minStringEnumValues" : 1,
+    "minStringValueLength" : 1,
+    "valueType" : "String"
+  }, {
+    "keyValue" : "staticKeyDynStringEnumDynValue",
+    "maxStringEnumValues" : 5,
+    "maxStringValueLength" : 3,
+    "minStringEnumValues" : 1,
+    "minStringValueLength" : 1,
+    "valueType" : "String"
+  }, {
+    "maxKeyLength" : 1,
+    "minKeyLength" : 1,
+    "stringEnumValues" : [ "s-val1", "s-val2" ],
+    "valueType" : "String"
+  }, {
+    "keyValue" : "staticKeyStaticStringEnumValues",
+    "stringEnumValues" : [ "s-val1", "s-val2" ],
+    "valueType" : "String"
+  }, {
+    "maxKeyLength" : 5,
+    "maxValue" : 100,
+    "minKeyLength" : 2,
+    "minValue" : 0,
+    "valueDistribution" : "UNIFORM",
+    "valueType" : "Integer"
+  }, {
+    "keyValue" : "staticKeyUniformIntegerValue",
+    "maxValue" : 100,
+    "minValue" : 0,
+    "valueDistribution" : "UNIFORM",
+    "valueType" : "Integer"
+  }, {
+    "keyValue" : "staticKeyUniformDoubleValue",
+    "maxValue" : 55.3,
+    "minValue" : 5.5,
+    "valueDistribution" : "UNIFORM",
+    "valueType" : "Double"
+  }, {
+    "maxKeyLength" : 5,
+    "maxValue" : 100,
+    "minKeyLength" : 2,
+    "minValue" : 0,
+    "triangleSpike" : 50,
+    "valueDistribution" : "TRIANGLE",
+    "valueType" : "Integer"
+  }, {
+    "keyValue" : "staticKeyTriangleIntegerValue",
+    "maxValue" : 100,
+    "minValue" : 0,
+    "triangleSpike" : 50,
+    "valueDistribution" : "TRIANGLE",
+    "valueType" : "Integer"
+  }, {
+    "keyValue" : "staticKeyTriangleDoubleValue",
+    "maxValue" : 55.3,
+    "minValue" : 5.5,
+    "triangleSpike" : 10,
+    "valueDistribution" : "TRIANGLE",
+    "valueType" : "Double"
+  }, {
+    "gaussMiddle" : 10,
+    "gaussRange" : 10,
+    "maxKeyLength" : 5,
+    "minKeyLength" : 2,
+    "valueDistribution" : "GAUSS",
+    "valueType" : "Integer"
+  }, {
+    "gaussMiddle" : 10,
+    "gaussRange" : 10,
+    "keyValue" : "staticKeyGaussIntegerValue",
+    "valueDistribution" : "GAUSS",
+    "valueType" : "Integer"
+  }, {
+    "gaussMiddle" : 10,
+    "gaussRange" : 10,
+    "keyValue" : "staticKeyGaussDoubleValue",
+    "valueDistribution" : "GAUSS",
+    "valueType" : "Double"
+  } ],
+  "recordCount" : 10
+}
