@@ -7,11 +7,14 @@ import de.cleem.tub.tsdbb.api.model.Record;
 import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.api.worker.client.WorkerPingApi;
 import de.cleem.tub.tsdbb.api.worker.client.WorkerPreloadApi;
+import de.cleem.tub.tsdbb.api.worker.client.WorkerResetApi;
 import de.cleem.tub.tsdbb.commons.api.ClientApiFacadeException;
 import de.cleem.tub.tsdbb.commons.list.ListHelper;
 import de.cleem.tub.tsdbb.commons.random.numbers.uniform.UniformGenerator;
 import de.cleem.tub.tsdbb.commons.spring.apiclient.ApiClientService;
 import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
+import de.cleem.tub.tsdbb.commons.spring.objectcache.SingleObjectInstanceCache;
+import de.cleem.tub.tsdbb.commons.spring.objectcache.SingleObjectInstanceCacheException;
 import de.cleem.tub.tsdbb.commons.spring.ping.PingException;
 import de.cleem.tub.tsdbb.commons.spring.ping.PingHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -28,13 +31,19 @@ import java.util.List;
 @Slf4j
 public class OrchestratorService extends BaseSpringComponent {
 
+
+    private final static Class[] CLASSES_TO_RESET = new Class[]{OrchestratorPreloadRequest.class,OrchestratorPreloadResponse.class};
+
     @Autowired
     private ApiClientService apiClientService;
 
-    public OrchestratorPreloadResponse preload(final OrchestratorPreloadRequest orchestratorPreloadRequest) throws ClientApiFacadeException, PingException {
+    @Autowired
+    private SingleObjectInstanceCache cache;
 
-        final OrchestratorPreloadResponse preloadResponse = new OrchestratorPreloadResponse();
-        preloadResponse.setStartTimestamp(OffsetDateTime.now());
+    public OrchestratorPreloadResponse preload(final OrchestratorPreloadRequest orchestratorPreloadRequest) throws ClientApiFacadeException, PingException, SingleObjectInstanceCacheException {
+
+        final OrchestratorPreloadResponse orchestratorPreloadResponse = new OrchestratorPreloadResponse();
+        orchestratorPreloadResponse.setStartTimestamp(OffsetDateTime.now());
 
         pingPeers(orchestratorPreloadRequest);
 
@@ -46,13 +55,16 @@ public class OrchestratorService extends BaseSpringComponent {
 
         final List<WorkerPreloadResponse> workerPreloadResponses = preloadWorkers(workerPreloadRequests);
 
-        preloadResponse.setOrchestratorPreloadRequest(orchestratorPreloadRequest);
-        preloadResponse.setGeneratorWorkload(generatorWorkload);
-        preloadResponse.setBenchmarkWorkload(benchmarkWorkload);
-        preloadResponse.setWorkerPreloadResponses(workerPreloadResponses);
-        preloadResponse.setEndTimestamp(OffsetDateTime.now());
+        orchestratorPreloadResponse.setOrchestratorPreloadRequest(orchestratorPreloadRequest);
+        orchestratorPreloadResponse.setGeneratorWorkload(generatorWorkload);
+        orchestratorPreloadResponse.setBenchmarkWorkload(benchmarkWorkload);
+        orchestratorPreloadResponse.setWorkerPreloadResponses(workerPreloadResponses);
+        orchestratorPreloadResponse.setEndTimestamp(OffsetDateTime.now());
 
-        return preloadResponse;
+        cache.add(orchestratorPreloadRequest);
+        cache.add(orchestratorPreloadResponse);
+
+        return orchestratorPreloadResponse;
 
     }
 
@@ -78,7 +90,6 @@ public class OrchestratorService extends BaseSpringComponent {
         }
 
     }
-
 
 
     // WORKLOAD METHODS
@@ -171,7 +182,6 @@ public class OrchestratorService extends BaseSpringComponent {
 
         final List<WorkerPreloadResponse> workerPreloadResponseList = new ArrayList<>();
 
-
         for(WorkerPreloadRequest workerPreloadRequest : workerPreloadRequests){
 
             workerPreloadApi = apiClientService.getApi(WorkerPreloadApi.class,workerPreloadRequest.getWorkerConfig().getWorkerUrl());
@@ -187,7 +197,36 @@ public class OrchestratorService extends BaseSpringComponent {
 
     }
 
+    public List<ResetResponse> resetWorkers(final OrchestratorPreloadRequest orchestratorPreloadRequest) throws ClientApiFacadeException {
+
+        WorkerResetApi workerResetApi;
+        ResetResponse workerResetResponse;
+
+        final List<ResetResponse> workerResetResponses = new ArrayList<>();
+
+        for(WorkerConfig workerConfig : orchestratorPreloadRequest.getWorkerConfigs()){
+
+            workerResetApi = apiClientService.getApi(WorkerResetApi.class,workerConfig.getWorkerUrl());
+            log.info("Resetting worker: "+workerConfig.getWorkerUrl());
+
+            workerResetResponse = workerResetApi.reset();
+
+            workerResetResponses.add(workerResetResponse);
+
+        }
+
+        return workerResetResponses;
+
+    }
 
 
+    public ResetResponse reset() throws SingleObjectInstanceCacheException, ClientApiFacadeException {
 
+        final OrchestratorPreloadRequest orchestratorPreloadRequest = cache.get(OrchestratorPreloadRequest.class);
+
+        final List<ResetResponse> workerResetResponses = resetWorkers(orchestratorPreloadRequest);
+
+        return cache.reset(CLASSES_TO_RESET,workerResetResponses);
+
+    }
 }

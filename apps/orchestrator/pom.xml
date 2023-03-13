@@ -22,7 +22,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${basedir}/../../${openapi-relative-spec-folder.root}/${openapi-spec-name.orchestrator}.yml</inputSpec>
+                            <inputSpec>${openapi-absolute-spec-folder.root}/${openapi-relative-spec-folder.root}/${openapi-spec-name.orchestrator}.yml</inputSpec>
                             <language>openapi-yaml</language>
                             <output>${openapi-merged-spec-output.root}</output>
                             <generateSupportingFiles>false</generateSupportingFiles>

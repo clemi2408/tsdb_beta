@@ -33,6 +33,20 @@ paths:
               schema:
                 $ref: "model/worker/workerPreloadResponse.json"
 
+  /rest/reset:
+    get:
+      description: Returns reset response
+      operationId: reset
+      tags:
+        - WorkerReset
+      responses:
+        '200':
+          description: The worker reset response
+          content:
+            application/json:
+              schema:
+                $ref: "model/resetResponse.json"
+
   /rest/ping:
     get:
       description: Returns Ping response (Pong)

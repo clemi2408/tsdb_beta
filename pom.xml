@@ -10,9 +10,9 @@
     <packaging>pom</packaging>
     <modules>
         <!--<module>single_tmp</module>-->
+        <module>schema</module>
         <module>commons</module>
         <module>apps</module>
-        <module>schema</module>
     </modules>
 
     <properties>
@@ -25,19 +25,15 @@
         <lombok.version>1.18.26</lombok.version>
         <jfiglet.version>1.0.1</jfiglet.version>
         <json.version>20220924</json.version>
-        <hessian.version>4.0.66</hessian.version>
 
         <openapi-generator.version>6.4.0</openapi-generator.version>
         <swagger-codegen-plugin.version>3.0.41</swagger-codegen-plugin.version>
 
         <!-- cross spec properties -->
-        <openapi-relative-spec-folder.root>schema/src/main/resources/api</openapi-relative-spec-folder.root>
-
-
-        <openapi-protobuf-output-folder.root>${project.build.directory}/generated-sources/protobuf</openapi-protobuf-output-folder.root>
+        <openapi-absolute-spec-folder.root>${basedir}/../../schema</openapi-absolute-spec-folder.root>
+        <openapi-relative-spec-folder.root>src/main/resources/api</openapi-relative-spec-folder.root>
         <openapi-code-output-folder.root>${project.build.directory}/generated-sources/openapi</openapi-code-output-folder.root>
         <openapi-merged-spec-output.root>${basedir}/target/classes/static</openapi-merged-spec-output.root>
-
 
         <openapi-root-package.path>de.cleem.tub.tsdbb.api</openapi-root-package.path>
         <openapi-model-package.name>model</openapi-model-package.name>

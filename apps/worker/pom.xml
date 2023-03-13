@@ -9,4 +9,31 @@
     <artifactId>worker</artifactId>
     <packaging>jar</packaging>
 
+    <build>
+        <plugins>
+            <plugin>
+                <!-- plugin used to create merged spec -->
+                <groupId>io.swagger.codegen.v3</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>${swagger-codegen-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${openapi-absolute-spec-folder.root}/${openapi-relative-spec-folder.root}/${openapi-spec-name.worker}.yml</inputSpec>
+                            <language>openapi-yaml</language>
+                            <output>${openapi-merged-spec-output.root}</output>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <configOptions>
+                                <outputFile>openapi.yml</outputFile>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

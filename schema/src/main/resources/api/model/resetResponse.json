@@ -1,0 +1,49 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+    "status" : {
+      "type" : "string",
+      "nullable" : false
+    },
+    "cleared" : {
+      "type" : "array",
+      "nullable" : true,
+      "items" : {
+        "type" : "string",
+        "nullable" : false
+      },
+      "minItems": 0
+    },
+    "error" : {
+      "type" : "array",
+      "nullable" : true,
+      "items" : {
+        "type" : "string",
+        "nullable" : false
+      },
+      "minItems": 0
+    },
+    "startTimestamp" : {
+      "type": "string",
+      "format": "date-time",
+      "nullable" : false
+    },
+    "endTimestamp" : {
+      "type": "string",
+      "format": "date-time",
+      "nullable" : false
+    },
+
+    "nestedResponses" : {
+      "type" : "array",
+      "nullable" : true,
+      "items" : {
+        "$ref": "resetResponse.json"
+      },
+      "minItems": 0
+    }
+  },
+  "required": [ "cleared","errors","endTimestamp","startTimestamp" ]
+
+}

@@ -1,10 +1,12 @@
 package de.cleem.tub.tsdbb.apps.worker.rest;
 
 import de.cleem.tub.tsdbb.api.model.PingResponse;
+import de.cleem.tub.tsdbb.api.model.ResetResponse;
 import de.cleem.tub.tsdbb.api.model.WorkerPreloadRequest;
 import de.cleem.tub.tsdbb.api.model.WorkerPreloadResponse;
 import de.cleem.tub.tsdbb.api.worker.server.WorkerPingApi;
 import de.cleem.tub.tsdbb.api.worker.server.WorkerPreloadApi;
+import de.cleem.tub.tsdbb.api.worker.server.WorkerResetApi;
 import de.cleem.tub.tsdbb.apps.worker.service.WorkerService;
 import de.cleem.tub.tsdbb.commons.api.ClientApiFacadeException;
 import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class WorkerREST extends BaseSpringComponent implements WorkerPingApi, WorkerPreloadApi {
+public class WorkerREST extends BaseSpringComponent implements WorkerPingApi, WorkerPreloadApi, WorkerResetApi {
 
     @Autowired
     private WorkerService workerService;
@@ -36,5 +38,10 @@ public class WorkerREST extends BaseSpringComponent implements WorkerPingApi, Wo
 
         return ResponseEntity.ok(workerService.preload(workerPreloadRequest));
 
+    }
+
+    @Override
+    public ResponseEntity<ResetResponse> reset() {
+        return ResponseEntity.ok(workerService.reset());
     }
 }

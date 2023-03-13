@@ -32,6 +32,21 @@ paths:
             application/json:
               schema:
                 $ref: "model/orchestrator/orchestratorPreloadResponse.json"
+
+  /rest/reset:
+    get:
+      description: Returns reset response
+      operationId: reset
+      tags:
+        - OrchestratorReset
+      responses:
+        '200':
+          description: The orchestrator reset response
+          content:
+            application/json:
+              schema:
+                $ref: "model/resetResponse.json"
+
   /rest/ping:
     get:
       description: Returns Ping response (Pong)

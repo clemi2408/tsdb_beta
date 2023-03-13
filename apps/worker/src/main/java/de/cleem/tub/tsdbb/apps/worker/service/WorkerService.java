@@ -1,9 +1,7 @@
 package de.cleem.tub.tsdbb.apps.worker.service;
 
 
-import de.cleem.tub.tsdbb.api.model.PingResponse;
-import de.cleem.tub.tsdbb.api.model.WorkerPreloadRequest;
-import de.cleem.tub.tsdbb.api.model.WorkerPreloadResponse;
+import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.api.orchestrator.client.OrchestratorPingApi;
 import de.cleem.tub.tsdbb.commons.api.ClientApiFacadeException;
 import de.cleem.tub.tsdbb.commons.spring.apiclient.ApiClientService;
@@ -22,6 +20,8 @@ import java.time.OffsetDateTime;
 @Component
 @Slf4j
 public class WorkerService extends BaseSpringComponent {
+
+    private final static Class[] CLASSES_TO_RESET = new Class[]{WorkerPreloadRequest.class};
 
     @Autowired
     private ApiClientService apiClientService;
@@ -46,5 +46,11 @@ public class WorkerService extends BaseSpringComponent {
         workerPreloadResponse.setEndTimestamp(OffsetDateTime.now());
 
         return workerPreloadResponse;
+    }
+
+    public ResetResponse reset() {
+
+        return cache.reset(CLASSES_TO_RESET);
+
     }
 }
