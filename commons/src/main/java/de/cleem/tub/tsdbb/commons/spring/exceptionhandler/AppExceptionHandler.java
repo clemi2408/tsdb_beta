@@ -49,7 +49,7 @@ public class AppExceptionHandler extends BaseSpringComponent {
 
         log.error(extractInformation(e,request));
 
-        if(logStackTrace ==true){
+        if(logStackTrace){
             e.printStackTrace();
         }
 

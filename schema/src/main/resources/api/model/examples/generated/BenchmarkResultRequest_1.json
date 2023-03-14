@@ -1,0 +1,27 @@
+{
+  "sourceInformation" : {
+    "url" : "http://example.org"
+  },
+  "taskResults" : [ {
+    "taskName" : "taskName",
+    "sourceInformation" : {
+      "url" : "http://example.org"
+    },
+    "threadName" : "threadName",
+    "record" : {
+      "kvPairs" : [ {
+        "key" : "key",
+        "value" : [ "value" ]
+      }, {
+        "key" : "key",
+        "value" : [ "value" ]
+      } ],
+      "recordId" : "d7777d76-13f2-4e82-9371-2c81504d42e5"
+    },
+    "durationInMs" : 100,
+    "timeFrame" : {
+      "startTimestamp" : 1678835106.611995000,
+      "endTimestamp" : 1678835106.611955000
+    }
+  } ]
+}

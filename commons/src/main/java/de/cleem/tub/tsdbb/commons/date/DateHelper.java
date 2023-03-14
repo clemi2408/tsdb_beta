@@ -1,8 +1,11 @@
 package de.cleem.tub.tsdbb.commons.date;
 
+import de.cleem.tub.tsdbb.api.model.TimeFrame;
 import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
 
 import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -93,6 +96,21 @@ public class DateHelper extends BaseClass {
                 diffs[4] + " Milliseconds";
 
     }
+
+
+    public static long getDateDifference(final TimeFrame timeFrame, final ChronoUnit unit){
+
+        return getDateDifference(timeFrame.getEndTimestamp(),timeFrame.getStartTimestamp(), unit);
+
+    }
+
+    public static long getDateDifference(final OffsetDateTime endDate, final OffsetDateTime startDate, final ChronoUnit unit){
+
+
+        return unit.between(startDate, endDate);
+
+    }
+
 
 
 }

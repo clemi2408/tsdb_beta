@@ -1,0 +1,9 @@
+{
+  "maxKeyLength" : 8,
+  "maxStringEnumValues" : 5,
+  "maxStringValueLength" : 3,
+  "minKeyLength" : 6,
+  "minStringEnumValues" : 1,
+  "minStringValueLength" : 1,
+  "valueType" : "string"
+}

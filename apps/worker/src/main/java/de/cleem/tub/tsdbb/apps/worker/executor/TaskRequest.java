@@ -1,32 +1,37 @@
 package de.cleem.tub.tsdbb.apps.worker.executor;
 
+import de.cleem.tub.tsdbb.api.model.Record;
+import de.cleem.tub.tsdbb.api.model.TaskResult;
+import de.cleem.tub.tsdbb.api.model.TimeFrame;
 import de.cleem.tub.tsdbb.api.model.WorkerPreloadRequest;
 import de.cleem.tub.tsdbb.apps.worker.adapters.BaseConnector;
-import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterIF;
-import de.cleem.tub.tsdbb.commons.exception.BaseException;
-import de.cleem.tub.tsdbb.api.model.Record;
+import de.cleem.tub.tsdbb.commons.date.DateHelper;
+import de.cleem.tub.tsdbb.commons.factories.sourceInformation.SourceInformationFactory;
+import de.cleem.tub.tsdbb.commons.factories.timeFrame.TimeFrameFactory;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.concurrent.Callable;
 
 @Slf4j
 public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
 
-    private String taskName;
-    private Record record;
+    private final String taskName;
+    private final Record record;
 
-
-    public TaskRequest(final TSDBAdapterIF tsdbAdapterIF, final WorkerPreloadRequest workerPreloadRequest, final String taskName, final Record record) throws ExecutionException, TSDBAdapterException {
+    private final String workerUrl;
+    public TaskRequest(final String workerUrl, final TSDBAdapterIF tsdbAdapterIF, final WorkerPreloadRequest workerPreloadRequest, final String taskName, final Record record) {
 
         this.record = record;
         this.taskName = taskName;
+        this.workerUrl=workerUrl;
         this.workerPreloadRequest = workerPreloadRequest;
         this.tsdbInterface = tsdbAdapterIF;
 
     }
-
 
     @Override
     public TaskResult call() throws Exception {
@@ -34,28 +39,24 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
         log.debug("Calling Task "+taskName);
 
         /////
-        final Date startDate = new Date();
+        final TimeFrame timeFrame = TimeFrameFactory.getTimeFrame();
+
         tsdbInterface.write(record);
-        final Date endDate = new Date();
-        ////
 
-        final long durationInMs = endDate.getTime() - startDate.getTime();
+        timeFrame.setEndTimestamp(OffsetDateTime.now());
 
-       // tsdbInterface.close();
-
-        final String threadName = Thread.currentThread().getName();
-
+        final long duration = DateHelper.getDateDifference(timeFrame, ChronoUnit.MILLIS);
 
         log.info(taskName+" wrote Record: "+record.getRecordId());
 
-        return TaskResult.builder()
-                .taskName(taskName)
-                .threadName(threadName)
-                .record(record)
-                .recordId(record.getRecordId())
-                .startDate(startDate)
-                .endDate(endDate)
-                .durationInMs(durationInMs)
-                .build();
+        final TaskResult taskResult = new TaskResult();
+        taskResult.setTaskName(taskName);
+        taskResult.setSourceInformation(SourceInformationFactory.getSourceInformation(workerUrl));
+        taskResult.setThreadName(Thread.currentThread().getName());
+        taskResult.setRecord(record);
+        taskResult.setTimeFrame(timeFrame);
+        taskResult.setDurationInMs(BigDecimal.valueOf(duration));
+
+        return taskResult;
     }
 }

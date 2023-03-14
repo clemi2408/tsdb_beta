@@ -19,7 +19,9 @@ public class OpenAPIClientFacade {
 
             final Method getApiClientMethod = api.getClass().getDeclaredMethod("getApiClient");
             getApiClientMethod.setAccessible(true);
-            final C apiClient = (C)getApiClientMethod.invoke(api);
+
+            @SuppressWarnings("unchecked") final C apiClient = (C)getApiClientMethod.invoke(api);
+
             getApiClientMethod.setAccessible(false);
 
             final Method setBasePathMethod = apiClient.getClass().getDeclaredMethod("setBasePath",String.class);

@@ -1,0 +1,28 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+    "taskResults" : {
+      "type" : "array",
+      "nullable" : false,
+      "items" : {
+        "$ref": "../result/taskResult.json"
+      },
+      "minItems": 0
+    },
+    "status" : {
+      "type" : "string",
+      "enum" : [ "INCOMPLETE", "COMPLETE" ],
+      "nullable" : false
+    },
+    "totalResultParts" : {
+      "type" : "integer",
+      "nullable" : false
+    },
+    "completedParts" : {
+      "type" : "integer",
+      "nullable" : false
+    }
+  },
+  "required": [ "taskResults","status","totalResultParts","completedParts"]
+}

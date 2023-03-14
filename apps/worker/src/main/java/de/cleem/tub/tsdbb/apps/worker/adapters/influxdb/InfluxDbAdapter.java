@@ -1,11 +1,10 @@
 package de.cleem.tub.tsdbb.apps.worker.adapters.influxdb;
 
-import de.cleem.tub.tsdbb.api.model.WorkerTsdbConnection;
-import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterIF;
-import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
-import de.cleem.tub.tsdbb.apps.worker.formats.LineProtocolFormat;
 import de.cleem.tub.tsdbb.api.model.Record;
-
+import de.cleem.tub.tsdbb.api.model.WorkerTsdbConnection;
+import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
+import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterIF;
+import de.cleem.tub.tsdbb.apps.worker.formats.LineProtocolFormat;
 import de.cleem.tub.tsdbb.commons.http.HttpException;
 import de.cleem.tub.tsdbb.commons.http.HttpHelper;
 import lombok.extern.slf4j.Slf4j;

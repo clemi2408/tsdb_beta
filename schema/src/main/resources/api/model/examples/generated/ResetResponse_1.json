@@ -1,0 +1,10 @@
+{
+  "sourceInformation" : {
+    "url" : "http://example.org"
+  },
+  "reset" : true,
+  "timeFrame" : {
+    "startTimestamp" : 1678835106.298837000,
+    "endTimestamp" : 1678835106.296338000
+  }
+}

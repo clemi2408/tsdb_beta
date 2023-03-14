@@ -16,7 +16,7 @@ TSDBs support the storage of data in a time context.
 They also offer additional query and analysis options for the stored data.
 
 > A time series database (TSDB) is a database optimized for time-stamped or time series data.
-> Time series data are simply measurements or events that are tracked, monitored, downsampled, and aggregated over time.
+> Time series data are simply measurements or events that are tracked, monitored, down sampled, and aggregated over time.
 > This could be server metrics, application performance monitoring, network data, sensor data, events, clicks, trades in
 > a market, and many other types of analytics data.
 >
@@ -54,7 +54,7 @@ For the effectiveness of the benchmark to be implemented, the following section 
 
 #### Relevance
 
-The benchmark to be implemented is to measure the write performance of TSDB storage engine implementations.
+The benchmark to be implemented is to measure write performance of TSDB storage engine implementations.
 For this purpose KV pairs are sent to the TSDB.
 With the configurable thread count `threadCount` it is possible to stress the subject under test.
 With the `write` operation a realistic TSDB request is executed and reflects the scenario domain.
@@ -99,7 +99,7 @@ Not yet considered:
 - Cost assessment of `write` Request to set Performance in relation to cost.
 - Geo Distribution of TSDB
 - fault tolerance of distributed TSDB
-- Multi tenancy and shareded resources
+- Multi tenancy and shared resources
 
 ### Trade off (DRAFT)
 

@@ -1,0 +1,8 @@
+{
+  "keyValue" : "staticKeyTriangleDoubleValue",
+  "maxValue" : 55.3,
+  "minValue" : 5.5,
+  "triangleSpike" : 10,
+  "valueDistribution" : "TRIANGLE",
+  "valueType" : "double"
+}

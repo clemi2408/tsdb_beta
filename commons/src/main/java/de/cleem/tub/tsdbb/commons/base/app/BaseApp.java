@@ -1,8 +1,8 @@
 package de.cleem.tub.tsdbb.commons.base.app;
 
 import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
+import de.cleem.tub.tsdbb.commons.date.DateException;
 import de.cleem.tub.tsdbb.commons.date.DateHelper;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
@@ -34,18 +34,20 @@ public class BaseApp extends BaseClass {
             throw new BaseAppException("Can not ShutdownHook - startDate is NULL");
         }
 
-        Runtime.getRuntime().addShutdownHook(new Thread() {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 
-            @SneakyThrows
-            public void run() {
+            appInfo.setEndDate(new Date());
+            log.info("Stopping: " + appInfo.getAppClassName() + " - " + appInfo.getEndDate());
 
-                appInfo.setEndDate(new Date());
-                log.info("Stopping: " + appInfo.getAppClassName() + " - " + appInfo.getEndDate());
+            try {
                 log.info("Uptime: " + DateHelper.getDateDifferenceString(appInfo.getEndDate(),appInfo.getStartDate()));
 
-
+            } catch (DateException e) {
+                throw new RuntimeException(e);
             }
-        });
+
+        }));
+
     }
 
     private static void printInfo(final BaseAppInfo appInfo) throws BaseAppException {

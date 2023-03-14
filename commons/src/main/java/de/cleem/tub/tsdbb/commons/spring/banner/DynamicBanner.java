@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import lombok.Value;
 import org.springframework.boot.Banner;
 import org.springframework.core.env.Environment;
 
@@ -19,11 +18,11 @@ import static com.github.dtmo.jfiglet.FigFontResources.loadFigFontResource;
 
 // copied and adopted from: https://github.com/springbootcamp/bannerama/blob/master/src/main/java/org/springbootcamp/bannerama/Bannerama.java
 
-@Value
+//@Value
 @Builder
 public class DynamicBanner extends BaseClass implements Banner {
 
-    public static final String FIGLET_FONT_ID="standard.flf";
+    public static final String FONT_ID ="standard.flf";
 
     @Default
     int newLinesAfter = 1;
@@ -53,7 +52,7 @@ public class DynamicBanner extends BaseClass implements Banner {
         @SneakyThrows
         Worker banner() {
 
-            final FigFont font = loadFigFontResource(FIGLET_FONT_ID);
+            final FigFont font = loadFigFontResource(FONT_ID);
             final FigletRenderer figletRenderer = new FigletRenderer(font);
             final String applicationName = resolvePropertyValue(PlaceholderEnum.APPLICATION_NAME, sourceClass.getSimpleName().toLowerCase());
             final String renderedApplicationName = figletRenderer.renderText(applicationName);
@@ -92,7 +91,7 @@ public class DynamicBanner extends BaseClass implements Banner {
         private Worker newLines(int num) {
             if (num > 0) {
                 for (int i = 0; i < num; i++) {
-                    out.println("");
+                    out.print("\n");
                 }
             }
             return this;

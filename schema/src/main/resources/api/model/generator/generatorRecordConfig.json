@@ -65,6 +65,7 @@
     },
     "valueType" : {
       "type" : "string",
+      "enum" : [ "integer", "double", "string" ],
       "nullable" : false
     }
   },

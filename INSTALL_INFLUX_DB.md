@@ -41,7 +41,7 @@ cd /usr/local/Cellar/influxdb-cli/2.6.1/bin
 influx setup
 ```
 
-Than answer the questions, the following values are used:
+Then answer the questions, the following values are used:
 
 - Username: admin
 - Password: adminadmin

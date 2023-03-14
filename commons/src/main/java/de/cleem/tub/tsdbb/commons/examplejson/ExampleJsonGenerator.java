@@ -1,5 +1,6 @@
 package de.cleem.tub.tsdbb.commons.examplejson;
 
+import de.cleem.tub.tsdbb.api.model.Record;
 import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.commons.file.FileException;
 import de.cleem.tub.tsdbb.commons.file.FileHelper;
@@ -9,14 +10,16 @@ import de.cleem.tub.tsdbb.commons.json.JsonHelper;
 import java.io.File;
 import java.math.BigDecimal;
 import java.net.URI;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class ExampleJsonGenerator {
 
     private static final String TARGET_FOLDER_STRING = "/Users/clemens/IdeaProjects/tsdb_beta/schema/src/main/resources/api/model/examples/generated";
-    private static final String WORKLOAD_FILE_STRING = "/Users/clemens/IdeaProjects/tsdb_beta/schema/src/main/resources/api/model/examples/workload_1.json";
+    private static final String WORKLOAD_FILE_STRING = "/Users/clemens/IdeaProjects/tsdb_beta/schema/src/main/resources/api/model/examples/manual/workload_1.json";
     private static final String ORCHESTRATOR_URL = "http://localhost:8081";
     private static final String GENERATOR_URL = "http://localhost:8080";
 
@@ -33,30 +36,6 @@ public class ExampleJsonGenerator {
 
     public static void main(String[] args) throws FileException, JsonException {
 
-
-        final WorkerConfig influxWorkerConfig = createWorkerConfig(createInfluxConnection());
-        write(influxWorkerConfig,1);
-
-        final WorkerConfig victoriaWorkerConfig = createWorkerConfig(createVictoriaConnection());
-        write(victoriaWorkerConfig,2);
-
-        final GeneratorGenerateRequest generatorGenerateRequest = createGenerateRequest();
-        write(generatorGenerateRequest,1);
-
-
-        final OrchestratorPreloadRequest orchestratorPreloadRequestInflux = getOrchestratorPreloadRequest(
-                createWorkerConfig(createInfluxConnection()),
-                createGenerateRequest()
-        );
-        write(orchestratorPreloadRequestInflux,1);
-
-
-        final OrchestratorPreloadRequest orchestratorPreloadRequestVictoria = getOrchestratorPreloadRequest(
-                createWorkerConfig(createVictoriaConnection()),
-                createGenerateRequest()
-        );
-        write(orchestratorPreloadRequestVictoria,2);
-
         final Workload workload = JsonHelper.objectFromByteArray(FileHelper.read(new File(WORKLOAD_FILE_STRING)),Workload.class);
 
         final WorkerPreloadRequest workerPreloadRequestVictoria = getWorkerPreloadRequest(createWorkerConfig(createVictoriaConnection()),workload);
@@ -65,6 +44,177 @@ public class ExampleJsonGenerator {
         final WorkerPreloadRequest workerPreloadRequestInflux = getWorkerPreloadRequest(createWorkerConfig(createInfluxConnection()),workload);
         write(workerPreloadRequestInflux,2);
 
+
+
+        write(createWorkerConfig(createInfluxConnection()),1);
+
+        write(createWorkerConfig(createVictoriaConnection()),2);
+
+        write(createGenerateRequest(),1);
+
+        write(createInfluxConnection(),1);
+        write(createVictoriaConnection(),2);
+
+        final OrchestratorPreloadRequest orchestratorPreloadRequestInflux = getOrchestratorPreloadRequest(
+                createWorkerConfig(createInfluxConnection()),
+                createGenerateRequest());
+
+        write(orchestratorPreloadRequestInflux,1);
+
+
+        final OrchestratorPreloadRequest orchestratorPreloadRequestVictoria = getOrchestratorPreloadRequest(
+                createWorkerConfig(createVictoriaConnection()),
+                createGenerateRequest());
+
+        write(orchestratorPreloadRequestVictoria,2);
+
+        write(getPingResponse(),1);
+
+        write(getSourceInformation(),1);
+
+        write(getResetResponse(false),1);
+
+        write(getResetResponse(true),2);
+
+        write(getTimeFrame(),1);
+
+        write(dynamicKeyWithDynamicStringValue(),1);
+        write(staticKeyWithDynamicStringValue(),2);
+        write(dynamicKeyWithDynamicStringEnumCountAndDynamicValue(),3);
+        write(staticKeyWithDynamicStringEnumCountAndDynamicValue(),4);
+        write(dynamicKeyWithStaticStringEnumValues(),5);
+        write(staticKeyWithStaticStringEnumValues(),6);
+        write(dynamicKeyWithUniformIntegerValue(),7);
+        write(staticKeyWithUniformIntegerValue(),8);
+        write(staticKeyWithUniformDoubleValue(),9);
+        write(dynamicKeyWithTriangleIntegerValue(),10);
+        write(staticKeyWithTriangleIntegerValue(),11);
+        write(staticKeyWithTriangleDoubleValue(),12);
+        write(dynamicKeyWithGaussIntegerValue(),13);
+        write(staticKeyWithGaussIntegerValue(),14);
+        write(staticKeyWithGaussDoubleValue(),15);
+
+        write(getKvPair(),1);
+
+        write(getRecord(),1);
+
+        write(getTaskResult(),1);
+
+        write(getBenchmarkResultRequest(),1);
+
+        write(getBenchmarkResultResponse(),1);
+
+    }
+
+    private static BenchmarkResultResponse getBenchmarkResultResponse(){
+
+        final BenchmarkResultResponse resultResponse = new BenchmarkResultResponse();
+        resultResponse.setDeliveryCount(BigDecimal.valueOf(10));
+
+        return resultResponse;
+
+    }
+
+    private static KvPair getKvPair(){
+
+        final KvPair kvPair = new KvPair();
+        kvPair.setKey("key");
+        kvPair.setValue(List.of("value"));
+
+        return kvPair;
+
+
+    }
+
+    private static List<KvPair> getKvPairs(){
+
+        final List<KvPair> kvPairs = new ArrayList<>();
+        kvPairs.add(getKvPair());
+        kvPairs.add(getKvPair());
+        return kvPairs;
+
+    }
+
+    private static Record getRecord(){
+        final Record record = new Record();
+        record.setRecordId(UUID.randomUUID());
+        record.setKvPairs(getKvPairs());
+
+        return record;
+    }
+
+    private static TaskResult getTaskResult(){
+
+        final TaskResult taskResult = new TaskResult();
+        taskResult.setTaskName("taskName");
+        taskResult.setDurationInMs(BigDecimal.valueOf(100));
+        taskResult.setThreadName("threadName");
+        taskResult.setTimeFrame(getTimeFrame());
+        taskResult.setSourceInformation(getSourceInformation());
+        taskResult.setRecord(getRecord());
+
+        return taskResult;
+    }
+    private static List<TaskResult> getTaskResults(){
+
+        final List<TaskResult> taskResultList = new ArrayList<>();
+
+        taskResultList.add(getTaskResult());
+
+        return taskResultList;
+
+    }
+
+    private static BenchmarkResultRequest getBenchmarkResultRequest(){
+
+        final BenchmarkResultRequest request = new BenchmarkResultRequest();
+        request.setSourceInformation(getSourceInformation());
+
+        request.setTaskResults(getTaskResults());
+
+        return request;
+
+
+    }
+
+    private static SourceInformation getSourceInformation(){
+        final SourceInformation sourceInformation = new SourceInformation();
+        sourceInformation.setUrl("http://example.org");
+        return sourceInformation;
+    }
+
+    private static TimeFrame getTimeFrame(){
+        final TimeFrame timeFrame = new TimeFrame();
+        timeFrame.setEndTimestamp(OffsetDateTime.now());
+        timeFrame.setStartTimestamp(OffsetDateTime.now());
+        return timeFrame;
+    }
+
+    private static ResetResponse getResetResponse(final boolean nested){
+
+        final ResetResponse resetResponse = new ResetResponse();
+        resetResponse.setTimeFrame(getTimeFrame());
+        resetResponse.setReset(true);
+
+        if(nested) {
+
+            resetResponse.setNestedResponses(new ArrayList<>());
+            resetResponse.getNestedResponses().add(getResetResponse(false));
+            resetResponse.getNestedResponses().add(getResetResponse(false));
+
+        }
+
+        resetResponse.setSourceInformation(getSourceInformation());
+
+        return resetResponse;
+
+    }
+
+    private static PingResponse getPingResponse(){
+
+        final PingResponse pingResponse = new PingResponse();
+        pingResponse.setStatus(PingResponse.StatusEnum.OK);
+        return pingResponse;
 
     }
 
@@ -93,7 +243,7 @@ public class ExampleJsonGenerator {
     private static GeneratorRecordConfig dynamicKeyWithDynamicStringValue(){
 
         final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType("String");
+        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.STRING);
         generatorRecordConfig.setMinKeyLength(1);
         generatorRecordConfig.setMaxKeyLength(1);
         generatorRecordConfig.setMinStringValueLength(1);
@@ -106,7 +256,7 @@ public class ExampleJsonGenerator {
 
         final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
         generatorRecordConfig.setKeyValue("staticKeyDynStringValue");
-        generatorRecordConfig.setValueType("String");
+        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.STRING);
         generatorRecordConfig.setMinStringValueLength(3);
         generatorRecordConfig.setMaxStringValueLength(5);
 
@@ -116,7 +266,7 @@ public class ExampleJsonGenerator {
     private static GeneratorRecordConfig dynamicKeyWithDynamicStringEnumCountAndDynamicValue(){
 
         final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType("String");
+        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.STRING);
         generatorRecordConfig.setMinKeyLength(6);
         generatorRecordConfig.setMaxKeyLength(8);
         generatorRecordConfig.setMinStringValueLength(1);
@@ -130,7 +280,7 @@ public class ExampleJsonGenerator {
     private static GeneratorRecordConfig staticKeyWithDynamicStringEnumCountAndDynamicValue(){
 
         final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType("String");
+        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.STRING);
         generatorRecordConfig.setKeyValue("staticKeyDynStringEnumDynValue");
         generatorRecordConfig.setMinStringValueLength(1);
         generatorRecordConfig.setMaxStringValueLength(3);
@@ -143,7 +293,7 @@ public class ExampleJsonGenerator {
     private static GeneratorRecordConfig dynamicKeyWithStaticStringEnumValues(){
 
         final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType("String");
+        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.STRING);
         generatorRecordConfig.setMinKeyLength(1);
         generatorRecordConfig.setMaxKeyLength(1);
         generatorRecordConfig.setStringEnumValues(List.of("s-val1","s-val2"));
@@ -153,7 +303,7 @@ public class ExampleJsonGenerator {
     private static GeneratorRecordConfig staticKeyWithStaticStringEnumValues(){
 
         final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType("String");
+        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.STRING);
         generatorRecordConfig.setKeyValue("staticKeyStaticStringEnumValues");
         generatorRecordConfig.setStringEnumValues(List.of("s-val1","s-val2"));
         return generatorRecordConfig;
@@ -162,7 +312,7 @@ public class ExampleJsonGenerator {
     private static GeneratorRecordConfig dynamicKeyWithUniformIntegerValue(){
 
         final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType("Integer");
+        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.INTEGER);
         generatorRecordConfig.minKeyLength(2);
         generatorRecordConfig.maxKeyLength(5);
         generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.UNIFORM);
@@ -175,7 +325,7 @@ public class ExampleJsonGenerator {
     private static GeneratorRecordConfig staticKeyWithUniformIntegerValue(){
 
         final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType("Integer");
+        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.INTEGER);
         generatorRecordConfig.setKeyValue("staticKeyUniformIntegerValue");
         generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.UNIFORM);
         generatorRecordConfig.setMinValue(BigDecimal.valueOf(0));
@@ -187,7 +337,7 @@ public class ExampleJsonGenerator {
     private static GeneratorRecordConfig staticKeyWithUniformDoubleValue(){
 
         final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType("Double");
+        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.DOUBLE);
         generatorRecordConfig.setKeyValue("staticKeyUniformDoubleValue");
         generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.UNIFORM);
         generatorRecordConfig.setMinValue(BigDecimal.valueOf(5.5d));
@@ -199,7 +349,7 @@ public class ExampleJsonGenerator {
     private static GeneratorRecordConfig dynamicKeyWithTriangleIntegerValue(){
 
         final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType("Integer");
+        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.INTEGER);
         generatorRecordConfig.minKeyLength(2);
         generatorRecordConfig.maxKeyLength(5);
         generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.TRIANGLE);
@@ -213,7 +363,7 @@ public class ExampleJsonGenerator {
     private static GeneratorRecordConfig staticKeyWithTriangleIntegerValue(){
 
         final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType("Integer");
+        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.INTEGER);
         generatorRecordConfig.setKeyValue("staticKeyTriangleIntegerValue");
         generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.TRIANGLE);
         generatorRecordConfig.setMinValue(BigDecimal.valueOf(0));
@@ -227,7 +377,7 @@ public class ExampleJsonGenerator {
     private static GeneratorRecordConfig staticKeyWithTriangleDoubleValue(){
 
         final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType("Double");
+        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.DOUBLE);
         generatorRecordConfig.setKeyValue("staticKeyTriangleDoubleValue");
         generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.TRIANGLE);
         generatorRecordConfig.setMinValue(BigDecimal.valueOf(5.5d));
@@ -240,7 +390,7 @@ public class ExampleJsonGenerator {
     private static GeneratorRecordConfig dynamicKeyWithGaussIntegerValue(){
 
         final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType("Integer");
+        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.INTEGER);
         generatorRecordConfig.minKeyLength(2);
         generatorRecordConfig.maxKeyLength(5);
         generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.GAUSS);
@@ -254,7 +404,7 @@ public class ExampleJsonGenerator {
     private static GeneratorRecordConfig staticKeyWithGaussIntegerValue(){
 
         final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType("Integer");
+        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.INTEGER);
         generatorRecordConfig.setKeyValue("staticKeyGaussIntegerValue");
         generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.GAUSS);
         generatorRecordConfig.setGaussMiddle(BigDecimal.valueOf(10));
@@ -267,7 +417,8 @@ public class ExampleJsonGenerator {
     private static GeneratorRecordConfig staticKeyWithGaussDoubleValue(){
 
         final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType("Double");
+
+        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.DOUBLE);
         generatorRecordConfig.setKeyValue("staticKeyGaussDoubleValue");
         generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.GAUSS);
         generatorRecordConfig.setGaussMiddle(BigDecimal.valueOf(10));

@@ -1,20 +1,20 @@
 package de.cleem.tub.tsdbb.apps.worker.adapters;
 
-import de.cleem.tub.tsdbb.api.model.WorkerTsdbConnection;
 import de.cleem.tub.tsdbb.api.model.Record;
+import de.cleem.tub.tsdbb.api.model.WorkerTsdbConnection;
 
 public interface TSDBAdapterIF {
 
-    abstract void setup(final WorkerTsdbConnection config) throws TSDBAdapterException;
+    void setup(final WorkerTsdbConnection config) throws TSDBAdapterException;
 
-    abstract void createStorage() throws TSDBAdapterException;
+    void createStorage() throws TSDBAdapterException;
 
-    abstract void write(final Record record) throws TSDBAdapterException;
+    void write(final Record record) throws TSDBAdapterException;
 
-    abstract void cleanup() throws TSDBAdapterException;
+    void cleanup() throws TSDBAdapterException;
 
-    abstract void close();
+    void close();
 
-    abstract String getConnectionInfo();
+    String getConnectionInfo();
 
 }

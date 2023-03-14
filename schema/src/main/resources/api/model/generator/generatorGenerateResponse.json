@@ -2,20 +2,18 @@
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
   "properties" : {
+    "sourceInformation" : {
+      "$ref": "../sourceInformation.json",
+      "nullable" : false
+    },
     "workload" : {
         "$ref": "../workload/workload.json",
         "nullable" : false
     },
-    "startTimestamp" : {
-      "type": "string",
-      "format": "date-time",
-      "nullable" : false
-    },
-    "endTimestamp" : {
-      "type": "string",
-      "format": "date-time",
+    "timeFrame" : {
+      "$ref": "../timeFrame.json",
       "nullable" : false
     }
   },
-  "required": [ "workload","startTimestamp","endTimestamp" ]
+  "required": [ "sourceInformation","workload","timeFrame" ]
 }

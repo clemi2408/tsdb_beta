@@ -1,0 +1,6 @@
+{
+  "keyValue" : "staticKeyDynStringValue",
+  "maxStringValueLength" : 5,
+  "minStringValueLength" : 3,
+  "valueType" : "string"
+}

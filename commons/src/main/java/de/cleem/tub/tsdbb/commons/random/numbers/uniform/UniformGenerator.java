@@ -17,7 +17,7 @@ public class UniformGenerator extends BaseClass {
 
     public static Double getDouble(final Number min, final Number max) {
 
-        final Double maxUsed = max.doubleValue() + 1d;
+        final double maxUsed = max.doubleValue() + 1d;
         return RANDOM.nextDouble(maxUsed - min.doubleValue()) + min.doubleValue();
 
     }

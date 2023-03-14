@@ -8,7 +8,6 @@ public class GaussGenerator extends BaseClass {
 
     final static Random RANDOM = new Random();
 
-
     public static Number getDouble(final Number gaussMiddle, final Number gaussRange) {
 
         final double gaussRangeDouble = gaussRange.doubleValue();

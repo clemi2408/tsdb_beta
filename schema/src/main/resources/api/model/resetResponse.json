@@ -2,36 +2,16 @@
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
   "properties" : {
-    "status" : {
-      "type" : "string",
+    "sourceInformation" : {
+      "$ref": "sourceInformation.json",
       "nullable" : false
     },
-    "cleared" : {
-      "type" : "array",
-      "nullable" : true,
-      "items" : {
-        "type" : "string",
-        "nullable" : false
-      },
-      "minItems": 0
-    },
-    "error" : {
-      "type" : "array",
-      "nullable" : true,
-      "items" : {
-        "type" : "string",
-        "nullable" : false
-      },
-      "minItems": 0
-    },
-    "startTimestamp" : {
-      "type": "string",
-      "format": "date-time",
+    "reset" : {
+      "type" : "boolean",
       "nullable" : false
     },
-    "endTimestamp" : {
-      "type": "string",
-      "format": "date-time",
+    "timeFrame" : {
+      "$ref": "timeFrame.json",
       "nullable" : false
     },
 
@@ -44,6 +24,6 @@
       "minItems": 0
     }
   },
-  "required": [ "cleared","errors","endTimestamp","startTimestamp" ]
+  "required": [ "sourceInformation","reset","timeFrame" ]
 
 }

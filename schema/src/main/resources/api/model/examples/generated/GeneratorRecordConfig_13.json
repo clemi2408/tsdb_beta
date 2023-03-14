@@ -1,0 +1,8 @@
+{
+  "gaussMiddle" : 10,
+  "gaussRange" : 10,
+  "maxKeyLength" : 5,
+  "minKeyLength" : 2,
+  "valueDistribution" : "GAUSS",
+  "valueType" : "integer"
+}

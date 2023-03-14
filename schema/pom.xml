@@ -32,7 +32,7 @@
                             <generateModelDocumentation>false</generateModelDocumentation>
                             <generateModelTests>false</generateModelTests>
                             <generateSupportingFiles>false</generateSupportingFiles>
-                            <verbose>true</verbose>
+                            <verbose>${openapi.verbose}</verbose>
                             <configOptions>
                                 <apiPackage>${openapi-root-package.path}.${openapi-spec-name.generator}.${openapi-server-package.name}</apiPackage>
                                 <modelPackage>${openapi-root-package.path}.${openapi-model-package.name}</modelPackage>
@@ -68,7 +68,7 @@
                             <generateModelDocumentation>false</generateModelDocumentation>
                             <generateModelTests>false</generateModelTests>
                             <generateSupportingFiles>true</generateSupportingFiles>
-                            <verbose>true</verbose>
+                            <verbose>${openapi.verbose}</verbose>
                             <configOptions>
                                 <apiPackage>${openapi-root-package.path}.${openapi-spec-name.generator}.${openapi-client-package.name}</apiPackage>
                                 <modelPackage>${openapi-root-package.path}.${openapi-model-package.name}</modelPackage>
@@ -100,7 +100,7 @@
                             <generateModelDocumentation>false</generateModelDocumentation>
                             <generateModelTests>false</generateModelTests>
                             <generateSupportingFiles>false</generateSupportingFiles>
-                            <verbose>true</verbose>
+                            <verbose>${openapi.verbose}</verbose>
                             <configOptions>
                                 <apiPackage>${openapi-root-package.path}.${openapi-spec-name.orchestrator}.${openapi-server-package.name}</apiPackage>
                                 <modelPackage>${openapi-root-package.path}.${openapi-model-package.name}</modelPackage>
@@ -136,7 +136,7 @@
                             <generateModelDocumentation>false</generateModelDocumentation>
                             <generateModelTests>false</generateModelTests>
                             <generateSupportingFiles>true</generateSupportingFiles>
-                            <verbose>true</verbose>
+                            <verbose>${openapi.verbose}</verbose>
                             <configOptions>
                                 <apiPackage>${openapi-root-package.path}.${openapi-spec-name.orchestrator}.${openapi-client-package.name}</apiPackage>
                                 <modelPackage>${openapi-root-package.path}.${openapi-model-package.name}</modelPackage>
@@ -168,7 +168,7 @@
                             <generateModelDocumentation>false</generateModelDocumentation>
                             <generateModelTests>false</generateModelTests>
                             <generateSupportingFiles>false</generateSupportingFiles>
-                            <verbose>true</verbose>
+                            <verbose>${openapi.verbose}</verbose>
                             <configOptions>
                                 <apiPackage>${openapi-root-package.path}.${openapi-spec-name.worker}.${openapi-server-package.name}</apiPackage>
                                 <modelPackage>${openapi-root-package.path}.${openapi-model-package.name}</modelPackage>
@@ -204,7 +204,7 @@
                             <generateModelDocumentation>false</generateModelDocumentation>
                             <generateModelTests>false</generateModelTests>
                             <generateSupportingFiles>true</generateSupportingFiles>
-                            <verbose>true</verbose>
+                            <verbose>${openapi.verbose}</verbose>
                             <configOptions>
                                 <apiPackage>${openapi-root-package.path}.${openapi-spec-name.worker}.${openapi-client-package.name}</apiPackage>
                                 <modelPackage>${openapi-root-package.path}.${openapi-model-package.name}</modelPackage>

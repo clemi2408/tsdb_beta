@@ -5,7 +5,6 @@ import de.cleem.tub.tsdbb.api.model.WorkerTsdbConnection;
 import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.InfluxDbAdapter;
 import de.cleem.tub.tsdbb.apps.worker.adapters.victoriametrics.VictoriaMetricsAdapter;
 import de.cleem.tub.tsdbb.apps.worker.executor.ExecutionException;
-import de.cleem.tub.tsdbb.commons.exception.BaseException;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 

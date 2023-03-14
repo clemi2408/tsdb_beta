@@ -1,0 +1,7 @@
+{
+  "keyValue" : "staticKeyUniformIntegerValue",
+  "maxValue" : 100,
+  "minValue" : 0,
+  "valueDistribution" : "UNIFORM",
+  "valueType" : "integer"
+}

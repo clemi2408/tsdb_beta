@@ -2,21 +2,18 @@
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
   "properties" : {
+    "sourceInformation" : {
+      "$ref": "sourceInformation.json",
+      "nullable" : false
+    },
     "status" : {
       "type" : "string",
       "nullable" : false
     },
-    "startTimestamp" : {
-      "type": "string",
-      "format": "date-time",
+    "timeFrame" : {
+      "$ref": "timeFrame.json",
       "nullable" : false
     },
-    "endTimestamp" : {
-      "type": "string",
-      "format": "date-time",
-      "nullable" : false
-    },
-
     "nestedResponses" : {
       "type" : "array",
       "nullable" : true,
@@ -26,6 +23,6 @@
       "minItems": 0
     }
   },
-  "required": [ "status","endTimestamp","startTimestamp" ]
+  "required": [ "sourceInformation","status","timeFrame" ]
 
 }

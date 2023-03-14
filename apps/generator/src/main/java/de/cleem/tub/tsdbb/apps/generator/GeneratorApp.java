@@ -1,6 +1,6 @@
 package de.cleem.tub.tsdbb.apps.generator;
 
-import de.cleem.tub.tsdbb.apps.generator.rest.GeneratorREST;
+import de.cleem.tub.tsdbb.apps.generator.controller.GeneratorController;
 import de.cleem.tub.tsdbb.apps.generator.service.GeneratorService;
 import de.cleem.tub.tsdbb.commons.base.app.BaseAppException;
 import de.cleem.tub.tsdbb.commons.spring.base.app.BaseSpringApp;
@@ -19,7 +19,7 @@ import org.springframework.context.annotation.ComponentScan;
         PingResponderService.class,
 
         GeneratorService.class,
-        GeneratorREST.class
+        GeneratorController.class
 
 })
 

@@ -10,7 +10,7 @@ import org.springframework.boot.SpringApplication;
 @Slf4j
 public class BaseSpringApp extends BaseApp {
 
-    public static void startSpringApp(final Class appClass, final String[] args) throws BaseAppException {
+    public static void startSpringApp(final Class<?> appClass, final String[] args) throws BaseAppException {
 
         final SpringApplication app = new SpringApplication(appClass);
         app.setBanner(DynamicBanner.builder().build());

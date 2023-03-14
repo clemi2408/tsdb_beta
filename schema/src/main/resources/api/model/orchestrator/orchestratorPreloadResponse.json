@@ -2,14 +2,20 @@
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
   "properties" : {
-
+    "sourceInformation" : {
+      "$ref": "../sourceInformation.json",
+      "nullable" : false
+    },
+    "timeFrame" : {
+      "$ref": "../timeFrame.json",
+      "nullable" : false
+    },
     "orchestratorPreloadRequest" : {
       "$ref": "orchestratorPreloadRequest.json",
       "nullable" : false
     },
-
-    "generatorWorkload" : {
-      "$ref": "../workload/workload.json",
+    "generatorGenerateResponse" : {
+      "$ref": "../generator/generatorGenerateResponse.json",
       "nullable" : false
     },
     "benchmarkWorkload" : {
@@ -23,17 +29,7 @@
         "$ref": "../worker/workerPreloadResponse.json"
       },
       "minItems": 1
-    },
-    "startTimestamp" : {
-      "type": "string",
-      "format": "date-time",
-      "nullable" : false
-    },
-    "endTimestamp" : {
-      "type": "string",
-      "format": "date-time",
-      "nullable" : false
     }
   },
-  "required": [ "startTimestamp","endTimestamp","generatorWorkload","benchmarkWorkload","orchestratorPreloadRequest","workerPreloadResponses" ]
+  "required": [ "sourceInformation","timeFrame","orchestratorPreloadRequest","generatorGenerateResponse","benchmarkWorkload","workerPreloadResponses"]
 }

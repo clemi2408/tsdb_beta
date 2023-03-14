@@ -30,7 +30,7 @@ public class LineProtocolFormat {
 
         // <measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]
 
-        final StringBuffer lineStringBuilder = new StringBuffer();
+        final StringBuilder lineStringBuilder = new StringBuilder();
         lineStringBuilder.append(measurementName);
         lineStringBuilder.append(",");
         lineStringBuilder.append(labelKey);

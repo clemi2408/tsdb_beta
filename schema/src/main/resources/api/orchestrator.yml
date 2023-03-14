@@ -32,7 +32,6 @@ paths:
             application/json:
               schema:
                 $ref: "model/orchestrator/orchestratorPreloadResponse.json"
-
   /rest/reset:
     get:
       description: Returns reset response
@@ -46,7 +45,6 @@ paths:
             application/json:
               schema:
                 $ref: "model/resetResponse.json"
-
   /rest/start:
     get:
       description: Returns StartStop response
@@ -60,7 +58,6 @@ paths:
             application/json:
               schema:
                 $ref: "model/startStopResponse.json"
-
   /rest/stop:
     get:
       description: Returns StartStop response
@@ -74,6 +71,40 @@ paths:
             application/json:
               schema:
                 $ref: "model/startStopResponse.json"
+
+  /rest/collect:
+    post:
+      description: Accepts Benchmark Result Request
+      operationId: collect
+      tags:
+        - OrchestratorCollect
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "model/result/benchmarkResultRequest.json"
+      responses:
+        '200':
+          description: The Benchmark Result Response
+          content:
+            application/json:
+              schema:
+                $ref: "model/result/benchmarkResultResponse.json"
+
+  /rest/results:
+    get:
+      description: Returns partial and complete results
+      operationId: results
+      tags:
+        - OrchestratorResults
+      responses:
+        '200':
+          description: The Orchestrator Result Response
+          content:
+            application/json:
+              schema:
+                $ref: "model/orchestrator/orchestratorResultResponse.json"
 
   /rest/ping:
     get:
