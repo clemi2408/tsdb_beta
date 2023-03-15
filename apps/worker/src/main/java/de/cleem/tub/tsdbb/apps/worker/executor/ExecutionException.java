@@ -1,7 +1,7 @@
 package de.cleem.tub.tsdbb.apps.worker.executor;
 
 
-import de.cleem.tub.tsdbb.commons.exception.BaseException;
+import de.cleem.tub.tsdbb.commons.base.exception.BaseException;
 
 public class ExecutionException extends BaseException {
 

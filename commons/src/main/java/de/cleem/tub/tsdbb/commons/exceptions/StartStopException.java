@@ -1,5 +1,7 @@
-package de.cleem.tub.tsdbb.commons.exception;
+package de.cleem.tub.tsdbb.commons.exceptions;
 
+
+import de.cleem.tub.tsdbb.commons.base.exception.BaseException;
 
 public class StartStopException extends BaseException {
 

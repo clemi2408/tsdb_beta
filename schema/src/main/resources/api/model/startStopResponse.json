@@ -8,6 +8,7 @@
     },
     "status" : {
       "type" : "string",
+      "enum" : [ "STARTED", "STOPPED" ],
       "nullable" : false
     },
     "timeFrame" : {

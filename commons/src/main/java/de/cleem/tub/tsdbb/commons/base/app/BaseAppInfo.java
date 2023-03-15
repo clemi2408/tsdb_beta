@@ -1,17 +1,16 @@
 package de.cleem.tub.tsdbb.commons.base.app;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
+import lombok.*;
 
 import java.util.Date;
 
 @Builder
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseAppInfo {
+public class BaseAppInfo extends BaseClass {
 
     private Date startDate;
     private Date endDate;

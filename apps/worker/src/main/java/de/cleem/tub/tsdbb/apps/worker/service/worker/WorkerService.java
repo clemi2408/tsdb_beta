@@ -13,7 +13,6 @@ import de.cleem.tub.tsdbb.commons.spring.apiclient.ApiClientService;
 import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
 import de.cleem.tub.tsdbb.commons.spring.pingresponder.PingResponderException;
 import de.cleem.tub.tsdbb.commons.spring.pingresponder.PingResponderService;
-import de.cleem.tub.tsdbb.commons.status.StatusItems;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -102,7 +101,7 @@ public class WorkerService extends BaseSpringComponent {
 
         startStopResponse.getTimeFrame().setEndTimestamp(OffsetDateTime.now());
 
-        startStopResponse.setStatus(StatusItems.STARTED_STRING);
+        startStopResponse.setStatus(StartStopResponse.StatusEnum.STARTED);
 
         return startStopResponse;
     }
@@ -117,7 +116,7 @@ public class WorkerService extends BaseSpringComponent {
 
         runService.stop();
 
-        startStopResponse.setStatus(StatusItems.STOPPED_STRING);
+        startStopResponse.setStatus(StartStopResponse.StatusEnum.STOPPED);
 
         startStopResponse.getTimeFrame().setEndTimestamp(OffsetDateTime.now());
         return startStopResponse;

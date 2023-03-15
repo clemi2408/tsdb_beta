@@ -1,4 +1,4 @@
-package de.cleem.tub.tsdbb.commons.exception;
+package de.cleem.tub.tsdbb.commons.base.exception;
 
 public class BaseException extends Exception {
 

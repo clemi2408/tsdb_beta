@@ -1,12 +1,13 @@
 package de.cleem.tub.tsdbb.commons.api;
 
+import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
 import lombok.Builder;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 @Builder
-public class OpenAPIClientFacade {
+public class OpenAPIClientFacade extends BaseClass {
 
     private String basePath;
 

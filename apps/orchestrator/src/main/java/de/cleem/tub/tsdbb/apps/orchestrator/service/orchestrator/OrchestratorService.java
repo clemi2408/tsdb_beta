@@ -5,14 +5,13 @@ import de.cleem.tub.tsdbb.apps.orchestrator.service.collector.WorkloadCollectorE
 import de.cleem.tub.tsdbb.apps.orchestrator.service.collector.WorkloadCollectorService;
 import de.cleem.tub.tsdbb.apps.orchestrator.service.preparation.WorkloadPreparationService;
 import de.cleem.tub.tsdbb.commons.api.ClientApiFacadeException;
-import de.cleem.tub.tsdbb.commons.exception.StartStopException;
+import de.cleem.tub.tsdbb.commons.exceptions.StartStopException;
 import de.cleem.tub.tsdbb.commons.factories.sourceInformation.SourceInformationFactory;
 import de.cleem.tub.tsdbb.commons.factories.timeFrame.TimeFrameFactory;
 import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
 import de.cleem.tub.tsdbb.commons.spring.pingresponder.PingResponderException;
 import de.cleem.tub.tsdbb.commons.spring.pingresponder.PingResponderService;
 import de.cleem.tub.tsdbb.commons.spring.remotecontrol.RemoteControlService;
-import de.cleem.tub.tsdbb.commons.status.StatusItems;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -114,7 +113,7 @@ public class OrchestratorService extends BaseSpringComponent {
         startStopResponse.setSourceInformation(SourceInformationFactory.getSourceInformation(getServerUrl()));
         startStopResponse.setNestedResponses(remoteControlService.startWorkers(orchestratorPreloadRequest));
         startStopResponse.getTimeFrame().setEndTimestamp(OffsetDateTime.now());
-        startStopResponse.setStatus(StatusItems.STARTED_STRING);
+        startStopResponse.setStatus(StartStopResponse.StatusEnum.STARTED);
 
         return startStopResponse;
 
@@ -133,7 +132,7 @@ public class OrchestratorService extends BaseSpringComponent {
         startStopResponse.setSourceInformation(SourceInformationFactory.getSourceInformation(getServerUrl()));
         startStopResponse.setNestedResponses(remoteControlService.stopWorkers(orchestratorPreloadRequest));
         startStopResponse.getTimeFrame().setEndTimestamp(OffsetDateTime.now());
-        startStopResponse.setStatus(StatusItems.STOPPED_STRING);
+        startStopResponse.setStatus(StartStopResponse.StatusEnum.STOPPED);
 
         return startStopResponse;
     }

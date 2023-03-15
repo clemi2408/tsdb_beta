@@ -1,6 +1,6 @@
 package de.cleem.tub.tsdbb.commons.file;
 
-import de.cleem.tub.tsdbb.commons.exception.BaseException;
+import de.cleem.tub.tsdbb.commons.base.exception.BaseException;
 
 import java.io.IOException;
 

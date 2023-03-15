@@ -12,11 +12,11 @@
       "key" : "key",
       "value" : [ "value" ]
     } ],
-    "recordId" : "e4201542-1dc9-4123-8f2f-e4736ff72730"
+    "recordId" : "94cd5a1b-de22-44a6-96db-31dbab798697"
   },
   "durationInMs" : 100,
   "timeFrame" : {
-    "startTimestamp" : 1678835106.592771000,
-    "endTimestamp" : 1678835106.592726000
+    "startTimestamp" : 1678838899.248410000,
+    "endTimestamp" : 1678838899.248363000
   }
 }

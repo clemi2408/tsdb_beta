@@ -25,7 +25,7 @@ public class DynamicBanner extends BaseClass implements Banner {
     public static final String FONT_ID ="standard.flf";
 
     @Default
-    int newLinesAfter = 1;
+    private final int newLinesAfter = 1;
 
     @Override
     @SneakyThrows

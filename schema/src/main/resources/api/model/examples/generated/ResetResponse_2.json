@@ -4,8 +4,8 @@
   },
   "reset" : true,
   "timeFrame" : {
-    "startTimestamp" : 1678835106.318406000,
-    "endTimestamp" : 1678835106.318369000
+    "startTimestamp" : 1678838899.009414000,
+    "endTimestamp" : 1678838899.009373000
   },
   "nestedResponses" : [ {
     "sourceInformation" : {
@@ -13,8 +13,8 @@
     },
     "reset" : true,
     "timeFrame" : {
-      "startTimestamp" : 1678835106.318456000,
-      "endTimestamp" : 1678835106.318440000
+      "startTimestamp" : 1678838899.009468000,
+      "endTimestamp" : 1678838899.009450000
     }
   }, {
     "sourceInformation" : {
@@ -22,8 +22,8 @@
     },
     "reset" : true,
     "timeFrame" : {
-      "startTimestamp" : 1678835106.318490000,
-      "endTimestamp" : 1678835106.318475000
+      "startTimestamp" : 1678838899.009506000,
+      "endTimestamp" : 1678838899.009489000
     }
   } ]
 }

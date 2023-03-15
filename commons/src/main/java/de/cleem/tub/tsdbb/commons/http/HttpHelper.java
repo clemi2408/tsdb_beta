@@ -1,5 +1,7 @@
 package de.cleem.tub.tsdbb.commons.http;
 
+import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -8,7 +10,7 @@ import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HttpHelper {
+public class HttpHelper extends BaseClass {
 
     private static final String HEADER_KEY_AUTHORIZATION = "Authorization";
     private static final String HEADER_KEY_AUTHORIZATION_VALUE_PREFIX_TOKEN = "Token ";

@@ -33,15 +33,18 @@ public class WorkloadGenerator extends BaseClass {
 
     }
 
+
     private KvPair generateKvPair(final GeneratorRecordConfig recordConfig) throws ValueGeneratorException, StringGeneratorException, KeyGeneratorException, WorkloadGeneratorException {
 
         if(recordConfig==null){
             throw new WorkloadGeneratorException("RecordConfig is NULL");
         }
 
-        return new KvPair()
-                .key(KeyGenerator.generate(recordConfig))
-                .value(ValueGenerator.generate(recordConfig));
+        final KvPair kvPair = new KvPair();
+        kvPair.setKey(KeyGenerator.generate(recordConfig));
+        kvPair.setValue(ValueGenerator.generate(recordConfig));
+
+        return kvPair;
 
     }
 

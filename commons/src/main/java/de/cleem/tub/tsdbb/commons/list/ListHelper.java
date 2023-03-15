@@ -1,9 +1,11 @@
 package de.cleem.tub.tsdbb.commons.list;
 
+import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListHelper {
+public class ListHelper extends BaseClass {
 
     public static <T> List<List<T>> splitListIntoParts(List<T> inputList, int parts)
     {

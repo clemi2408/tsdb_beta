@@ -30,7 +30,7 @@ public class WorkerController extends BaseSpringComponent implements WorkerPingA
     }
 
     @Override
-    public ResponseEntity<ResetResponse> reset() throws TSDBAdapterException, ExecutionException {
+    public ResponseEntity<ResetResponse> reset() throws TSDBAdapterException {
 
         return ResponseEntity.ok(workerService.reset());
 

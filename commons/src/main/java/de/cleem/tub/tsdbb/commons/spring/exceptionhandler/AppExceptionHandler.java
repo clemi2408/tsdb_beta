@@ -1,6 +1,6 @@
 package de.cleem.tub.tsdbb.commons.spring.exceptionhandler;
 
-import de.cleem.tub.tsdbb.commons.exception.BaseException;
+import de.cleem.tub.tsdbb.commons.base.exception.BaseException;
 import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,6 @@
 package de.cleem.tub.tsdbb.commons.http;
 
-import de.cleem.tub.tsdbb.commons.exception.BaseException;
+import de.cleem.tub.tsdbb.commons.base.exception.BaseException;
 
 public class HttpException extends BaseException {
 

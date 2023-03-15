@@ -5,7 +5,7 @@ import de.cleem.tub.tsdbb.api.orchestrator.server.*;
 import de.cleem.tub.tsdbb.apps.orchestrator.service.collector.WorkloadCollectorException;
 import de.cleem.tub.tsdbb.apps.orchestrator.service.orchestrator.OrchestratorService;
 import de.cleem.tub.tsdbb.commons.api.ClientApiFacadeException;
-import de.cleem.tub.tsdbb.commons.exception.StartStopException;
+import de.cleem.tub.tsdbb.commons.exceptions.StartStopException;
 import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
 import de.cleem.tub.tsdbb.commons.spring.pingresponder.PingResponderException;
 import org.springframework.beans.factory.annotation.Autowired;
