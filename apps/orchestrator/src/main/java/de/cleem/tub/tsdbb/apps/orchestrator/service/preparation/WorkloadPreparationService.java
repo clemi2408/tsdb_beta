@@ -15,26 +15,26 @@ import java.util.List;
 @Slf4j
 public class WorkloadPreparationService extends BaseSpringComponent {
 
-    public List<WorkerPreloadRequest> prepareWorkerPreloadRequests(final OrchestratorPreloadRequest orchestratorPreloadRequest, final Workload benchmarkWorkload) {
+    public List<WorkerSetupRequest> prepareWorkerSetupRequests(final OrchestratorSetupRequest orchestratorSetupRequest, final Workload benchmarkWorkload) {
 
-        final int workerCount = orchestratorPreloadRequest.getWorkerConfigs().size();
+        final int workerCount = orchestratorSetupRequest.getWorkerConfigs().size();
 
         final List<List<Record>> partitionedWorkload = ListHelper.splitListIntoParts(benchmarkWorkload.getRecords(),workerCount);
 
-        final List<WorkerPreloadRequest> workerPreloadRequests = new ArrayList<>();
+        final List<WorkerSetupRequest> workerSetupRequests = new ArrayList<>();
 
-        WorkerPreloadRequest workerPreloadRequest;
-        for(int i = 0; i < orchestratorPreloadRequest.getWorkerConfigs().size(); i++){
+        WorkerSetupRequest workerSetupRequest;
+        for(int i = 0; i < orchestratorSetupRequest.getWorkerConfigs().size(); i++){
 
-            workerPreloadRequest = new WorkerPreloadRequest();
-            workerPreloadRequest.setWorkerConfig(orchestratorPreloadRequest.getWorkerConfigs().get(i));
-            workerPreloadRequest.setOrchestratorUrl(getServerUrl());
-            workerPreloadRequest.setBenchmarkWorkload(new Workload().records(partitionedWorkload.get(i)));
-            workerPreloadRequests.add(workerPreloadRequest);
+            workerSetupRequest = new WorkerSetupRequest();
+            workerSetupRequest.setWorkerConfig(orchestratorSetupRequest.getWorkerConfigs().get(i));
+            workerSetupRequest.setOrchestratorUrl(getServerUrl());
+            workerSetupRequest.setBenchmarkWorkload(new Workload().records(partitionedWorkload.get(i)));
+            workerSetupRequests.add(workerSetupRequest);
 
         }
 
-        return workerPreloadRequests;
+        return workerSetupRequests;
 
     }
 

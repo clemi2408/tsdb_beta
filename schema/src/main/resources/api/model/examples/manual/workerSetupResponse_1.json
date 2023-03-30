@@ -2,7 +2,7 @@
   "sourceInformation": {
     "url": "http://localhost:8082"
   },
-  "preloadRequest": {
+  "workerSetupRequest": {
     "orchestratorUrl": "http://localhost:8081",
     "workerConfig": {
       "workerUrl": "http://localhost:8082",

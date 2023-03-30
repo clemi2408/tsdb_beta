@@ -16,16 +16,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class WorkerController extends BaseSpringComponent implements WorkerPingApi, WorkerPreloadApi, WorkerResetApi, WorkerStartApi, WorkerStopApi {
+public class WorkerController extends BaseSpringComponent implements WorkerPingApi, WorkerSetupApi, WorkerResetApi, WorkerStartApi, WorkerStopApi {
 
     @Autowired
     private WorkerService workerService;
 
 
     @Override
-    public ResponseEntity<WorkerPreloadResponse> preload(final WorkerPreloadRequest workerPreloadRequest) throws ClientApiFacadeException, PingResponderException, TSDBAdapterException, ExecutionException {
+    public ResponseEntity<WorkerSetupResponse> setup(final WorkerSetupRequest workerSetupRequest) throws ClientApiFacadeException, PingResponderException, TSDBAdapterException, ExecutionException {
 
-        return ResponseEntity.ok(workerService.preload(workerPreloadRequest));
+        return ResponseEntity.ok(workerService.setup(workerSetupRequest));
 
     }
 

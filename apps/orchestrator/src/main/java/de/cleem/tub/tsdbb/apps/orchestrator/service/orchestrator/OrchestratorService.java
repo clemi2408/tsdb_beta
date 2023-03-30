@@ -5,6 +5,7 @@ import de.cleem.tub.tsdbb.apps.orchestrator.service.collector.WorkloadCollectorE
 import de.cleem.tub.tsdbb.apps.orchestrator.service.collector.WorkloadCollectorService;
 import de.cleem.tub.tsdbb.apps.orchestrator.service.preparation.WorkloadPreparationService;
 import de.cleem.tub.tsdbb.commons.api.ClientApiFacadeException;
+import de.cleem.tub.tsdbb.commons.exceptions.SetupException;
 import de.cleem.tub.tsdbb.commons.exceptions.StartStopException;
 import de.cleem.tub.tsdbb.commons.factories.sourceInformation.SourceInformationFactory;
 import de.cleem.tub.tsdbb.commons.factories.timeFrame.TimeFrameFactory;
@@ -39,45 +40,65 @@ public class OrchestratorService extends BaseSpringComponent {
     @Autowired
     private WorkloadCollectorService workloadCollectorService;
 
-    private OrchestratorPreloadRequest orchestratorPreloadRequest;
-    private OrchestratorPreloadResponse orchestratorPreloadResponse;
+    private OrchestratorSetupRequest orchestratorSetupRequest;
+    private OrchestratorSetupResponse orchestratorSetupResponse;
 
-    public OrchestratorPreloadResponse preload(final OrchestratorPreloadRequest orchestratorPreloadRequest) throws ClientApiFacadeException, PingResponderException {
+    public OrchestratorSetupResponse setup(final OrchestratorSetupRequest orchestratorSetupRequest) throws ClientApiFacadeException, PingResponderException, SetupException {
 
-        log.info("Preloading Orchestrator");
+        if(orchestratorSetupRequest.getGenerateRequest()!=null && orchestratorSetupRequest.getWorkload()!=null){
+            throw new SetupException("Provide either GenerateRequest or Workload");
+        }
 
-        final OrchestratorPreloadResponse orchestratorPreloadResponse = new OrchestratorPreloadResponse();
-        orchestratorPreloadResponse.setTimeFrame(TimeFrameFactory.getTimeFrame());
-        orchestratorPreloadResponse.setSourceInformation(SourceInformationFactory.getSourceInformation(getServerUrl()));
 
-        remoteControlService.pingPeers(orchestratorPreloadRequest);
+        log.info("Setup Orchestrator");
 
-        final GeneratorGenerateResponse generatorGenerateResponse = remoteControlService.loadWorkload(orchestratorPreloadRequest);
-        final Workload benchmarkWorkload = workloadPreparationService.resolveMultiStringEnumValues(generatorGenerateResponse);
+        final OrchestratorSetupResponse orchestratorSetupResponse = new OrchestratorSetupResponse();
+        orchestratorSetupResponse.setTimeFrame(TimeFrameFactory.getTimeFrame());
+        orchestratorSetupResponse.setSourceInformation(SourceInformationFactory.getSourceInformation(getServerUrl()));
+        orchestratorSetupResponse.setOrchestratorSetupRequest(orchestratorSetupRequest);
+
+        remoteControlService.pingPeers(orchestratorSetupRequest);
+
+        Workload benchmarkWorkload = null;
+        if(orchestratorSetupRequest.getGenerateRequest()!=null) {
+
+            if(orchestratorSetupRequest.getGeneratorUrl()==null){
+                throw new SetupException("No Generator URL provided");
+            }
+
+            final GeneratorGenerateResponse generatorGenerateResponse = remoteControlService.loadWorkload(orchestratorSetupRequest);
+            orchestratorSetupResponse.setGeneratorGenerateResponse(generatorGenerateResponse);
+            benchmarkWorkload = workloadPreparationService.resolveMultiStringEnumValues(generatorGenerateResponse);
+
+        }
+
+        if(orchestratorSetupRequest.getWorkload()!=null){
+            benchmarkWorkload=orchestratorSetupRequest.getWorkload();
+        }
+
+        orchestratorSetupResponse.setBenchmarkWorkload(benchmarkWorkload);
 
         // TODO: split generated Workload after certain distribution to send
-        final List<WorkerPreloadRequest> workerPreloadRequests = workloadPreparationService.prepareWorkerPreloadRequests(orchestratorPreloadRequest,benchmarkWorkload);
+        final List<WorkerSetupRequest> workerSetupRequests = workloadPreparationService.prepareWorkerSetupRequests(orchestratorSetupRequest,benchmarkWorkload);
+        final List<WorkerSetupResponse> workerSetupResponses = remoteControlService.setupWorkers(workerSetupRequests);
 
-        final List<WorkerPreloadResponse> workerPreloadResponses = remoteControlService.preloadWorkers(workerPreloadRequests);
+        orchestratorSetupResponse.setWorkerSetupResponses(workerSetupResponses);
+        orchestratorSetupResponse.getTimeFrame().setEndTimestamp(OffsetDateTime.now());
 
-        orchestratorPreloadResponse.setOrchestratorPreloadRequest(orchestratorPreloadRequest);
-        orchestratorPreloadResponse.setGeneratorGenerateResponse(generatorGenerateResponse);
-        orchestratorPreloadResponse.setBenchmarkWorkload(benchmarkWorkload);
-        orchestratorPreloadResponse.setWorkerPreloadResponses(workerPreloadResponses);
-        orchestratorPreloadResponse.getTimeFrame().setEndTimestamp(OffsetDateTime.now());
+        this.orchestratorSetupRequest = orchestratorSetupRequest;
+        this.orchestratorSetupResponse = orchestratorSetupResponse;
 
-        this.orchestratorPreloadRequest = orchestratorPreloadRequest;
-        this.orchestratorPreloadResponse = orchestratorPreloadResponse;
-
-        return orchestratorPreloadResponse;
+        return orchestratorSetupResponse;
 
     }
 
     public ResetResponse reset() throws ClientApiFacadeException, StartStopException {
 
-        if(orchestratorPreloadRequest==null && orchestratorPreloadResponse==null){
-            throw new StartStopException("Call preload before Reset");
+        if(orchestratorSetupRequest ==null && orchestratorSetupResponse ==null){
+            throw new StartStopException("Call setup before Reset");
         }
+
+        workloadCollectorService.reset();
 
         log.info("Resetting Orchestrator");
 
@@ -85,12 +106,12 @@ public class OrchestratorService extends BaseSpringComponent {
         resetResponse.setTimeFrame(TimeFrameFactory.getTimeFrame());
         resetResponse.setSourceInformation(SourceInformationFactory.getSourceInformation(getServerUrl()));
 
-        final List<ResetResponse> workerResetResponses = remoteControlService.resetWorkers(orchestratorPreloadRequest);
+        final List<ResetResponse> workerResetResponses = remoteControlService.resetWorkers(orchestratorSetupRequest);
 
         resetResponse.setNestedResponses(workerResetResponses);
 
-        orchestratorPreloadRequest = null;
-        orchestratorPreloadResponse = null;
+        orchestratorSetupRequest = null;
+        orchestratorSetupResponse = null;
 
         resetResponse.setReset(true);
 
@@ -102,8 +123,12 @@ public class OrchestratorService extends BaseSpringComponent {
 
     public StartStopResponse start() throws ClientApiFacadeException, StartStopException {
 
-        if(orchestratorPreloadRequest==null){
-            throw new StartStopException("Call preload before Start");
+        if(orchestratorSetupRequest ==null){
+            throw new StartStopException("Call setup before Start");
+        }
+
+        if(workloadCollectorService.hasResults()){
+            throw new StartStopException("Call reset to clean available results");
         }
 
         log.info("Starting Orchestrator");
@@ -111,7 +136,7 @@ public class OrchestratorService extends BaseSpringComponent {
         final StartStopResponse startStopResponse = new StartStopResponse();
         startStopResponse.setTimeFrame(TimeFrameFactory.getTimeFrame());
         startStopResponse.setSourceInformation(SourceInformationFactory.getSourceInformation(getServerUrl()));
-        startStopResponse.setNestedResponses(remoteControlService.startWorkers(orchestratorPreloadRequest));
+        startStopResponse.setNestedResponses(remoteControlService.startWorkers(orchestratorSetupRequest));
         startStopResponse.getTimeFrame().setEndTimestamp(OffsetDateTime.now());
         startStopResponse.setStatus(StartStopResponse.StatusEnum.STARTED);
 
@@ -121,8 +146,8 @@ public class OrchestratorService extends BaseSpringComponent {
 
     public StartStopResponse stop() throws ClientApiFacadeException, StartStopException {
 
-        if(orchestratorPreloadRequest==null){
-            throw new StartStopException("Call preload before Stop");
+        if(orchestratorSetupRequest ==null){
+            throw new StartStopException("Call setup before Stop");
         }
 
         log.info("Stopping Orchestrator");
@@ -130,7 +155,7 @@ public class OrchestratorService extends BaseSpringComponent {
         final StartStopResponse startStopResponse = new StartStopResponse();
         startStopResponse.setTimeFrame(TimeFrameFactory.getTimeFrame());
         startStopResponse.setSourceInformation(SourceInformationFactory.getSourceInformation(getServerUrl()));
-        startStopResponse.setNestedResponses(remoteControlService.stopWorkers(orchestratorPreloadRequest));
+        startStopResponse.setNestedResponses(remoteControlService.stopWorkers(orchestratorSetupRequest));
         startStopResponse.getTimeFrame().setEndTimestamp(OffsetDateTime.now());
         startStopResponse.setStatus(StartStopResponse.StatusEnum.STOPPED);
 
@@ -151,7 +176,7 @@ public class OrchestratorService extends BaseSpringComponent {
 
     public OrchestratorResultResponse results() {
 
-        return workloadCollectorService.results(orchestratorPreloadRequest);
+        return workloadCollectorService.results(orchestratorSetupRequest);
 
     }
 }

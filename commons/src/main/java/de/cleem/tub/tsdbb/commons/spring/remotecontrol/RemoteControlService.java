@@ -30,16 +30,18 @@ public class RemoteControlService extends BaseSpringComponent {
     private PingResponderService pingResponderService;
 
     // Generator and Ping Method
-    public void pingPeers(final OrchestratorPreloadRequest preloadRequest) throws ClientApiFacadeException, PingResponderException {
+    public void pingPeers(final OrchestratorSetupRequest orchestratorSetupRequest) throws ClientApiFacadeException, PingResponderException {
 
-        final GeneratorPingApi generatorPingApi = apiClientService.getApi(GeneratorPingApi.class,preloadRequest.getGeneratorUrl());
+        if(orchestratorSetupRequest.getGenerateRequest()!=null) {
+            final GeneratorPingApi generatorPingApi = apiClientService.getApi(GeneratorPingApi.class, orchestratorSetupRequest.getGeneratorUrl());
 
-        log.info("Sending ping to generator: "+preloadRequest.getGeneratorUrl());
-        pingResponderService.checkPingResponse(generatorPingApi.ping(),"generator",preloadRequest.getGeneratorUrl());
+            log.info("Sending ping to generator: " + orchestratorSetupRequest.getGeneratorUrl());
+            pingResponderService.checkPingResponse(generatorPingApi.ping(), "generator", orchestratorSetupRequest.getGeneratorUrl());
+        }
 
         WorkerPingApi workerPingApi;
 
-        for(WorkerConfig workerConfig : preloadRequest.getWorkerConfigs()){
+        for(WorkerConfig workerConfig : orchestratorSetupRequest.getWorkerConfigs()){
 
             workerPingApi = apiClientService.getApi(WorkerPingApi.class,workerConfig.getWorkerUrl());
 
@@ -52,12 +54,12 @@ public class RemoteControlService extends BaseSpringComponent {
     }
 
     // Generator Generate Method
-    public GeneratorGenerateResponse loadWorkload(final OrchestratorPreloadRequest preloadRequest) throws ClientApiFacadeException {
+    public GeneratorGenerateResponse loadWorkload(final OrchestratorSetupRequest orchestratorSetupRequest) throws ClientApiFacadeException {
 
-        final GeneratorGenerateApi generatorGenerateApi = apiClientService.getApi(GeneratorGenerateApi.class,preloadRequest.getGeneratorUrl());
+        final GeneratorGenerateApi generatorGenerateApi = apiClientService.getApi(GeneratorGenerateApi.class,orchestratorSetupRequest.getGeneratorUrl());
 
-        log.info("Requesting workload from generator: "+preloadRequest.getGeneratorUrl());
-        final GeneratorGenerateResponse generateResponse = generatorGenerateApi.generate(preloadRequest.getGenerateRequest());
+        log.info("Requesting workload from generator: "+orchestratorSetupRequest.getGeneratorUrl());
+        final GeneratorGenerateResponse generateResponse = generatorGenerateApi.generate(orchestratorSetupRequest.getGenerateRequest());
 
         log.info("Got workload from generator with "+generateResponse.getWorkload().getRecords().size()+" records");
 
@@ -65,37 +67,37 @@ public class RemoteControlService extends BaseSpringComponent {
 
     }
 
-    // Worker Control Methods: PRELOAD/START/STOP/RESET
-    public List<WorkerPreloadResponse> preloadWorkers(final List<WorkerPreloadRequest> workerPreloadRequests) throws ClientApiFacadeException {
+    // Worker Control Methods: SETUP/START/STOP/RESET
+    public List<WorkerSetupResponse> setupWorkers(final List<WorkerSetupRequest> workerSetupRequests) throws ClientApiFacadeException {
 
-        WorkerPreloadApi workerPreloadApi;
-        WorkerPreloadResponse workerPreloadResponse;
+        WorkerSetupApi workerSetupApi;
+        WorkerSetupResponse workerSetupResponse;
 
-        final List<WorkerPreloadResponse> workerPreloadResponseList = new ArrayList<>();
+        final List<WorkerSetupResponse> workerSetupResponseList = new ArrayList<>();
 
-        for(WorkerPreloadRequest workerPreloadRequest : workerPreloadRequests){
+        for(WorkerSetupRequest workerSetupRequest : workerSetupRequests){
 
-            workerPreloadApi = apiClientService.getApi(WorkerPreloadApi.class,workerPreloadRequest.getWorkerConfig().getWorkerUrl());
-            log.info("Preloading benchmarkWorkload to worker: "+workerPreloadRequest.getWorkerConfig().getWorkerUrl());
+            workerSetupApi = apiClientService.getApi(WorkerSetupApi.class,workerSetupRequest.getWorkerConfig().getWorkerUrl());
+            log.info("Setup benchmarkWorkload to worker: "+workerSetupRequest.getWorkerConfig().getWorkerUrl());
 
-            workerPreloadResponse = workerPreloadApi.preload(workerPreloadRequest);
+            workerSetupResponse = workerSetupApi.setup(workerSetupRequest);
 
-            workerPreloadResponseList.add(workerPreloadResponse);
+            workerSetupResponseList.add(workerSetupResponse);
 
         }
 
-        return workerPreloadResponseList;
+        return workerSetupResponseList;
 
     }
 
-    public List<ResetResponse> resetWorkers(final OrchestratorPreloadRequest orchestratorPreloadRequest) throws ClientApiFacadeException {
+    public List<ResetResponse> resetWorkers(final OrchestratorSetupRequest orchestratorSetupRequest) throws ClientApiFacadeException {
 
         WorkerResetApi workerResetApi;
         ResetResponse workerResetResponse;
 
         final List<ResetResponse> workerResetResponses = new ArrayList<>();
 
-        for(WorkerConfig workerConfig : orchestratorPreloadRequest.getWorkerConfigs()){
+        for(WorkerConfig workerConfig : orchestratorSetupRequest.getWorkerConfigs()){
 
             workerResetApi = apiClientService.getApi(WorkerResetApi.class,workerConfig.getWorkerUrl());
             log.info("Resetting worker: "+workerConfig.getWorkerUrl());
@@ -110,14 +112,14 @@ public class RemoteControlService extends BaseSpringComponent {
 
     }
 
-    public List<StartStopResponse> startWorkers(final OrchestratorPreloadRequest orchestratorPreloadRequest) throws ClientApiFacadeException {
+    public List<StartStopResponse> startWorkers(final OrchestratorSetupRequest orchestratorSetupRequest) throws ClientApiFacadeException {
 
         WorkerStartApi workerStartApi;
         StartStopResponse startStopResponse;
 
         final List<StartStopResponse> workerStartStopResponses = new ArrayList<>();
 
-        for(WorkerConfig workerConfig : orchestratorPreloadRequest.getWorkerConfigs()){
+        for(WorkerConfig workerConfig : orchestratorSetupRequest.getWorkerConfigs()){
 
             workerStartApi = apiClientService.getApi(WorkerStartApi.class,workerConfig.getWorkerUrl());
             log.info("Starting worker: "+workerConfig.getWorkerUrl());
@@ -132,14 +134,14 @@ public class RemoteControlService extends BaseSpringComponent {
 
     }
 
-    public List<StartStopResponse> stopWorkers(final OrchestratorPreloadRequest orchestratorPreloadRequest) throws ClientApiFacadeException {
+    public List<StartStopResponse> stopWorkers(final OrchestratorSetupRequest orchestratorSetupRequest) throws ClientApiFacadeException {
 
         WorkerStopApi workerStopApi;
         StartStopResponse startStopResponse;
 
         final List<StartStopResponse> workerStartStopResponses = new ArrayList<>();
 
-        for(WorkerConfig workerConfig : orchestratorPreloadRequest.getWorkerConfigs()){
+        for(WorkerConfig workerConfig : orchestratorSetupRequest.getWorkerConfigs()){
 
             workerStopApi = apiClientService.getApi(WorkerStopApi.class,workerConfig.getWorkerUrl());
             log.info("Stopping worker: "+workerConfig.getWorkerUrl());
@@ -154,13 +156,13 @@ public class RemoteControlService extends BaseSpringComponent {
 
     }
 
-    public void collect(final List<TaskResult> taskResults, final WorkerPreloadRequest workerPreloadRequest) throws ClientApiFacadeException {
+    public void collect(final List<TaskResult> taskResults, final WorkerSetupRequest workerSetupRequest) throws ClientApiFacadeException {
 
         final BenchmarkResultRequest benchmarkResultRequest = new BenchmarkResultRequest();
         benchmarkResultRequest.setSourceInformation(SourceInformationFactory.getSourceInformation(getServerUrl()));
         benchmarkResultRequest.setTaskResults(taskResults);
 
-        final String orchestratorBasePath = workerPreloadRequest.getOrchestratorUrl();
+        final String orchestratorBasePath = workerSetupRequest.getOrchestratorUrl();
 
         final OrchestratorCollectApi orchestratorCollectApi = apiClientService.getApi(OrchestratorCollectApi.class,orchestratorBasePath);
 

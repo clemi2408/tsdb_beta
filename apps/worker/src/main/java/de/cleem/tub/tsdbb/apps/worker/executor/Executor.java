@@ -3,7 +3,7 @@ package de.cleem.tub.tsdbb.apps.worker.executor;
 
 import de.cleem.tub.tsdbb.api.model.Record;
 import de.cleem.tub.tsdbb.api.model.TaskResult;
-import de.cleem.tub.tsdbb.api.model.WorkerPreloadRequest;
+import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
 import de.cleem.tub.tsdbb.apps.worker.adapters.BaseConnector;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import de.cleem.tub.tsdbb.commons.api.ClientApiFacadeException;
@@ -35,13 +35,13 @@ public class Executor extends BaseConnector {
 
     }
 
-    public void setup(final WorkerPreloadRequest workerPreloadRequest) throws ExecutionException, TSDBAdapterException {
+    public void setup(final WorkerSetupRequest workerSetupRequest) throws ExecutionException, TSDBAdapterException {
 
-        this.workerPreloadRequest = workerPreloadRequest;
+        this.workerSetupRequest = workerSetupRequest;
 
         setStorageAdapter();
 
-        if (workerPreloadRequest.getWorkerConfig().getCreateStorage()) {
+        if (workerSetupRequest.getWorkerConfig().getCreateStorage()) {
             log.info("Creating storage");
             tsdbInterface.createStorage();
         }
@@ -58,8 +58,8 @@ public class Executor extends BaseConnector {
 
             log.info("Invoking " + threads.size() + " TaskRequests");
 
-            if(this.workerPreloadRequest==null){
-                throw new ExecutionException("Call preload before Start");
+            if(this.workerSetupRequest ==null){
+                throw new ExecutionException("Call Setup before Start");
             }
 
             if(executor.isShutdown()){
@@ -68,7 +68,7 @@ public class Executor extends BaseConnector {
 
             futureTaskResults = executor.invokeAll(threads);
 
-            remoteControlService.collect(collectResults(),workerPreloadRequest);
+            remoteControlService.collect(collectResults(), workerSetupRequest);
 
         } catch (InterruptedException | ClientApiFacadeException e) {
             throw new ExecutionException(e);
@@ -87,7 +87,7 @@ public class Executor extends BaseConnector {
 
     public void cleanup() throws TSDBAdapterException {
 
-        if (workerPreloadRequest.getWorkerConfig().getCleanupStorage()) {
+        if (workerSetupRequest.getWorkerConfig().getCleanupStorage()) {
             log.info("Cleaning up storage");
             tsdbInterface.cleanup();
         }
@@ -109,9 +109,9 @@ public class Executor extends BaseConnector {
     }
 
     private ExecutorService getExecutorService(){
-        log.info("Creating ThreadPool using " + workerPreloadRequest.getWorkerConfig().getWorkerThreads() + " Threads");
+        log.info("Creating ThreadPool using " + workerSetupRequest.getWorkerConfig().getWorkerThreads() + " Threads");
 
-        return Executors.newFixedThreadPool(workerPreloadRequest.getWorkerConfig().getWorkerThreads());
+        return Executors.newFixedThreadPool(workerSetupRequest.getWorkerConfig().getWorkerThreads());
 
 
     }
@@ -123,14 +123,14 @@ public class Executor extends BaseConnector {
         final List<TaskRequest> threads = new ArrayList<>();
 
         int recordCount = 0;
-        for (Record record : workerPreloadRequest.getBenchmarkWorkload().getRecords()) {
+        for (Record record : workerSetupRequest.getBenchmarkWorkload().getRecords()) {
             recordCount++;
 
             if (recordCount % 10 == 0) {
-                log.debug("Created Task: " + recordCount + "/" + workerPreloadRequest.getBenchmarkWorkload().getRecords().size());
+                log.debug("Created Task: " + recordCount + "/" + workerSetupRequest.getBenchmarkWorkload().getRecords().size());
             }
 
-            threads.add(new TaskRequest(workerUrl,tsdbInterface, workerPreloadRequest,"Task: " + recordCount, record));
+            threads.add(new TaskRequest(workerUrl,tsdbInterface, workerSetupRequest,"Task: " + recordCount, record));
 
         }
 

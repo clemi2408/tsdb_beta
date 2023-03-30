@@ -21,7 +21,7 @@ public class WorkloadCollectorService extends BaseSpringComponent {
 
     private final Map<String,List<TaskResult>> resultMap = new ConcurrentHashMap<>();
 
-    public BenchmarkResultResponse collect(BenchmarkResultRequest benchmarkResultRequest) throws WorkloadCollectorException {
+    public BenchmarkResultResponse collect(final BenchmarkResultRequest benchmarkResultRequest) throws WorkloadCollectorException {
 
         final String workerUrl = benchmarkResultRequest.getSourceInformation().getUrl();
 
@@ -39,9 +39,9 @@ public class WorkloadCollectorService extends BaseSpringComponent {
         return benchmarkResultResponse;
     }
 
-    public OrchestratorResultResponse results(OrchestratorPreloadRequest orchestratorPreloadRequest) {
+    public OrchestratorResultResponse results(final OrchestratorSetupRequest orchestratorSetupRequest) {
 
-        final int totalResultParts = orchestratorPreloadRequest.getWorkerConfigs().size();
+        final int totalResultParts = orchestratorSetupRequest.getWorkerConfigs().size();
         final int completedParts = resultMap.size();
 
         final StatusEnum status = totalResultParts==completedParts?StatusEnum.COMPLETE:StatusEnum.INCOMPLETE;
@@ -70,5 +70,16 @@ public class WorkloadCollectorService extends BaseSpringComponent {
 
     }
 
+    public boolean hasResults(){
+        return !resultMap.isEmpty();
+    }
+
+    public void reset(){
+
+        if(hasResults()){
+            resultMap.clear();
+        }
+
+    }
 
 }

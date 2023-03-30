@@ -3,7 +3,7 @@ package de.cleem.tub.tsdbb.apps.worker.executor;
 import de.cleem.tub.tsdbb.api.model.Record;
 import de.cleem.tub.tsdbb.api.model.TaskResult;
 import de.cleem.tub.tsdbb.api.model.TimeFrame;
-import de.cleem.tub.tsdbb.api.model.WorkerPreloadRequest;
+import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
 import de.cleem.tub.tsdbb.apps.worker.adapters.BaseConnector;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterIF;
 import de.cleem.tub.tsdbb.commons.date.DateHelper;
@@ -23,12 +23,12 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
     private final Record record;
 
     private final String workerUrl;
-    public TaskRequest(final String workerUrl, final TSDBAdapterIF tsdbAdapterIF, final WorkerPreloadRequest workerPreloadRequest, final String taskName, final Record record) {
+    public TaskRequest(final String workerUrl, final TSDBAdapterIF tsdbAdapterIF, final WorkerSetupRequest workerSetupRequest, final String taskName, final Record record) {
 
         this.record = record;
         this.taskName = taskName;
         this.workerUrl=workerUrl;
-        this.workerPreloadRequest = workerPreloadRequest;
+        this.workerSetupRequest = workerSetupRequest;
         this.tsdbInterface = tsdbAdapterIF;
 
     }
@@ -41,7 +41,8 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
         /////
         final TimeFrame timeFrame = TimeFrameFactory.getTimeFrame();
 
-        tsdbInterface.write(record);
+
+        final int sizeInBytes = tsdbInterface.write(record);
 
         timeFrame.setEndTimestamp(OffsetDateTime.now());
 
@@ -53,8 +54,8 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
         taskResult.setTaskName(taskName);
         taskResult.setSourceInformation(SourceInformationFactory.getSourceInformation(workerUrl));
         taskResult.setThreadName(Thread.currentThread().getName());
-        taskResult.setRecord(record);
         taskResult.setTimeFrame(timeFrame);
+        taskResult.setRequestSizeInBytes(BigDecimal.valueOf(sizeInBytes));
         taskResult.setDurationInMs(BigDecimal.valueOf(duration));
 
         return taskResult;

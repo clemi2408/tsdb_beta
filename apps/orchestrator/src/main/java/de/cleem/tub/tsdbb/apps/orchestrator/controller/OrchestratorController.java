@@ -5,6 +5,7 @@ import de.cleem.tub.tsdbb.api.orchestrator.server.*;
 import de.cleem.tub.tsdbb.apps.orchestrator.service.collector.WorkloadCollectorException;
 import de.cleem.tub.tsdbb.apps.orchestrator.service.orchestrator.OrchestratorService;
 import de.cleem.tub.tsdbb.commons.api.ClientApiFacadeException;
+import de.cleem.tub.tsdbb.commons.exceptions.SetupException;
 import de.cleem.tub.tsdbb.commons.exceptions.StartStopException;
 import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
 import de.cleem.tub.tsdbb.commons.spring.pingresponder.PingResponderException;
@@ -14,15 +15,15 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class OrchestratorController extends BaseSpringComponent implements OrchestratorPreloadApi, OrchestratorCollectApi,OrchestratorPingApi, OrchestratorResetApi, OrchestratorStartApi, OrchestratorStopApi, OrchestratorResultsApi {
+public class OrchestratorController extends BaseSpringComponent implements OrchestratorSetupApi, OrchestratorCollectApi,OrchestratorPingApi, OrchestratorResetApi, OrchestratorStartApi, OrchestratorStopApi, OrchestratorResultsApi {
 
     @Autowired
     private OrchestratorService orchestratorService;
 
     @Override
-    public ResponseEntity<OrchestratorPreloadResponse> preload(final OrchestratorPreloadRequest orchestratorPreloadRequest) throws ClientApiFacadeException, PingResponderException {
+    public ResponseEntity<OrchestratorSetupResponse> setup(final OrchestratorSetupRequest orchestratorSetupRequest) throws ClientApiFacadeException, PingResponderException, SetupException {
 
-        return ResponseEntity.ok(orchestratorService.preload(orchestratorPreloadRequest));
+        return ResponseEntity.ok(orchestratorService.setup(orchestratorSetupRequest));
 
     }
 

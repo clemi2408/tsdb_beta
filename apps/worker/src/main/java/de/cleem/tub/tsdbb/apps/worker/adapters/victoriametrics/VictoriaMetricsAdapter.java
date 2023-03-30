@@ -93,7 +93,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
     }
     @Override
-    public void write(final Record record) throws TSDBAdapterException {
+    public int write(final Record record) throws TSDBAdapterException {
 
         final String metricLine = lineProtocolFormat.getLine(record, Instant.now());
 
@@ -102,14 +102,19 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
         //'http://localhost:8428/write' \
         //-d 'census,location=klamath,scientist=anderson bees=23 1673176214'
 
-
         try {
+
             HttpHelper.executePost(httpClient, writeUri, metricLine, new HashMap<>(), 204);
+
+            log.debug("Wrote Line: " + metricLine + " to: " + getConnectionInfo());
+
+            return metricLine.length();
+
         } catch (HttpException e) {
             throw new TSDBAdapterException(e);
         }
 
-        log.debug("Wrote Line: " + metricLine + " to: " + getConnectionInfo());
+
 
     }
     @Override

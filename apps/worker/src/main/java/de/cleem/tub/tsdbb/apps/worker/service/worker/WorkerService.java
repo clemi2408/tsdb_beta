@@ -35,32 +35,32 @@ public class WorkerService extends BaseSpringComponent {
 
     @Autowired
     private RunService runService;
-    private WorkerPreloadRequest workerPreloadRequest;
+    private WorkerSetupRequest workerSetupRequest;
 
 
-    public WorkerPreloadResponse preload(final WorkerPreloadRequest workerPreloadRequest) throws ClientApiFacadeException, PingResponderException, TSDBAdapterException, ExecutionException {
+    public WorkerSetupResponse setup(final WorkerSetupRequest workerSetupRequest) throws ClientApiFacadeException, PingResponderException, TSDBAdapterException, ExecutionException {
 
 
-        log.info("Preloading Worker");
+        log.info("Setup Worker");
 
-        log.info("Received Workload: "+workerPreloadRequest.getBenchmarkWorkload().getRecords().size());
+        log.info("Received Workload: "+workerSetupRequest.getBenchmarkWorkload().getRecords().size());
 
-        final WorkerPreloadResponse workerPreloadResponse = new WorkerPreloadResponse();
-        workerPreloadResponse.setTimeFrame(TimeFrameFactory.getTimeFrame());
-        workerPreloadResponse.setSourceInformation(SourceInformationFactory.getSourceInformation(getServerUrl()));
+        final WorkerSetupResponse workerSetupResponse = new WorkerSetupResponse();
+        workerSetupResponse.setTimeFrame(TimeFrameFactory.getTimeFrame());
+        workerSetupResponse.setSourceInformation(SourceInformationFactory.getSourceInformation(getServerUrl()));
 
-        this.workerPreloadRequest = workerPreloadRequest;
+        this.workerSetupRequest = workerSetupRequest;
 
-        final OrchestratorPingApi orchestratorPingApi = apiClientService.getApi(OrchestratorPingApi.class,workerPreloadRequest.getOrchestratorUrl());
+        final OrchestratorPingApi orchestratorPingApi = apiClientService.getApi(OrchestratorPingApi.class,workerSetupRequest.getOrchestratorUrl());
 
-        pingResponderService.checkPingResponse(orchestratorPingApi.ping(),"orchestrator",workerPreloadRequest.getOrchestratorUrl());
+        pingResponderService.checkPingResponse(orchestratorPingApi.ping(),"orchestrator",workerSetupRequest.getOrchestratorUrl());
 
-        runService.setup(workerPreloadRequest);
+        runService.setup(workerSetupRequest);
 
-        workerPreloadResponse.preloadRequest(workerPreloadRequest);
-        workerPreloadResponse.getTimeFrame().setEndTimestamp(OffsetDateTime.now());
+        workerSetupResponse.setWorkerSetupRequest(workerSetupRequest);
+        workerSetupResponse.getTimeFrame().setEndTimestamp(OffsetDateTime.now());
 
-        return workerPreloadResponse;
+        return workerSetupResponse;
     }
 
     public ResetResponse reset() throws TSDBAdapterException {
@@ -76,9 +76,9 @@ public class WorkerService extends BaseSpringComponent {
         resetResponse.setSourceInformation(SourceInformationFactory.getSourceInformation(getServerUrl()));
         resetResponse.setReset(false);
 
-        if(workerPreloadRequest!=null){
+        if(workerSetupRequest !=null){
 
-            this.workerPreloadRequest = null;
+            this.workerSetupRequest = null;
 
             resetResponse.setReset(true);
 

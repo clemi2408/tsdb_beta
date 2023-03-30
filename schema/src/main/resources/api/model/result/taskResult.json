@@ -14,11 +14,11 @@
       "type" : "string",
       "nullable" : false
     },
-    "record" : {
-      "$ref": "../workload/record.json",
+    "durationInMs" : {
+      "type" : "number",
       "nullable" : false
     },
-    "durationInMs" : {
+    "requestSizeInBytes" : {
       "type" : "number",
       "nullable" : false
     },
@@ -27,6 +27,6 @@
       "nullable" : false
     }
   },
-  "required": [ "sourceInformation","taskName","threadName","record","durationInMs","timeFrame" ]
+  "required": [ "sourceInformation","taskName","threadName","requestSizeInBytes","durationInMs","timeFrame" ]
 
 }

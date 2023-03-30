@@ -13,26 +13,25 @@ servers:
   - url: http://localhost:8082
   - url: https://host.tld
 paths:
-  /rest/preload:
+  /rest/setup:
     post:
-      description: Accepts Preload Request
-      operationId: preload
+      description: Accepts Setup Request
+      operationId: setup
       tags:
-        - WorkerPreload
+        - WorkerSetup
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "model/worker/workerPreloadRequest.json"
+              $ref: "model/worker/workerSetupRequest.json"
       responses:
         '200':
-          description: The Preload response
+          description: The Setup response
           content:
             application/json:
               schema:
-                $ref: "model/worker/workerPreloadResponse.json"
-
+                $ref: "model/worker/workerSetupResponse.json"
   /rest/reset:
     get:
       description: Returns reset response
@@ -46,7 +45,6 @@ paths:
             application/json:
               schema:
                 $ref: "model/resetResponse.json"
-
   /rest/start:
     get:
       description: Returns StartStop response
@@ -60,7 +58,6 @@ paths:
             application/json:
               schema:
                 $ref: "model/startStopResponse.json"
-
   /rest/stop:
     get:
       description: Returns StartStop response
@@ -74,7 +71,6 @@ paths:
             application/json:
               schema:
                 $ref: "model/startStopResponse.json"
-
   /rest/ping:
     get:
       description: Returns Ping response (Pong)

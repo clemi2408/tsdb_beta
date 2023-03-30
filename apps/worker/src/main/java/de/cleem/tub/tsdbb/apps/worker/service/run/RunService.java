@@ -1,6 +1,6 @@
 package de.cleem.tub.tsdbb.apps.worker.service.run;
 
-import de.cleem.tub.tsdbb.api.model.WorkerPreloadRequest;
+import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import de.cleem.tub.tsdbb.apps.worker.executor.ExecutionException;
 import de.cleem.tub.tsdbb.apps.worker.executor.Executor;
@@ -29,8 +29,8 @@ public class RunService extends BaseSpringComponent {
 
     }
 
-    public void setup(final WorkerPreloadRequest workerPreloadRequest) throws TSDBAdapterException, ExecutionException {
-        executor.setup(workerPreloadRequest);
+    public void setup(final WorkerSetupRequest workerSetupRequest) throws TSDBAdapterException, ExecutionException {
+        executor.setup(workerSetupRequest);
     }
 
     public void start() throws ExecutionException {

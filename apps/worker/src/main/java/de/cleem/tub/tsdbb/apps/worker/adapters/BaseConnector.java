@@ -1,6 +1,7 @@
 package de.cleem.tub.tsdbb.apps.worker.adapters;
 
-import de.cleem.tub.tsdbb.api.model.WorkerPreloadRequest;
+import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
+import de.cleem.tub.tsdbb.api.model.WorkerSetupResponse;
 import de.cleem.tub.tsdbb.api.model.WorkerTsdbConnection;
 import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.InfluxDbAdapter;
 import de.cleem.tub.tsdbb.apps.worker.adapters.victoriametrics.VictoriaMetricsAdapter;
@@ -12,13 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 public class BaseConnector {
 
     @Getter
-    protected WorkerPreloadRequest workerPreloadRequest;
+    protected WorkerSetupRequest workerSetupRequest;
 
     protected TSDBAdapterIF tsdbInterface;
 
     protected void setStorageAdapter() throws ExecutionException, TSDBAdapterException {
 
-        final WorkerTsdbConnection workerTsdbConnection = workerPreloadRequest.getWorkerConfig().getTsdbConnection();
+        final WorkerTsdbConnection workerTsdbConnection = workerSetupRequest.getWorkerConfig().getTsdbConnection();
 
         final WorkerTsdbConnection.TsdbTypeEnum tsdbType = workerTsdbConnection.getTsdbType();
 

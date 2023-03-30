@@ -18,8 +18,10 @@ import java.util.UUID;
 
 public class ExampleJsonGenerator {
 
-    private static final String TARGET_FOLDER_STRING = "/Users/clemens/IdeaProjects/tsdb_beta/schema/src/main/resources/api/model/examples/generated";
-    private static final String WORKLOAD_FILE_STRING = "/Users/clemens/IdeaProjects/tsdb_beta/schema/src/main/resources/api/model/examples/manual/workload_1.json";
+    private static final String TARGET_FOLDER_STRING = "/Users/kuenzelc/DEV/workspaces/priv/tsdb_beta/schema/src/main/resources/api/model/examples/generated";
+    private static final String GENERATED_WORKLOAD_FILE_STRING = "/Users/kuenzelc/DEV/workspaces/priv/tsdb_beta/schema/src/main/resources/api/model/examples/manual/workload_generated.json";
+    private static final String PREPARED_WORKLOAD_FILE_STRING = "/Users/kuenzelc/DEV/workspaces/priv/tsdb_beta/schema/src/main/resources/api/model/examples/manual/workload_prepared.json";
+
     private static final String ORCHESTRATOR_URL = "http://localhost:8081";
     private static final String GENERATOR_URL = "http://localhost:8080";
 
@@ -36,14 +38,15 @@ public class ExampleJsonGenerator {
 
     public static void main(String[] args) throws FileException, JsonException {
 
-        final Workload workload = JsonHelper.objectFromByteArray(FileHelper.read(new File(WORKLOAD_FILE_STRING)),Workload.class);
+        final Workload generatedWorkload = JsonHelper.objectFromByteArray(FileHelper.read(new File(GENERATED_WORKLOAD_FILE_STRING)),Workload.class);
+        final Workload preparedWorkload = JsonHelper.objectFromByteArray(FileHelper.read(new File(PREPARED_WORKLOAD_FILE_STRING)),Workload.class);
 
-        final WorkerPreloadRequest workerPreloadRequestVictoria = getWorkerPreloadRequest(createWorkerConfig(createVictoriaConnection()),workload);
-        write(workerPreloadRequestVictoria,1);
 
-        final WorkerPreloadRequest workerPreloadRequestInflux = getWorkerPreloadRequest(createWorkerConfig(createInfluxConnection()),workload);
-        write(workerPreloadRequestInflux,2);
+        final WorkerSetupRequest workerSetupRequestVictoria = getWorkerSetupRequest(createWorkerConfig(createVictoriaConnection()),generatedWorkload);
+        write(workerSetupRequestVictoria,1);
 
+        final WorkerSetupRequest workerSetupRequestInflux = getWorkerSetupRequest(createWorkerConfig(createInfluxConnection()),generatedWorkload);
+        write(workerSetupRequestInflux,2);
 
 
         write(createWorkerConfig(createInfluxConnection()),1);
@@ -55,18 +58,38 @@ public class ExampleJsonGenerator {
         write(createInfluxConnection(),1);
         write(createVictoriaConnection(),2);
 
-        final OrchestratorPreloadRequest orchestratorPreloadRequestInflux = getOrchestratorPreloadRequest(
+        final OrchestratorSetupRequest orchestratorSetupRequestGeneratorInflux = getOrchestratorSetupRequest(
                 createWorkerConfig(createInfluxConnection()),
-                createGenerateRequest());
+                null,
+                createGenerateRequest(),
+                GENERATOR_URL);
 
-        write(orchestratorPreloadRequestInflux,1);
+        write(orchestratorSetupRequestGeneratorInflux,1);
 
 
-        final OrchestratorPreloadRequest orchestratorPreloadRequestVictoria = getOrchestratorPreloadRequest(
+        final OrchestratorSetupRequest orchestratorSetupRequestGeneratorVictoria = getOrchestratorSetupRequest(
                 createWorkerConfig(createVictoriaConnection()),
-                createGenerateRequest());
+                null,
+                createGenerateRequest(),
+                GENERATOR_URL);
 
-        write(orchestratorPreloadRequestVictoria,2);
+        write(orchestratorSetupRequestGeneratorVictoria,2);
+
+        final OrchestratorSetupRequest orchestratorSetupRequestWorkloadInflux = getOrchestratorSetupRequest(
+                createWorkerConfig(createInfluxConnection()),
+                preparedWorkload,
+                null,null);
+
+        write(orchestratorSetupRequestWorkloadInflux,3);
+
+
+        final OrchestratorSetupRequest orchestratorSetupRequestWorkloadVictoria = getOrchestratorSetupRequest(
+                createWorkerConfig(createVictoriaConnection()),
+                preparedWorkload,
+                null,null);
+
+
+        write(orchestratorSetupRequestWorkloadVictoria,4);
 
         write(getPingResponse(),1);
 
@@ -151,7 +174,7 @@ public class ExampleJsonGenerator {
         taskResult.setThreadName("threadName");
         taskResult.setTimeFrame(getTimeFrame());
         taskResult.setSourceInformation(getSourceInformation());
-        taskResult.setRecord(getRecord());
+        taskResult.setRequestSizeInBytes(BigDecimal.valueOf(10));
 
         return taskResult;
     }
@@ -218,24 +241,32 @@ public class ExampleJsonGenerator {
 
     }
 
-    private static OrchestratorPreloadRequest getOrchestratorPreloadRequest(final WorkerConfig workerConfig,final GeneratorGenerateRequest generatorGenerateRequest){
+    private static OrchestratorSetupRequest getOrchestratorSetupRequest(final WorkerConfig workerConfig, final Workload workload, final GeneratorGenerateRequest generatorGenerateRequest, final String generatorUrl){
 
-        final OrchestratorPreloadRequest orchestratorPreloadRequest = new OrchestratorPreloadRequest();
-        orchestratorPreloadRequest.setWorkerConfigs(List.of(workerConfig));
-        orchestratorPreloadRequest.setGenerateRequest(generatorGenerateRequest);
-        orchestratorPreloadRequest.setGeneratorUrl(GENERATOR_URL);
+        final OrchestratorSetupRequest orchestratorSetupRequest = new OrchestratorSetupRequest();
+        orchestratorSetupRequest.setWorkerConfigs(List.of(workerConfig));
 
-        return orchestratorPreloadRequest;
+        if(generatorGenerateRequest!=null) {
+            orchestratorSetupRequest.setGenerateRequest(generatorGenerateRequest);
+        }
+        if(workload!=null){
+            orchestratorSetupRequest.setWorkload(workload);
+        }
+
+        if(generatorUrl!=null) {
+            orchestratorSetupRequest.setGeneratorUrl(generatorUrl);
+        }
+        return orchestratorSetupRequest;
     }
 
-    private static WorkerPreloadRequest getWorkerPreloadRequest(final WorkerConfig workerConfig, final Workload workload){
+    private static WorkerSetupRequest getWorkerSetupRequest(final WorkerConfig workerConfig, final Workload workload){
 
-        final WorkerPreloadRequest workerPreloadRequest = new WorkerPreloadRequest();
-        workerPreloadRequest.setWorkerConfig(workerConfig);
-        workerPreloadRequest.setOrchestratorUrl(ORCHESTRATOR_URL);
-        workerPreloadRequest.setBenchmarkWorkload(workload);
+        final WorkerSetupRequest workerSetupRequest = new WorkerSetupRequest();
+        workerSetupRequest.setWorkerConfig(workerConfig);
+        workerSetupRequest.setOrchestratorUrl(ORCHESTRATOR_URL);
+        workerSetupRequest.setBenchmarkWorkload(workload);
 
-        return workerPreloadRequest;
+        return workerSetupRequest;
 
     }
 

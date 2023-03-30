@@ -1,5 +1,5 @@
 {
-  "orchestratorPreloadRequest": {
+  "orchestratorSetupRequest": {
     "generateRequest": {
       "recordConfigs": [
         {
@@ -2112,9 +2112,9 @@
       }
     ]
   },
-  "workerPreloadResponses": [
+  "workerSetupResponses": [
     {
-      "preloadRequest": {
+      "workerSetupRequest": {
         "orchestratorUrl": "http://localhost:8081",
         "workerConfig": {
           "workerUrl": "http://localhost:8082",

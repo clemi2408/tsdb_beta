@@ -4,19 +4,10 @@
     "url" : "http://example.org"
   },
   "threadName" : "threadName",
-  "record" : {
-    "kvPairs" : [ {
-      "key" : "key",
-      "value" : [ "value" ]
-    }, {
-      "key" : "key",
-      "value" : [ "value" ]
-    } ],
-    "recordId" : "94cd5a1b-de22-44a6-96db-31dbab798697"
-  },
   "durationInMs" : 100,
+  "requestSizeInBytes" : 10,
   "timeFrame" : {
-    "startTimestamp" : 1678838899.248410000,
-    "endTimestamp" : 1678838899.248363000
+    "startTimestamp" : 1680208130.300611000,
+    "endTimestamp" : 1680208130.300532000
   }
 }

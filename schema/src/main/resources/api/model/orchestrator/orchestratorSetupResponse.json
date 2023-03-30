@@ -10,26 +10,26 @@
       "$ref": "../timeFrame.json",
       "nullable" : false
     },
-    "orchestratorPreloadRequest" : {
-      "$ref": "orchestratorPreloadRequest.json",
+    "orchestratorSetupRequest" : {
+      "$ref": "orchestratorSetupRequest.json",
       "nullable" : false
     },
     "generatorGenerateResponse" : {
       "$ref": "../generator/generatorGenerateResponse.json",
-      "nullable" : false
+      "nullable" : true
     },
     "benchmarkWorkload" : {
       "$ref": "../workload/workload.json",
       "nullable" : false
     },
-    "workerPreloadResponses" : {
+    "workerSetupResponses" : {
       "type" : "array",
       "nullable" : false,
       "items" : {
-        "$ref": "../worker/workerPreloadResponse.json"
+        "$ref": "../worker/workerSetupResponse.json"
       },
       "minItems": 1
     }
   },
-  "required": [ "sourceInformation","timeFrame","orchestratorPreloadRequest","generatorGenerateResponse","benchmarkWorkload","workerPreloadResponses"]
+  "required": [ "sourceInformation","timeFrame","orchestratorSetupRequest","benchmarkWorkload","workerSetupResponses"]
 }

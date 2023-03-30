@@ -9,7 +9,7 @@ public interface TSDBAdapterIF {
 
     void createStorage() throws TSDBAdapterException;
 
-    void write(final Record record) throws TSDBAdapterException;
+    int write(final Record record) throws TSDBAdapterException;
 
     void cleanup() throws TSDBAdapterException;
 

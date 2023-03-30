@@ -124,13 +124,14 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
     }
     @Override
-    public void write(final Record record) throws TSDBAdapterException {
+    public int write(final Record record) throws TSDBAdapterException {
 
         if (bucketId == null) {
             throw new TSDBAdapterException("Can not write to Storage - bucketId is NULL - " + getConnectionInfo());
         }
 
         final String metricLine = lineProtocolFormat.getLine(record,  Instant.now());
+
 
         // WRITE
         // curl -v --request POST \
@@ -143,13 +144,16 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         final HashMap<String, String> headers = HttpHelper.getTokenAuthHeaderMap(token);
 
         try {
+
             HttpHelper.executePost(httpClient, writeUri, metricLine, headers, 204);
+
             log.debug("Wrote Line: " + metricLine + " to: " + getConnectionInfo());
+
+            return metricLine.length();
+
         } catch (HttpException e) {
             throw new TSDBAdapterException(e);
         }
-
-
 
     }
     @Override

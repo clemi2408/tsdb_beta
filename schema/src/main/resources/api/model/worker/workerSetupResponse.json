@@ -6,8 +6,8 @@
       "$ref": "../sourceInformation.json",
       "nullable" : false
     },
-    "preloadRequest" : {
-      "$ref": "workerPreloadRequest.json",
+    "workerSetupRequest" : {
+      "$ref": "workerSetupRequest.json",
       "nullable" : false
     },
     "timeFrame" : {
@@ -15,5 +15,5 @@
       "nullable" : false
     }
   },
-  "required": [ "sourceInformation","timeFrame","preloadRequest" ]
+  "required": [ "sourceInformation","timeFrame","workerSetupRequest" ]
 }

@@ -13,25 +13,25 @@ servers:
   - url: http://localhost:8081
   - url: https://host.tld
 paths:
-  /rest/preload:
+  /rest/setup:
     post:
-      description: Accepts Preload Request
-      operationId: preload
+      description: Accepts Setup Request
+      operationId: setup
       tags:
-        - OrchestratorPreload
+        - OrchestratorSetup
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "model/orchestrator/orchestratorPreloadRequest.json"
+              $ref: "model/orchestrator/orchestratorSetupRequest.json"
       responses:
         '200':
-          description: The Preload response
+          description: The Setup response
           content:
             application/json:
               schema:
-                $ref: "model/orchestrator/orchestratorPreloadResponse.json"
+                $ref: "model/orchestrator/orchestratorSetupResponse.json"
   /rest/reset:
     get:
       description: Returns reset response
@@ -71,7 +71,6 @@ paths:
             application/json:
               schema:
                 $ref: "model/startStopResponse.json"
-
   /rest/collect:
     post:
       description: Accepts Benchmark Result Request
@@ -91,7 +90,6 @@ paths:
             application/json:
               schema:
                 $ref: "model/result/benchmarkResultResponse.json"
-
   /rest/results:
     get:
       description: Returns partial and complete results
@@ -105,7 +103,6 @@ paths:
             application/json:
               schema:
                 $ref: "model/orchestrator/orchestratorResultResponse.json"
-
   /rest/ping:
     get:
       description: Returns Ping response (Pong)

@@ -5,11 +5,15 @@
 
     "generateRequest" : {
         "$ref": "../generator/generatorGenerateRequest.json",
-        "nullable" : false
+        "nullable" : true
+    },
+    "workload" : {
+      "$ref": "../workload/workload.json",
+      "nullable" : true
     },
     "generatorUrl" : {
       "type" : "string",
-      "nullable" : false
+      "nullable" : true
     },
     "workerConfigs" : {
       "type" : "array",
@@ -20,5 +24,5 @@
       "minItems": 1
     }
   },
-  "required": [ "generateRequest","generatorUrl","workerConfigs" ]
+  "required": [ "workerConfigs" ]
 }
