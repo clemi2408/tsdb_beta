@@ -1,0 +1,29 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+    "tsdbType" : {
+      "type" : "string",
+      "enum": ["INFLUX", "VICTORIA"],
+      "nullable" : false
+    },
+    "url" : {
+      "type" : "string",
+      "nullable" : false,
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "token" : {
+      "type" : "string",
+      "nullable" : true
+    },
+    "connectionProperties": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+
+  },
+  "required": [ "tsdbType","url" ]
+}

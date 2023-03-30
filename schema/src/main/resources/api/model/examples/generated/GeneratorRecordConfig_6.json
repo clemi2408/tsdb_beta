@@ -1,0 +1,5 @@
+{
+  "keyValue" : "staticKeyStaticStringEnumValues",
+  "stringEnumValues" : [ "s-val1", "s-val2" ],
+  "valueType" : "string"
+}

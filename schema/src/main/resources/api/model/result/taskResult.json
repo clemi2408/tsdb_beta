@@ -1,0 +1,32 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+    "taskName" : {
+      "type" : "string",
+      "nullable" : false
+    },
+    "sourceInformation" : {
+      "$ref": "../sourceInformation.json",
+      "nullable" : false
+    },
+    "threadName" : {
+      "type" : "string",
+      "nullable" : false
+    },
+    "durationInMs" : {
+      "type" : "number",
+      "nullable" : false
+    },
+    "requestSizeInBytes" : {
+      "type" : "number",
+      "nullable" : false
+    },
+    "timeFrame" : {
+      "$ref": "../timeFrame.json",
+      "nullable" : false
+    }
+  },
+  "required": [ "sourceInformation","taskName","threadName","requestSizeInBytes","durationInMs","timeFrame" ]
+
+}

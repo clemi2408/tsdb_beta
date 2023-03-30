@@ -1,0 +1,11 @@
+{
+  "workerUrl" : "http://localhost:8082",
+  "workerThreads" : 3,
+  "tsdbConnection" : {
+    "tsdbType" : "VICTORIA",
+    "url" : "http://127.0.0.1:8428",
+    "connectionProperties" : { }
+  },
+  "createStorage" : true,
+  "cleanupStorage" : true
+}

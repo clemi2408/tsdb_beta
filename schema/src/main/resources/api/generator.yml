@@ -1,0 +1,48 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Generator API
+  description: API to generate Workload
+  termsOfService: https://host.tld/terms/
+  contact:
+    name: Clemens Künzel
+    email: me@cleem.de
+    url: https://host.tld
+
+servers:
+  - url: http://localhost:8080
+  - url: https://host.tld
+paths:
+  /rest/generate:
+    post:
+      description: Accepts the generate request and produces the generate response
+      operationId: generate
+      tags:
+        - GeneratorGenerate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "model/generator/generatorGenerateRequest.json"
+      responses:
+        '200':
+          description: The generate response
+          content:
+            application/json:
+              schema:
+                $ref: "model/generator/generatorGenerateResponse.json"
+
+  /rest/ping:
+    get:
+      description: Returns Ping response (Pong)
+      operationId: ping
+      tags:
+        - GeneratorPing
+      responses:
+        '200':
+          description: The Ping response (Pong)
+          content:
+            application/json:
+              schema:
+                $ref: "model/pingResponse.json"

@@ -1,0 +1,29 @@
+{
+  "sourceInformation" : {
+    "url" : "http://example.org"
+  },
+  "reset" : true,
+  "timeFrame" : {
+    "startTimestamp" : 1680208130.212648000,
+    "endTimestamp" : 1680208130.212628000
+  },
+  "nestedResponses" : [ {
+    "sourceInformation" : {
+      "url" : "http://example.org"
+    },
+    "reset" : true,
+    "timeFrame" : {
+      "startTimestamp" : 1680208130.212667000,
+      "endTimestamp" : 1680208130.212662000
+    }
+  }, {
+    "sourceInformation" : {
+      "url" : "http://example.org"
+    },
+    "reset" : true,
+    "timeFrame" : {
+      "startTimestamp" : 1680208130.212678000,
+      "endTimestamp" : 1680208130.212674000
+    }
+  } ]
+}

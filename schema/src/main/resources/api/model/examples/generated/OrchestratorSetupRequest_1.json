@@ -1,0 +1,117 @@
+{
+  "generateRequest" : {
+    "recordConfigs" : [ {
+      "maxKeyLength" : 1,
+      "maxStringValueLength" : 3,
+      "minKeyLength" : 1,
+      "minStringValueLength" : 1,
+      "valueType" : "string"
+    }, {
+      "keyValue" : "staticKeyDynStringValue",
+      "maxStringValueLength" : 5,
+      "minStringValueLength" : 3,
+      "valueType" : "string"
+    }, {
+      "maxKeyLength" : 8,
+      "maxStringEnumValues" : 5,
+      "maxStringValueLength" : 3,
+      "minKeyLength" : 6,
+      "minStringEnumValues" : 1,
+      "minStringValueLength" : 1,
+      "valueType" : "string"
+    }, {
+      "keyValue" : "staticKeyDynStringEnumDynValue",
+      "maxStringEnumValues" : 5,
+      "maxStringValueLength" : 3,
+      "minStringEnumValues" : 1,
+      "minStringValueLength" : 1,
+      "valueType" : "string"
+    }, {
+      "maxKeyLength" : 1,
+      "minKeyLength" : 1,
+      "stringEnumValues" : [ "s-val1", "s-val2" ],
+      "valueType" : "string"
+    }, {
+      "keyValue" : "staticKeyStaticStringEnumValues",
+      "stringEnumValues" : [ "s-val1", "s-val2" ],
+      "valueType" : "string"
+    }, {
+      "maxKeyLength" : 5,
+      "maxValue" : 100,
+      "minKeyLength" : 2,
+      "minValue" : 0,
+      "valueDistribution" : "UNIFORM",
+      "valueType" : "integer"
+    }, {
+      "keyValue" : "staticKeyUniformIntegerValue",
+      "maxValue" : 100,
+      "minValue" : 0,
+      "valueDistribution" : "UNIFORM",
+      "valueType" : "integer"
+    }, {
+      "keyValue" : "staticKeyUniformDoubleValue",
+      "maxValue" : 55.3,
+      "minValue" : 5.5,
+      "valueDistribution" : "UNIFORM",
+      "valueType" : "double"
+    }, {
+      "maxKeyLength" : 5,
+      "maxValue" : 100,
+      "minKeyLength" : 2,
+      "minValue" : 0,
+      "triangleSpike" : 50,
+      "valueDistribution" : "TRIANGLE",
+      "valueType" : "integer"
+    }, {
+      "keyValue" : "staticKeyTriangleIntegerValue",
+      "maxValue" : 100,
+      "minValue" : 0,
+      "triangleSpike" : 50,
+      "valueDistribution" : "TRIANGLE",
+      "valueType" : "integer"
+    }, {
+      "keyValue" : "staticKeyTriangleDoubleValue",
+      "maxValue" : 55.3,
+      "minValue" : 5.5,
+      "triangleSpike" : 10,
+      "valueDistribution" : "TRIANGLE",
+      "valueType" : "double"
+    }, {
+      "gaussMiddle" : 10,
+      "gaussRange" : 10,
+      "maxKeyLength" : 5,
+      "minKeyLength" : 2,
+      "valueDistribution" : "GAUSS",
+      "valueType" : "integer"
+    }, {
+      "gaussMiddle" : 10,
+      "gaussRange" : 10,
+      "keyValue" : "staticKeyGaussIntegerValue",
+      "valueDistribution" : "GAUSS",
+      "valueType" : "integer"
+    }, {
+      "gaussMiddle" : 10,
+      "gaussRange" : 10,
+      "keyValue" : "staticKeyGaussDoubleValue",
+      "valueDistribution" : "GAUSS",
+      "valueType" : "double"
+    } ],
+    "recordCount" : 10
+  },
+  "generatorUrl" : "http://localhost:8080",
+  "workerConfigs" : [ {
+    "workerUrl" : "http://localhost:8082",
+    "workerThreads" : 3,
+    "tsdbConnection" : {
+      "tsdbType" : "INFLUX",
+      "url" : "http://127.0.0.1:8086",
+      "token" : "YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==",
+      "connectionProperties" : {
+        "bucketName" : "testbucket",
+        "organisationName" : "testorg"
+      }
+    },
+    "createStorage" : true,
+    "cleanupStorage" : true
+  } ]
+}

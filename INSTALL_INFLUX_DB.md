@@ -41,7 +41,7 @@ cd /usr/local/Cellar/influxdb-cli/2.6.1/bin
 influx setup
 ```
 
-Than answer the questions, the following values are used:
+Then answer the questions, the following values are used:
 
 - Username: admin
 - Password: adminadmin
@@ -74,6 +74,8 @@ cd /usr/local/Cellar/influxdb-cli/2.6.1/bin
 influx auth create \
   --operator
 ```
+
+e.g. `s-kr1M8PTAYyylFNE8KJ2bG2foRf0c2_c9ECxOT1VbMeLK15bBT9xsUCglGKqcVSEZBPqrtKdVR5IpcA1L-aTA==`
 
 The response contains the token.
 Example:

@@ -1,0 +1,28 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+
+    "workerUrl" : {
+      "type" : "string",
+      "nullable" : false
+    },
+    "workerThreads" : {
+      "type" : "integer",
+      "nullable" : false
+    },
+    "tsdbConnection": {
+      "$ref": "workerTsdbConnection.json",
+      "nullable" : false
+    },
+    "createStorage" : {
+      "type" : "boolean",
+      "nullable" : false
+    },
+    "cleanupStorage" : {
+      "type" : "boolean",
+      "nullable" : false
+    }
+  },
+  "required": [ "workerUrl","workerThreads","cleanupStorage","createStorage","tsdbConnection" ]
+}

@@ -4,39 +4,71 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
+    <groupId>de.cleem.tub</groupId>
     <artifactId>tsdbBenchmark</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <!--<module>single_tmp</module>-->
+        <module>schema</module>
+        <module>commons</module>
+        <module>apps</module>
+    </modules>
 
     <properties>
+        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jackson.version>2.14.1</jackson.version>
-        <lombok.version>1.18.24</lombok.version>
-        <sl4j-simple.version>2.0.6</sl4j-simple.version>
-        <influxdb-client.version>6.7.0</influxdb-client.version>
+        <jackson.version>2.14.2</jackson.version>
+        <lombok.version>1.18.26</lombok.version>
+        <jfiglet.version>1.0.1</jfiglet.version>
         <json.version>20220924</json.version>
+
+        <openapi-generator.version>6.4.0</openapi-generator.version>
+        <swagger-codegen-plugin.version>3.0.41</swagger-codegen-plugin.version>
+
+        <!-- cross spec properties -->
+        <openapi.verbose>false</openapi.verbose>
+        <openapi-absolute-spec-folder.root>${basedir}/../../schema</openapi-absolute-spec-folder.root>
+        <openapi-relative-spec-folder.root>src/main/resources/api</openapi-relative-spec-folder.root>
+        <openapi-code-output-folder.root>${project.build.directory}/generated-sources/openapi</openapi-code-output-folder.root>
+        <openapi-merged-spec-output.root>${basedir}/target/classes/static</openapi-merged-spec-output.root>
+
+        <openapi-root-package.path>de.cleem.tub.tsdbb.api</openapi-root-package.path>
+        <openapi-model-package.name>model</openapi-model-package.name>
+        <openapi-client-package.name>client</openapi-client-package.name>
+        <openapi-server-package.name>server</openapi-server-package.name>
+
+        <!-- spec generator properties -->
+        <openapi-spec-name.generator>generator</openapi-spec-name.generator>
+        <openapi-spec-name.orchestrator>orchestrator</openapi-spec-name.orchestrator>
+        <openapi-spec-name.worker>worker</openapi-spec-name.worker>
+
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>3.0.4</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${sl4j-simple.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>${json.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -47,5 +79,41 @@
             <artifactId>jackson-core</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${json.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.dtmo.jfiglet</groupId>
+            <artifactId>jfiglet</artifactId>
+            <version>${jfiglet.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+
+
+
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

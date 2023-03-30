@@ -2,7 +2,7 @@
 
 ## Scenario Domain
 
-- target audence
+- target audience
 - application domain
 
 ### Qualities
@@ -28,16 +28,16 @@
 ### Reproducibility or repeatability
 
 - only chance to reproduce if repeatable
-- re run will lead to same/similar results
+- re-run will lead to same/similar results
 - reproduce same run and same/similar results
-- in cloud often repeatable but not reproduceable
+- in cloud often repeatable but not reproducible
 
 ### Fairness
 
 - treat all SUT fair
 - no implicit assumptions
 - use common feature scope
-- multi quality assessement (chapter 3)
+- multi quality assessment (chapter 3)
 - have intense knowledge about available solutions
 
 ### Portability
@@ -57,11 +57,11 @@
 ## New Design Objectives in Cloud Service Benchmarking
 
 - more dynamic
-- not longer static
+- no longer static
 - often not fixed amount of resources (illusion of infinite)
-- Performance weightened in relation to costs
+- Performance weighted in relation to costs
 - geo distribution (fault tolerance, latency)
-- mulit tenancy (shared resources)
+- multi tenancy (shared resources)
 - nature of modern applications (fast evolution, new application requirements could lead to cloud infra changes)
 - benchmark needs to be highly changeable
 

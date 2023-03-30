@@ -1,0 +1,3095 @@
+{
+  "orchestratorSetupRequest": {
+    "generateRequest": {
+      "recordConfigs": [
+        {
+          "maxKeyLength": 1,
+          "maxStringValueLength": 3,
+          "minKeyLength": 1,
+          "minStringValueLength": 1,
+          "valueType": "String"
+        },
+        {
+          "keyValue": "staticKeyDynStringValue",
+          "maxStringValueLength": 5,
+          "minStringValueLength": 3,
+          "valueType": "String"
+        },
+        {
+          "maxKeyLength": 8,
+          "maxStringEnumValues": 5,
+          "maxStringValueLength": 3,
+          "minKeyLength": 6,
+          "minStringEnumValues": 1,
+          "minStringValueLength": 1,
+          "valueType": "String"
+        },
+        {
+          "keyValue": "staticKeyDynStringEnumDynValue",
+          "maxStringEnumValues": 5,
+          "maxStringValueLength": 3,
+          "minStringEnumValues": 1,
+          "minStringValueLength": 1,
+          "valueType": "String"
+        },
+        {
+          "maxKeyLength": 1,
+          "minKeyLength": 1,
+          "stringEnumValues": [
+            "s-val1",
+            "s-val2"
+          ],
+          "valueType": "String"
+        },
+        {
+          "keyValue": "staticKeyStaticStringEnumValues",
+          "stringEnumValues": [
+            "s-val1",
+            "s-val2"
+          ],
+          "valueType": "String"
+        },
+        {
+          "maxKeyLength": 5,
+          "maxValue": 100,
+          "minKeyLength": 2,
+          "minValue": 0,
+          "valueDistribution": "UNIFORM",
+          "valueType": "Integer"
+        },
+        {
+          "keyValue": "staticKeyUniformIntegerValue",
+          "maxValue": 100,
+          "minValue": 0,
+          "valueDistribution": "UNIFORM",
+          "valueType": "Integer"
+        },
+        {
+          "keyValue": "staticKeyUniformDoubleValue",
+          "maxValue": 55.3,
+          "minValue": 5.5,
+          "valueDistribution": "UNIFORM",
+          "valueType": "Double"
+        },
+        {
+          "maxKeyLength": 5,
+          "maxValue": 100,
+          "minKeyLength": 2,
+          "minValue": 0,
+          "triangleSpike": 50,
+          "valueDistribution": "TRIANGLE",
+          "valueType": "Integer"
+        },
+        {
+          "keyValue": "staticKeyTriangleIntegerValue",
+          "maxValue": 100,
+          "minValue": 0,
+          "triangleSpike": 50,
+          "valueDistribution": "TRIANGLE",
+          "valueType": "Integer"
+        },
+        {
+          "keyValue": "staticKeyTriangleDoubleValue",
+          "maxValue": 55.3,
+          "minValue": 5.5,
+          "triangleSpike": 10,
+          "valueDistribution": "TRIANGLE",
+          "valueType": "Double"
+        },
+        {
+          "gaussMiddle": 10,
+          "gaussRange": 10,
+          "maxKeyLength": 5,
+          "minKeyLength": 2,
+          "valueDistribution": "GAUSS",
+          "valueType": "Integer"
+        },
+        {
+          "gaussMiddle": 10,
+          "gaussRange": 10,
+          "keyValue": "staticKeyGaussIntegerValue",
+          "valueDistribution": "GAUSS",
+          "valueType": "Integer"
+        },
+        {
+          "gaussMiddle": 10,
+          "gaussRange": 10,
+          "keyValue": "staticKeyGaussDoubleValue",
+          "valueDistribution": "GAUSS",
+          "valueType": "Double"
+        }
+      ],
+      "recordCount": 10
+    },
+    "generatorUrl": "http://localhost:8080",
+    "workerConfigs": [
+      {
+        "workerUrl": "http://localhost:8082",
+        "workerThreads": 3,
+        "tsdbConnection": {
+          "tsdbType": "INFLUX",
+          "url": "http://127.0.0.1:8086",
+          "token": "YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==",
+          "connectionProperties": {
+            "bucketName": "testbucket3",
+            "organisationName": "testorg"
+          }
+        },
+        "createStorage": true,
+        "cleanupStorage": true
+      }
+    ]
+  },
+  "generatorWorkload": {
+    "records": [
+      {
+        "kvPairs": [
+          {
+            "key": "V",
+            "value": [
+              "u"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "5hX"
+            ]
+          },
+          {
+            "key": "LVJ4Ouh1",
+            "value": [
+              "rH9",
+              "Uq",
+              "v",
+              "v",
+              "P"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "i",
+              "2M",
+              "F",
+              "l"
+            ]
+          },
+          {
+            "key": "n",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "a1L",
+            "value": [
+              54
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              25
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              52.52895705006408
+            ]
+          },
+          {
+            "key": "Honk0",
+            "value": [
+              33
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              30
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              9.427704459539823
+            ]
+          },
+          {
+            "key": "dnqTn",
+            "value": [
+              9
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              13
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              10.350685106228532
+            ]
+          }
+        ],
+        "recordId": "8aabcc89-ef87-4f71-9f91-b319aca62c84"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "b",
+            "value": [
+              "Sqj"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "RnYRT"
+            ]
+          },
+          {
+            "key": "YKx8C1",
+            "value": [
+              "3",
+              "aVL",
+              "Rx"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "V",
+              "CK",
+              "Rg"
+            ]
+          },
+          {
+            "key": "6",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "W4NsE",
+            "value": [
+              29
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              71
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              36.1910067629167
+            ]
+          },
+          {
+            "key": "vwr",
+            "value": [
+              8
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              45
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              14.39930263710321
+            ]
+          },
+          {
+            "key": "wfWRo",
+            "value": [
+              10
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              10
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              8.699687509270834
+            ]
+          }
+        ],
+        "recordId": "98802d98-c5ef-48c3-b076-05f69dd41959"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "8",
+            "value": [
+              "iSW"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "SVEvg"
+            ]
+          },
+          {
+            "key": "cxEAVxkv",
+            "value": [
+              "dNl",
+              "SP",
+              "S",
+              "vt"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "8P",
+              "w",
+              "YwF",
+              "Fo",
+              "73"
+            ]
+          },
+          {
+            "key": "R",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "ABqJ",
+            "value": [
+              45
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              37
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              47.361867635794475
+            ]
+          },
+          {
+            "key": "V3",
+            "value": [
+              57
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              50
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              19.25550128580869
+            ]
+          },
+          {
+            "key": "TQCqY",
+            "value": [
+              11
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              10
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              7.045685748141887
+            ]
+          }
+        ],
+        "recordId": "b4d701c0-7fb8-40ed-a594-8fc9e671bb0e"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "a",
+            "value": [
+              "IjB"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "G2q"
+            ]
+          },
+          {
+            "key": "eokBgIx",
+            "value": [
+              "1",
+              "Z",
+              "y2U",
+              "N",
+              "he"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "1",
+              "p"
+            ]
+          },
+          {
+            "key": "G",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "q0",
+            "value": [
+              45
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              41
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              52.4210600210733
+            ]
+          },
+          {
+            "key": "sEHL",
+            "value": [
+              49
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              38
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              13.709563548145509
+            ]
+          },
+          {
+            "key": "fHZF7",
+            "value": [
+              11
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              12
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              9.384996710270586
+            ]
+          }
+        ],
+        "recordId": "374cd89c-8efb-44a6-8272-6d9c1b0a302a"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "7",
+            "value": [
+              "8"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "D8kn"
+            ]
+          },
+          {
+            "key": "HI0y88",
+            "value": [
+              "4X",
+              "Jw",
+              "DdB",
+              "FrB",
+              "Y"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "ho"
+            ]
+          },
+          {
+            "key": "I",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "v3",
+            "value": [
+              94
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              72
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              21.324433496810208
+            ]
+          },
+          {
+            "key": "YXg",
+            "value": [
+              31
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              13
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              16.170886168251123
+            ]
+          },
+          {
+            "key": "zoaO",
+            "value": [
+              9
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              10
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              8.911112684983937
+            ]
+          }
+        ],
+        "recordId": "9476870b-901f-4d88-b156-5350c9df87d9"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "Y",
+            "value": [
+              "WJJ"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "iNBH"
+            ]
+          },
+          {
+            "key": "n42TDY6",
+            "value": [
+              "aZ",
+              "oy",
+              "fpA"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "4lO"
+            ]
+          },
+          {
+            "key": "H",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "dM",
+            "value": [
+              92
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              20
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              44.24240780487565
+            ]
+          },
+          {
+            "key": "Io2US",
+            "value": [
+              47
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              67
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              10.327223502535267
+            ]
+          },
+          {
+            "key": "H5Nr",
+            "value": [
+              6
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              12
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              10.19497874283813
+            ]
+          }
+        ],
+        "recordId": "4ea8e2cc-26cb-453f-8e4b-7a583c381afc"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "m",
+            "value": [
+              "7p"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "kHe"
+            ]
+          },
+          {
+            "key": "nbEZVjJF",
+            "value": [
+              "t"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "gBe",
+              "m"
+            ]
+          },
+          {
+            "key": "U",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "B5PAP",
+            "value": [
+              81
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              61
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              19.97256856828171
+            ]
+          },
+          {
+            "key": "xuTZ",
+            "value": [
+              24
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              52
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              19.812168367217154
+            ]
+          },
+          {
+            "key": "xQN",
+            "value": [
+              11
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              8
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              8.407036765209956
+            ]
+          }
+        ],
+        "recordId": "3eed0e93-4d95-49a7-8d1d-1e46f0e5af07"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "R",
+            "value": [
+              "EA"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "1KXy"
+            ]
+          },
+          {
+            "key": "yoNE7sT",
+            "value": [
+              "9RL",
+              "9",
+              "c8e",
+              "Ly6"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "Sd"
+            ]
+          },
+          {
+            "key": "a",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "VILQ",
+            "value": [
+              85
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              25
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              24.962456492996235
+            ]
+          },
+          {
+            "key": "HBY",
+            "value": [
+              53
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              58
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              9.06052032919056
+            ]
+          },
+          {
+            "key": "HHoA",
+            "value": [
+              10
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              11
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              10.12951851302406
+            ]
+          }
+        ],
+        "recordId": "737060f7-e865-4376-9765-53b5b6119316"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "c",
+            "value": [
+              "l"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "Tqloj"
+            ]
+          },
+          {
+            "key": "tvdJnHA",
+            "value": [
+              "Mj",
+              "x6",
+              "s",
+              "F",
+              "V2"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "7uT",
+              "zY",
+              "zJ",
+              "p8"
+            ]
+          },
+          {
+            "key": "X",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "oJpnu",
+            "value": [
+              88
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              6
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              17.385726519754208
+            ]
+          },
+          {
+            "key": "6bNr",
+            "value": [
+              62
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              69
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              19.392958454152087
+            ]
+          },
+          {
+            "key": "5w",
+            "value": [
+              7
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              10
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              9.367894617460495
+            ]
+          }
+        ],
+        "recordId": "f5f3a3a6-285e-496b-8aaa-447299fd0e27"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "4",
+            "value": [
+              "PLX"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "IsBdD"
+            ]
+          },
+          {
+            "key": "v9S4gzBP",
+            "value": [
+              "Rms",
+              "DSY",
+              "crq"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "T8",
+              "r",
+              "GE"
+            ]
+          },
+          {
+            "key": "r",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val1",
+              "s-val2"
+            ]
+          },
+          {
+            "key": "RL0",
+            "value": [
+              66
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              72
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              16.322463583525334
+            ]
+          },
+          {
+            "key": "7g3mE",
+            "value": [
+              13
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              34
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              18.10225591279216
+            ]
+          },
+          {
+            "key": "v82s",
+            "value": [
+              7
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              9
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              6.429581316048596
+            ]
+          }
+        ],
+        "recordId": "d0ee8628-de2b-4cd5-a566-9959f45dff60"
+      }
+    ]
+  },
+  "benchmarkWorkload": {
+    "records": [
+      {
+        "kvPairs": [
+          {
+            "key": "V",
+            "value": [
+              "u"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "5hX"
+            ]
+          },
+          {
+            "key": "LVJ4Ouh1",
+            "value": [
+              "v"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "l"
+            ]
+          },
+          {
+            "key": "n",
+            "value": [
+              "s-val2"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val2"
+            ]
+          },
+          {
+            "key": "a1L",
+            "value": [
+              54
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              25
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              52.52895705006408
+            ]
+          },
+          {
+            "key": "Honk0",
+            "value": [
+              33
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              30
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              9.427704459539823
+            ]
+          },
+          {
+            "key": "dnqTn",
+            "value": [
+              9
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              13
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              10.350685106228532
+            ]
+          }
+        ],
+        "recordId": "8aabcc89-ef87-4f71-9f91-b319aca62c84"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "b",
+            "value": [
+              "Sqj"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "RnYRT"
+            ]
+          },
+          {
+            "key": "YKx8C1",
+            "value": [
+              "aVL"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "CK"
+            ]
+          },
+          {
+            "key": "6",
+            "value": [
+              "s-val2"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val2"
+            ]
+          },
+          {
+            "key": "W4NsE",
+            "value": [
+              29
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              71
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              36.1910067629167
+            ]
+          },
+          {
+            "key": "vwr",
+            "value": [
+              8
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              45
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              14.39930263710321
+            ]
+          },
+          {
+            "key": "wfWRo",
+            "value": [
+              10
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              10
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              8.699687509270834
+            ]
+          }
+        ],
+        "recordId": "98802d98-c5ef-48c3-b076-05f69dd41959"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "8",
+            "value": [
+              "iSW"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "SVEvg"
+            ]
+          },
+          {
+            "key": "cxEAVxkv",
+            "value": [
+              "S"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "8P"
+            ]
+          },
+          {
+            "key": "R",
+            "value": [
+              "s-val1"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val1"
+            ]
+          },
+          {
+            "key": "ABqJ",
+            "value": [
+              45
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              37
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              47.361867635794475
+            ]
+          },
+          {
+            "key": "V3",
+            "value": [
+              57
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              50
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              19.25550128580869
+            ]
+          },
+          {
+            "key": "TQCqY",
+            "value": [
+              11
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              10
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              7.045685748141887
+            ]
+          }
+        ],
+        "recordId": "b4d701c0-7fb8-40ed-a594-8fc9e671bb0e"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "a",
+            "value": [
+              "IjB"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "G2q"
+            ]
+          },
+          {
+            "key": "eokBgIx",
+            "value": [
+              "1"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "p"
+            ]
+          },
+          {
+            "key": "G",
+            "value": [
+              "s-val2"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val1"
+            ]
+          },
+          {
+            "key": "q0",
+            "value": [
+              45
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              41
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              52.4210600210733
+            ]
+          },
+          {
+            "key": "sEHL",
+            "value": [
+              49
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              38
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              13.709563548145509
+            ]
+          },
+          {
+            "key": "fHZF7",
+            "value": [
+              11
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              12
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              9.384996710270586
+            ]
+          }
+        ],
+        "recordId": "374cd89c-8efb-44a6-8272-6d9c1b0a302a"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "7",
+            "value": [
+              "8"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "D8kn"
+            ]
+          },
+          {
+            "key": "HI0y88",
+            "value": [
+              "DdB"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "ho"
+            ]
+          },
+          {
+            "key": "I",
+            "value": [
+              "s-val1"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val2"
+            ]
+          },
+          {
+            "key": "v3",
+            "value": [
+              94
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              72
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              21.324433496810208
+            ]
+          },
+          {
+            "key": "YXg",
+            "value": [
+              31
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              13
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              16.170886168251123
+            ]
+          },
+          {
+            "key": "zoaO",
+            "value": [
+              9
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              10
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              8.911112684983937
+            ]
+          }
+        ],
+        "recordId": "9476870b-901f-4d88-b156-5350c9df87d9"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "Y",
+            "value": [
+              "WJJ"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "iNBH"
+            ]
+          },
+          {
+            "key": "n42TDY6",
+            "value": [
+              "aZ"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "4lO"
+            ]
+          },
+          {
+            "key": "H",
+            "value": [
+              "s-val1"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val1"
+            ]
+          },
+          {
+            "key": "dM",
+            "value": [
+              92
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              20
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              44.24240780487565
+            ]
+          },
+          {
+            "key": "Io2US",
+            "value": [
+              47
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              67
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              10.327223502535267
+            ]
+          },
+          {
+            "key": "H5Nr",
+            "value": [
+              6
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              12
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              10.19497874283813
+            ]
+          }
+        ],
+        "recordId": "4ea8e2cc-26cb-453f-8e4b-7a583c381afc"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "m",
+            "value": [
+              "7p"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "kHe"
+            ]
+          },
+          {
+            "key": "nbEZVjJF",
+            "value": [
+              "t"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "m"
+            ]
+          },
+          {
+            "key": "U",
+            "value": [
+              "s-val2"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val2"
+            ]
+          },
+          {
+            "key": "B5PAP",
+            "value": [
+              81
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              61
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              19.97256856828171
+            ]
+          },
+          {
+            "key": "xuTZ",
+            "value": [
+              24
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              52
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              19.812168367217154
+            ]
+          },
+          {
+            "key": "xQN",
+            "value": [
+              11
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              8
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              8.407036765209956
+            ]
+          }
+        ],
+        "recordId": "3eed0e93-4d95-49a7-8d1d-1e46f0e5af07"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "R",
+            "value": [
+              "EA"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "1KXy"
+            ]
+          },
+          {
+            "key": "yoNE7sT",
+            "value": [
+              "9RL"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "Sd"
+            ]
+          },
+          {
+            "key": "a",
+            "value": [
+              "s-val2"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val2"
+            ]
+          },
+          {
+            "key": "VILQ",
+            "value": [
+              85
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              25
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              24.962456492996235
+            ]
+          },
+          {
+            "key": "HBY",
+            "value": [
+              53
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              58
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              9.06052032919056
+            ]
+          },
+          {
+            "key": "HHoA",
+            "value": [
+              10
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              11
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              10.12951851302406
+            ]
+          }
+        ],
+        "recordId": "737060f7-e865-4376-9765-53b5b6119316"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "c",
+            "value": [
+              "l"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "Tqloj"
+            ]
+          },
+          {
+            "key": "tvdJnHA",
+            "value": [
+              "F"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "p8"
+            ]
+          },
+          {
+            "key": "X",
+            "value": [
+              "s-val1"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val2"
+            ]
+          },
+          {
+            "key": "oJpnu",
+            "value": [
+              88
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              6
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              17.385726519754208
+            ]
+          },
+          {
+            "key": "6bNr",
+            "value": [
+              62
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              69
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              19.392958454152087
+            ]
+          },
+          {
+            "key": "5w",
+            "value": [
+              7
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              10
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              9.367894617460495
+            ]
+          }
+        ],
+        "recordId": "f5f3a3a6-285e-496b-8aaa-447299fd0e27"
+      },
+      {
+        "kvPairs": [
+          {
+            "key": "4",
+            "value": [
+              "PLX"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringValue",
+            "value": [
+              "IsBdD"
+            ]
+          },
+          {
+            "key": "v9S4gzBP",
+            "value": [
+              "DSY"
+            ]
+          },
+          {
+            "key": "staticKeyDynStringEnumDynValue",
+            "value": [
+              "GE"
+            ]
+          },
+          {
+            "key": "r",
+            "value": [
+              "s-val1"
+            ]
+          },
+          {
+            "key": "staticKeyStaticStringEnumValues",
+            "value": [
+              "s-val1"
+            ]
+          },
+          {
+            "key": "RL0",
+            "value": [
+              66
+            ]
+          },
+          {
+            "key": "staticKeyUniformIntegerValue",
+            "value": [
+              72
+            ]
+          },
+          {
+            "key": "staticKeyUniformDoubleValue",
+            "value": [
+              16.322463583525334
+            ]
+          },
+          {
+            "key": "7g3mE",
+            "value": [
+              13
+            ]
+          },
+          {
+            "key": "staticKeyTriangleIntegerValue",
+            "value": [
+              34
+            ]
+          },
+          {
+            "key": "staticKeyTriangleDoubleValue",
+            "value": [
+              18.10225591279216
+            ]
+          },
+          {
+            "key": "v82s",
+            "value": [
+              7
+            ]
+          },
+          {
+            "key": "staticKeyGaussIntegerValue",
+            "value": [
+              9
+            ]
+          },
+          {
+            "key": "staticKeyGaussDoubleValue",
+            "value": [
+              6.429581316048596
+            ]
+          }
+        ],
+        "recordId": "d0ee8628-de2b-4cd5-a566-9959f45dff60"
+      }
+    ]
+  },
+  "workerSetupResponses": [
+    {
+      "workerSetupRequest": {
+        "orchestratorUrl": "http://localhost:8081",
+        "workerConfig": {
+          "workerUrl": "http://localhost:8082",
+          "workerThreads": 3,
+          "tsdbConnection": {
+            "tsdbType": "INFLUX",
+            "url": "http://127.0.0.1:8086",
+            "token": "YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==",
+            "connectionProperties": {
+              "bucketName": "testbucket3",
+              "organisationName": "testorg"
+            }
+          },
+          "createStorage": true,
+          "cleanupStorage": true
+        },
+        "benchmarkWorkload": {
+          "records": [
+            {
+              "kvPairs": [
+                {
+                  "key": "V",
+                  "value": [
+                    "u"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringValue",
+                  "value": [
+                    "5hX"
+                  ]
+                },
+                {
+                  "key": "LVJ4Ouh1",
+                  "value": [
+                    "v"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringEnumDynValue",
+                  "value": [
+                    "l"
+                  ]
+                },
+                {
+                  "key": "n",
+                  "value": [
+                    "s-val2"
+                  ]
+                },
+                {
+                  "key": "staticKeyStaticStringEnumValues",
+                  "value": [
+                    "s-val2"
+                  ]
+                },
+                {
+                  "key": "a1L",
+                  "value": [
+                    54
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformIntegerValue",
+                  "value": [
+                    25
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformDoubleValue",
+                  "value": [
+                    52.52895705006408
+                  ]
+                },
+                {
+                  "key": "Honk0",
+                  "value": [
+                    33
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleIntegerValue",
+                  "value": [
+                    30
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleDoubleValue",
+                  "value": [
+                    9.427704459539823
+                  ]
+                },
+                {
+                  "key": "dnqTn",
+                  "value": [
+                    9
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussIntegerValue",
+                  "value": [
+                    13
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussDoubleValue",
+                  "value": [
+                    10.350685106228532
+                  ]
+                }
+              ],
+              "recordId": "8aabcc89-ef87-4f71-9f91-b319aca62c84"
+            },
+            {
+              "kvPairs": [
+                {
+                  "key": "b",
+                  "value": [
+                    "Sqj"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringValue",
+                  "value": [
+                    "RnYRT"
+                  ]
+                },
+                {
+                  "key": "YKx8C1",
+                  "value": [
+                    "aVL"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringEnumDynValue",
+                  "value": [
+                    "CK"
+                  ]
+                },
+                {
+                  "key": "6",
+                  "value": [
+                    "s-val2"
+                  ]
+                },
+                {
+                  "key": "staticKeyStaticStringEnumValues",
+                  "value": [
+                    "s-val2"
+                  ]
+                },
+                {
+                  "key": "W4NsE",
+                  "value": [
+                    29
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformIntegerValue",
+                  "value": [
+                    71
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformDoubleValue",
+                  "value": [
+                    36.1910067629167
+                  ]
+                },
+                {
+                  "key": "vwr",
+                  "value": [
+                    8
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleIntegerValue",
+                  "value": [
+                    45
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleDoubleValue",
+                  "value": [
+                    14.39930263710321
+                  ]
+                },
+                {
+                  "key": "wfWRo",
+                  "value": [
+                    10
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussIntegerValue",
+                  "value": [
+                    10
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussDoubleValue",
+                  "value": [
+                    8.699687509270834
+                  ]
+                }
+              ],
+              "recordId": "98802d98-c5ef-48c3-b076-05f69dd41959"
+            },
+            {
+              "kvPairs": [
+                {
+                  "key": "8",
+                  "value": [
+                    "iSW"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringValue",
+                  "value": [
+                    "SVEvg"
+                  ]
+                },
+                {
+                  "key": "cxEAVxkv",
+                  "value": [
+                    "S"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringEnumDynValue",
+                  "value": [
+                    "8P"
+                  ]
+                },
+                {
+                  "key": "R",
+                  "value": [
+                    "s-val1"
+                  ]
+                },
+                {
+                  "key": "staticKeyStaticStringEnumValues",
+                  "value": [
+                    "s-val1"
+                  ]
+                },
+                {
+                  "key": "ABqJ",
+                  "value": [
+                    45
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformIntegerValue",
+                  "value": [
+                    37
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformDoubleValue",
+                  "value": [
+                    47.361867635794475
+                  ]
+                },
+                {
+                  "key": "V3",
+                  "value": [
+                    57
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleIntegerValue",
+                  "value": [
+                    50
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleDoubleValue",
+                  "value": [
+                    19.25550128580869
+                  ]
+                },
+                {
+                  "key": "TQCqY",
+                  "value": [
+                    11
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussIntegerValue",
+                  "value": [
+                    10
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussDoubleValue",
+                  "value": [
+                    7.045685748141887
+                  ]
+                }
+              ],
+              "recordId": "b4d701c0-7fb8-40ed-a594-8fc9e671bb0e"
+            },
+            {
+              "kvPairs": [
+                {
+                  "key": "a",
+                  "value": [
+                    "IjB"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringValue",
+                  "value": [
+                    "G2q"
+                  ]
+                },
+                {
+                  "key": "eokBgIx",
+                  "value": [
+                    "1"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringEnumDynValue",
+                  "value": [
+                    "p"
+                  ]
+                },
+                {
+                  "key": "G",
+                  "value": [
+                    "s-val2"
+                  ]
+                },
+                {
+                  "key": "staticKeyStaticStringEnumValues",
+                  "value": [
+                    "s-val1"
+                  ]
+                },
+                {
+                  "key": "q0",
+                  "value": [
+                    45
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformIntegerValue",
+                  "value": [
+                    41
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformDoubleValue",
+                  "value": [
+                    52.4210600210733
+                  ]
+                },
+                {
+                  "key": "sEHL",
+                  "value": [
+                    49
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleIntegerValue",
+                  "value": [
+                    38
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleDoubleValue",
+                  "value": [
+                    13.709563548145509
+                  ]
+                },
+                {
+                  "key": "fHZF7",
+                  "value": [
+                    11
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussIntegerValue",
+                  "value": [
+                    12
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussDoubleValue",
+                  "value": [
+                    9.384996710270586
+                  ]
+                }
+              ],
+              "recordId": "374cd89c-8efb-44a6-8272-6d9c1b0a302a"
+            },
+            {
+              "kvPairs": [
+                {
+                  "key": "7",
+                  "value": [
+                    "8"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringValue",
+                  "value": [
+                    "D8kn"
+                  ]
+                },
+                {
+                  "key": "HI0y88",
+                  "value": [
+                    "DdB"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringEnumDynValue",
+                  "value": [
+                    "ho"
+                  ]
+                },
+                {
+                  "key": "I",
+                  "value": [
+                    "s-val1"
+                  ]
+                },
+                {
+                  "key": "staticKeyStaticStringEnumValues",
+                  "value": [
+                    "s-val2"
+                  ]
+                },
+                {
+                  "key": "v3",
+                  "value": [
+                    94
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformIntegerValue",
+                  "value": [
+                    72
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformDoubleValue",
+                  "value": [
+                    21.324433496810208
+                  ]
+                },
+                {
+                  "key": "YXg",
+                  "value": [
+                    31
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleIntegerValue",
+                  "value": [
+                    13
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleDoubleValue",
+                  "value": [
+                    16.170886168251123
+                  ]
+                },
+                {
+                  "key": "zoaO",
+                  "value": [
+                    9
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussIntegerValue",
+                  "value": [
+                    10
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussDoubleValue",
+                  "value": [
+                    8.911112684983937
+                  ]
+                }
+              ],
+              "recordId": "9476870b-901f-4d88-b156-5350c9df87d9"
+            },
+            {
+              "kvPairs": [
+                {
+                  "key": "Y",
+                  "value": [
+                    "WJJ"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringValue",
+                  "value": [
+                    "iNBH"
+                  ]
+                },
+                {
+                  "key": "n42TDY6",
+                  "value": [
+                    "aZ"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringEnumDynValue",
+                  "value": [
+                    "4lO"
+                  ]
+                },
+                {
+                  "key": "H",
+                  "value": [
+                    "s-val1"
+                  ]
+                },
+                {
+                  "key": "staticKeyStaticStringEnumValues",
+                  "value": [
+                    "s-val1"
+                  ]
+                },
+                {
+                  "key": "dM",
+                  "value": [
+                    92
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformIntegerValue",
+                  "value": [
+                    20
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformDoubleValue",
+                  "value": [
+                    44.24240780487565
+                  ]
+                },
+                {
+                  "key": "Io2US",
+                  "value": [
+                    47
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleIntegerValue",
+                  "value": [
+                    67
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleDoubleValue",
+                  "value": [
+                    10.327223502535267
+                  ]
+                },
+                {
+                  "key": "H5Nr",
+                  "value": [
+                    6
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussIntegerValue",
+                  "value": [
+                    12
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussDoubleValue",
+                  "value": [
+                    10.19497874283813
+                  ]
+                }
+              ],
+              "recordId": "4ea8e2cc-26cb-453f-8e4b-7a583c381afc"
+            },
+            {
+              "kvPairs": [
+                {
+                  "key": "m",
+                  "value": [
+                    "7p"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringValue",
+                  "value": [
+                    "kHe"
+                  ]
+                },
+                {
+                  "key": "nbEZVjJF",
+                  "value": [
+                    "t"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringEnumDynValue",
+                  "value": [
+                    "m"
+                  ]
+                },
+                {
+                  "key": "U",
+                  "value": [
+                    "s-val2"
+                  ]
+                },
+                {
+                  "key": "staticKeyStaticStringEnumValues",
+                  "value": [
+                    "s-val2"
+                  ]
+                },
+                {
+                  "key": "B5PAP",
+                  "value": [
+                    81
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformIntegerValue",
+                  "value": [
+                    61
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformDoubleValue",
+                  "value": [
+                    19.97256856828171
+                  ]
+                },
+                {
+                  "key": "xuTZ",
+                  "value": [
+                    24
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleIntegerValue",
+                  "value": [
+                    52
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleDoubleValue",
+                  "value": [
+                    19.812168367217154
+                  ]
+                },
+                {
+                  "key": "xQN",
+                  "value": [
+                    11
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussIntegerValue",
+                  "value": [
+                    8
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussDoubleValue",
+                  "value": [
+                    8.407036765209956
+                  ]
+                }
+              ],
+              "recordId": "3eed0e93-4d95-49a7-8d1d-1e46f0e5af07"
+            },
+            {
+              "kvPairs": [
+                {
+                  "key": "R",
+                  "value": [
+                    "EA"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringValue",
+                  "value": [
+                    "1KXy"
+                  ]
+                },
+                {
+                  "key": "yoNE7sT",
+                  "value": [
+                    "9RL"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringEnumDynValue",
+                  "value": [
+                    "Sd"
+                  ]
+                },
+                {
+                  "key": "a",
+                  "value": [
+                    "s-val2"
+                  ]
+                },
+                {
+                  "key": "staticKeyStaticStringEnumValues",
+                  "value": [
+                    "s-val2"
+                  ]
+                },
+                {
+                  "key": "VILQ",
+                  "value": [
+                    85
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformIntegerValue",
+                  "value": [
+                    25
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformDoubleValue",
+                  "value": [
+                    24.962456492996235
+                  ]
+                },
+                {
+                  "key": "HBY",
+                  "value": [
+                    53
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleIntegerValue",
+                  "value": [
+                    58
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleDoubleValue",
+                  "value": [
+                    9.06052032919056
+                  ]
+                },
+                {
+                  "key": "HHoA",
+                  "value": [
+                    10
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussIntegerValue",
+                  "value": [
+                    11
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussDoubleValue",
+                  "value": [
+                    10.12951851302406
+                  ]
+                }
+              ],
+              "recordId": "737060f7-e865-4376-9765-53b5b6119316"
+            },
+            {
+              "kvPairs": [
+                {
+                  "key": "c",
+                  "value": [
+                    "l"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringValue",
+                  "value": [
+                    "Tqloj"
+                  ]
+                },
+                {
+                  "key": "tvdJnHA",
+                  "value": [
+                    "F"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringEnumDynValue",
+                  "value": [
+                    "p8"
+                  ]
+                },
+                {
+                  "key": "X",
+                  "value": [
+                    "s-val1"
+                  ]
+                },
+                {
+                  "key": "staticKeyStaticStringEnumValues",
+                  "value": [
+                    "s-val2"
+                  ]
+                },
+                {
+                  "key": "oJpnu",
+                  "value": [
+                    88
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformIntegerValue",
+                  "value": [
+                    6
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformDoubleValue",
+                  "value": [
+                    17.385726519754208
+                  ]
+                },
+                {
+                  "key": "6bNr",
+                  "value": [
+                    62
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleIntegerValue",
+                  "value": [
+                    69
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleDoubleValue",
+                  "value": [
+                    19.392958454152087
+                  ]
+                },
+                {
+                  "key": "5w",
+                  "value": [
+                    7
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussIntegerValue",
+                  "value": [
+                    10
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussDoubleValue",
+                  "value": [
+                    9.367894617460495
+                  ]
+                }
+              ],
+              "recordId": "f5f3a3a6-285e-496b-8aaa-447299fd0e27"
+            },
+            {
+              "kvPairs": [
+                {
+                  "key": "4",
+                  "value": [
+                    "PLX"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringValue",
+                  "value": [
+                    "IsBdD"
+                  ]
+                },
+                {
+                  "key": "v9S4gzBP",
+                  "value": [
+                    "DSY"
+                  ]
+                },
+                {
+                  "key": "staticKeyDynStringEnumDynValue",
+                  "value": [
+                    "GE"
+                  ]
+                },
+                {
+                  "key": "r",
+                  "value": [
+                    "s-val1"
+                  ]
+                },
+                {
+                  "key": "staticKeyStaticStringEnumValues",
+                  "value": [
+                    "s-val1"
+                  ]
+                },
+                {
+                  "key": "RL0",
+                  "value": [
+                    66
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformIntegerValue",
+                  "value": [
+                    72
+                  ]
+                },
+                {
+                  "key": "staticKeyUniformDoubleValue",
+                  "value": [
+                    16.322463583525334
+                  ]
+                },
+                {
+                  "key": "7g3mE",
+                  "value": [
+                    13
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleIntegerValue",
+                  "value": [
+                    34
+                  ]
+                },
+                {
+                  "key": "staticKeyTriangleDoubleValue",
+                  "value": [
+                    18.10225591279216
+                  ]
+                },
+                {
+                  "key": "v82s",
+                  "value": [
+                    7
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussIntegerValue",
+                  "value": [
+                    9
+                  ]
+                },
+                {
+                  "key": "staticKeyGaussDoubleValue",
+                  "value": [
+                    6.429581316048596
+                  ]
+                }
+              ],
+              "recordId": "d0ee8628-de2b-4cd5-a566-9959f45dff60"
+            }
+          ]
+        }
+      },
+      "startTimestamp": "2023-03-13T21:44:50.794602Z",
+      "endTimestamp": "2023-03-13T21:44:51.857365Z"
+    }
+  ],
+  "startTimestamp": "2023-03-13T22:44:49.046607+01:00",
+  "endTimestamp": "2023-03-13T22:44:51.963064+01:00"
+}

@@ -1,0 +1,20 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+    "recordConfigs" : {
+      "type" : "array",
+      "nullable" : false,
+      "items" : {
+        "$ref": "generatorRecordConfig.json"
+      },
+      "minItems": 1
+    },
+    "recordCount" : {
+      "type" : "integer",
+      "minimum": 1,
+      "nullable" : false
+    }
+  },
+  "required": [ "recordCount","recordConfigs" ]
+}

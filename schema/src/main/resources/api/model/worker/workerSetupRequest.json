@@ -1,0 +1,20 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+
+    "orchestratorUrl" : {
+      "type" : "string",
+      "nullable" : false
+    },
+    "workerConfig" : {
+        "$ref": "workerConfig.json",
+        "nullable" : false
+    },
+    "benchmarkWorkload" : {
+      "$ref": "../workload/workload.json",
+      "nullable" : false
+    }
+  },
+  "required": [ "orchestratorUrl","workerConfig","benchmarkWorkload" ]
+}

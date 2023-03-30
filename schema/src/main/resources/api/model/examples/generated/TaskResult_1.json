@@ -1,0 +1,13 @@
+{
+  "taskName" : "taskName",
+  "sourceInformation" : {
+    "url" : "http://example.org"
+  },
+  "threadName" : "threadName",
+  "durationInMs" : 100,
+  "requestSizeInBytes" : 10,
+  "timeFrame" : {
+    "startTimestamp" : 1680208130.300611000,
+    "endTimestamp" : 1680208130.300532000
+  }
+}

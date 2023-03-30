@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+application:
+  banner:
+    title: TSDB Benchmark Orchestrator Microservice
+    copyright: cleem
+    year: 2023
+  errors:
+    logStackTrace: true
+
+
+spring:
+  application:
+    name: orchestrator

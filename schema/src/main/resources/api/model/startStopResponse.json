@@ -1,0 +1,29 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+    "sourceInformation" : {
+      "$ref": "sourceInformation.json",
+      "nullable" : false
+    },
+    "status" : {
+      "type" : "string",
+      "enum" : [ "STARTED", "STOPPED" ],
+      "nullable" : false
+    },
+    "timeFrame" : {
+      "$ref": "timeFrame.json",
+      "nullable" : false
+    },
+    "nestedResponses" : {
+      "type" : "array",
+      "nullable" : true,
+      "items" : {
+        "$ref": "startStopResponse.json"
+      },
+      "minItems": 0
+    }
+  },
+  "required": [ "sourceInformation","status","timeFrame" ]
+
+}
