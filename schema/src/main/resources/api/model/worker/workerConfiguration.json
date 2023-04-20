@@ -1,0 +1,36 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+    "workerName" : {
+      "type" : "string",
+      "nullable" : false
+    },
+    "workerUrl" : {
+      "type" : "string",
+      "nullable" : false,
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "workerThreads" : {
+      "type" : "integer",
+      "nullable" : false
+    },
+    "workerPercentage" : {
+      "type" : "integer",
+      "nullable" : false
+    },
+    "tsdbEndpoints" : {
+      "type" : "array",
+      "nullable" : false,
+      "items" : {
+        "$ref": "workerTsdbEndpoint.json"
+      },
+      "minItems": 1
+    }
+
+
+
+  },
+  "required": [ "workerName","workerUrl","workerThreads","workerPercentage","tsdbEndpoints" ]
+}

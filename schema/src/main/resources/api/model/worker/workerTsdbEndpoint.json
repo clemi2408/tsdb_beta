@@ -2,28 +2,24 @@
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
   "properties" : {
-    "tsdbType" : {
+    "endpointName" : {
       "type" : "string",
-      "enum": ["INFLUX", "VICTORIA"],
       "nullable" : false
     },
-    "url" : {
+    "tsdbUrl" : {
       "type" : "string",
       "nullable" : false,
       "format": "uri",
       "pattern": "^https?://"
     },
-    "token" : {
+    "tsdbToken" : {
       "type" : "string",
       "nullable" : true
     },
-    "connectionProperties": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      }
+    "endpointPercentage" : {
+      "type" : "integer",
+      "nullable" : false
     }
-
   },
-  "required": [ "tsdbType","url" ]
+  "required": [ "endpointName","tsdbUrl","endpointPercentage"]
 }

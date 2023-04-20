@@ -2,17 +2,9 @@
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
   "properties" : {
-
-    "workerUrl" : {
+    "tsdbType" : {
       "type" : "string",
-      "nullable" : false
-    },
-    "workerThreads" : {
-      "type" : "integer",
-      "nullable" : false
-    },
-    "tsdbConnection": {
-      "$ref": "workerTsdbConnection.json",
+      "enum": ["INFLUX", "VICTORIA"],
       "nullable" : false
     },
     "createStorage" : {
@@ -22,7 +14,15 @@
     "cleanupStorage" : {
       "type" : "boolean",
       "nullable" : false
+    },
+    "customProperties": {
+      "type": "object",
+      "nullable" : true,
+      "additionalProperties": {
+        "type": "string"
+      }
     }
+
   },
-  "required": [ "workerUrl","workerThreads","cleanupStorage","createStorage","tsdbConnection" ]
+  "required": [ "tsdbType","createStorage","cleanupStorage"]
 }

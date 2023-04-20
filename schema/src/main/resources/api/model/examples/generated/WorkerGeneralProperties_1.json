@@ -1,0 +1,5 @@
+{
+  "tsdbType" : "VICTORIA",
+  "createStorage" : true,
+  "cleanupStorage" : true
+}

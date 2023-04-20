@@ -4,7 +4,9 @@
   "properties" : {
     "url" : {
       "type" : "string",
-      "nullable" : false
+      "nullable" : false,
+      "format": "uri",
+      "pattern": "^https?://"
     }
   },
   "required": [ "url" ]

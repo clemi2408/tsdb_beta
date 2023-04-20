@@ -5,16 +5,23 @@
 
     "orchestratorUrl" : {
       "type" : "string",
+      "nullable" : true,
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+
+    "workerGeneralProperties": {
+      "$ref": "workerGeneralProperties.json",
       "nullable" : false
     },
-    "workerConfig" : {
-        "$ref": "workerConfig.json",
-        "nullable" : false
+    "workerConfiguration": {
+      "$ref": "workerConfiguration.json",
+      "nullable" : false
     },
     "benchmarkWorkload" : {
       "$ref": "../workload/workload.json",
       "nullable" : false
     }
   },
-  "required": [ "orchestratorUrl","workerConfig","benchmarkWorkload" ]
+  "required": [ "orchestratorUrl","workerGeneralProperties","workerConfiguration","benchmarkWorkload" ]
 }
