@@ -4,12 +4,14 @@ package de.cleem.tub.tsdbb.apps.worker.executor;
 import de.cleem.tub.tsdbb.api.model.Record;
 import de.cleem.tub.tsdbb.api.model.TaskResult;
 import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
+import de.cleem.tub.tsdbb.api.model.WorkerTsdbEndpoint;
 import de.cleem.tub.tsdbb.apps.worker.adapters.BaseConnector;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import de.cleem.tub.tsdbb.commons.api.ClientApiFacadeException;
 import de.cleem.tub.tsdbb.commons.spring.remotecontrol.RemoteControlService;
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -19,7 +21,7 @@ import java.util.concurrent.Future;
 @Slf4j
 public class Executor extends BaseConnector {
 
-    private final String workerUrl;
+    private final URI workerUrl;
     private ExecutorService executor;
 
     private List<Future<TaskResult>> futureTaskResults;
@@ -27,8 +29,9 @@ public class Executor extends BaseConnector {
     private List<TaskRequest> threads;
 
     final RemoteControlService remoteControlService;
+    private WorkerTsdbEndpoint firstEndpoint;
 
-    public Executor(final RemoteControlService remoteControlService, final String workerUrl) {
+    public Executor(final RemoteControlService remoteControlService, final URI workerUrl) {
         this.remoteControlService = remoteControlService;
         this.workerUrl = workerUrl;
         log.info("Constructing: " + this.getClass().getSimpleName());
@@ -38,12 +41,12 @@ public class Executor extends BaseConnector {
     public void setup(final WorkerSetupRequest workerSetupRequest) throws ExecutionException, TSDBAdapterException {
 
         this.workerSetupRequest = workerSetupRequest;
-
+        this.firstEndpoint = workerSetupRequest.getWorkerConfiguration().getTsdbEndpoints().get(0);
         setStorageAdapter();
 
-        if (workerSetupRequest.getWorkerConfig().getCreateStorage()) {
+        if (workerSetupRequest.getWorkerGeneralProperties().getCreateStorage()) {
             log.info("Creating storage");
-            tsdbInterface.createStorage();
+            tsdbInterface.createStorage(firstEndpoint);
         }
 
 
@@ -87,9 +90,9 @@ public class Executor extends BaseConnector {
 
     public void cleanup() throws TSDBAdapterException {
 
-        if (workerSetupRequest.getWorkerConfig().getCleanupStorage()) {
+        if (workerSetupRequest.getWorkerGeneralProperties().getCleanupStorage()) {
             log.info("Cleaning up storage");
-            tsdbInterface.cleanup();
+            tsdbInterface.cleanup(firstEndpoint);
         }
 
     }
@@ -109,9 +112,12 @@ public class Executor extends BaseConnector {
     }
 
     private ExecutorService getExecutorService(){
-        log.info("Creating ThreadPool using " + workerSetupRequest.getWorkerConfig().getWorkerThreads() + " Threads");
 
-        return Executors.newFixedThreadPool(workerSetupRequest.getWorkerConfig().getWorkerThreads());
+        final Integer threads = workerSetupRequest.getWorkerConfiguration().getWorkerThreads();
+
+        log.info("Creating ThreadPool using " + threads + " Threads");
+
+        return Executors.newFixedThreadPool(threads);
 
 
     }
@@ -123,6 +129,7 @@ public class Executor extends BaseConnector {
         final List<TaskRequest> threads = new ArrayList<>();
 
         int recordCount = 0;
+        WorkerTsdbEndpoint endpoint;
         for (Record record : workerSetupRequest.getBenchmarkWorkload().getRecords()) {
             recordCount++;
 
@@ -130,7 +137,11 @@ public class Executor extends BaseConnector {
                 log.debug("Created Task: " + recordCount + "/" + workerSetupRequest.getBenchmarkWorkload().getRecords().size());
             }
 
-            threads.add(new TaskRequest(workerUrl,tsdbInterface, workerSetupRequest,"Task: " + recordCount, record));
+            /// SELECT ENDPOINT:
+            endpoint=workerSetupRequest.getWorkerConfiguration().getTsdbEndpoints().get(0);
+
+
+            threads.add(new TaskRequest(tsdbInterface, workerSetupRequest,endpoint,"Task: " + recordCount, record));
 
         }
 

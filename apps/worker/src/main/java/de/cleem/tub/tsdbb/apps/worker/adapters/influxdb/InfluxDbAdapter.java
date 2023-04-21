@@ -1,7 +1,9 @@
 package de.cleem.tub.tsdbb.apps.worker.adapters.influxdb;
 
 import de.cleem.tub.tsdbb.api.model.Record;
-import de.cleem.tub.tsdbb.api.model.WorkerTsdbConnection;
+import de.cleem.tub.tsdbb.api.model.WorkerGeneralProperties;
+import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
+import de.cleem.tub.tsdbb.api.model.WorkerTsdbEndpoint;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterIF;
 import de.cleem.tub.tsdbb.apps.worker.formats.LineProtocolFormat;
@@ -37,39 +39,38 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
     private HttpClient httpClient;
     private LineProtocolFormat lineProtocolFormat;
 
-    private URI baseUrl;
+/*    private URI baseUrl;
     private URI orgsUri;
     private URI bucketsUri;
     private URI healthUri;
+      private String token;*/
 
     private String orgName;
     private String orgId;
     private String bucketName;
     private String bucketId;
-    private String token;
+
+
+    private WorkerGeneralProperties.TsdbTypeEnum tsdbType;
 
     @Override
-    public void setup(final WorkerTsdbConnection workerTsdbConnection) throws TSDBAdapterException {
+    public void setup(final WorkerSetupRequest workerSetupRequest) throws TSDBAdapterException {
 
-        if (!(workerTsdbConnection.getTsdbType().equals(WorkerTsdbConnection.TsdbTypeEnum.INFLUX))) {
+        tsdbType = workerSetupRequest.getWorkerGeneralProperties().getTsdbType();
 
-            throw new TSDBAdapterException("Setup error - workerTsdbConnection is of type "+ WorkerTsdbConnection.TsdbTypeEnum.INFLUX+" - " + getConnectionInfo());
+        if (!(tsdbType.equals(WorkerGeneralProperties.TsdbTypeEnum.INFLUX))) {
+
+            throw new TSDBAdapterException("Setup error - workerTsdbConnection is of type "+ WorkerGeneralProperties.TsdbTypeEnum.INFLUX);
 
         }
 
         httpClient = HttpClient.newHttpClient();
-        
-        final WorkerTsdbConnection.TsdbTypeEnum tsdbType = workerTsdbConnection.getTsdbType();
 
-        baseUrl = workerTsdbConnection.getUrl();
-        orgsUri = URI.create(baseUrl + ORGS_ENDPOINT);
-        bucketsUri = URI.create(baseUrl + BUCKETS_ENDPOINT);
-        healthUri = URI.create(baseUrl + HEALTH_ENDPOINT);
+        for(WorkerTsdbEndpoint endpoint : workerSetupRequest.getWorkerConfiguration().getTsdbEndpoints()) {
 
-        token = workerTsdbConnection.getToken();
+            healthCheck(endpoint);
 
-
-        healthCheck();
+        }
 
 
         lineProtocolFormat = LineProtocolFormat.builder()
@@ -78,23 +79,23 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
                 .labelValue(tsdbType.getValue())
                 .build();
 
-        if(!workerTsdbConnection.getConnectionProperties().containsKey(PROPERTY_KEY_BUCKET_NAME)){
+        if(!workerSetupRequest.getWorkerGeneralProperties().getCustomProperties().containsKey(PROPERTY_KEY_BUCKET_NAME)){
             throw new TSDBAdapterException("Connection Property "+PROPERTY_KEY_BUCKET_NAME+" not set");
         }
 
-        bucketName = workerTsdbConnection.getConnectionProperties().get(PROPERTY_KEY_BUCKET_NAME);
+        bucketName = workerSetupRequest.getWorkerGeneralProperties().getCustomProperties().get(PROPERTY_KEY_BUCKET_NAME);
 
-        if(!workerTsdbConnection.getConnectionProperties().containsKey(PROPERTY_KEY_ORGANISATION_NAME)){
+        if(!workerSetupRequest.getWorkerGeneralProperties().getCustomProperties().containsKey(PROPERTY_KEY_ORGANISATION_NAME)){
             throw new TSDBAdapterException("Connection Property "+PROPERTY_KEY_ORGANISATION_NAME+" not set");
         }
 
-        orgName = workerTsdbConnection.getConnectionProperties().get(PROPERTY_KEY_ORGANISATION_NAME);
+        orgName = workerSetupRequest.getWorkerGeneralProperties().getCustomProperties().get(PROPERTY_KEY_ORGANISATION_NAME);
 
-        orgId = lookupId(ORGS_STRING, orgName,listOrganisations());
+        orgId = lookupId(ORGS_STRING, orgName,listOrganisations(workerSetupRequest.getWorkerConfiguration().getTsdbEndpoints().get(0)));
 
     }
     @Override
-    public void createStorage() throws TSDBAdapterException {
+    public void createStorage(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         // CREATE BUCKET
         // curl --request POST \
@@ -107,11 +108,12 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         //  }'
 
 
-        final HashMap<String, String> headerMap = HttpHelper.getTokenAuthHeaderMap(token);
+        final HashMap<String, String> headerMap = HttpHelper.getTokenAuthHeaderMap(endpoint.getTsdbToken());
         headerMap.put(HttpHelper.HEADER_KEY_CONTENT_TYPE, HttpHelper.HEADER_KEY_CONTENT_TYPE_VALUE_JSON);
 
         final String createBucketRequestBody = buildCreateBucketJson(orgId, bucketName);
 
+        final URI bucketsUri = URI.create(endpoint.getTsdbUrl() + BUCKETS_ENDPOINT);
 
         try {
             HttpHelper.executePost(httpClient, bucketsUri, createBucketRequestBody, headerMap, 201);
@@ -119,15 +121,15 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException(e);
         }
 
-        bucketId = lookupId(BUCKETS_STRING, bucketName, listBuckets());
+        bucketId = lookupId(BUCKETS_STRING, bucketName, listBuckets(endpoint));
 
 
     }
     @Override
-    public int write(final Record record) throws TSDBAdapterException {
+    public int write(final Record record,final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         if (bucketId == null) {
-            throw new TSDBAdapterException("Can not write to Storage - bucketId is NULL - " + getConnectionInfo());
+            throw new TSDBAdapterException("Can not write to Storage - bucketId is NULL");
         }
 
         final String metricLine = lineProtocolFormat.getLine(record,  Instant.now());
@@ -139,15 +141,15 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         //  --header "Authorization: Token ${INFLUX_TOKEN}" \
         //  --data-binary 'testtesttest1,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1673369771'
 
-        final URI writeUri = URI.create(baseUrl + String.format(WRITE_ENDPOINT, orgName, bucketName, WRITE_PRECISION));
+        final URI writeUri = URI.create(endpoint.getTsdbUrl() + String.format(WRITE_ENDPOINT, orgName, bucketName, WRITE_PRECISION));
 
-        final HashMap<String, String> headers = HttpHelper.getTokenAuthHeaderMap(token);
+        final HashMap<String, String> headers = HttpHelper.getTokenAuthHeaderMap(endpoint.getTsdbToken());
 
         try {
 
             HttpHelper.executePost(httpClient, writeUri, metricLine, headers, 204);
 
-            log.debug("Wrote Line: " + metricLine + " to: " + getConnectionInfo());
+            log.debug("Wrote Line: " + metricLine);
 
             return metricLine.length();
 
@@ -157,11 +159,11 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
     }
     @Override
-    public void cleanup() throws TSDBAdapterException {
+    public void cleanup(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         if (bucketId == null) {
 
-            throw new TSDBAdapterException("Can not delete to Storage " + bucketName + " - bucketId is NULL - " + getConnectionInfo());
+            throw new TSDBAdapterException("Can not delete to Storage " + bucketName + " - bucketId is NULL");
 
         }
 
@@ -171,14 +173,14 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         //  --header 'Accept: application/json'
 
 
-        final URI deleteBucketUri = URI.create(baseUrl + BUCKETS_ENDPOINT + "/" + bucketId);
+        final URI deleteBucketUri = URI.create(endpoint.getTsdbUrl() + BUCKETS_ENDPOINT + "/" + bucketId);
 
-        final HashMap<String, String> headerMap = HttpHelper.getTokenAuthHeaderMap(token);
+        final HashMap<String, String> headerMap = HttpHelper.getTokenAuthHeaderMap(endpoint.getTsdbToken());
         headerMap.put(HttpHelper.HEADER_KEY_CONTENT_TYPE, HttpHelper.HEADER_KEY_CONTENT_TYPE_VALUE_JSON);
 
         try {
             HttpHelper.executeDelete(httpClient, deleteBucketUri, null, headerMap, 204);
-            log.info("Deleted bucket: " + bucketName + " - " + getConnectionInfo());
+            log.info("Deleted bucket: " + bucketName);
         } catch (HttpException e) {
             throw new TSDBAdapterException(e);
         }
@@ -193,45 +195,16 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         httpClient = null;
 
     }
-    @Override
-    public String getConnectionInfo() {
-
-        final StringBuilder infoBuffer = new StringBuilder();
-
-        if (baseUrl != null) {
-            infoBuffer.append(baseUrl);
-        }
-        if (orgName != null) {
-            infoBuffer
-                    .append(" Organisation: ")
-                    .append(orgName);
-        }
-        if (orgId != null) {
-            infoBuffer.append(" (")
-                    .append(orgId)
-                    .append(")");
-        }
-        if (bucketName != null) {
-            infoBuffer
-                    .append(" Bucket: ")
-                    .append(bucketName);
-        }
-        if (bucketId != null) {
-            infoBuffer.append(" (")
-                    .append(bucketId)
-                    .append(")");
-        }
-
-
-        return infoBuffer.toString();
-    }
 
     ////
-    private void healthCheck() throws TSDBAdapterException {
+    private void healthCheck(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         // HEALTH
         // curl "http://localhost:8086/health"
         try {
+
+            final URI healthUri = URI.create(endpoint.getTsdbUrl() + HEALTH_ENDPOINT);
+
             HttpHelper.executeGet(httpClient, healthUri, null, null, 200);
         } catch (HttpException e) {
             throw new TSDBAdapterException(e);
@@ -252,13 +225,15 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         return createBucketJson.toString();
 
     }
-    private String listBuckets() throws TSDBAdapterException {
+    private String listBuckets(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         // LIST BUCKETS
         // curl "http://localhost:8086/api/v2/buckets" \
         // --header "Authorization: Token ${INFLUX_TOKEN}"
-        final HashMap<String, String> headerMap = HttpHelper.getTokenAuthHeaderMap(token);
-        
+        final HashMap<String, String> headerMap = HttpHelper.getTokenAuthHeaderMap(endpoint.getTsdbToken());
+
+        final URI bucketsUri = URI.create(endpoint.getTsdbUrl() + BUCKETS_ENDPOINT);
+
         try {
             return HttpHelper.executeGet(httpClient, bucketsUri, null, headerMap, 200);
         } catch (HttpException e) {
@@ -266,14 +241,17 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         }
 
     }
-    private String listOrganisations() throws TSDBAdapterException {
+    private String listOrganisations(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         // LIST ORG
         // curl "http://localhost:8086/api/v2/orgs" \
         // --header "Authorization: Token ${INFLUX_TOKEN}"
 
-        final HashMap<String, String> headers = HttpHelper.getTokenAuthHeaderMap(token);
-        
+
+        final HashMap<String, String> headers = HttpHelper.getTokenAuthHeaderMap(endpoint.getTsdbToken());
+
+        final URI orgsUri = URI.create(endpoint.getTsdbUrl() + ORGS_ENDPOINT);
+
         try {
             return HttpHelper.executeGet(httpClient, orgsUri, null, headers, 200);
         } catch (HttpException e) {

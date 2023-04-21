@@ -1,9 +1,7 @@
 package de.cleem.tub.tsdbb.apps.worker.executor;
 
+import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.api.model.Record;
-import de.cleem.tub.tsdbb.api.model.TaskResult;
-import de.cleem.tub.tsdbb.api.model.TimeFrame;
-import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
 import de.cleem.tub.tsdbb.apps.worker.adapters.BaseConnector;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterIF;
 import de.cleem.tub.tsdbb.commons.date.DateHelper;
@@ -12,6 +10,7 @@ import de.cleem.tub.tsdbb.commons.factories.timeFrame.TimeFrameFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.Callable;
@@ -21,15 +20,15 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
 
     private final String taskName;
     private final Record record;
+    private final WorkerTsdbEndpoint endpoint;
 
-    private final String workerUrl;
-    public TaskRequest(final String workerUrl, final TSDBAdapterIF tsdbAdapterIF, final WorkerSetupRequest workerSetupRequest, final String taskName, final Record record) {
+    public TaskRequest(final TSDBAdapterIF tsdbAdapterIF, final WorkerSetupRequest workerSetupRequest, final WorkerTsdbEndpoint endpoint, final String taskName, final Record record) {
 
         this.record = record;
         this.taskName = taskName;
-        this.workerUrl=workerUrl;
         this.workerSetupRequest = workerSetupRequest;
         this.tsdbInterface = tsdbAdapterIF;
+        this.endpoint=endpoint;
 
     }
 
@@ -42,7 +41,7 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
         final TimeFrame timeFrame = TimeFrameFactory.getTimeFrame();
 
 
-        final int sizeInBytes = tsdbInterface.write(record);
+        final int sizeInBytes = tsdbInterface.write(record,endpoint);
 
         timeFrame.setEndTimestamp(OffsetDateTime.now());
 
@@ -52,7 +51,7 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
 
         final TaskResult taskResult = new TaskResult();
         taskResult.setTaskName(taskName);
-        taskResult.setSourceInformation(SourceInformationFactory.getSourceInformation(workerUrl));
+        taskResult.setSourceInformation(SourceInformationFactory.getSourceInformation(workerSetupRequest.getWorkerConfiguration().getWorkerUrl()));
         taskResult.setThreadName(Thread.currentThread().getName());
         taskResult.setTimeFrame(timeFrame);
         taskResult.setRequestSizeInBytes(BigDecimal.valueOf(sizeInBytes));
