@@ -6,17 +6,19 @@ import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.net.URI;
+
 @Component
 @Slf4j
 public class ApiClientService extends BaseSpringComponent {
 
 
-    public <A> A getApi(final Class<A> apiClass, final String basePath) throws ClientApiFacadeException {
+    public <A> A getApi(final Class<A> apiClass, final URI basePath) throws ClientApiFacadeException {
 
        log.info("Providing Client Api for "+apiClass.getSimpleName()+" with basePath "+basePath);
 
        return OpenAPIClientFacade.builder()
-                .basePath(basePath)
+                .basePath(basePath.toString())
                 .build()
                 .getApi(apiClass);
 

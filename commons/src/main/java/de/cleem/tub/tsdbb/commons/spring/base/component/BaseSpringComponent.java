@@ -7,6 +7,8 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
+
 @Slf4j
 public class BaseSpringComponent extends BaseClass implements InitializingBean, DisposableBean {
 
@@ -24,9 +26,9 @@ public class BaseSpringComponent extends BaseClass implements InitializingBean, 
 
     }
 
-    public String getServerUrl(){
+    public URI getServerUrl(){
 
-       return ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+       return ServletUriComponentsBuilder.fromCurrentContextPath().build().toUri();
 
     }
 }

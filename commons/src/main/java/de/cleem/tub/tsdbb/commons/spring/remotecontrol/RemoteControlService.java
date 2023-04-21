@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,8 @@ public class RemoteControlService extends BaseSpringComponent {
 
         WorkerPingApi workerPingApi;
 
-        for(WorkerConfig workerConfig : orchestratorSetupRequest.getWorkerConfigs()){
+
+        for(WorkerConfiguration workerConfig : orchestratorSetupRequest.getWorkerConnectionSettings().getWorkerConfigurations()){
 
             workerPingApi = apiClientService.getApi(WorkerPingApi.class,workerConfig.getWorkerUrl());
 
@@ -75,10 +77,12 @@ public class RemoteControlService extends BaseSpringComponent {
 
         final List<WorkerSetupResponse> workerSetupResponseList = new ArrayList<>();
 
+        URI workerUri;
         for(WorkerSetupRequest workerSetupRequest : workerSetupRequests){
+            workerUri=workerSetupRequest.getWorkerConfiguration().getWorkerUrl();
 
-            workerSetupApi = apiClientService.getApi(WorkerSetupApi.class,workerSetupRequest.getWorkerConfig().getWorkerUrl());
-            log.info("Setup benchmarkWorkload to worker: "+workerSetupRequest.getWorkerConfig().getWorkerUrl());
+            workerSetupApi = apiClientService.getApi(WorkerSetupApi.class,workerUri);
+            log.info("Setup benchmarkWorkload to worker: "+workerUri);
 
             workerSetupResponse = workerSetupApi.setup(workerSetupRequest);
 
@@ -97,10 +101,11 @@ public class RemoteControlService extends BaseSpringComponent {
 
         final List<ResetResponse> workerResetResponses = new ArrayList<>();
 
-        for(WorkerConfig workerConfig : orchestratorSetupRequest.getWorkerConfigs()){
-
-            workerResetApi = apiClientService.getApi(WorkerResetApi.class,workerConfig.getWorkerUrl());
-            log.info("Resetting worker: "+workerConfig.getWorkerUrl());
+        URI workerUrl;
+        for(WorkerConfiguration workerConfig : orchestratorSetupRequest.getWorkerConnectionSettings().getWorkerConfigurations()){
+            workerUrl = workerConfig.getWorkerUrl();
+            workerResetApi = apiClientService.getApi(WorkerResetApi.class,workerUrl);
+            log.info("Resetting worker: "+workerUrl);
 
             workerResetResponse = workerResetApi.reset();
 
@@ -119,10 +124,13 @@ public class RemoteControlService extends BaseSpringComponent {
 
         final List<StartStopResponse> workerStartStopResponses = new ArrayList<>();
 
-        for(WorkerConfig workerConfig : orchestratorSetupRequest.getWorkerConfigs()){
+        URI workerUrl;
+        for(WorkerConfiguration workerConfig : orchestratorSetupRequest.getWorkerConnectionSettings().getWorkerConfigurations()){
 
-            workerStartApi = apiClientService.getApi(WorkerStartApi.class,workerConfig.getWorkerUrl());
-            log.info("Starting worker: "+workerConfig.getWorkerUrl());
+            workerUrl = workerConfig.getWorkerUrl();
+
+            workerStartApi = apiClientService.getApi(WorkerStartApi.class,workerUrl);
+            log.info("Starting worker: "+workerUrl);
 
             startStopResponse = workerStartApi.start();
 
@@ -141,10 +149,12 @@ public class RemoteControlService extends BaseSpringComponent {
 
         final List<StartStopResponse> workerStartStopResponses = new ArrayList<>();
 
-        for(WorkerConfig workerConfig : orchestratorSetupRequest.getWorkerConfigs()){
+        URI workerUrl;
+        for(WorkerConfiguration workerConfig : orchestratorSetupRequest.getWorkerConnectionSettings().getWorkerConfigurations()){
 
-            workerStopApi = apiClientService.getApi(WorkerStopApi.class,workerConfig.getWorkerUrl());
-            log.info("Stopping worker: "+workerConfig.getWorkerUrl());
+            workerUrl=workerConfig.getWorkerUrl();
+            workerStopApi = apiClientService.getApi(WorkerStopApi.class,workerUrl);
+            log.info("Stopping worker: "+workerUrl);
 
             startStopResponse = workerStopApi.stop();
 
@@ -162,7 +172,7 @@ public class RemoteControlService extends BaseSpringComponent {
         benchmarkResultRequest.setSourceInformation(SourceInformationFactory.getSourceInformation(getServerUrl()));
         benchmarkResultRequest.setTaskResults(taskResults);
 
-        final String orchestratorBasePath = workerSetupRequest.getOrchestratorUrl();
+        final URI orchestratorBasePath = workerSetupRequest.getOrchestratorUrl();
 
         final OrchestratorCollectApi orchestratorCollectApi = apiClientService.getApi(OrchestratorCollectApi.class,orchestratorBasePath);
 

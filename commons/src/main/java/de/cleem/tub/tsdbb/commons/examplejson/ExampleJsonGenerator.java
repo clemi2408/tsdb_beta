@@ -22,8 +22,8 @@ public class ExampleJsonGenerator {
     private static final String GENERATED_WORKLOAD_FILE_STRING = "/Users/kuenzelc/DEV/workspaces/priv/tsdb_beta/schema/src/main/resources/api/model/examples/manual/workload_generated.json";
     private static final String PREPARED_WORKLOAD_FILE_STRING = "/Users/kuenzelc/DEV/workspaces/priv/tsdb_beta/schema/src/main/resources/api/model/examples/manual/workload_prepared.json";
 
-    private static final String ORCHESTRATOR_URL = "http://localhost:8081";
-    private static final String GENERATOR_URL = "http://localhost:8080";
+    private static final URI ORCHESTRATOR_URL = URI.create("http://localhost:8081");
+    private static final URI GENERATOR_URL = URI.create("http://localhost:8080");
 
 
     public static <T> void write(final T instance, final int index) throws JsonException, FileException {
@@ -41,25 +41,30 @@ public class ExampleJsonGenerator {
         final Workload generatedWorkload = JsonHelper.objectFromByteArray(FileHelper.read(new File(GENERATED_WORKLOAD_FILE_STRING)),Workload.class);
         final Workload preparedWorkload = JsonHelper.objectFromByteArray(FileHelper.read(new File(PREPARED_WORKLOAD_FILE_STRING)),Workload.class);
 
-
-        final WorkerSetupRequest workerSetupRequestVictoria = getWorkerSetupRequest(createWorkerConfig(createVictoriaConnection()),generatedWorkload);
+        final WorkerGeneralProperties workerGeneralPropertiesVictoria = getVictoriaGeneralProperties();
+        final WorkerConfiguration workerConfigurationVictoria = getVictoriaWorkerConfiguration();
+        final WorkerSetupRequest workerSetupRequestVictoria = getWorkerSetupRequest(workerGeneralPropertiesVictoria, workerConfigurationVictoria,generatedWorkload);
         write(workerSetupRequestVictoria,1);
 
-        final WorkerSetupRequest workerSetupRequestInflux = getWorkerSetupRequest(createWorkerConfig(createInfluxConnection()),generatedWorkload);
+
+        final WorkerGeneralProperties workerGeneralPropertiesInflux = getInfluxGeneralProperties();
+        final WorkerConfiguration workerConfigurationInflux = getInfluxWorkerConfiguration();
+        final WorkerSetupRequest workerSetupRequestInflux = getWorkerSetupRequest(workerGeneralPropertiesInflux,workerConfigurationInflux,generatedWorkload);
         write(workerSetupRequestInflux,2);
 
 
-        write(createWorkerConfig(createInfluxConnection()),1);
+        write(workerGeneralPropertiesVictoria,1);
+        write(workerGeneralPropertiesInflux,2);
 
-        write(createWorkerConfig(createVictoriaConnection()),2);
+
+        write(workerConfigurationVictoria,1);
+        write(workerConfigurationInflux,2);
 
         write(createGenerateRequest(),1);
 
-        write(createInfluxConnection(),1);
-        write(createVictoriaConnection(),2);
 
         final OrchestratorSetupRequest orchestratorSetupRequestGeneratorInflux = getOrchestratorSetupRequest(
-                createWorkerConfig(createInfluxConnection()),
+                createConnection(workerGeneralPropertiesInflux,workerConfigurationInflux),
                 null,
                 createGenerateRequest(),
                 GENERATOR_URL);
@@ -68,7 +73,7 @@ public class ExampleJsonGenerator {
 
 
         final OrchestratorSetupRequest orchestratorSetupRequestGeneratorVictoria = getOrchestratorSetupRequest(
-                createWorkerConfig(createVictoriaConnection()),
+                createConnection(workerGeneralPropertiesVictoria,workerConfigurationVictoria),
                 null,
                 createGenerateRequest(),
                 GENERATOR_URL);
@@ -76,7 +81,7 @@ public class ExampleJsonGenerator {
         write(orchestratorSetupRequestGeneratorVictoria,2);
 
         final OrchestratorSetupRequest orchestratorSetupRequestWorkloadInflux = getOrchestratorSetupRequest(
-                createWorkerConfig(createInfluxConnection()),
+                createConnection(workerGeneralPropertiesInflux,workerConfigurationInflux),
                 preparedWorkload,
                 null,null);
 
@@ -84,7 +89,7 @@ public class ExampleJsonGenerator {
 
 
         final OrchestratorSetupRequest orchestratorSetupRequestWorkloadVictoria = getOrchestratorSetupRequest(
-                createWorkerConfig(createVictoriaConnection()),
+                createConnection(workerGeneralPropertiesVictoria,workerConfigurationVictoria),
                 preparedWorkload,
                 null,null);
 
@@ -202,7 +207,7 @@ public class ExampleJsonGenerator {
 
     private static SourceInformation getSourceInformation(){
         final SourceInformation sourceInformation = new SourceInformation();
-        sourceInformation.setUrl("http://example.org");
+        sourceInformation.setUrl(URI.create("http://example.org"));
         return sourceInformation;
     }
 
@@ -241,10 +246,11 @@ public class ExampleJsonGenerator {
 
     }
 
-    private static OrchestratorSetupRequest getOrchestratorSetupRequest(final WorkerConfig workerConfig, final Workload workload, final GeneratorGenerateRequest generatorGenerateRequest, final String generatorUrl){
+    private static OrchestratorSetupRequest getOrchestratorSetupRequest(final WorkerConnectionSettings workerConnectionSettings, final Workload workload, final GeneratorGenerateRequest generatorGenerateRequest, final URI generatorUrl){
 
         final OrchestratorSetupRequest orchestratorSetupRequest = new OrchestratorSetupRequest();
-        orchestratorSetupRequest.setWorkerConfigs(List.of(workerConfig));
+
+        orchestratorSetupRequest.setWorkerConnectionSettings(workerConnectionSettings);
 
         if(generatorGenerateRequest!=null) {
             orchestratorSetupRequest.setGenerateRequest(generatorGenerateRequest);
@@ -259,17 +265,16 @@ public class ExampleJsonGenerator {
         return orchestratorSetupRequest;
     }
 
-    private static WorkerSetupRequest getWorkerSetupRequest(final WorkerConfig workerConfig, final Workload workload){
+    private static WorkerSetupRequest getWorkerSetupRequest(final WorkerGeneralProperties workerGeneralProperties, final WorkerConfiguration workerConfiguration, final Workload workload){
 
         final WorkerSetupRequest workerSetupRequest = new WorkerSetupRequest();
-        workerSetupRequest.setWorkerConfig(workerConfig);
+        workerSetupRequest.setWorkerConfiguration(workerConfiguration);
+        workerSetupRequest.setWorkerGeneralProperties(workerGeneralProperties);
         workerSetupRequest.setOrchestratorUrl(ORCHESTRATOR_URL);
         workerSetupRequest.setBenchmarkWorkload(workload);
-
         return workerSetupRequest;
 
     }
-
 
     private static GeneratorRecordConfig dynamicKeyWithDynamicStringValue(){
 
@@ -490,44 +495,84 @@ public class ExampleJsonGenerator {
     }
 
 
-    private static WorkerConfig createWorkerConfig(final WorkerTsdbConnection tsdbConnection){
+    public static WorkerGeneralProperties getWorkerGeneralProperties(){
+        final WorkerGeneralProperties workerGeneralProperties = new WorkerGeneralProperties();
+        workerGeneralProperties.setCreateStorage(true);
+        workerGeneralProperties.setCleanupStorage(true);
 
-        final WorkerConfig workerConfig = new WorkerConfig();
-        workerConfig.setWorkerThreads(3);
-        workerConfig.setCleanupStorage(true);
-        workerConfig.setCreateStorage(true);
-        workerConfig.setWorkerUrl("http://localhost:8082");
-        workerConfig.setTsdbConnection(tsdbConnection);
-
-        return workerConfig;
+        return workerGeneralProperties;
 
     }
 
-    private static WorkerTsdbConnection createInfluxConnection(){
+    private static WorkerGeneralProperties getInfluxGeneralProperties(){
 
-        final WorkerTsdbConnection influxConnection = new WorkerTsdbConnection();
-        influxConnection.setTsdbType(WorkerTsdbConnection.TsdbTypeEnum.INFLUX);
-        influxConnection.setToken("YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==");
-        influxConnection.setUrl(URI.create("http://127.0.0.1:8086"));
-        influxConnection.setConnectionProperties(new HashMap<>());
-        influxConnection.getConnectionProperties().put("bucketName","testbucket");
-        influxConnection.getConnectionProperties().put("organisationName","testorg");
+        final WorkerGeneralProperties workerGeneralProperties = getWorkerGeneralProperties();
 
+        workerGeneralProperties.setTsdbType(WorkerGeneralProperties.TsdbTypeEnum.INFLUX);
+        workerGeneralProperties.setCustomProperties(new HashMap<>());
+        workerGeneralProperties.getCustomProperties().put("bucketName","testbucket");
+        workerGeneralProperties.getCustomProperties().put("organisationName","testorg");
 
-        return influxConnection;
-
+        return workerGeneralProperties;
 
     }
 
-    private static WorkerTsdbConnection createVictoriaConnection(){
+    private static WorkerConnectionSettings createConnection(final WorkerGeneralProperties workerGeneralProperties, final WorkerConfiguration workerConfiguration){
 
-        final WorkerTsdbConnection influxConnection = new WorkerTsdbConnection();
-        influxConnection.setTsdbType(WorkerTsdbConnection.TsdbTypeEnum.VICTORIA);
-        influxConnection.setUrl(URI.create("http://127.0.0.1:8428"));
-        return influxConnection;
+        final WorkerConnectionSettings workerConnectionSettings = new WorkerConnectionSettings();
+        workerConnectionSettings.setWorkerGeneralProperties(workerGeneralProperties);
+        workerConnectionSettings.setWorkerConfigurations(List.of(workerConfiguration));
+
+        return workerConnectionSettings;
 
 
     }
 
+    private static WorkerGeneralProperties getVictoriaGeneralProperties(){
+
+        final WorkerGeneralProperties workerGeneralProperties = getWorkerGeneralProperties();
+
+        workerGeneralProperties.setTsdbType(WorkerGeneralProperties.TsdbTypeEnum.VICTORIA);
+
+        return workerGeneralProperties;
+
+    }
+
+
+    private static WorkerConfiguration getInfluxWorkerConfiguration(){
+        final WorkerTsdbEndpoint workerTsdbEndpoint = new WorkerTsdbEndpoint();
+        workerTsdbEndpoint.setEndpointName("influx-zoneA");
+        workerTsdbEndpoint.setEndpointPercentage(100);
+        workerTsdbEndpoint.setTsdbToken("YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==");
+        workerTsdbEndpoint.setTsdbUrl(URI.create("http://127.0.0.1:8086"));
+
+        final WorkerConfiguration workerConfiguration = new WorkerConfiguration();
+        workerConfiguration.setWorkerName("influx-worker-1");
+        workerConfiguration.setWorkerUrl(URI.create("http://localhost:8082"));
+        workerConfiguration.setWorkerThreads(3);
+        workerConfiguration.setWorkerPercentage(100);
+        workerConfiguration.setTsdbEndpoints(List.of(workerTsdbEndpoint));
+
+        return workerConfiguration;
+    }
+
+    private static WorkerConfiguration getVictoriaWorkerConfiguration(){
+
+        final WorkerTsdbEndpoint workerTsdbEndpoint = new WorkerTsdbEndpoint();
+        workerTsdbEndpoint.setEndpointName("victora-zoneA");
+        workerTsdbEndpoint.setEndpointPercentage(100);
+        workerTsdbEndpoint.setTsdbUrl(URI.create("http://127.0.0.1:8428"));
+
+        final WorkerConfiguration workerConfiguration = new WorkerConfiguration();
+        workerConfiguration.setWorkerName("victoria-worker-1");
+        workerConfiguration.setWorkerUrl(URI.create("http://localhost:8082"));
+        workerConfiguration.setWorkerThreads(3);
+        workerConfiguration.setWorkerPercentage(100);
+        workerConfiguration.setTsdbEndpoints(List.of(workerTsdbEndpoint));
+
+        return workerConfiguration;
+
+
+    }
 
 }
