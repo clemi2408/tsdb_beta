@@ -1,18 +1,18 @@
 package de.cleem.tub.tsdbb.apps.worker.executor;
 
 
+import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.api.model.Record;
-import de.cleem.tub.tsdbb.api.model.TaskResult;
-import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
-import de.cleem.tub.tsdbb.api.model.WorkerTsdbEndpoint;
 import de.cleem.tub.tsdbb.apps.worker.adapters.BaseConnector;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import de.cleem.tub.tsdbb.commons.api.ClientApiFacadeException;
+import de.cleem.tub.tsdbb.commons.recordsplit.RecordListSplitter;
 import de.cleem.tub.tsdbb.commons.spring.remotecontrol.RemoteControlService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -128,18 +128,21 @@ public class Executor extends BaseConnector {
 
         final List<TaskRequest> threads = new ArrayList<>();
 
+        final List<WorkerTsdbEndpoint> endpoints = workerSetupRequest.getWorkerConfiguration().getTsdbEndpoints();
+        final List<Record> records = workerSetupRequest.getBenchmarkWorkload().getRecords();
+        final LinkedHashMap<Integer[], WorkerTsdbEndpoint> lookupIntervals = RecordListSplitter.createLookupIntervals(endpoints,WorkerTsdbEndpoint::getEndpointPercentage);
+        final Integer upperBoundEndpoints = RecordListSplitter.getUpperBound(lookupIntervals, WorkerTsdbEndpoint::getEndpointPercentage);
+
         int recordCount = 0;
         WorkerTsdbEndpoint endpoint;
-        for (Record record : workerSetupRequest.getBenchmarkWorkload().getRecords()) {
+        for (Record record : records) {
             recordCount++;
 
             if (recordCount % 10 == 0) {
-                log.debug("Created Task: " + recordCount + "/" + workerSetupRequest.getBenchmarkWorkload().getRecords().size());
+                log.debug("Created Task: " + recordCount + "/" + records.size());
             }
 
-            /// SELECT ENDPOINT:
-            endpoint=workerSetupRequest.getWorkerConfiguration().getTsdbEndpoints().get(0);
-
+            endpoint=RecordListSplitter.doRangeLookup(lookupIntervals,upperBoundEndpoints,WorkerTsdbEndpoint::getEndpointPercentage);
 
             threads.add(new TaskRequest(tsdbInterface, workerSetupRequest,endpoint,"Task: " + recordCount, record));
 

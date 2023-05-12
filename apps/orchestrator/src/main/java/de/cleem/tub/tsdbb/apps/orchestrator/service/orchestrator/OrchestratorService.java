@@ -78,7 +78,6 @@ public class OrchestratorService extends BaseSpringComponent {
 
         orchestratorSetupResponse.setBenchmarkWorkload(benchmarkWorkload);
 
-        // TODO: split generated Workload after certain distribution to send
         final List<WorkerSetupRequest> workerSetupRequests = workloadPreparationService.prepareWorkerSetupRequests(orchestratorSetupRequest,benchmarkWorkload);
         final List<WorkerSetupResponse> workerSetupResponses = remoteControlService.setupWorkers(workerSetupRequests);
 

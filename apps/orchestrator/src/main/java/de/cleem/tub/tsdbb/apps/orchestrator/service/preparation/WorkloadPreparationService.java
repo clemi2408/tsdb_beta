@@ -2,8 +2,8 @@ package de.cleem.tub.tsdbb.apps.orchestrator.service.preparation;
 
 import de.cleem.tub.tsdbb.api.model.Record;
 import de.cleem.tub.tsdbb.api.model.*;
-import de.cleem.tub.tsdbb.commons.list.ListHelper;
 import de.cleem.tub.tsdbb.commons.random.numbers.uniform.UniformGenerator;
+import de.cleem.tub.tsdbb.commons.recordsplit.RecordListSplitter;
 import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -17,17 +17,18 @@ public class WorkloadPreparationService extends BaseSpringComponent {
 
     public List<WorkerSetupRequest> prepareWorkerSetupRequests(final OrchestratorSetupRequest orchestratorSetupRequest, final Workload benchmarkWorkload) {
 
-        final int workerCount = orchestratorSetupRequest.getWorkerConfigs().size();
+        final List<WorkerConfiguration> workerConfigurations = orchestratorSetupRequest.getWorkerConnectionSettings().getWorkerConfigurations();
 
-        final List<List<Record>> partitionedWorkload = ListHelper.splitListIntoParts(benchmarkWorkload.getRecords(),workerCount);
+        final List<List<Record>> partitionedWorkload = RecordListSplitter.splitWorkload(benchmarkWorkload.getRecords(),workerConfigurations, WorkerConfiguration::getWorkerPercentage);
 
         final List<WorkerSetupRequest> workerSetupRequests = new ArrayList<>();
 
         WorkerSetupRequest workerSetupRequest;
-        for(int i = 0; i < orchestratorSetupRequest.getWorkerConfigs().size(); i++){
+        for(int i = 0; i < workerConfigurations.size(); i++){
 
             workerSetupRequest = new WorkerSetupRequest();
-            workerSetupRequest.setWorkerConfig(orchestratorSetupRequest.getWorkerConfigs().get(i));
+            workerSetupRequest.setWorkerConfiguration(workerConfigurations.get(i));
+            workerSetupRequest.setWorkerGeneralProperties(orchestratorSetupRequest.getWorkerConnectionSettings().getWorkerGeneralProperties());
             workerSetupRequest.setOrchestratorUrl(getServerUrl());
             workerSetupRequest.setBenchmarkWorkload(new Workload().records(partitionedWorkload.get(i)));
             workerSetupRequests.add(workerSetupRequest);

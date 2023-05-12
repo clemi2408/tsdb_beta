@@ -31,6 +31,7 @@ public class RunService extends BaseSpringComponent {
 
     public void setup(final WorkerSetupRequest workerSetupRequest) throws TSDBAdapterException, ExecutionException {
         executor.setup(workerSetupRequest);
+
     }
 
     public void start() throws ExecutionException {

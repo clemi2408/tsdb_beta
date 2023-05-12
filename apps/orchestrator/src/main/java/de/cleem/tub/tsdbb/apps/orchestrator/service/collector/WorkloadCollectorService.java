@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.ApplicationScope;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,11 +20,12 @@ import java.util.concurrent.ConcurrentHashMap;
 @ApplicationScope
 public class WorkloadCollectorService extends BaseSpringComponent {
 
-    private final Map<String,List<TaskResult>> resultMap = new ConcurrentHashMap<>();
+    private final Map<URI,List<TaskResult>> resultMap = new ConcurrentHashMap<>();
 
     public BenchmarkResultResponse collect(final BenchmarkResultRequest benchmarkResultRequest) throws WorkloadCollectorException {
 
-        final String workerUrl = benchmarkResultRequest.getSourceInformation().getUrl();
+
+        final URI workerUrl = benchmarkResultRequest.getSourceInformation().getUrl();
 
         if(resultMap.containsKey(workerUrl)){
             throw new WorkloadCollectorException("Worker "+workerUrl+" already collected");
@@ -41,7 +43,7 @@ public class WorkloadCollectorService extends BaseSpringComponent {
 
     public OrchestratorResultResponse results(final OrchestratorSetupRequest orchestratorSetupRequest) {
 
-        final int totalResultParts = orchestratorSetupRequest.getWorkerConfigs().size();
+        final int totalResultParts = orchestratorSetupRequest.getWorkerConnectionSettings().getWorkerConfigurations().size();
         final int completedParts = resultMap.size();
 
         final StatusEnum status = totalResultParts==completedParts?StatusEnum.COMPLETE:StatusEnum.INCOMPLETE;
@@ -60,7 +62,7 @@ public class WorkloadCollectorService extends BaseSpringComponent {
 
         final List<TaskResult> aggregatedResult = new ArrayList<>();
 
-        for(Map.Entry<String, List<TaskResult>> entry : resultMap.entrySet()){
+        for(Map.Entry<URI, List<TaskResult>> entry : resultMap.entrySet()){
 
             aggregatedResult.addAll(entry.getValue());
 

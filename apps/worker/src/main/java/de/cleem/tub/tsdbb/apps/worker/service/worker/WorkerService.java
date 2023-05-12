@@ -40,7 +40,6 @@ public class WorkerService extends BaseSpringComponent {
 
     public WorkerSetupResponse setup(final WorkerSetupRequest workerSetupRequest) throws ClientApiFacadeException, PingResponderException, TSDBAdapterException, ExecutionException {
 
-
         log.info("Setup Worker");
 
         log.info("Received Workload: "+workerSetupRequest.getBenchmarkWorkload().getRecords().size());
