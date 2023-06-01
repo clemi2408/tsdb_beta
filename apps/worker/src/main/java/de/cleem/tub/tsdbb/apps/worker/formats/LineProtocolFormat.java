@@ -18,7 +18,7 @@ public class LineProtocolFormat {
     private String labelKey;
     private String labelValue;
 
-    public String getLine(final Record record, final Instant time) throws TSDBAdapterException {
+    public String getLine(final Record record) throws TSDBAdapterException {
 
         if (record == null) {
             throw new TSDBAdapterException("Can not write to Storage - record is NULL");
@@ -53,10 +53,17 @@ public class LineProtocolFormat {
 
         }
 
-        if (time != null) {
-            lineStringBuilder.append(" ");
-            lineStringBuilder.append(time.toEpochMilli());
+        lineStringBuilder.append(" ");
+
+        Instant instant;
+        if (record.getTimestamp() != null) {
+            instant = record.getTimestamp().toInstant();
         }
+        else{
+            instant = Instant.now();
+        }
+
+        lineStringBuilder.append(instant.toEpochMilli());
 
         final String line = lineStringBuilder.toString();
 

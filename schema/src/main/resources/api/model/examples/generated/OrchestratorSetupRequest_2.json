@@ -96,23 +96,32 @@
       "valueDistribution" : "GAUSS",
       "valueType" : "double"
     } ],
-    "recordCount" : 10
+    "recordCount" : 10,
+    "insertTimestampConfig" : {
+      "startOffset" : 1685613854.149632000,
+      "insertFrequency" : "PT1M"
+    }
   },
   "generatorUrl" : "http://localhost:8080",
   "workerConnectionSettings" : {
     "workerGeneralProperties" : {
-      "tsdbType" : "VICTORIA",
+      "tsdbType" : "INFLUX",
       "createStorage" : true,
-      "cleanupStorage" : true
+      "cleanupStorage" : true,
+      "customProperties" : {
+        "bucketName" : "testbucket",
+        "organisationName" : "testorg"
+      }
     },
     "workerConfigurations" : [ {
-      "workerName" : "victoria-worker-1",
+      "workerName" : "influx-worker-1",
       "workerUrl" : "http://localhost:8082",
       "workerThreads" : 3,
       "workerPercentage" : 100,
       "tsdbEndpoints" : [ {
-        "endpointName" : "victora-zoneA",
-        "tsdbUrl" : "http://127.0.0.1:8428",
+        "endpointName" : "influx-zoneA",
+        "tsdbUrl" : "http://127.0.0.1:8086",
+        "tsdbToken" : "YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==",
         "endpointPercentage" : 100
       } ]
     } ]

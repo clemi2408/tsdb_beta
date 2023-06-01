@@ -19,6 +19,7 @@ import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -90,7 +91,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     @Override
     public int write(final Record record, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
-        final String metricLine = lineProtocolFormat.getLine(record, Instant.now());
+        final String metricLine = lineProtocolFormat.getLine(record);
 
         // WRITE
         // curl -X POST \

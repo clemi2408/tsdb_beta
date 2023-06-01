@@ -9,6 +9,7 @@ import de.cleem.tub.tsdbb.apps.generator.generators.key.KeyGeneratorException;
 import de.cleem.tub.tsdbb.apps.generator.generators.value.ValueGeneratorException;
 import de.cleem.tub.tsdbb.apps.generator.generators.workload.WorkloadGeneratorException;
 import de.cleem.tub.tsdbb.apps.generator.service.GeneratorService;
+import de.cleem.tub.tsdbb.commons.duration.DurationException;
 import de.cleem.tub.tsdbb.commons.random.strings.StringGeneratorException;
 import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class GeneratorController extends BaseSpringComponent implements Generato
     private GeneratorService generatorService;
 
     @Override
-    public ResponseEntity<GeneratorGenerateResponse> generate(final GeneratorGenerateRequest generatorGenerateRequest) throws ValueGeneratorException, StringGeneratorException, WorkloadGeneratorException, KeyGeneratorException {
+    public ResponseEntity<GeneratorGenerateResponse> generate(final GeneratorGenerateRequest generatorGenerateRequest) throws ValueGeneratorException, StringGeneratorException, WorkloadGeneratorException, KeyGeneratorException, DurationException {
 
         return ResponseEntity.ok(generatorService.generate(generatorGenerateRequest));
 
