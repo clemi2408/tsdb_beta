@@ -13,16 +13,14 @@
     },
     "generatorUrl" : {
       "type" : "string",
-      "nullable" : true
+      "nullable" : true,
+      "format": "uri",
+      "pattern": "^https?://"
     },
-    "workerConfigs" : {
-      "type" : "array",
-      "nullable" : false,
-      "items" : {
-        "$ref": "../worker/workerConfig.json"
-      },
-      "minItems": 1
+    "workerConnectionSettings" : {
+      "$ref": "../worker/workerConnectionSettings.json",
+      "nullable" : false
     }
   },
-  "required": [ "workerConfigs" ]
+  "required": [ "workerConnectionSettings" ]
 }

@@ -1,0 +1,11 @@
+{
+  "workerName" : "victoria-worker-1",
+  "workerUrl" : "http://localhost:8082",
+  "workerThreads" : 3,
+  "workerPercentage" : 100,
+  "tsdbEndpoints" : [ {
+    "endpointName" : "victora-zoneA",
+    "tsdbUrl" : "http://127.0.0.1:8428",
+    "endpointPercentage" : 100
+  } ]
+}

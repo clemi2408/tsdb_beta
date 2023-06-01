@@ -482,19 +482,27 @@
       "recordId" : "697333ee-fb00-42ff-b0ca-32402e678719"
     } ]
   },
-  "workerConfigs" : [ {
-    "workerUrl" : "http://localhost:8082",
-    "workerThreads" : 3,
-    "tsdbConnection" : {
+  "workerConnectionSettings" : {
+    "workerGeneralProperties" : {
       "tsdbType" : "INFLUX",
-      "url" : "http://127.0.0.1:8086",
-      "token" : "s-kr1M8PTAYyylFNE8KJ2bG2foRf0c2_c9ECxOT1VbMeLK15bBT9xsUCglGKqcVSEZBPqrtKdVR5IpcA1L-aTA==",
-      "connectionProperties" : {
+      "createStorage" : true,
+      "cleanupStorage" : true,
+      "customProperties" : {
         "bucketName" : "testbucket",
         "organisationName" : "testorg"
       }
     },
-    "createStorage" : true,
-    "cleanupStorage" : true
-  } ]
+    "workerConfigurations" : [ {
+      "workerName" : "influx-worker-1",
+      "workerUrl" : "http://localhost:8082",
+      "workerThreads" : 3,
+      "workerPercentage" : 100,
+      "tsdbEndpoints" : [ {
+        "endpointName" : "influx-zoneA",
+        "tsdbUrl" : "http://127.0.0.1:8086",
+        "tsdbToken" : "YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==",
+        "endpointPercentage" : 100
+      } ]
+    } ]
+  }
 }

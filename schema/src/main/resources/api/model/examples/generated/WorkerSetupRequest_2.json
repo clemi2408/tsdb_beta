@@ -1,19 +1,25 @@
 {
   "orchestratorUrl" : "http://localhost:8081",
-  "workerConfig" : {
+  "workerGeneralProperties" : {
+    "tsdbType" : "INFLUX",
+    "createStorage" : true,
+    "cleanupStorage" : true,
+    "customProperties" : {
+      "bucketName" : "testbucket",
+      "organisationName" : "testorg"
+    }
+  },
+  "workerConfiguration" : {
+    "workerName" : "influx-worker-1",
     "workerUrl" : "http://localhost:8082",
     "workerThreads" : 3,
-    "tsdbConnection" : {
-      "tsdbType" : "INFLUX",
-      "url" : "http://127.0.0.1:8086",
-      "token" : "YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==",
-      "connectionProperties" : {
-        "bucketName" : "testbucket",
-        "organisationName" : "testorg"
-      }
-    },
-    "createStorage" : true,
-    "cleanupStorage" : true
+    "workerPercentage" : 100,
+    "tsdbEndpoints" : [ {
+      "endpointName" : "influx-zoneA",
+      "tsdbUrl" : "http://127.0.0.1:8086",
+      "tsdbToken" : "YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==",
+      "endpointPercentage" : 100
+    } ]
   },
   "benchmarkWorkload" : {
     "records" : [ {

@@ -4,6 +4,7 @@ import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.api.orchestrator.server.*;
 import de.cleem.tub.tsdbb.apps.orchestrator.service.collector.WorkloadCollectorException;
 import de.cleem.tub.tsdbb.apps.orchestrator.service.orchestrator.OrchestratorService;
+import de.cleem.tub.tsdbb.apps.orchestrator.service.orchestrator.ResultException;
 import de.cleem.tub.tsdbb.commons.api.ClientApiFacadeException;
 import de.cleem.tub.tsdbb.commons.exceptions.SetupException;
 import de.cleem.tub.tsdbb.commons.exceptions.StartStopException;
@@ -21,7 +22,7 @@ public class OrchestratorController extends BaseSpringComponent implements Orche
     private OrchestratorService orchestratorService;
 
     @Override
-    public ResponseEntity<OrchestratorSetupResponse> setup(final OrchestratorSetupRequest orchestratorSetupRequest) throws ClientApiFacadeException, PingResponderException, SetupException {
+    public ResponseEntity<OrchestratorSetupResponse> setup(final OrchestratorSetupRequest orchestratorSetupRequest) throws ClientApiFacadeException, PingResponderException, SetupException, StartStopException {
 
         return ResponseEntity.ok(orchestratorService.setup(orchestratorSetupRequest));
 
@@ -57,7 +58,7 @@ public class OrchestratorController extends BaseSpringComponent implements Orche
     }
 
     @Override
-    public ResponseEntity<OrchestratorResultResponse> results() {
+    public ResponseEntity<OrchestratorResultResponse> results() throws ResultException {
         return ResponseEntity.ok(orchestratorService.results());
     }
 }

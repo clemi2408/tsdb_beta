@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.net.URI;
+
 
 @Component
 @Slf4j
@@ -30,7 +32,7 @@ public class PingResponderService extends BaseSpringComponent {
 
     }
 
-    public void checkPingResponse(final PingResponse pingResponse, final String type, final String url) throws PingResponderException {
+    public void checkPingResponse(final PingResponse pingResponse, final String type, final URI url) throws PingResponderException {
 
         if(!pingResponse.getStatus().equals(StatusEnum.OK)){
 

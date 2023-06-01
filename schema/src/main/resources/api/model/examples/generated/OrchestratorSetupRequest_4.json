@@ -482,15 +482,22 @@
       "recordId" : "697333ee-fb00-42ff-b0ca-32402e678719"
     } ]
   },
-  "workerConfigs" : [ {
-    "workerUrl" : "http://localhost:8082",
-    "workerThreads" : 3,
-    "tsdbConnection" : {
+  "workerConnectionSettings" : {
+    "workerGeneralProperties" : {
       "tsdbType" : "VICTORIA",
-      "url" : "http://127.0.0.1:8428",
-      "connectionProperties" : { }
+      "createStorage" : true,
+      "cleanupStorage" : true
     },
-    "createStorage" : true,
-    "cleanupStorage" : true
-  } ]
+    "workerConfigurations" : [ {
+      "workerName" : "victoria-worker-1",
+      "workerUrl" : "http://localhost:8082",
+      "workerThreads" : 3,
+      "workerPercentage" : 100,
+      "tsdbEndpoints" : [ {
+        "endpointName" : "victora-zoneA",
+        "tsdbUrl" : "http://127.0.0.1:8428",
+        "endpointPercentage" : 100
+      } ]
+    } ]
+  }
 }

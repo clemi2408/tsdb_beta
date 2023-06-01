@@ -3,7 +3,7 @@ package de.cleem.tub.tsdbb.apps.worker.service.run;
 import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import de.cleem.tub.tsdbb.apps.worker.executor.ExecutionException;
-import de.cleem.tub.tsdbb.apps.worker.executor.Executor;
+import de.cleem.tub.tsdbb.apps.worker.executor.TaskExecutor;
 import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
 import de.cleem.tub.tsdbb.commons.spring.remotecontrol.RemoteControlService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import org.springframework.web.context.annotation.ApplicationScope;
 @ApplicationScope
 public class RunService extends BaseSpringComponent {
 
-    private Executor executor;
+    private TaskExecutor executor;
 
     @Autowired
     private RemoteControlService remoteControlService;
@@ -25,12 +25,13 @@ public class RunService extends BaseSpringComponent {
     public void afterPropertiesSet() throws Exception {
 
        super.afterPropertiesSet();
-        executor=new Executor(remoteControlService,getServerUrl());
+        executor=new TaskExecutor(remoteControlService,getServerUrl());
 
     }
 
     public void setup(final WorkerSetupRequest workerSetupRequest) throws TSDBAdapterException, ExecutionException {
         executor.setup(workerSetupRequest);
+
     }
 
     public void start() throws ExecutionException {

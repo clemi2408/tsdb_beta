@@ -2,7 +2,9 @@ package de.cleem.tub.tsdbb.apps.worker.adapters.victoriametrics;
 
 
 import de.cleem.tub.tsdbb.api.model.Record;
-import de.cleem.tub.tsdbb.api.model.WorkerTsdbConnection;
+import de.cleem.tub.tsdbb.api.model.WorkerGeneralProperties;
+import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
+import de.cleem.tub.tsdbb.api.model.WorkerTsdbEndpoint;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterIF;
 import de.cleem.tub.tsdbb.apps.worker.formats.LineProtocolFormat;
@@ -30,28 +32,21 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     private static final String DELETE_ENDPOINT = "/api/v1/admin/tsdb/delete_series?match[]=%s";
     private static final int PRE_CLEANUP_SLEEP_IN_MS = 2000;
     private HttpClient httpClient;
-    private URI baseUrl;
-    private URI labelUri;
-    private URI writeUri;
     private LineProtocolFormat lineProtocolFormat;
-    private WorkerTsdbConnection.TsdbTypeEnum tsdbType;
+    private WorkerGeneralProperties.TsdbTypeEnum tsdbType;
 
     @Override
-    public void setup(final WorkerTsdbConnection workerTsdbConnection) throws TSDBAdapterException {
+    public void setup(final WorkerSetupRequest workerSetupRequest) throws TSDBAdapterException {
 
-        if (!(workerTsdbConnection.getTsdbType().equals(WorkerTsdbConnection.TsdbTypeEnum.VICTORIA))) {
+        tsdbType = workerSetupRequest.getWorkerGeneralProperties().getTsdbType();
 
-            throw new TSDBAdapterException("Setup error - workerTsdbConnection is of type "+ WorkerTsdbConnection.TsdbTypeEnum.VICTORIA+" - " + getConnectionInfo());
+        if (!(tsdbType.equals(WorkerGeneralProperties.TsdbTypeEnum.VICTORIA))) {
+
+            throw new TSDBAdapterException("Setup error - workerTsdbConnection is of type "+ WorkerGeneralProperties.TsdbTypeEnum.VICTORIA);
 
         }
 
         httpClient = HttpClient.newHttpClient();
-
-        tsdbType = workerTsdbConnection.getTsdbType();
-
-        baseUrl = workerTsdbConnection.getUrl();
-        labelUri = URI.create(baseUrl + LABEL_ENDPOINT);
-        writeUri = URI.create(baseUrl + WRITE_ENDPOINT);
 
         lineProtocolFormat = LineProtocolFormat.builder()
                 .measurementName(tsdbType.getValue()+MEASUREMENT_SUFFIX_STRING)
@@ -61,7 +56,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
     }
     @Override
-    public void createStorage() {
+    public void createStorage(final WorkerTsdbEndpoint endpoint) {
 
         // NOT IMPLEMENTED
 
@@ -73,7 +68,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
     }
     @Override
-    public void cleanup() throws TSDBAdapterException {
+    public void cleanup(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         try {
             // :(
@@ -83,17 +78,17 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
             throw new RuntimeException(e);
         }
 
-        final String[] seriesArray = getSeriesByLabelKV();
+        final String[] seriesArray = getSeriesByLabelKV(endpoint);
 
         for (String series : seriesArray) {
 
-            deleteSeries(series);
+            deleteSeries(series, endpoint);
 
         }
 
     }
     @Override
-    public int write(final Record record) throws TSDBAdapterException {
+    public int write(final Record record, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         final String metricLine = lineProtocolFormat.getLine(record, Instant.now());
 
@@ -104,9 +99,11 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         try {
 
+            final URI writeUri = URI.create(endpoint.getTsdbUrl() + WRITE_ENDPOINT);
+
             HttpHelper.executePost(httpClient, writeUri, metricLine, new HashMap<>(), 204);
 
-            log.debug("Wrote Line: " + metricLine + " to: " + getConnectionInfo());
+            log.debug("Wrote Line: " + metricLine + " to: " + writeUri);
 
             return metricLine.length();
 
@@ -117,20 +114,9 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
 
     }
-    @Override
-    public String getConnectionInfo() {
-
-        final StringBuilder stringBuilder = new StringBuilder();
-
-        if (baseUrl != null) {
-            stringBuilder.append(baseUrl);
-        }
-
-        return stringBuilder.toString();
-    }
 
     ////
-    private String[] getSeriesByLabelKV() throws TSDBAdapterException {
+    private String[] getSeriesByLabelKV(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         final String requestBody = "match[]={__name__=~\".+\", " + RUN_LABEL_KEY + "=\"" + tsdbType.getValue() + "\"}";
 
@@ -140,6 +126,8 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         final HashMap<String, String> headers = new HashMap<>();
         headers.put(HttpHelper.HEADER_KEY_CONTENT_TYPE, HttpHelper.HEADER_KEY_CONTENT_TYPE_VALUE_FORM_URLENCODED);
+
+        final URI labelUri = URI.create(endpoint.getTsdbUrl() + LABEL_ENDPOINT);
 
         final String response;
 
@@ -166,16 +154,16 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
 
     }
-    private void deleteSeries(final String seriesName) throws TSDBAdapterException {
+    private void deleteSeries(final String seriesName, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
-        final URI deleteUri = URI.create(baseUrl + String.format(DELETE_ENDPOINT, seriesName));
+        final URI deleteUri = URI.create(endpoint.getTsdbUrl() + String.format(DELETE_ENDPOINT, seriesName));
 
         // curl 'http://localhost:8428/api/v1/admin/tsdb/delete_series?match[]=victoria_measurement_PEp'
 
         try {
 
             HttpHelper.executeGet(httpClient, deleteUri, null, null, 204);
-            log.info("Deleted series: " + seriesName + " - " + getConnectionInfo());
+            log.info("Deleted series: " + seriesName);
 
         } catch (HttpException e) {
             throw new TSDBAdapterException(e);

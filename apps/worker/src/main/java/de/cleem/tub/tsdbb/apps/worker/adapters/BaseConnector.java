@@ -1,8 +1,7 @@
 package de.cleem.tub.tsdbb.apps.worker.adapters;
 
+import de.cleem.tub.tsdbb.api.model.WorkerGeneralProperties;
 import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
-import de.cleem.tub.tsdbb.api.model.WorkerSetupResponse;
-import de.cleem.tub.tsdbb.api.model.WorkerTsdbConnection;
 import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.InfluxDbAdapter;
 import de.cleem.tub.tsdbb.apps.worker.adapters.victoriametrics.VictoriaMetricsAdapter;
 import de.cleem.tub.tsdbb.apps.worker.executor.ExecutionException;
@@ -19,23 +18,20 @@ public class BaseConnector {
 
     protected void setStorageAdapter() throws ExecutionException, TSDBAdapterException {
 
-        final WorkerTsdbConnection workerTsdbConnection = workerSetupRequest.getWorkerConfig().getTsdbConnection();
-
-        final WorkerTsdbConnection.TsdbTypeEnum tsdbType = workerTsdbConnection.getTsdbType();
-
+        final WorkerGeneralProperties.TsdbTypeEnum tsdbType = workerSetupRequest.getWorkerGeneralProperties().getTsdbType();
 
         log.info("Setting up "+tsdbType.getValue()+" TSDB Connection");
 
-        if (tsdbType.equals(WorkerTsdbConnection.TsdbTypeEnum.INFLUX)) {
+        if (tsdbType.equals(WorkerGeneralProperties.TsdbTypeEnum.INFLUX)) {
 
 
             tsdbInterface = new InfluxDbAdapter();
-            tsdbInterface.setup(workerTsdbConnection);
+            tsdbInterface.setup(workerSetupRequest);
 
-        } else if (tsdbType.equals(WorkerTsdbConnection.TsdbTypeEnum.VICTORIA)) {
+        } else if (tsdbType.equals(WorkerGeneralProperties.TsdbTypeEnum.VICTORIA)) {
 
             tsdbInterface = new VictoriaMetricsAdapter();
-            tsdbInterface.setup(workerTsdbConnection);
+            tsdbInterface.setup(workerSetupRequest);
 
         } else {
             throw new ExecutionException("Invalid WorkerTsdbConnection: " + tsdbType);

@@ -1,0 +1,21 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+
+    "workerGeneralProperties": {
+      "$ref": "workerGeneralProperties.json",
+      "nullable" : false
+    },
+
+    "workerConfigurations" : {
+      "type" : "array",
+      "nullable" : false,
+      "items" : {
+        "$ref": "workerConfiguration.json"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [ "workerGeneralProperties","workerConfigurations" ]
+}

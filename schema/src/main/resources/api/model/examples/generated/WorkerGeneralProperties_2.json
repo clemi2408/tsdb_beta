@@ -1,0 +1,9 @@
+{
+  "tsdbType" : "INFLUX",
+  "createStorage" : true,
+  "cleanupStorage" : true,
+  "customProperties" : {
+    "bucketName" : "testbucket",
+    "organisationName" : "testorg"
+  }
+}
