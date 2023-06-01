@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 @Slf4j
-public class Executor extends BaseConnector {
+public class TaskExecutor extends BaseConnector {
 
     private final URI workerUrl;
     private ExecutorService executor;
@@ -31,7 +31,7 @@ public class Executor extends BaseConnector {
     final RemoteControlService remoteControlService;
     private WorkerTsdbEndpoint firstEndpoint;
 
-    public Executor(final RemoteControlService remoteControlService, final URI workerUrl) {
+    public TaskExecutor(final RemoteControlService remoteControlService, final URI workerUrl) {
         this.remoteControlService = remoteControlService;
         this.workerUrl = workerUrl;
         log.info("Constructing: " + this.getClass().getSimpleName());
@@ -57,24 +57,28 @@ public class Executor extends BaseConnector {
 
     public void start() throws ExecutionException {
 
+
+        if (workerSetupRequest == null) {
+            throw new ExecutionException("Call Setup before Start");
+        }
+
+        if (executor.isShutdown()) {
+            initThreadRuntime();
+        }
+
+        log.info("Invoking " + threads.size() + " TaskRequests");
+
         try {
 
-            log.info("Invoking " + threads.size() + " TaskRequests");
-
-            if(this.workerSetupRequest ==null){
-                throw new ExecutionException("Call Setup before Start");
-            }
-
-            if(executor.isShutdown()){
-                initThreadRuntime();
-            }
-
             futureTaskResults = executor.invokeAll(threads);
-
             remoteControlService.collect(collectResults(), workerSetupRequest);
 
-        } catch (InterruptedException | ClientApiFacadeException e) {
-            throw new ExecutionException(e);
+        } catch (InterruptedException | ClientApiFacadeException | ExecutionException e) {
+            try {
+                throw new ExecutionException(e);
+            } catch (ExecutionException ex) {
+                throw new RuntimeException(ex);
+            }
         }
 
     }
@@ -83,12 +87,20 @@ public class Executor extends BaseConnector {
 
         log.info("Shutting down ThreadPool");
 
-        executor.shutdown();
+        if(executor!=null) {
+
+            executor.shutdown();
+
+        }
 
 
     }
 
     public void cleanup() throws TSDBAdapterException {
+
+        if(workerSetupRequest==null){
+            throw new TSDBAdapterException("Run setup first");
+        }
 
         if (workerSetupRequest.getWorkerGeneralProperties().getCleanupStorage()) {
             log.info("Cleaning up storage");

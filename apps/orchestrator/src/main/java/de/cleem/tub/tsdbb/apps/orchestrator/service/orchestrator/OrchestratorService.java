@@ -43,14 +43,17 @@ public class OrchestratorService extends BaseSpringComponent {
     private OrchestratorSetupRequest orchestratorSetupRequest;
     private OrchestratorSetupResponse orchestratorSetupResponse;
 
-    public OrchestratorSetupResponse setup(final OrchestratorSetupRequest orchestratorSetupRequest) throws ClientApiFacadeException, PingResponderException, SetupException {
+    public OrchestratorSetupResponse setup(final OrchestratorSetupRequest orchestratorSetupRequest) throws ClientApiFacadeException, PingResponderException, SetupException, StartStopException {
+
+        log.info("Setup Orchestrator");
 
         if(orchestratorSetupRequest.getGenerateRequest()!=null && orchestratorSetupRequest.getWorkload()!=null){
             throw new SetupException("Provide either GenerateRequest or Workload");
         }
 
-
-        log.info("Setup Orchestrator");
+        if(workloadCollectorService.hasResults()){
+            throw new SetupException("Call reset before setup to clean available results");
+        }
 
         final OrchestratorSetupResponse orchestratorSetupResponse = new OrchestratorSetupResponse();
         orchestratorSetupResponse.setTimeFrame(TimeFrameFactory.getTimeFrame());
@@ -127,7 +130,7 @@ public class OrchestratorService extends BaseSpringComponent {
         }
 
         if(workloadCollectorService.hasResults()){
-            throw new StartStopException("Call reset to clean available results");
+            throw new StartStopException("Call reset before start to clean available results");
         }
 
         log.info("Starting Orchestrator");
@@ -173,7 +176,11 @@ public class OrchestratorService extends BaseSpringComponent {
 
     }
 
-    public OrchestratorResultResponse results() {
+    public OrchestratorResultResponse results() throws ResultException {
+
+        if(orchestratorSetupRequest ==null){
+            throw new ResultException("Call setup before results");
+        }
 
         return workloadCollectorService.results(orchestratorSetupRequest);
 
