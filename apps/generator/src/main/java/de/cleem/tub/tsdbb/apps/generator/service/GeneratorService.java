@@ -8,6 +8,7 @@ import de.cleem.tub.tsdbb.apps.generator.generators.key.KeyGeneratorException;
 import de.cleem.tub.tsdbb.apps.generator.generators.value.ValueGeneratorException;
 import de.cleem.tub.tsdbb.apps.generator.generators.workload.WorkloadGenerator;
 import de.cleem.tub.tsdbb.apps.generator.generators.workload.WorkloadGeneratorException;
+import de.cleem.tub.tsdbb.commons.duration.DurationException;
 import de.cleem.tub.tsdbb.commons.factories.sourceInformation.SourceInformationFactory;
 import de.cleem.tub.tsdbb.commons.factories.timeFrame.TimeFrameFactory;
 import de.cleem.tub.tsdbb.commons.random.strings.StringGeneratorException;
@@ -25,7 +26,7 @@ public class GeneratorService extends BaseSpringComponent {
     @Autowired
     private PingResponderService pingResponderService;
 
-    public GeneratorGenerateResponse generate(final GeneratorGenerateRequest generateRequest) throws ValueGeneratorException, StringGeneratorException, WorkloadGeneratorException, KeyGeneratorException {
+    public GeneratorGenerateResponse generate(final GeneratorGenerateRequest generateRequest) throws ValueGeneratorException, StringGeneratorException, WorkloadGeneratorException, KeyGeneratorException, DurationException {
 
         final GeneratorGenerateResponse generatorGenerateResponse = new GeneratorGenerateResponse();
         generatorGenerateResponse.setTimeFrame(TimeFrameFactory.getTimeFrame());

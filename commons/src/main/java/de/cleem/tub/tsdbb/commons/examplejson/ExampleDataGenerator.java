@@ -2,9 +2,12 @@ package de.cleem.tub.tsdbb.commons.examplejson;
 
 import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.api.model.Record;
+import de.cleem.tub.tsdbb.commons.duration.DurationException;
+import de.cleem.tub.tsdbb.commons.duration.DurationHelper;
 
 import java.math.BigDecimal;
 import java.net.URI;
+import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -356,10 +359,11 @@ public class ExampleDataGenerator {
         return generatorRecordConfig;
     }
 
-    public static GeneratorGenerateRequest createGenerateRequest(){
+    public static GeneratorGenerateRequest createGenerateRequest(final int recordCount, final InsertTimestampConfig insertTimestampConfig){
 
         final GeneratorGenerateRequest request = new GeneratorGenerateRequest();
-        request.setRecordCount(10);
+        request.setRecordCount(recordCount);
+        request.setInsertTimestampConfig(insertTimestampConfig);
 
         final List<GeneratorRecordConfig> generatorRecordConfigList = new ArrayList<>();
 
@@ -462,6 +466,17 @@ public class ExampleDataGenerator {
 
         return workerConfiguration;
 
+
+    }
+
+    public static InsertTimestampConfig getInsertTimestampConfig(final String durationString) throws DurationException {
+
+        final InsertTimestampConfig insertTimestampConfig = new InsertTimestampConfig();
+
+        insertTimestampConfig.setStartOffset(OffsetDateTime.now());
+        insertTimestampConfig.setInsertFrequency(durationString);
+
+        return insertTimestampConfig;
 
     }
 }

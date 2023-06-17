@@ -1,6 +1,7 @@
 package de.cleem.tub.tsdbb.commons.examplejson;
 
 import de.cleem.tub.tsdbb.api.model.*;
+import de.cleem.tub.tsdbb.commons.duration.DurationException;
 import de.cleem.tub.tsdbb.commons.file.FileException;
 import de.cleem.tub.tsdbb.commons.file.FileHelper;
 import de.cleem.tub.tsdbb.commons.json.JsonException;
@@ -11,9 +12,10 @@ import java.net.URI;
 
 public class ExampleJsonGenerator {
 
-    private static final String TARGET_FOLDER_STRING = "/Users/kuenzelc/DEV/workspaces/priv/tsdb_beta/schema/src/main/resources/api/model/examples/generated";
-    private static final String GENERATED_WORKLOAD_FILE_STRING = "/Users/kuenzelc/DEV/workspaces/priv/tsdb_beta/schema/src/main/resources/api/model/examples/manual/workload_generated.json";
-    private static final String PREPARED_WORKLOAD_FILE_STRING = "/Users/kuenzelc/DEV/workspaces/priv/tsdb_beta/schema/src/main/resources/api/model/examples/manual/workload_prepared.json";
+    private static final String BASE_FOLDER = "/Users/clemens/IdeaProjects/tsdb_beta/schema/src/main/resources/api/model/examples/";
+    private static final String TARGET_FOLDER_STRING = BASE_FOLDER+"/generated";
+    private static final String GENERATED_WORKLOAD_FILE_STRING = BASE_FOLDER+"/manual/workload_generated.json";
+    private static final String PREPARED_WORKLOAD_FILE_STRING = BASE_FOLDER+"/manual/workload_prepared.json";
 
     private static final URI ORCHESTRATOR_URL = URI.create("http://localhost:8081");
     private static final URI GENERATOR_URL = URI.create("http://localhost:8080");
@@ -29,7 +31,7 @@ public class ExampleJsonGenerator {
 
     }
 
-    public static void main(String[] args) throws FileException, JsonException {
+    public static void main(String[] args) throws FileException, JsonException, DurationException {
 
         final Workload generatedWorkload = JsonHelper.objectFromByteArray(FileHelper.read(new File(GENERATED_WORKLOAD_FILE_STRING)),Workload.class);
         final Workload preparedWorkload = JsonHelper.objectFromByteArray(FileHelper.read(new File(PREPARED_WORKLOAD_FILE_STRING)),Workload.class);
@@ -53,32 +55,48 @@ public class ExampleJsonGenerator {
         write(workerConfigurationVictoria,1);
         write(workerConfigurationInflux,2);
 
-        write(ExampleDataGenerator.createGenerateRequest(),1);
+        write(ExampleDataGenerator.createGenerateRequest(10,null),1);
+
+
+        final InsertTimestampConfig insertTimestampConfig = ExampleDataGenerator.getInsertTimestampConfig("PT1M");
+
+        write(ExampleDataGenerator.createGenerateRequest(10,insertTimestampConfig),2);
 
 
         final OrchestratorSetupRequest orchestratorSetupRequestGeneratorInflux = ExampleDataGenerator.getOrchestratorSetupRequest(
                 ExampleDataGenerator.createConnection(workerGeneralPropertiesInflux,workerConfigurationInflux),
                 null,
-                ExampleDataGenerator.createGenerateRequest(),
+                ExampleDataGenerator.createGenerateRequest(10,null),
                 GENERATOR_URL);
 
         write(orchestratorSetupRequestGeneratorInflux,1);
+
+        final OrchestratorSetupRequest orchestratorSetupRequestGeneratorInflux2 = ExampleDataGenerator.getOrchestratorSetupRequest(
+                ExampleDataGenerator.createConnection(workerGeneralPropertiesInflux,workerConfigurationInflux),
+                null,
+                ExampleDataGenerator.createGenerateRequest(10,insertTimestampConfig),
+                GENERATOR_URL);
+
+        write(orchestratorSetupRequestGeneratorInflux2,2);
+
 
 
         final OrchestratorSetupRequest orchestratorSetupRequestGeneratorVictoria = ExampleDataGenerator.getOrchestratorSetupRequest(
                 ExampleDataGenerator.createConnection(workerGeneralPropertiesVictoria,workerConfigurationVictoria),
                 null,
-                ExampleDataGenerator.createGenerateRequest(),
+                ExampleDataGenerator.createGenerateRequest(10, insertTimestampConfig),
                 GENERATOR_URL);
 
-        write(orchestratorSetupRequestGeneratorVictoria,2);
+        write(orchestratorSetupRequestGeneratorVictoria,3);
 
         final OrchestratorSetupRequest orchestratorSetupRequestWorkloadInflux = ExampleDataGenerator.getOrchestratorSetupRequest(
                 ExampleDataGenerator.createConnection(workerGeneralPropertiesInflux,workerConfigurationInflux),
                 preparedWorkload,
                 null,null);
 
-        write(orchestratorSetupRequestWorkloadInflux,3);
+
+
+        write(orchestratorSetupRequestWorkloadInflux,4);
 
 
         final OrchestratorSetupRequest orchestratorSetupRequestWorkloadVictoria = ExampleDataGenerator.getOrchestratorSetupRequest(
@@ -86,8 +104,7 @@ public class ExampleJsonGenerator {
                 preparedWorkload,
                 null,null);
 
-
-        write(orchestratorSetupRequestWorkloadVictoria,4);
+        write(orchestratorSetupRequestWorkloadVictoria,5);
 
         write(ExampleDataGenerator.getPingResponse(),1);
 

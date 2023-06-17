@@ -39,17 +39,10 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
     private HttpClient httpClient;
     private LineProtocolFormat lineProtocolFormat;
 
-/*    private URI baseUrl;
-    private URI orgsUri;
-    private URI bucketsUri;
-    private URI healthUri;
-      private String token;*/
-
     private String orgName;
     private String orgId;
     private String bucketName;
     private String bucketId;
-
 
     private WorkerGeneralProperties.TsdbTypeEnum tsdbType;
 
@@ -132,8 +125,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not write to Storage - bucketId is NULL");
         }
 
-        final String metricLine = lineProtocolFormat.getLine(record,  Instant.now());
-
+        final String metricLine = lineProtocolFormat.getLine(record);
 
         // WRITE
         // curl -v --request POST \

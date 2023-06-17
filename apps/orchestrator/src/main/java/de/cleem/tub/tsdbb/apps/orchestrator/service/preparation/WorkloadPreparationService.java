@@ -51,7 +51,9 @@ public class WorkloadPreparationService extends BaseSpringComponent {
 
         for (Record inputRecord : generatorWorkload.getRecords()) {
 
-            benchmarkRecord = new Record().recordId(inputRecord.getRecordId())
+            benchmarkRecord = new Record()
+                    .recordId(inputRecord.getRecordId())
+                    .timestamp(inputRecord.getTimestamp())
                     .kvPairs(new ArrayList<>());
 
 
