@@ -21,7 +21,12 @@
     "benchmarkWorkload" : {
       "$ref": "../workload/workload.json",
       "nullable" : false
+    },
+    "workerLoadCount" : {
+      "type" : "integer",
+      "minimum": 0,
+      "nullable" : false
     }
   },
-  "required": [ "orchestratorUrl","workerGeneralProperties","workerConfiguration","benchmarkWorkload" ]
+  "required": [ "workerLoadCount","orchestratorUrl","workerGeneralProperties","workerConfiguration","benchmarkWorkload" ]
 }

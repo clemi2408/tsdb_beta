@@ -17,7 +17,14 @@ public class WorkloadPreparationService extends BaseSpringComponent {
 
     public List<WorkerSetupRequest> prepareWorkerSetupRequests(final OrchestratorSetupRequest orchestratorSetupRequest, final Workload benchmarkWorkload) {
 
+
+
         final List<WorkerConfiguration> workerConfigurations = orchestratorSetupRequest.getWorkerConnectionSettings().getWorkerConfigurations();
+
+        final int totalPreloadCount = orchestratorSetupRequest.getGenerateRequest().getQueryConfig().getInsertQueryConfig().getPreloadCount();
+        final int workerCount = workerConfigurations.size();
+
+        final int preloadCountPerWorker = totalPreloadCount/workerCount;
 
         final List<List<Record>> partitionedWorkload = RecordListSplitter.splitWorkload(benchmarkWorkload.getRecords(),workerConfigurations, WorkerConfiguration::getWorkerPercentage);
 
@@ -32,6 +39,7 @@ public class WorkloadPreparationService extends BaseSpringComponent {
             workerSetupRequest.setOrchestratorUrl(getServerUrl());
             workerSetupRequest.setBenchmarkWorkload(new Workload().records(partitionedWorkload.get(i)));
             workerSetupRequests.add(workerSetupRequest);
+            workerSetupRequest.setWorkerLoadCount(preloadCountPerWorker);
 
         }
 

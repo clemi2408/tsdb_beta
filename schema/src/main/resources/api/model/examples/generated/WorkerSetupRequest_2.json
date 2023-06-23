@@ -503,5 +503,6 @@
       } ],
       "recordId" : "697333ee-fb00-42ff-b0ca-32402e678719"
     } ]
-  }
+  },
+  "workerLoadCount" : null
 }

@@ -1,0 +1,6 @@
+{
+  "minSelectInterval" : "P1H",
+  "maxSelectInterval" : "P8H",
+  "selectCount" : 10,
+  "aggregateType" : "MAX"
+}

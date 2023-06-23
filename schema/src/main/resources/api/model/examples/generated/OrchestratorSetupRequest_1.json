@@ -98,12 +98,38 @@
     } ],
     "queryConfig" : {
       "insertQueryConfig" : {
-        "recordCount" : 10,
-        "startOffsetDateTime" : 1687522392.720179000,
-        "insertFrequency" : "PT1M"
+        "insertCount" : 10,
+        "preloadCount" : 5,
+        "startOffsetDateTime" : 1687525966.225152000,
+        "insertInterval" : "PT1M"
       },
       "selectQueryConfig" : {
-        "test" : 1
+        "selectQueries" : [ {
+          "minSelectInterval" : "P1H",
+          "maxSelectInterval" : "P8H",
+          "selectCount" : 10,
+          "aggregateType" : "NONE"
+        }, {
+          "minSelectInterval" : "P1H",
+          "maxSelectInterval" : "P8H",
+          "selectCount" : 10,
+          "aggregateType" : "MIN"
+        }, {
+          "minSelectInterval" : "P1H",
+          "maxSelectInterval" : "P8H",
+          "selectCount" : 10,
+          "aggregateType" : "MAX"
+        }, {
+          "minSelectInterval" : "P1H",
+          "maxSelectInterval" : "P8H",
+          "selectCount" : 10,
+          "aggregateType" : "AVG"
+        }, {
+          "minSelectInterval" : "P1H",
+          "maxSelectInterval" : "P8H",
+          "selectCount" : 10,
+          "aggregateType" : "SUM"
+        } ]
       }
     }
   },

@@ -1,0 +1,26 @@
+[ {
+  "minSelectInterval" : "P1H",
+  "maxSelectInterval" : "P8H",
+  "selectCount" : 10,
+  "aggregateType" : "NONE"
+}, {
+  "minSelectInterval" : "P1H",
+  "maxSelectInterval" : "P8H",
+  "selectCount" : 10,
+  "aggregateType" : "MIN"
+}, {
+  "minSelectInterval" : "P1H",
+  "maxSelectInterval" : "P8H",
+  "selectCount" : 10,
+  "aggregateType" : "MAX"
+}, {
+  "minSelectInterval" : "P1H",
+  "maxSelectInterval" : "P8H",
+  "selectCount" : 10,
+  "aggregateType" : "AVG"
+}, {
+  "minSelectInterval" : "P1H",
+  "maxSelectInterval" : "P8H",
+  "selectCount" : 10,
+  "aggregateType" : "SUM"
+} ]

@@ -10,6 +10,7 @@ import de.cleem.tub.tsdbb.commons.json.JsonHelper;
 import java.io.File;
 import java.net.URI;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class ExampleJsonGenerator {
 
@@ -57,11 +58,31 @@ public class ExampleJsonGenerator {
         write(workerConfigurationVictoria,1);
         write(workerConfigurationInflux,2);
 
+        final GeneratorSelectQuery rangeSelect = ExampleDataGenerator.getRangeSelectQuery(10, "P1H", "P8H");
+        write(rangeSelect,1);
 
-        final GeneratorInsertQueryConfig insertQueryConfig = ExampleDataGenerator.getInsertQueryConfig(10,"PT1M");
+        final GeneratorSelectQuery minAggrSelect = ExampleDataGenerator.getAggregateQueryMin(10, "P1H", "P8H");
+        write(minAggrSelect,2);
+
+        final GeneratorSelectQuery maxAggrSelect = ExampleDataGenerator.getAggregateQueryMax(10, "P1H", "P8H");
+        write(maxAggrSelect,3);
+
+        final GeneratorSelectQuery avgAggrSelect = ExampleDataGenerator.getAggregateQueryAvg(10, "P1H", "P8H");
+        write(avgAggrSelect,4);
+
+        final GeneratorSelectQuery sumAggrSelect = ExampleDataGenerator.getAggregateQuerySum(10, "P1H", "P8H");
+        write(sumAggrSelect,5);
+
+        final List<GeneratorSelectQuery> selectQueries =List.of(
+                rangeSelect,minAggrSelect,maxAggrSelect,avgAggrSelect,sumAggrSelect
+        );
+
+        write(selectQueries,1);
+
+        final GeneratorInsertQueryConfig insertQueryConfig = ExampleDataGenerator.getInsertQueryConfig(10, 5,"PT1M");
         write(insertQueryConfig,1);
 
-        final GeneratorSelectQueryConfig selectQueryConfig = ExampleDataGenerator.getSelectQueryConfig();
+        final GeneratorSelectQueryConfig selectQueryConfig = ExampleDataGenerator.getSelectQueryConfig(selectQueries);
         write(selectQueryConfig,1);
 
 

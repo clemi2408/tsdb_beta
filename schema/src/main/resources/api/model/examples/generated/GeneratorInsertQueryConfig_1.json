@@ -1,5 +1,6 @@
 {
-  "recordCount" : 10,
-  "startOffsetDateTime" : 1687522392.720179000,
-  "insertFrequency" : "PT1M"
+  "insertCount" : 10,
+  "preloadCount" : 5,
+  "startOffsetDateTime" : 1687525966.225152000,
+  "insertInterval" : "PT1M"
 }

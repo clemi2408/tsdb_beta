@@ -2,11 +2,14 @@
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
   "properties" : {
-    "test" : {
-      "type": "integer",
-      "minimum": 1,
-      "nullable": false
+    "selectQueries" : {
+      "type" : "array",
+      "nullable" : false,
+      "items" : {
+        "$ref": "generatorSelectQuery.json"
+      },
+      "minItems": 1
     }
   },
-  "required": [ "test" ]
+  "required": [ "selectQueries" ]
 }

@@ -466,13 +466,14 @@ public class ExampleDataGenerator {
 
     }
 
-    public static GeneratorInsertQueryConfig getInsertQueryConfig(final int recordCount, final String durationString) throws DurationException {
+    public static GeneratorInsertQueryConfig getInsertQueryConfig(final int insertCount,final int preloadCount, final String durationString) throws DurationException {
 
         final GeneratorInsertQueryConfig insertQueryConfig = new GeneratorInsertQueryConfig();
-        insertQueryConfig.setRecordCount(recordCount);
+        insertQueryConfig.setInsertCount(insertCount);
+        insertQueryConfig.setPreloadCount(preloadCount);
 
         insertQueryConfig.setStartOffsetDateTime(OffsetDateTime.now());
-        insertQueryConfig.setInsertFrequency(durationString);
+        insertQueryConfig.setInsertInterval(durationString);
 
         return insertQueryConfig;
 
@@ -486,11 +487,55 @@ public class ExampleDataGenerator {
         return generatorQueryConfig;
     }
 
-    public static GeneratorSelectQueryConfig getSelectQueryConfig() {
+    public static GeneratorSelectQueryConfig getSelectQueryConfig(List<GeneratorSelectQuery> selectQueries) {
 
         GeneratorSelectQueryConfig selectQueryConfig = new GeneratorSelectQueryConfig();
-        selectQueryConfig.setTest(1);
+        selectQueryConfig.setSelectQueries(selectQueries);
         return selectQueryConfig;
+
+    }
+
+    public static GeneratorSelectQuery getGeneratorSelectQuery(int selectCount, String minInterval, String maxInterval, GeneratorSelectQuery.AggregateTypeEnum type){
+        final GeneratorSelectQuery generatorSelectQuery = new GeneratorSelectQuery();
+        generatorSelectQuery.setSelectCount(selectCount);
+        generatorSelectQuery.setMaxSelectInterval(maxInterval);
+        generatorSelectQuery.setMinSelectInterval(minInterval);
+        generatorSelectQuery.setAggregateType(type);
+        return generatorSelectQuery;
+    }
+
+    public static GeneratorSelectQuery getRangeSelectQuery(int selectCount, String minInterval, String maxInterval) {
+
+        return getGeneratorSelectQuery(selectCount,minInterval,maxInterval, GeneratorSelectQuery.AggregateTypeEnum.NONE);
+
+
+    }
+
+    public static GeneratorSelectQuery getAggregateQueryMin(int selectCount, String minInterval, String maxInterval) {
+
+        return getGeneratorSelectQuery(selectCount,minInterval,maxInterval, GeneratorSelectQuery.AggregateTypeEnum.MIN);
+
+
+    }
+
+    public static GeneratorSelectQuery getAggregateQueryMax(int selectCount, String minInterval, String maxInterval) {
+
+        return getGeneratorSelectQuery(selectCount,minInterval,maxInterval, GeneratorSelectQuery.AggregateTypeEnum.MAX);
+
+
+    }
+
+    public static GeneratorSelectQuery getAggregateQueryAvg(int selectCount, String minInterval, String maxInterval) {
+
+        return getGeneratorSelectQuery(selectCount,minInterval,maxInterval, GeneratorSelectQuery.AggregateTypeEnum.AVG);
+
+
+    }
+
+    public static GeneratorSelectQuery getAggregateQuerySum(int selectCount, String minInterval, String maxInterval) {
+
+        return getGeneratorSelectQuery(selectCount,minInterval,maxInterval, GeneratorSelectQuery.AggregateTypeEnum.SUM);
+
 
     }
 }
