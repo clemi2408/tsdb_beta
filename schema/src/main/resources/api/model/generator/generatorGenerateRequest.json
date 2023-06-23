@@ -10,15 +10,10 @@
       },
       "minItems": 1
     },
-    "recordCount" : {
-      "type" : "integer",
-      "minimum": 1,
+    "queryConfig" : {
+      "$ref": "generatorQueryConfig.json",
       "nullable" : false
-    },
-    "insertTimestampConfig" : {
-      "$ref": "insertTimestampConfig.json",
-      "nullable" : true
     }
   },
-  "required": [ "recordCount","recordConfigs" ]
+  "required": ["recordConfigs","queryConfig" ]
 }

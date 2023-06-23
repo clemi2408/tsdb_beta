@@ -9,10 +9,12 @@ import de.cleem.tub.tsdbb.commons.json.JsonHelper;
 
 import java.io.File;
 import java.net.URI;
+import java.nio.file.Paths;
 
 public class ExampleJsonGenerator {
 
-    private static final String BASE_FOLDER = "/Users/clemens/IdeaProjects/tsdb_beta/schema/src/main/resources/api/model/examples/";
+    public static final File BASE_FOLDER = Paths.get("schema","src","main","resources","api", "model", "examples").toFile();
+
     private static final String TARGET_FOLDER_STRING = BASE_FOLDER+"/generated";
     private static final String GENERATED_WORKLOAD_FILE_STRING = BASE_FOLDER+"/manual/workload_generated.json";
     private static final String PREPARED_WORKLOAD_FILE_STRING = BASE_FOLDER+"/manual/workload_prepared.json";
@@ -55,18 +57,24 @@ public class ExampleJsonGenerator {
         write(workerConfigurationVictoria,1);
         write(workerConfigurationInflux,2);
 
-        write(ExampleDataGenerator.createGenerateRequest(10,null),1);
+
+        final GeneratorInsertQueryConfig insertQueryConfig = ExampleDataGenerator.getInsertQueryConfig(10,"PT1M");
+        write(insertQueryConfig,1);
+
+        final GeneratorSelectQueryConfig selectQueryConfig = ExampleDataGenerator.getSelectQueryConfig();
+        write(selectQueryConfig,1);
 
 
-        final InsertTimestampConfig insertTimestampConfig = ExampleDataGenerator.getInsertTimestampConfig("PT1M");
+        final GeneratorQueryConfig queryConfig = ExampleDataGenerator.getQueryConfig(insertQueryConfig,selectQueryConfig);
+        write(queryConfig,1);
 
-        write(ExampleDataGenerator.createGenerateRequest(10,insertTimestampConfig),2);
+        write(ExampleDataGenerator.createGenerateRequest(queryConfig),1);
 
 
         final OrchestratorSetupRequest orchestratorSetupRequestGeneratorInflux = ExampleDataGenerator.getOrchestratorSetupRequest(
                 ExampleDataGenerator.createConnection(workerGeneralPropertiesInflux,workerConfigurationInflux),
                 null,
-                ExampleDataGenerator.createGenerateRequest(10,null),
+                ExampleDataGenerator.createGenerateRequest(queryConfig),
                 GENERATOR_URL);
 
         write(orchestratorSetupRequestGeneratorInflux,1);
@@ -74,7 +82,7 @@ public class ExampleJsonGenerator {
         final OrchestratorSetupRequest orchestratorSetupRequestGeneratorInflux2 = ExampleDataGenerator.getOrchestratorSetupRequest(
                 ExampleDataGenerator.createConnection(workerGeneralPropertiesInflux,workerConfigurationInflux),
                 null,
-                ExampleDataGenerator.createGenerateRequest(10,insertTimestampConfig),
+                ExampleDataGenerator.createGenerateRequest(queryConfig),
                 GENERATOR_URL);
 
         write(orchestratorSetupRequestGeneratorInflux2,2);
@@ -84,7 +92,7 @@ public class ExampleJsonGenerator {
         final OrchestratorSetupRequest orchestratorSetupRequestGeneratorVictoria = ExampleDataGenerator.getOrchestratorSetupRequest(
                 ExampleDataGenerator.createConnection(workerGeneralPropertiesVictoria,workerConfigurationVictoria),
                 null,
-                ExampleDataGenerator.createGenerateRequest(10, insertTimestampConfig),
+                ExampleDataGenerator.createGenerateRequest(queryConfig),
                 GENERATOR_URL);
 
         write(orchestratorSetupRequestGeneratorVictoria,3);

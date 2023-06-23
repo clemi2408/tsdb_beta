@@ -56,7 +56,7 @@ public class WorkloadGenerator extends BaseClass {
 
 
         if(index%100==0) {
-            log.debug("Generating Record " + index + " of " + generateRequest.getRecordCount());
+            log.debug("Generating Record " + index + " of " + generateRequest.getQueryConfig().getInsertQueryConfig().getRecordCount());
         }
 
         if(generateRequest.getRecordConfigs()==null){
@@ -84,13 +84,30 @@ public class WorkloadGenerator extends BaseClass {
 
     public Workload generate() throws ValueGeneratorException, StringGeneratorException, KeyGeneratorException, WorkloadGeneratorException, DurationException {
 
-        log.info("Generating Workload with " + generateRequest.getRecordCount() + " Records");
 
-        if(generateRequest.getRecordCount()==null){
-            throw new WorkloadGeneratorException("RecordCount is NULL");
+        final GeneratorQueryConfig queryConfig = generateRequest.getQueryConfig();
+
+        if(queryConfig==null){
+            throw new WorkloadGeneratorException("queryConfig is NULL");
         }
 
-        if(generateRequest.getRecordCount()<=0){
+        final GeneratorInsertQueryConfig insertQueryConfig = queryConfig.getInsertQueryConfig();
+
+        if(insertQueryConfig==null){
+            throw new WorkloadGeneratorException("insertQueryConfig is NULL");
+        }
+
+        final Integer recordCount =  insertQueryConfig.getRecordCount();
+
+        if(recordCount==null){
+            throw new WorkloadGeneratorException("recordCount is NULL");
+
+        }
+
+        log.info("Generating Workload with " + recordCount + " Records");
+
+
+        if(recordCount<=0){
             throw new WorkloadGeneratorException("RecordCount is <=0");
         }
 
@@ -99,18 +116,18 @@ public class WorkloadGenerator extends BaseClass {
 
         OffsetDateTime timestamp = null;
         Duration duration = null;
-        if(generateRequest.getInsertTimestampConfig()!=null){
 
-            final InsertTimestampConfig insertTimestampConfig = generateRequest.getInsertTimestampConfig();
 
-            timestamp = insertTimestampConfig.getStartOffset();
-            duration = DurationHelper.parseDuration(insertTimestampConfig.getInsertFrequency());
+        if(insertQueryConfig.getInsertFrequency()!=null && insertQueryConfig.getStartOffsetDateTime()!=null){
+
+            timestamp = insertQueryConfig.getStartOffsetDateTime();
+            duration = DurationHelper.parseDuration(insertQueryConfig.getInsertFrequency());
 
             log.info("Generating Insert Timestamps starting from: "+timestamp+ " with frequency "+duration);
 
         }
 
-        for (int i = 1; i <= generateRequest.getRecordCount(); i++) {
+        for (int i = 1; i <= insertQueryConfig.getRecordCount(); i++) {
 
             data.add(generateRecord(i,timestamp));
 

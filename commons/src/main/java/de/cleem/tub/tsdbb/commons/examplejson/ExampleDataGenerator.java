@@ -3,11 +3,9 @@ package de.cleem.tub.tsdbb.commons.examplejson;
 import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.api.model.Record;
 import de.cleem.tub.tsdbb.commons.duration.DurationException;
-import de.cleem.tub.tsdbb.commons.duration.DurationHelper;
 
 import java.math.BigDecimal;
 import java.net.URI;
-import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -359,11 +357,10 @@ public class ExampleDataGenerator {
         return generatorRecordConfig;
     }
 
-    public static GeneratorGenerateRequest createGenerateRequest(final int recordCount, final InsertTimestampConfig insertTimestampConfig){
+    public static GeneratorGenerateRequest createGenerateRequest(final GeneratorQueryConfig queryConfig){
 
         final GeneratorGenerateRequest request = new GeneratorGenerateRequest();
-        request.setRecordCount(recordCount);
-        request.setInsertTimestampConfig(insertTimestampConfig);
+        request.setQueryConfig(queryConfig);
 
         final List<GeneratorRecordConfig> generatorRecordConfigList = new ArrayList<>();
 
@@ -469,14 +466,31 @@ public class ExampleDataGenerator {
 
     }
 
-    public static InsertTimestampConfig getInsertTimestampConfig(final String durationString) throws DurationException {
+    public static GeneratorInsertQueryConfig getInsertQueryConfig(final int recordCount, final String durationString) throws DurationException {
 
-        final InsertTimestampConfig insertTimestampConfig = new InsertTimestampConfig();
+        final GeneratorInsertQueryConfig insertQueryConfig = new GeneratorInsertQueryConfig();
+        insertQueryConfig.setRecordCount(recordCount);
 
-        insertTimestampConfig.setStartOffset(OffsetDateTime.now());
-        insertTimestampConfig.setInsertFrequency(durationString);
+        insertQueryConfig.setStartOffsetDateTime(OffsetDateTime.now());
+        insertQueryConfig.setInsertFrequency(durationString);
 
-        return insertTimestampConfig;
+        return insertQueryConfig;
+
+    }
+
+    public static GeneratorQueryConfig getQueryConfig(final GeneratorInsertQueryConfig insertQueryConfig, final GeneratorSelectQueryConfig selectQueryConfig) {
+
+        GeneratorQueryConfig generatorQueryConfig = new GeneratorQueryConfig();
+        generatorQueryConfig.setInsertQueryConfig(insertQueryConfig);
+        generatorQueryConfig.setSelectQueryConfig(selectQueryConfig);
+        return generatorQueryConfig;
+    }
+
+    public static GeneratorSelectQueryConfig getSelectQueryConfig() {
+
+        GeneratorSelectQueryConfig selectQueryConfig = new GeneratorSelectQueryConfig();
+        selectQueryConfig.setTest(1);
+        return selectQueryConfig;
 
     }
 }

@@ -12,11 +12,11 @@ Install InfluxDB via brew:
 brew install influxdb
 ```
 
-Binaries are installed to: `/usr/local/Cellar/influxdb/2.6.1/bin`
+Binaries are installed to: `/usr/local/Cellar/influxdb/2.7.1/bin`
 To run execute:
 
 ```
-cd /usr/local/Cellar/influxdb/2.6.1/bin
+cd /usr/local/Cellar/influxdb/2.7.1/bin
 ./influxd
 ```
 
@@ -30,14 +30,14 @@ Install InfluxDB-CLI
 brew install influxdb-cli
 ```
 
-Binaries are installed to: `/usr/local/Cellar/influxdb-cli/2.6.1/bin`
+Binaries are installed to: `/usr/local/Cellar/influxdb-cli/2.7.3/bin`
 
 ## Initial database setup
 
 To configure InfluxDB Daemon change to cli bin folder and execute:
 
 ```
-cd /usr/local/Cellar/influxdb-cli/2.6.1/bin
+cd /usr/local/Cellar/influxdb-cli/2.7.3/bin
 influx setup
 ```
 

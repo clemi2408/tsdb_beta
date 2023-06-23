@@ -95,5 +95,14 @@
     "valueDistribution" : "GAUSS",
     "valueType" : "double"
   } ],
-  "recordCount" : 10
+  "queryConfig" : {
+    "insertQueryConfig" : {
+      "recordCount" : 10,
+      "startOffsetDateTime" : 1687522392.720179000,
+      "insertFrequency" : "PT1M"
+    },
+    "selectQueryConfig" : {
+      "test" : 1
+    }
+  }
 }

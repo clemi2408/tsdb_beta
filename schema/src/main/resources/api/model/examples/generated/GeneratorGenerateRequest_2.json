@@ -1,5 +1,6 @@
 {
-  "recordConfigs" : [ {
+  "recordConfigs" : [
+    {
     "maxKeyLength" : 1,
     "maxStringValueLength" : 3,
     "minKeyLength" : 1,

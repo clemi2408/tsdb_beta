@@ -96,10 +96,15 @@
       "valueDistribution" : "GAUSS",
       "valueType" : "double"
     } ],
-    "recordCount" : 10,
-    "insertTimestampConfig" : {
-      "startOffset" : 1685613854.149632000,
-      "insertFrequency" : "PT1M"
+    "queryConfig" : {
+      "insertQueryConfig" : {
+        "recordCount" : 10,
+        "startOffsetDateTime" : 1687522392.720179000,
+        "insertFrequency" : "PT1M"
+      },
+      "selectQueryConfig" : {
+        "test" : 1
+      }
     }
   },
   "generatorUrl" : "http://localhost:8080",
