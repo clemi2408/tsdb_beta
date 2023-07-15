@@ -1,106 +1,144 @@
-{
+  {
   "generateRequest" : {
-    "recordConfigs" : [ {
-      "maxKeyLength" : 1,
-      "maxStringValueLength" : 3,
-      "minKeyLength" : 1,
-      "minStringValueLength" : 1,
-      "valueType" : "string"
-    }, {
-      "keyValue" : "staticKeyDynStringValue",
-      "maxStringValueLength" : 5,
-      "minStringValueLength" : 3,
-      "valueType" : "string"
-    }, {
-      "maxKeyLength" : 8,
-      "maxStringEnumValues" : 5,
-      "maxStringValueLength" : 3,
-      "minKeyLength" : 6,
-      "minStringEnumValues" : 1,
-      "minStringValueLength" : 1,
-      "valueType" : "string"
-    }, {
-      "keyValue" : "staticKeyDynStringEnumDynValue",
-      "maxStringEnumValues" : 5,
-      "maxStringValueLength" : 3,
-      "minStringEnumValues" : 1,
-      "minStringValueLength" : 1,
-      "valueType" : "string"
-    }, {
-      "maxKeyLength" : 1,
-      "minKeyLength" : 1,
-      "stringEnumValues" : [ "s-val1", "s-val2" ],
-      "valueType" : "string"
-    }, {
-      "keyValue" : "staticKeyStaticStringEnumValues",
-      "stringEnumValues" : [ "s-val1", "s-val2" ],
-      "valueType" : "string"
-    }, {
+    "insertConfigs" : [ {
+      "id" : "6b5fd14b-8cc7-40ce-b644-813923d6817c",
+      "valueType" : "string",
       "maxKeyLength" : 5,
-      "maxValue" : 100,
+      "minKeyLength" : 5,
+      "individualKey" : true,
+      "maxStringValueLength" : 5,
+      "minStringValueLength" : 5
+    }, {
+      "id" : "22a52ef3-3986-4ff0-8553-fc31c0d20dd6",
+      "valueType" : "string",
+      "maxKeyLength" : 5,
+      "minKeyLength" : 5,
+      "individualKey" : false,
+      "maxStringValueLength" : 5,
+      "minStringValueLength" : 5
+    }, {
+      "id" : "a6e6c0b9-e1eb-4711-bcf4-66afff11e0e5",
+      "valueType" : "string",
+      "keyValue" : "staticKeyDynStringValue",
+      "individualKey" : false,
+      "maxStringValueLength" : 5,
+      "minStringValueLength" : 3
+    }, {
+      "id" : "2c0d914b-cca4-4414-a523-a137d1d59e45",
+      "valueType" : "string",
+      "maxKeyLength" : 8,
+      "minKeyLength" : 6,
+      "individualKey" : false,
+      "maxStringEnumValues" : 5,
+      "minStringEnumValues" : 1,
+      "maxStringValueLength" : 3,
+      "minStringValueLength" : 1
+    }, {
+      "id" : "c382a229-9f66-4c6c-ac5d-285249874d88",
+      "valueType" : "string",
+      "keyValue" : "staticKeyDynStringEnumDynValue",
+      "individualKey" : false,
+      "maxStringEnumValues" : 5,
+      "minStringEnumValues" : 1,
+      "maxStringValueLength" : 3,
+      "minStringValueLength" : 1
+    }, {
+      "id" : "3a9c704f-1e92-4221-a22b-ee39d8242b1a",
+      "valueType" : "string",
+      "maxKeyLength" : 1,
+      "minKeyLength" : 1,
+      "individualKey" : false,
+      "stringEnumValues" : [ "s-val1", "s-val2" ]
+    }, {
+      "id" : "cf608366-49cf-4c99-aa3a-5a95e1fbe5c1",
+      "valueType" : "string",
+      "keyValue" : "staticKeyStaticStringEnumValues",
+      "individualKey" : false,
+      "stringEnumValues" : [ "s-val1", "s-val2" ]
+    }, {
+      "id" : "e5be310b-af9b-4d66-bbde-dcb96c6055ab",
+      "valueType" : "integer",
+      "maxKeyLength" : 5,
       "minKeyLength" : 2,
-      "minValue" : 0,
-      "valueDistribution" : "UNIFORM",
-      "valueType" : "integer"
-    }, {
-      "keyValue" : "staticKeyUniformIntegerValue",
+      "individualKey" : false,
       "maxValue" : 100,
       "minValue" : 0,
-      "valueDistribution" : "UNIFORM",
-      "valueType" : "integer"
+      "valueDistribution" : "UNIFORM"
     }, {
+      "id" : "7223554b-ae9c-44bb-8070-6e31669647bc",
+      "valueType" : "integer",
+      "keyValue" : "staticKeyUniformIntegerValue",
+      "individualKey" : false,
+      "maxValue" : 100,
+      "minValue" : 0,
+      "valueDistribution" : "UNIFORM"
+    }, {
+      "id" : "c2addd58-46f1-472c-995c-d42b34df71f2",
+      "valueType" : "double",
       "keyValue" : "staticKeyUniformDoubleValue",
+      "individualKey" : false,
       "maxValue" : 55.3,
       "minValue" : 5.5,
-      "valueDistribution" : "UNIFORM",
-      "valueType" : "double"
+      "valueDistribution" : "UNIFORM"
     }, {
+      "id" : "ff4dfa29-1a7e-4777-bddc-1216470768cc",
+      "valueType" : "integer",
       "maxKeyLength" : 5,
-      "maxValue" : 100,
       "minKeyLength" : 2,
-      "minValue" : 0,
-      "triangleSpike" : 50,
-      "valueDistribution" : "TRIANGLE",
-      "valueType" : "integer"
-    }, {
-      "keyValue" : "staticKeyTriangleIntegerValue",
+      "individualKey" : false,
       "maxValue" : 100,
       "minValue" : 0,
       "triangleSpike" : 50,
-      "valueDistribution" : "TRIANGLE",
-      "valueType" : "integer"
+      "valueDistribution" : "TRIANGLE"
     }, {
+      "id" : "86d6eb71-ac30-4525-a0c7-e41e13b5d687",
+      "valueType" : "integer",
+      "keyValue" : "staticKeyTriangleIntegerValue",
+      "individualKey" : false,
+      "maxValue" : 100,
+      "minValue" : 0,
+      "triangleSpike" : 50,
+      "valueDistribution" : "TRIANGLE"
+    }, {
+      "id" : "c9c4faa1-1ec4-4a4c-b86a-6a15ff944452",
+      "valueType" : "double",
       "keyValue" : "staticKeyTriangleDoubleValue",
+      "individualKey" : false,
       "maxValue" : 55.3,
       "minValue" : 5.5,
       "triangleSpike" : 10,
-      "valueDistribution" : "TRIANGLE",
-      "valueType" : "double"
+      "valueDistribution" : "TRIANGLE"
     }, {
-      "gaussMiddle" : 10,
-      "gaussRange" : 10,
+      "id" : "d552e0e0-88c9-4555-8f99-02bdfc9523e6",
+      "valueType" : "integer",
       "maxKeyLength" : 5,
       "minKeyLength" : 2,
-      "valueDistribution" : "GAUSS",
-      "valueType" : "integer"
-    }, {
+      "individualKey" : false,
       "gaussMiddle" : 10,
       "gaussRange" : 10,
+      "valueDistribution" : "GAUSS"
+    }, {
+      "id" : "342edf83-9533-4063-a5ca-efe5f6ef9b74",
+      "valueType" : "integer",
       "keyValue" : "staticKeyGaussIntegerValue",
-      "valueDistribution" : "GAUSS",
-      "valueType" : "integer"
-    }, {
+      "individualKey" : false,
       "gaussMiddle" : 10,
       "gaussRange" : 10,
+      "valueDistribution" : "GAUSS"
+    }, {
+      "id" : "e6468666-823c-49b5-9e8f-0adf4c2f3d06",
+      "valueType" : "double",
       "keyValue" : "staticKeyGaussDoubleValue",
-      "valueDistribution" : "GAUSS",
-      "valueType" : "double"
+      "individualKey" : false,
+      "gaussMiddle" : 10,
+      "gaussRange" : 10,
+      "valueDistribution" : "GAUSS"
     } ],
     "queryConfig" : {
       "insertQueryConfig" : {
         "insertCount" : 10,
         "preloadCount" : 5,
-        "startOffsetDateTime" : 1687525966.225152000,
+        "startOffsetDateTime" : 1689417976.024005000,
         "insertInterval" : "PT1M"
       },
       "selectQueryConfig" : {

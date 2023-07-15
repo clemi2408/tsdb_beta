@@ -10,18 +10,18 @@ For repeatability of the benchmark, the `GeneratorConfig` holding the configurat
 the generated workload is persisted.
 The `GeneratorConfig` has the following configuration parameters:
 
-- Number of records `recordCount`.
-- List of `RecordConfig` entries `recordConfigs`.
+- Number of inserts `insertCount`.
+- List of `InsertConfig` entries `insertConfigs`.
 
-With the definition of `RecordConfig` elements the record to be generated can be described.
-A record can consist of several KV pairs.
-Each `RecordConfig` element describes a KV pair of the record to be generated.
+With the definition of `InsertConfig` elements the insert to be generated can be described.
+A insert can consist of several KV pairs.
+Each `InsertConfig` element describes a KV pair of the insert to be generated.
 With respect to the key, the following key strategies are possible:
 
 - Key strategy A: Assignment of a predefined key.
 - Key strategy B: Generation of a key by defining a minimum and maximum length.
 
-The `RecordConfig` has the following key-specific parameters:
+The `InsertConfig` has the following key-specific parameters:
 
 - Default value of the key `keyValue` (key strategy A).
 - Minimum length of the key of the KV pair `minKeyLength` (key strategy B).
@@ -49,7 +49,7 @@ Independent of the generation strategy it is possible to generate the following 
 
 ## Examples
 
-Example `RecordConfig` with generated key with length in range `minKeyLength` to `maxKeyLength`.
+Example `InsertConfig` with generated key with length in range `minKeyLength` to `maxKeyLength`.
 The `Integer` value is generated with the value strategy `uniform` in range `minValue` and `maxValue`.
 
 ```
@@ -63,7 +63,7 @@ The `Integer` value is generated with the value strategy `uniform` in range `min
   }
 ```
 
-Example `RecordConfig` with defined key `keyValue`.
+Example `InsertConfig` with defined key `keyValue`.
 The `Double` value is generated with the value strategy `gaussian` with `gaussMiddle` and `gaussRange`.
 
 ```
@@ -76,7 +76,7 @@ The `Double` value is generated with the value strategy `gaussian` with `gaussMi
 }
 ```
 
-Example `RecordConfig` with defined key `keyValue`.
+Example `InsertConfig` with defined key `keyValue`.
 The `Integer` value is generated with the value strategy `triangle` in range `minValue` and `maxValue` with `triangleSpike`.
 
 ```
@@ -90,7 +90,7 @@ The `Integer` value is generated with the value strategy `triangle` in range `mi
 }
 ```
 
-Example `RecordConfig` with generated key with length in range `minKeyLength` to `maxKeyLength`.
+Example `InsertConfig` with generated key with length in range `minKeyLength` to `maxKeyLength`.
 The `String` value is generated with length in range `minStringValueLength` to `maxStringValueLength`.
 
 ```
@@ -103,7 +103,7 @@ The `String` value is generated with length in range `minStringValueLength` to `
 }
 ```
 
-Example `RecordConfig` with defined key `keyValue`.
+Example `InsertConfig` with defined key `keyValue`.
 The `String` value is generated with length in range `minStringValueLength` to `maxStringValueLength`.
 
 ```
@@ -115,7 +115,7 @@ The `String` value is generated with length in range `minStringValueLength` to `
 }
 ```
 
-Example `RecordConfig` with defined key `keyValue`.
+Example `InsertConfig` with defined key `keyValue`.
 The `String` values are defined in `stringEnumValues` for random selection.
 
 ```
@@ -129,7 +129,7 @@ The `String` values are defined in `stringEnumValues` for random selection.
 }
 ```
 
-Example `RecordConfig` with generated key with length in range `minKeyLength` to `maxKeyLength`.
+Example `InsertConfig` with generated key with length in range `minKeyLength` to `maxKeyLength`.
 The `String` values are defined in `stringEnumValues` for random selection.
 
 ```
@@ -144,7 +144,7 @@ The `String` values are defined in `stringEnumValues` for random selection.
 }
 ```
 
-Example `RecordConfig` with defined key `keyValue`.
+Example `InsertConfig` with defined key `keyValue`.
 The amount of `String` values to be generated is in range `minStringEnumValues` to `maxStringEnumValues` for random selection.
 The Generated Strings have length in range `minStringValueLength` to `maxStringValueLength`.
 
@@ -159,10 +159,10 @@ The Generated Strings have length in range `minStringValueLength` to `maxStringV
 }
 ```
 
-Example `RecordConfig` with generated key and generated String values with the count in range `minStringEnumValues` to `maxStringEnumValues` and length in range `minStringValueLength` to `maxStringValueLength` for random selection:
+Example `InsertConfig` with generated key and generated String values with the count in range `minStringEnumValues` to `maxStringEnumValues` and length in range `minStringValueLength` to `maxStringValueLength` for random selection:
 
 
-Example `RecordConfig` with generated key with length in range `minKeyLength` to `maxKeyLength`.
+Example `InsertConfig` with generated key with length in range `minKeyLength` to `maxKeyLength`.
 The amount of `String` values to be generated is in range `minStringEnumValues` to `maxStringEnumValues` for random selection.
 The Generated Strings have length in range `minStringValueLength` to `maxStringValueLength`.
 

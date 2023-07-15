@@ -1,9 +1,9 @@
 package de.cleem.tub.tsdbb.apps.orchestrator.service.preparation;
 
-import de.cleem.tub.tsdbb.api.model.Record;
+import de.cleem.tub.tsdbb.api.model.Insert;
 import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.commons.random.numbers.uniform.UniformGenerator;
-import de.cleem.tub.tsdbb.commons.recordsplit.RecordListSplitter;
+import de.cleem.tub.tsdbb.commons.insertsplit.InsertListSplitter;
 import de.cleem.tub.tsdbb.commons.spring.base.component.BaseSpringComponent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ public class WorkloadPreparationService extends BaseSpringComponent {
 
         final int preloadCountPerWorker = totalPreloadCount/workerCount;
 
-        final List<List<Record>> partitionedWorkload = RecordListSplitter.splitWorkload(benchmarkWorkload.getRecords(),workerConfigurations, WorkerConfiguration::getWorkerPercentage);
+        final List<List<Insert>> partitionedWorkload = InsertListSplitter.splitWorkload(benchmarkWorkload.getInserts(),workerConfigurations, WorkerConfiguration::getWorkerPercentage);
 
         final List<WorkerSetupRequest> workerSetupRequests = new ArrayList<>();
 
@@ -37,7 +37,7 @@ public class WorkloadPreparationService extends BaseSpringComponent {
             workerSetupRequest.setWorkerConfiguration(workerConfigurations.get(i));
             workerSetupRequest.setWorkerGeneralProperties(orchestratorSetupRequest.getWorkerConnectionSettings().getWorkerGeneralProperties());
             workerSetupRequest.setOrchestratorUrl(getServerUrl());
-            workerSetupRequest.setBenchmarkWorkload(new Workload().records(partitionedWorkload.get(i)));
+            workerSetupRequest.setBenchmarkWorkload(new Workload().inserts(partitionedWorkload.get(i)));
             workerSetupRequests.add(workerSetupRequest);
             workerSetupRequest.setWorkerLoadCount(preloadCountPerWorker);
 
@@ -51,40 +51,40 @@ public class WorkloadPreparationService extends BaseSpringComponent {
 
         final Workload generatorWorkload = generatorGenerateResponse.getWorkload();
 
-        final Workload benchmarkWorkload = new Workload().records(new ArrayList<>());
+        final Workload benchmarkWorkload = new Workload().inserts(new ArrayList<>());
 
-        Record benchmarkRecord;
-        KvPair benchmarkWorkloadRecordKvPair;
-        List<Object> benchmarkWorkloadRecordKvPairValues;
+        Insert benchmarkInsert;
+        KvPair benchmarkWorkloadInsertKvPair;
+        List<Object> benchmarkWorkloadInsertKvPairValues;
 
-        for (Record inputRecord : generatorWorkload.getRecords()) {
+        for (Insert inputInsert : generatorWorkload.getInserts()) {
 
-            benchmarkRecord = new Record()
-                    .recordId(inputRecord.getRecordId())
-                    .timestamp(inputRecord.getTimestamp())
+            benchmarkInsert = new Insert()
+                    .id(inputInsert.getId())
+                    .timestamp(inputInsert.getTimestamp())
                     .kvPairs(new ArrayList<>());
 
 
-            for (KvPair inputWorkloadRecordKvPair : inputRecord.getKvPairs()) {
+            for (KvPair inputWorkloadInsertKvPair : inputInsert.getKvPairs()) {
 
-                if (inputWorkloadRecordKvPair.getValue().size() == 1) {
-                    benchmarkWorkloadRecordKvPairValues = inputWorkloadRecordKvPair.getValue();
+                if (inputWorkloadInsertKvPair.getValue().size() == 1) {
+                    benchmarkWorkloadInsertKvPairValues = inputWorkloadInsertKvPair.getValue();
                 } else {
 
-                    final int randomIndex = UniformGenerator.getInteger(0, inputWorkloadRecordKvPair.getValue().size() - 1);
+                    final int randomIndex = UniformGenerator.getInteger(0, inputWorkloadInsertKvPair.getValue().size() - 1);
 
-                    benchmarkWorkloadRecordKvPairValues =  List.of(inputWorkloadRecordKvPair.getValue().get(randomIndex));
+                    benchmarkWorkloadInsertKvPairValues =  List.of(inputWorkloadInsertKvPair.getValue().get(randomIndex));
                 }
 
-                benchmarkWorkloadRecordKvPair = new KvPair()
-                        .key(inputWorkloadRecordKvPair.getKey())
-                        .value(benchmarkWorkloadRecordKvPairValues);
+                benchmarkWorkloadInsertKvPair = new KvPair()
+                        .key(inputWorkloadInsertKvPair.getKey())
+                        .value(benchmarkWorkloadInsertKvPairValues);
 
-                benchmarkRecord.getKvPairs().add(benchmarkWorkloadRecordKvPair);
+                benchmarkInsert.getKvPairs().add(benchmarkWorkloadInsertKvPair);
 
             }
 
-            benchmarkWorkload.getRecords().add(benchmarkRecord);
+            benchmarkWorkload.getInserts().add(benchmarkInsert);
 
         }
 

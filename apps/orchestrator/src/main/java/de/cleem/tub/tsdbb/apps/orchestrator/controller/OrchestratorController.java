@@ -59,6 +59,8 @@ public class OrchestratorController extends BaseSpringComponent implements Orche
 
     @Override
     public ResponseEntity<OrchestratorResultResponse> results() throws ResultException {
-        return ResponseEntity.ok(orchestratorService.results());
+
+        OrchestratorResultResponse a = orchestratorService.results();
+        return ResponseEntity.ok(a);
     }
 }

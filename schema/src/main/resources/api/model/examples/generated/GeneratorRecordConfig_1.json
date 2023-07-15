@@ -1,7 +1,0 @@
-{
-  "maxKeyLength" : 1,
-  "maxStringValueLength" : 3,
-  "minKeyLength" : 1,
-  "minStringValueLength" : 1,
-  "valueType" : "string"
-}

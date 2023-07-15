@@ -6,7 +6,7 @@
         "url": "http://localhost:8082"
       },
       "threadName": "pool-1-thread-1",
-      "record": {
+      "insert": {
         "kvPairs": [
           {
             "key": "l",
@@ -99,7 +99,7 @@
             ]
           }
         ],
-        "recordId": "d977cc9c-73e6-4cb3-9d50-c1e32a79aa41"
+        "id": "d977cc9c-73e6-4cb3-9d50-c1e32a79aa41"
       },
       "durationInMs": 440,
       "timeFrame": {
@@ -113,7 +113,7 @@
         "url": "http://localhost:8082"
       },
       "threadName": "pool-1-thread-2",
-      "record": {
+      "insert": {
         "kvPairs": [
           {
             "key": "s",
@@ -206,7 +206,7 @@
             ]
           }
         ],
-        "recordId": "2ad15e57-ed73-4ebc-9fde-047fd87bf1a8"
+        "id": "2ad15e57-ed73-4ebc-9fde-047fd87bf1a8"
       },
       "durationInMs": 440,
       "timeFrame": {
@@ -220,7 +220,7 @@
         "url": "http://localhost:8082"
       },
       "threadName": "pool-1-thread-3",
-      "record": {
+      "insert": {
         "kvPairs": [
           {
             "key": "O",
@@ -313,7 +313,7 @@
             ]
           }
         ],
-        "recordId": "b1bc4a21-4527-43b5-bc51-9e24eb9aef41"
+        "id": "b1bc4a21-4527-43b5-bc51-9e24eb9aef41"
       },
       "durationInMs": 440,
       "timeFrame": {
@@ -327,7 +327,7 @@
         "url": "http://localhost:8082"
       },
       "threadName": "pool-1-thread-3",
-      "record": {
+      "insert": {
         "kvPairs": [
           {
             "key": "J",
@@ -420,7 +420,7 @@
             ]
           }
         ],
-        "recordId": "237134ae-eac8-48c3-a249-275d8b0d7bbe"
+        "id": "237134ae-eac8-48c3-a249-275d8b0d7bbe"
       },
       "durationInMs": 49,
       "timeFrame": {
@@ -434,7 +434,7 @@
         "url": "http://localhost:8082"
       },
       "threadName": "pool-1-thread-2",
-      "record": {
+      "insert": {
         "kvPairs": [
           {
             "key": "F",
@@ -527,7 +527,7 @@
             ]
           }
         ],
-        "recordId": "75fafe29-3621-40fa-9686-d4c9ffea1d00"
+        "id": "75fafe29-3621-40fa-9686-d4c9ffea1d00"
       },
       "durationInMs": 49,
       "timeFrame": {
@@ -541,7 +541,7 @@
         "url": "http://localhost:8082"
       },
       "threadName": "pool-1-thread-1",
-      "record": {
+      "insert": {
         "kvPairs": [
           {
             "key": "o",
@@ -634,7 +634,7 @@
             ]
           }
         ],
-        "recordId": "e549503f-3501-4f85-b6d9-1113a09a0d86"
+        "id": "e549503f-3501-4f85-b6d9-1113a09a0d86"
       },
       "durationInMs": 28,
       "timeFrame": {
@@ -648,7 +648,7 @@
         "url": "http://localhost:8082"
       },
       "threadName": "pool-1-thread-1",
-      "record": {
+      "insert": {
         "kvPairs": [
           {
             "key": "W",
@@ -741,7 +741,7 @@
             ]
           }
         ],
-        "recordId": "5aa05fa3-9c13-4171-b592-e5ab8fbb74ec"
+        "id": "5aa05fa3-9c13-4171-b592-e5ab8fbb74ec"
       },
       "durationInMs": 40,
       "timeFrame": {
@@ -755,7 +755,7 @@
         "url": "http://localhost:8082"
       },
       "threadName": "pool-1-thread-3",
-      "record": {
+      "insert": {
         "kvPairs": [
           {
             "key": "d",
@@ -848,7 +848,7 @@
             ]
           }
         ],
-        "recordId": "8bf2a2c6-4427-4262-a16b-7e80c27243a2"
+        "id": "8bf2a2c6-4427-4262-a16b-7e80c27243a2"
       },
       "durationInMs": 38,
       "timeFrame": {
@@ -862,7 +862,7 @@
         "url": "http://localhost:8082"
       },
       "threadName": "pool-1-thread-2",
-      "record": {
+      "insert": {
         "kvPairs": [
           {
             "key": "B",
@@ -955,7 +955,7 @@
             ]
           }
         ],
-        "recordId": "52056564-7275-4bf1-aaaf-c525eb330658"
+        "id": "52056564-7275-4bf1-aaaf-c525eb330658"
       },
       "durationInMs": 38,
       "timeFrame": {
@@ -969,7 +969,7 @@
         "url": "http://localhost:8082"
       },
       "threadName": "pool-1-thread-1",
-      "record": {
+      "insert": {
         "kvPairs": [
           {
             "key": "S",
@@ -1062,7 +1062,7 @@
             ]
           }
         ],
-        "recordId": "41366c23-4143-48a6-9aa0-c14b8fd34bd3"
+        "id": "41366c23-4143-48a6-9aa0-c14b8fd34bd3"
       },
       "durationInMs": 38,
       "timeFrame": {

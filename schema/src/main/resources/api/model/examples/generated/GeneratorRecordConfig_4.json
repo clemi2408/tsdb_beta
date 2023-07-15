@@ -1,8 +1,0 @@
-{
-  "keyValue" : "staticKeyDynStringEnumDynValue",
-  "maxStringEnumValues" : 5,
-  "maxStringValueLength" : 3,
-  "minStringEnumValues" : 1,
-  "minStringValueLength" : 1,
-  "valueType" : "string"
-}

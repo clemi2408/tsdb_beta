@@ -1,0 +1,10 @@
+{
+  "id" : "32f1c358-ed1c-4394-bdad-ac585137ec87",
+  "valueType" : "double",
+  "keyValue" : "staticKeyTriangleDoubleValue",
+  "individualKey" : false,
+  "maxValue" : 55.3,
+  "minValue" : 5.5,
+  "triangleSpike" : 10,
+  "valueDistribution" : "TRIANGLE"
+}

@@ -42,7 +42,7 @@ public class WorkerService extends BaseSpringComponent {
 
         log.info("Setup Worker");
 
-        log.info("Received Workload: "+workerSetupRequest.getBenchmarkWorkload().getRecords().size());
+        log.info("Received Workload: "+workerSetupRequest.getBenchmarkWorkload().getInserts().size());
 
         final WorkerSetupResponse workerSetupResponse = new WorkerSetupResponse();
         workerSetupResponse.setTimeFrame(TimeFrameFactory.getTimeFrame());

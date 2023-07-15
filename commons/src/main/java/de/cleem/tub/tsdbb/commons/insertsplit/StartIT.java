@@ -1,6 +1,6 @@
-package de.cleem.tub.tsdbb.commons.recordsplit;
+package de.cleem.tub.tsdbb.commons.insertsplit;
 
-import de.cleem.tub.tsdbb.api.model.Record;
+import de.cleem.tub.tsdbb.api.model.Insert;
 import de.cleem.tub.tsdbb.api.model.WorkerConfiguration;
 import de.cleem.tub.tsdbb.api.model.WorkerTsdbEndpoint;
 import de.cleem.tub.tsdbb.commons.examplejson.ExampleDataGenerator;
@@ -9,48 +9,47 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 public class StartIT {
 
     public static void main(String[] args) {
 
-        final List<Record> records = ExampleDataGenerator.getRecords(1000);
+        final List<Insert> inserts = ExampleDataGenerator.getInserts(1000);
 
         final List<WorkerTsdbEndpoint> exampleEndpoints = getExampleEndpoints();
-        final LinkedHashMap<Integer[],WorkerTsdbEndpoint> endpointLookup = RecordListSplitter.createLookupIntervals(exampleEndpoints, WorkerTsdbEndpoint::getEndpointPercentage);
-        final Integer upperBoundEndpoints = RecordListSplitter.getUpperBound(endpointLookup,WorkerTsdbEndpoint::getEndpointPercentage);
-        final WorkerTsdbEndpoint endpoint = RecordListSplitter.doRangeLookup(endpointLookup,upperBoundEndpoints,WorkerTsdbEndpoint::getEndpointPercentage);
+        final LinkedHashMap<Integer[],WorkerTsdbEndpoint> endpointLookup = InsertListSplitter.createLookupIntervals(exampleEndpoints, WorkerTsdbEndpoint::getEndpointPercentage);
+        final Integer upperBoundEndpoints = InsertListSplitter.getUpperBound(endpointLookup,WorkerTsdbEndpoint::getEndpointPercentage);
+        final WorkerTsdbEndpoint endpoint = InsertListSplitter.doRangeLookup(endpointLookup,upperBoundEndpoints,WorkerTsdbEndpoint::getEndpointPercentage);
         //log.debug("Lookup: "+endpoint.getEndpointName()+" - "+endpoint.getEndpointPercentage());
-        final List<List<Record>> workerEndpointSplit = RecordListSplitter.splitWorkload(records,exampleEndpoints, WorkerTsdbEndpoint::getEndpointPercentage);
+        final List<List<Insert>> workerEndpointSplit = InsertListSplitter.splitWorkload(inserts,exampleEndpoints, WorkerTsdbEndpoint::getEndpointPercentage);
         displaySplit(workerEndpointSplit);
 
         final List<WorkerConfiguration> exampleWorkers = getExampleWorkerConfigs();
-        final LinkedHashMap<Integer[],WorkerConfiguration> workerLookup = RecordListSplitter.createLookupIntervals(exampleWorkers, WorkerConfiguration::getWorkerPercentage);
-        final Integer upperBoundWorkers = RecordListSplitter.getUpperBound(workerLookup,WorkerConfiguration::getWorkerPercentage);
-        final WorkerConfiguration worker = RecordListSplitter.doRangeLookup(workerLookup,upperBoundWorkers,WorkerConfiguration::getWorkerPercentage);
+        final LinkedHashMap<Integer[],WorkerConfiguration> workerLookup = InsertListSplitter.createLookupIntervals(exampleWorkers, WorkerConfiguration::getWorkerPercentage);
+        final Integer upperBoundWorkers = InsertListSplitter.getUpperBound(workerLookup,WorkerConfiguration::getWorkerPercentage);
+        final WorkerConfiguration worker = InsertListSplitter.doRangeLookup(workerLookup,upperBoundWorkers,WorkerConfiguration::getWorkerPercentage);
         //log.debug("Lookup: "+worker.getWorkerName()+" - "+ worker.getWorkerPercentage());
-        final List<List<Record>> workerSplit = RecordListSplitter.splitWorkload(records,exampleWorkers, WorkerConfiguration::getWorkerPercentage);
+        final List<List<Insert>> workerSplit = InsertListSplitter.splitWorkload(inserts,exampleWorkers, WorkerConfiguration::getWorkerPercentage);
         displaySplit(workerSplit);
 
     }
 
-    private static void displaySplit(final List<List<Record>> split){
+    private static void displaySplit(final List<List<Insert>> split){
         System.out.println("\n");
         System.out.println("Split into: "+split.size()+" parts");
 
-        int totalRecords=0;
+        int totalInserts=0;
         int i = 0;
-        for(List<Record> splitPart : split){
+        for(List<Insert> splitPart : split){
             System.out.println("\tPart: "+i);
             i++;
-            totalRecords+=splitPart.size();
+            totalInserts+=splitPart.size();
             System.out.println("\t\tCount: "+splitPart.size());
 
         }
 
-        System.out.println("Total Records: "+totalRecords);
+        System.out.println("Total Inserts: "+totalInserts);
 
 
     }

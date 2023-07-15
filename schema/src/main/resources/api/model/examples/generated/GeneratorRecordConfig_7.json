@@ -1,8 +1,0 @@
-{
-  "maxKeyLength" : 5,
-  "maxValue" : 100,
-  "minKeyLength" : 2,
-  "minValue" : 0,
-  "valueDistribution" : "UNIFORM",
-  "valueType" : "integer"
-}

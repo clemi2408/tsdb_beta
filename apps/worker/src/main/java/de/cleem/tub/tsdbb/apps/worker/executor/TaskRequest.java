@@ -1,7 +1,7 @@
 package de.cleem.tub.tsdbb.apps.worker.executor;
 
 import de.cleem.tub.tsdbb.api.model.*;
-import de.cleem.tub.tsdbb.api.model.Record;
+import de.cleem.tub.tsdbb.api.model.Insert;
 import de.cleem.tub.tsdbb.apps.worker.adapters.BaseConnector;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterIF;
 import de.cleem.tub.tsdbb.commons.date.DateHelper;
@@ -19,12 +19,12 @@ import java.util.concurrent.Callable;
 public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
 
     private final String taskName;
-    private final Record record;
+    private final Insert insert;
     private final WorkerTsdbEndpoint endpoint;
 
-    public TaskRequest(final TSDBAdapterIF tsdbAdapterIF, final WorkerSetupRequest workerSetupRequest, final WorkerTsdbEndpoint endpoint, final String taskName, final Record record) {
+    public TaskRequest(final TSDBAdapterIF tsdbAdapterIF, final WorkerSetupRequest workerSetupRequest, final WorkerTsdbEndpoint endpoint, final String taskName, final Insert insert) {
 
-        this.record = record;
+        this.insert = insert;
         this.taskName = taskName;
         this.workerSetupRequest = workerSetupRequest;
         this.tsdbInterface = tsdbAdapterIF;
@@ -41,13 +41,13 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
         final TimeFrame timeFrame = TimeFrameFactory.getTimeFrame();
 
 
-        final int sizeInBytes = tsdbInterface.write(record,endpoint);
+        final int sizeInBytes = tsdbInterface.write(insert,endpoint);
 
         timeFrame.setEndTimestamp(OffsetDateTime.now());
 
         final long duration = DateHelper.getDateDifference(timeFrame, ChronoUnit.MILLIS);
 
-        log.info(taskName+" wrote Record: "+record.getRecordId());
+        log.info(taskName+" wrote Insert: "+insert.getId());
 
         final TaskResult taskResult = new TaskResult();
         taskResult.setTaskName(taskName);

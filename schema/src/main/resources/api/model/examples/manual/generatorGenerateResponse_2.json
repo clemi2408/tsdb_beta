@@ -1,6 +1,6 @@
 {
   "workload": {
-    "records": [
+    "inserts": [
       {
         "kvPairs": [
           {
@@ -100,7 +100,7 @@
             ]
           }
         ],
-        "recordId": "59711dc8-faa3-43e5-9b10-d236280bf45d"
+        "id": "59711dc8-faa3-43e5-9b10-d236280bf45d"
       },
       {
         "kvPairs": [
@@ -198,7 +198,7 @@
             ]
           }
         ],
-        "recordId": "3f8060c2-8eb7-4079-8aa0-52a1a43882b8"
+        "id": "3f8060c2-8eb7-4079-8aa0-52a1a43882b8"
       },
       {
         "kvPairs": [
@@ -297,7 +297,7 @@
             ]
           }
         ],
-        "recordId": "6592e99b-984c-441d-a2b8-4f8bac7d8b2b"
+        "id": "6592e99b-984c-441d-a2b8-4f8bac7d8b2b"
       },
       {
         "kvPairs": [
@@ -399,7 +399,7 @@
             ]
           }
         ],
-        "recordId": "3b73a58c-eeea-491e-be66-6def7291f044"
+        "id": "3b73a58c-eeea-491e-be66-6def7291f044"
       },
       {
         "kvPairs": [
@@ -499,7 +499,7 @@
             ]
           }
         ],
-        "recordId": "4781d7b5-64d6-407c-9a89-89f07b3f6372"
+        "id": "4781d7b5-64d6-407c-9a89-89f07b3f6372"
       },
       {
         "kvPairs": [
@@ -603,7 +603,7 @@
             ]
           }
         ],
-        "recordId": "03f1cec4-a0a2-43a3-bc11-2d02bdccb230"
+        "id": "03f1cec4-a0a2-43a3-bc11-2d02bdccb230"
       },
       {
         "kvPairs": [
@@ -704,7 +704,7 @@
             ]
           }
         ],
-        "recordId": "bdb7b468-dbe9-49ea-9980-43c80993725b"
+        "id": "bdb7b468-dbe9-49ea-9980-43c80993725b"
       },
       {
         "kvPairs": [
@@ -807,7 +807,7 @@
             ]
           }
         ],
-        "recordId": "9d6ae8db-f32d-48fd-805f-7554d7ddf4dd"
+        "id": "9d6ae8db-f32d-48fd-805f-7554d7ddf4dd"
       },
       {
         "kvPairs": [
@@ -908,7 +908,7 @@
             ]
           }
         ],
-        "recordId": "b6061858-1a19-4203-b925-38952acc34e5"
+        "id": "b6061858-1a19-4203-b925-38952acc34e5"
       },
       {
         "kvPairs": [
@@ -1009,7 +1009,7 @@
             ]
           }
         ],
-        "recordId": "4c68f4b1-1e93-4100-b795-2e2f88973429"
+        "id": "4c68f4b1-1e93-4100-b795-2e2f88973429"
       }
     ]
   },

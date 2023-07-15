@@ -1,0 +1,7 @@
+{
+  "id" : "59befbff-570b-48d5-ad45-dab57878c0c3",
+  "valueType" : "string",
+  "keyValue" : "staticKeyStaticStringEnumValues",
+  "individualKey" : false,
+  "stringEnumValues" : [ "s-val1", "s-val2" ]
+}

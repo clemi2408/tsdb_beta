@@ -1,0 +1,10 @@
+{
+  "id" : "013395bd-3ac9-46bb-990c-8882e5ac77a6",
+  "valueType" : "integer",
+  "maxKeyLength" : 5,
+  "minKeyLength" : 2,
+  "individualKey" : false,
+  "gaussMiddle" : 10,
+  "gaussRange" : 10,
+  "valueDistribution" : "GAUSS"
+}

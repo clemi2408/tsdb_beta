@@ -1,5 +1,5 @@
 {
-    "records": [
+    "inserts": [
       {
         "kvPairs": [
           {
@@ -93,7 +93,7 @@
             ]
           }
         ],
-        "recordId": "9d6ad555-d250-4b71-a43b-e129890d2823"
+        "id": "9d6ad555-d250-4b71-a43b-e129890d2823"
       },
       {
         "kvPairs": [
@@ -188,7 +188,7 @@
             ]
           }
         ],
-        "recordId": "55acc9c0-4307-4f37-b403-7e5440c6da23"
+        "id": "55acc9c0-4307-4f37-b403-7e5440c6da23"
       },
       {
         "kvPairs": [
@@ -283,7 +283,7 @@
             ]
           }
         ],
-        "recordId": "f1153808-b018-4708-8a7e-aa780c83e833"
+        "id": "f1153808-b018-4708-8a7e-aa780c83e833"
       },
       {
         "kvPairs": [
@@ -378,7 +378,7 @@
             ]
           }
         ],
-        "recordId": "da1474fa-5395-4e92-8adb-95de06c8f3cb"
+        "id": "da1474fa-5395-4e92-8adb-95de06c8f3cb"
       },
       {
         "kvPairs": [
@@ -473,7 +473,7 @@
             ]
           }
         ],
-        "recordId": "39bb6d07-5ab9-40b0-9d32-55db07aec4f5"
+        "id": "39bb6d07-5ab9-40b0-9d32-55db07aec4f5"
       },
       {
         "kvPairs": [
@@ -568,7 +568,7 @@
             ]
           }
         ],
-        "recordId": "41f49743-efce-4e23-926d-02fac8550204"
+        "id": "41f49743-efce-4e23-926d-02fac8550204"
       },
       {
         "kvPairs": [
@@ -663,7 +663,7 @@
             ]
           }
         ],
-        "recordId": "08dea61d-54c7-41f8-a7d0-fc98bcbc33fb"
+        "id": "08dea61d-54c7-41f8-a7d0-fc98bcbc33fb"
       },
       {
         "kvPairs": [
@@ -758,7 +758,7 @@
             ]
           }
         ],
-        "recordId": "3e6d7478-560c-4300-9116-84e33b49e24b"
+        "id": "3e6d7478-560c-4300-9116-84e33b49e24b"
       },
       {
         "kvPairs": [
@@ -853,7 +853,7 @@
             ]
           }
         ],
-        "recordId": "5f13399d-ea0e-4503-90d2-7896ac552dcc"
+        "id": "5f13399d-ea0e-4503-90d2-7896ac552dcc"
       },
       {
         "kvPairs": [
@@ -948,7 +948,7 @@
             ]
           }
         ],
-        "recordId": "697333ee-fb00-42ff-b0ca-32402e678719"
+        "id": "697333ee-fb00-42ff-b0ca-32402e678719"
       }
     ]
   }

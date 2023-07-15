@@ -1,0 +1,11 @@
+{
+  "id" : "8e97664b-2c18-4988-952f-b3b9754a6273",
+  "valueType" : "integer",
+  "maxKeyLength" : 5,
+  "minKeyLength" : 2,
+  "individualKey" : false,
+  "maxValue" : 100,
+  "minValue" : 0,
+  "triangleSpike" : 50,
+  "valueDistribution" : "TRIANGLE"
+}

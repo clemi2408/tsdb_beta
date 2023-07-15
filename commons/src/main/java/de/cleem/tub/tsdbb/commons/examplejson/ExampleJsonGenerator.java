@@ -145,8 +145,11 @@ public class ExampleJsonGenerator {
 
         write(ExampleDataGenerator.getTimeFrame(),1);
 
-        write(ExampleDataGenerator.dynamicKeyWithDynamicStringValue(),1);
-        write(ExampleDataGenerator.staticKeyWithDynamicStringValue(),2);
+        write(ExampleDataGenerator.dynamicKeyWithDynamicStringValueSharedKey(),1);
+        write(ExampleDataGenerator.dynamicKeyWithDynamicStringValueIndividualKey(),2);
+        write(ExampleDataGenerator.staticKeyWithDynamicStringValue(),3);
+
+
         write(ExampleDataGenerator.dynamicKeyWithDynamicStringEnumCountAndDynamicValue(),3);
         write(ExampleDataGenerator.staticKeyWithDynamicStringEnumCountAndDynamicValue(),4);
         write(ExampleDataGenerator.dynamicKeyWithStaticStringEnumValues(),5);
@@ -163,7 +166,7 @@ public class ExampleJsonGenerator {
 
         write(ExampleDataGenerator.getKvPair(),1);
 
-        write(ExampleDataGenerator.getRecord(),1);
+        write(ExampleDataGenerator.getInsert(),1);
 
         write(ExampleDataGenerator.getTaskResult(),1);
 

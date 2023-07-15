@@ -1,7 +1,7 @@
 package de.cleem.tub.tsdbb.apps.worker.adapters.victoriametrics;
 
 
-import de.cleem.tub.tsdbb.api.model.Record;
+import de.cleem.tub.tsdbb.api.model.Insert;
 import de.cleem.tub.tsdbb.api.model.WorkerGeneralProperties;
 import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
 import de.cleem.tub.tsdbb.api.model.WorkerTsdbEndpoint;
@@ -89,9 +89,11 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
     }
     @Override
-    public int write(final Record record, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    public int write(final Insert insert, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
-        final String metricLine = lineProtocolFormat.getLine(record);
+        final String metricLine = lineProtocolFormat.getLine(insert);
+        log.info("Created metricLine: "+metricLine);
+
 
         // WRITE
         // curl -X POST \

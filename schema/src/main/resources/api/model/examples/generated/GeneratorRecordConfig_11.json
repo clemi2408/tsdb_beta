@@ -1,8 +1,0 @@
-{
-  "keyValue" : "staticKeyTriangleIntegerValue",
-  "maxValue" : 100,
-  "minValue" : 0,
-  "triangleSpike" : 50,
-  "valueDistribution" : "TRIANGLE",
-  "valueType" : "integer"
-}

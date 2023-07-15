@@ -10,7 +10,7 @@
       },
       "minItems": 1
     },
-    "recordId" : {
+    "id" : {
       "type" : "string",
       "format": "uuid",
       "nullable" : false
@@ -21,6 +21,6 @@
       "nullable": true
     }
   },
-  "required": [ "recordId","kvPairs" ]
+  "required": [ "id","kvPairs" ]
 
 }

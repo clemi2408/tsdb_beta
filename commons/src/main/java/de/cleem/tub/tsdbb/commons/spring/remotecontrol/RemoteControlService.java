@@ -63,7 +63,7 @@ public class RemoteControlService extends BaseSpringComponent {
         log.info("Requesting workload from generator: "+orchestratorSetupRequest.getGeneratorUrl());
         final GeneratorGenerateResponse generateResponse = generatorGenerateApi.generate(orchestratorSetupRequest.getGenerateRequest());
 
-        log.info("Got workload from generator with "+generateResponse.getWorkload().getRecords().size()+" records");
+        log.info("Got workload from generator with "+generateResponse.getWorkload().getInserts().size()+" inserts");
 
         return generateResponse;
 

@@ -1,0 +1,9 @@
+{
+  "id" : "4a2696be-afb3-4898-91b9-3ee433498e06",
+  "valueType" : "double",
+  "keyValue" : "staticKeyUniformDoubleValue",
+  "individualKey" : false,
+  "maxValue" : 55.3,
+  "minValue" : 5.5,
+  "valueDistribution" : "UNIFORM"
+}

@@ -1,0 +1,10 @@
+{
+  "id" : "cb038f60-3d0e-4772-9f95-ac5a241a9911",
+  "valueType" : "string",
+  "keyValue" : "staticKeyDynStringEnumDynValue",
+  "individualKey" : false,
+  "maxStringEnumValues" : 5,
+  "minStringEnumValues" : 1,
+  "maxStringValueLength" : 3,
+  "minStringValueLength" : 1
+}

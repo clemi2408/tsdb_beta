@@ -1,0 +1,10 @@
+{
+  "id" : "af2c60f5-e997-4709-890e-b52b7a1819f5",
+  "valueType" : "integer",
+  "keyValue" : "staticKeyTriangleIntegerValue",
+  "individualKey" : false,
+  "maxValue" : 100,
+  "minValue" : 0,
+  "triangleSpike" : 50,
+  "valueDistribution" : "TRIANGLE"
+}

@@ -1,0 +1,9 @@
+{
+  "id" : "d79dce6e-3ca0-4a76-90d5-3f11d477f7ee",
+  "valueType" : "integer",
+  "keyValue" : "staticKeyGaussIntegerValue",
+  "individualKey" : false,
+  "gaussMiddle" : 10,
+  "gaussRange" : 10,
+  "valueDistribution" : "GAUSS"
+}

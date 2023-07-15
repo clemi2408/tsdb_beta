@@ -1,6 +1,6 @@
 package de.cleem.tub.tsdbb.apps.worker.adapters.influxdb;
 
-import de.cleem.tub.tsdbb.api.model.Record;
+import de.cleem.tub.tsdbb.api.model.Insert;
 import de.cleem.tub.tsdbb.api.model.WorkerGeneralProperties;
 import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
 import de.cleem.tub.tsdbb.api.model.WorkerTsdbEndpoint;
@@ -119,13 +119,13 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
     }
     @Override
-    public int write(final Record record,final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    public int write(final Insert insert,final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         if (bucketId == null) {
             throw new TSDBAdapterException("Can not write to Storage - bucketId is NULL");
         }
 
-        final String metricLine = lineProtocolFormat.getLine(record);
+        final String metricLine = lineProtocolFormat.getLine(insert);
 
         // WRITE
         // curl -v --request POST \

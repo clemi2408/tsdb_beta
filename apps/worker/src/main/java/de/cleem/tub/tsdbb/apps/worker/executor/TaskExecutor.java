@@ -2,11 +2,11 @@ package de.cleem.tub.tsdbb.apps.worker.executor;
 
 
 import de.cleem.tub.tsdbb.api.model.*;
-import de.cleem.tub.tsdbb.api.model.Record;
+import de.cleem.tub.tsdbb.api.model.Insert;
 import de.cleem.tub.tsdbb.apps.worker.adapters.BaseConnector;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import de.cleem.tub.tsdbb.commons.api.ClientApiFacadeException;
-import de.cleem.tub.tsdbb.commons.recordsplit.RecordListSplitter;
+import de.cleem.tub.tsdbb.commons.insertsplit.InsertListSplitter;
 import de.cleem.tub.tsdbb.commons.spring.remotecontrol.RemoteControlService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -141,22 +141,22 @@ public class TaskExecutor extends BaseConnector {
         final List<TaskRequest> threads = new ArrayList<>();
 
         final List<WorkerTsdbEndpoint> endpoints = workerSetupRequest.getWorkerConfiguration().getTsdbEndpoints();
-        final List<Record> records = workerSetupRequest.getBenchmarkWorkload().getRecords();
-        final LinkedHashMap<Integer[], WorkerTsdbEndpoint> lookupIntervals = RecordListSplitter.createLookupIntervals(endpoints,WorkerTsdbEndpoint::getEndpointPercentage);
-        final Integer upperBoundEndpoints = RecordListSplitter.getUpperBound(lookupIntervals, WorkerTsdbEndpoint::getEndpointPercentage);
+        final List<Insert> inserts = workerSetupRequest.getBenchmarkWorkload().getInserts();
+        final LinkedHashMap<Integer[], WorkerTsdbEndpoint> lookupIntervals = InsertListSplitter.createLookupIntervals(endpoints,WorkerTsdbEndpoint::getEndpointPercentage);
+        final Integer upperBoundEndpoints = InsertListSplitter.getUpperBound(lookupIntervals, WorkerTsdbEndpoint::getEndpointPercentage);
 
-        int recordCount = 0;
+        int insertCount = 0;
         WorkerTsdbEndpoint endpoint;
-        for (Record record : records) {
-            recordCount++;
+        for (Insert insert : inserts) {
+            insertCount++;
 
-            if (recordCount % 10 == 0) {
-                log.debug("Created Task: " + recordCount + "/" + records.size());
+            if (insertCount % 10 == 0) {
+                log.debug("Created Task: " + insertCount + "/" + inserts.size());
             }
 
-            endpoint=RecordListSplitter.doRangeLookup(lookupIntervals,upperBoundEndpoints,WorkerTsdbEndpoint::getEndpointPercentage);
+            endpoint= InsertListSplitter.doRangeLookup(lookupIntervals,upperBoundEndpoints,WorkerTsdbEndpoint::getEndpointPercentage);
 
-            threads.add(new TaskRequest(tsdbInterface, workerSetupRequest,endpoint,"Task: " + recordCount, record));
+            threads.add(new TaskRequest(tsdbInterface, workerSetupRequest,endpoint,"Task: " + insertCount, insert));
 
         }
 

@@ -1,6 +1,6 @@
-package de.cleem.tub.tsdbb.commons.recordsplit;
+package de.cleem.tub.tsdbb.commons.insertsplit;
 
-import de.cleem.tub.tsdbb.api.model.Record;
+import de.cleem.tub.tsdbb.api.model.Insert;
 import de.cleem.tub.tsdbb.commons.random.numbers.uniform.UniformGenerator;
 import lombok.extern.slf4j.Slf4j;
 
@@ -8,27 +8,27 @@ import java.util.*;
 import java.util.function.Function;
 
 @Slf4j
-public class RecordListSplitter {
+public class InsertListSplitter {
 
     //////// Split Worker based on Items Percentage (e.g. to Workers or Endpoints)
-    public static <T, U extends Comparable<? super U>> List<List<Record>> splitWorkload(final List<Record> records, final List<T> items, final Function<? super T, ? extends U> valueExtractor) {
+    public static <T, U extends Comparable<? super U>> List<List<Insert>> splitWorkload(final List<Insert> inserts, final List<T> items, final Function<? super T, ? extends U> valueExtractor) {
 
         // Create Output List<List>
-        final List<List<Record>> itemsWorkloadList = new ArrayList<>();
+        final List<List<Insert>> itemsWorkloadList = new ArrayList<>();
 
         // Create LookupMap
-        final Map<T, List<Record>> itemToRecordListMap = new HashMap<>();
+        final Map<T, List<Insert>> itemToInsertListMap = new HashMap<>();
 
         //Prepare Output List<List> and LookupMap
-        List<Record> itemRecordList;
+        List<Insert> itemInsertList;
         for(T item : items){
 
-            itemRecordList = new ArrayList<Record>();
+            itemInsertList = new ArrayList<Insert>();
             // Add Reference to WorkerWorkload List to Output List<List>
-            itemsWorkloadList.add(itemRecordList);
+            itemsWorkloadList.add(itemInsertList);
 
             // Add Reference to WorkerWorkload List to LookupMap
-            itemToRecordListMap.put(item, itemRecordList);
+            itemToInsertListMap.put(item, itemInsertList);
 
         }
 
@@ -37,12 +37,12 @@ public class RecordListSplitter {
 
         final Integer upperBound = getUpperBound(lookupIntervals,valueExtractor);
 
-        //Map Records to Items
+        //Map Inserts to Items
         T currentItem;
-        for(Record currentRecord : records){
+        for(Insert currentInsert : inserts){
 
             currentItem= doRangeLookup(lookupIntervals, upperBound,valueExtractor);
-            itemToRecordListMap.get(currentItem).add(currentRecord);
+            itemToInsertListMap.get(currentItem).add(currentInsert);
 
         }
 

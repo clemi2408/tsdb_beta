@@ -1,0 +1,9 @@
+{
+  "id" : "3002c2e8-b1ff-48f3-963a-9fc93bb9d318",
+  "valueType" : "double",
+  "keyValue" : "staticKeyGaussDoubleValue",
+  "individualKey" : false,
+  "gaussMiddle" : 10,
+  "gaussRange" : 10,
+  "valueDistribution" : "GAUSS"
+}

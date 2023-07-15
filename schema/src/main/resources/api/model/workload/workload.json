@@ -2,14 +2,22 @@
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
   "properties" : {
-    "records" : {
+    "inserts" : {
       "type" : "array",
       "nullable" : false,
       "items": {
-        "$ref": "record.json"
+        "$ref": "insert.json"
+      },
+      "minItems": 1
+    },
+    "selects" : {
+      "type" : "array",
+      "nullable" : false,
+      "items": {
+        "$ref": "select.json"
       },
       "minItems": 1
     }
   },
-  "required": [ "records" ]
+  "required": [ "inserts" ]
 }

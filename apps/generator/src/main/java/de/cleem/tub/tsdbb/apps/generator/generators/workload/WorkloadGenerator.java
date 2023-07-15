@@ -1,7 +1,6 @@
 package de.cleem.tub.tsdbb.apps.generator.generators.workload;
 
 
-import de.cleem.tub.tsdbb.api.model.Record;
 import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.apps.generator.generators.key.KeyGenerator;
 import de.cleem.tub.tsdbb.apps.generator.generators.key.KeyGeneratorException;
@@ -15,14 +14,13 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 public class WorkloadGenerator extends BaseClass {
     private GeneratorGenerateRequest generateRequest;
 
+    private final Map<String,String> idToKeyMap = new HashMap<>();
 
     public static WorkloadGenerator builder() {
 
@@ -38,45 +36,61 @@ public class WorkloadGenerator extends BaseClass {
     }
 
 
-    private KvPair generateKvPair(final GeneratorRecordConfig recordConfig) throws ValueGeneratorException, StringGeneratorException, KeyGeneratorException, WorkloadGeneratorException {
+    private KvPair generateKvPair(final GeneratorInsertConfig insertConfig) throws ValueGeneratorException, StringGeneratorException, KeyGeneratorException, WorkloadGeneratorException {
 
-        if(recordConfig==null){
-            throw new WorkloadGeneratorException("RecordConfig is NULL");
+        if(insertConfig==null){
+            throw new WorkloadGeneratorException("InsertConfig is NULL");
         }
 
         final KvPair kvPair = new KvPair();
-        kvPair.setKey(KeyGenerator.generate(recordConfig));
-        kvPair.setValue(ValueGenerator.generate(recordConfig));
+
+        if(insertConfig.getIndividualKey()!=null && !insertConfig.getIndividualKey()){
+
+            if(!idToKeyMap.containsKey(insertConfig.getId())){
+
+                idToKeyMap.put(insertConfig.getId(),KeyGenerator.generate(insertConfig));
+
+            }
+
+            kvPair.setKey(idToKeyMap.get(insertConfig.getId()));
+
+        }
+        else{
+            kvPair.setKey(KeyGenerator.generate(insertConfig));
+        }
+
+
+        kvPair.setValue(ValueGenerator.generate(insertConfig));
 
         return kvPair;
 
     }
 
-    private Record generateRecord(final int index, final OffsetDateTime timestamp) throws ValueGeneratorException, StringGeneratorException, KeyGeneratorException, WorkloadGeneratorException {
+    private Insert generateInsert(final int index, final OffsetDateTime timestamp) throws ValueGeneratorException, StringGeneratorException, KeyGeneratorException, WorkloadGeneratorException {
 
 
         if(index%100==0) {
-            log.debug("Generating Record " + index + " of " + generateRequest.getQueryConfig().getInsertQueryConfig().getInsertCount());
+            log.debug("Generating Insert " + index + " of " + generateRequest.getQueryConfig().getInsertQueryConfig().getInsertCount());
         }
 
-        if(generateRequest.getRecordConfigs()==null){
-            throw new WorkloadGeneratorException("RecordConfigList is NULL");
+        if(generateRequest.getInsertConfigs()==null){
+            throw new WorkloadGeneratorException("InsertConfigList is NULL");
         }
-        if(generateRequest.getRecordConfigs().isEmpty()){
-            throw new WorkloadGeneratorException("RecordConfigList is Empty");
+        if(generateRequest.getInsertConfigs().isEmpty()){
+            throw new WorkloadGeneratorException("InsertConfigList is Empty");
         }
 
         final List<KvPair> kvPairList = new LinkedList<>();
 
-        for (GeneratorRecordConfig recordConfig : generateRequest.getRecordConfigs()) {
+        for (GeneratorInsertConfig insertConfig : generateRequest.getInsertConfigs()) {
 
-            kvPairList.add(generateKvPair(recordConfig));
+            kvPairList.add(generateKvPair(insertConfig));
 
         }
 
 
-        return new Record()
-                .recordId(UUID.randomUUID())
+        return new Insert()
+                .id(UUID.randomUUID())
                 .timestamp(timestamp)
                 .kvPairs(kvPairList);
 
@@ -97,21 +111,41 @@ public class WorkloadGenerator extends BaseClass {
             throw new WorkloadGeneratorException("insertQueryConfig is NULL");
         }
 
-        final Integer recordCount =  insertQueryConfig.getInsertCount();
+        final GeneratorSelectQueryConfig selectQueryConfig = queryConfig.getSelectQueryConfig();
 
-        if(recordCount==null){
-            throw new WorkloadGeneratorException("recordCount is NULL");
+        if(selectQueryConfig==null){
+            throw new WorkloadGeneratorException("selectQueryConfig is NULL");
+        }
+
+        final Integer insertCount =  insertQueryConfig.getInsertCount();
+
+        if(insertCount==null){
+            throw new WorkloadGeneratorException("insertCount is NULL");
 
         }
 
-        log.info("Generating Workload with " + recordCount + " Records");
-
-
-        if(recordCount<=0){
-            throw new WorkloadGeneratorException("RecordCount is <=0");
+        if(insertCount<=0){
+            throw new WorkloadGeneratorException("insertCount is <=0");
         }
 
-        final LinkedList<Record> data = new LinkedList<>();
+        log.info("Generating Workload with " + insertCount + " Inserts");
+
+
+        return new Workload()
+                .inserts(generateInserts(insertQueryConfig))
+                .selects(generateSelects(selectQueryConfig));
+
+    }
+
+    private LinkedList<Select> generateSelects(final GeneratorSelectQueryConfig selectQueryConfig) {
+
+        return null;
+
+    }
+
+    private LinkedList<Insert> generateInserts(final GeneratorInsertQueryConfig insertQueryConfig) throws DurationException, ValueGeneratorException, StringGeneratorException, WorkloadGeneratorException, KeyGeneratorException {
+
+        final LinkedList<Insert> data = new LinkedList<>();
 
 
         OffsetDateTime timestamp = null;
@@ -127,9 +161,10 @@ public class WorkloadGenerator extends BaseClass {
 
         }
 
+
         for (int i = 1; i <= insertQueryConfig.getInsertCount(); i++) {
 
-            data.add(generateRecord(i,timestamp));
+            data.add(generateInsert(i,timestamp));
 
             // Calculate next Timestamp
             if(timestamp!=null && duration!=null){
@@ -140,9 +175,10 @@ public class WorkloadGenerator extends BaseClass {
 
         }
 
-        log.info("Generated Workload with " + data.size() + " Records");
+        log.info("Generated Workload with " + data.size() + " Inserts");
 
-        return new Workload().records(data);
+
+        return data;
 
     }
 

@@ -1,0 +1,11 @@
+{
+  "id" : "7e8bcd8e-0966-4a49-8fb4-a61f2ce608cf",
+  "valueType" : "string",
+  "maxKeyLength" : 8,
+  "minKeyLength" : 6,
+  "individualKey" : false,
+  "maxStringEnumValues" : 5,
+  "minStringEnumValues" : 1,
+  "maxStringValueLength" : 3,
+  "minStringValueLength" : 1
+}

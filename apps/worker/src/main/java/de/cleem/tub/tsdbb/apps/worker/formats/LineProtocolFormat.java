@@ -1,7 +1,7 @@
 package de.cleem.tub.tsdbb.apps.worker.formats;
 
 import de.cleem.tub.tsdbb.api.model.KvPair;
-import de.cleem.tub.tsdbb.api.model.Record;
+import de.cleem.tub.tsdbb.api.model.Insert;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
@@ -18,14 +18,14 @@ public class LineProtocolFormat {
     private String labelKey;
     private String labelValue;
 
-    public String getLine(final Record record) throws TSDBAdapterException {
+    public String getLine(final Insert insert) throws TSDBAdapterException {
 
-        if (record == null) {
-            throw new TSDBAdapterException("Can not write to Storage - record is NULL");
+        if (insert == null) {
+            throw new TSDBAdapterException("Can not write to Storage - insert is NULL");
         }
 
-        if (record.getKvPairs().size() == 0) {
-            throw new TSDBAdapterException("Can not write to Storage - record is Empty");
+        if (insert.getKvPairs().size() == 0) {
+            throw new TSDBAdapterException("Can not write to Storage - insert is Empty");
         }
 
         // <measurement>[,<tag_key>=<tag_value>[,<tag_key>=<tag_value>]] <field_key>=<field_value>[,<field_key>=<field_value>] [<timestamp>]
@@ -40,7 +40,7 @@ public class LineProtocolFormat {
 
 
         int counter = 0;
-        for (KvPair kvPair : record.getKvPairs()) {
+        for (KvPair kvPair : insert.getKvPairs()) {
 
             if (counter != 0) {
                 lineStringBuilder.append(",");
@@ -56,8 +56,8 @@ public class LineProtocolFormat {
         lineStringBuilder.append(" ");
 
         Instant instant;
-        if (record.getTimestamp() != null) {
-            instant = record.getTimestamp().toInstant();
+        if (insert.getTimestamp() != null) {
+            instant = insert.getTimestamp().toInstant();
         }
         else{
             instant = Instant.now();

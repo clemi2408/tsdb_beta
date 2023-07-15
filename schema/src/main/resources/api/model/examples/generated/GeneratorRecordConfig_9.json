@@ -1,7 +1,0 @@
-{
-  "keyValue" : "staticKeyUniformDoubleValue",
-  "maxValue" : 55.3,
-  "minValue" : 5.5,
-  "valueDistribution" : "UNIFORM",
-  "valueType" : "double"
-}

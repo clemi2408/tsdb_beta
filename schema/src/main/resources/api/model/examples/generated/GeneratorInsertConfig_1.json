@@ -1,0 +1,9 @@
+{
+  "id" : "2a9910e4-0215-467a-bc31-97c412264ccd",
+  "valueType" : "string",
+  "maxKeyLength" : 5,
+  "minKeyLength" : 5,
+  "individualKey" : false,
+  "maxStringValueLength" : 5,
+  "minStringValueLength" : 5
+}

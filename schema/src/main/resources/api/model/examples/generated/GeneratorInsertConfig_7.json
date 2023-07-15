@@ -1,0 +1,10 @@
+{
+  "id" : "f68f9506-3fc5-4df8-9d0a-e6208a4af211",
+  "valueType" : "integer",
+  "maxKeyLength" : 5,
+  "minKeyLength" : 2,
+  "individualKey" : false,
+  "maxValue" : 100,
+  "minValue" : 0,
+  "valueDistribution" : "UNIFORM"
+}

@@ -1,6 +1,0 @@
-{
-  "maxKeyLength" : 1,
-  "minKeyLength" : 1,
-  "stringEnumValues" : [ "s-val1", "s-val2" ],
-  "valueType" : "string"
-}

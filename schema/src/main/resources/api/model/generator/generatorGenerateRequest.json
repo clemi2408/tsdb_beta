@@ -2,11 +2,11 @@
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
   "properties" : {
-    "recordConfigs" : {
+    "insertConfigs" : {
       "type" : "array",
       "nullable" : false,
       "items" : {
-        "$ref": "generatorRecordConfig.json"
+        "$ref": "generatorInsertConfig.json"
       },
       "minItems": 1
     },
@@ -15,5 +15,5 @@
       "nullable" : false
     }
   },
-  "required": ["recordConfigs","queryConfig" ]
+  "required": ["insertConfigs","queryConfig" ]
 }

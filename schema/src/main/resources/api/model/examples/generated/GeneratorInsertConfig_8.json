@@ -1,0 +1,9 @@
+{
+  "id" : "98f52de1-b2e7-4ee1-b211-62afda30f830",
+  "valueType" : "integer",
+  "keyValue" : "staticKeyUniformIntegerValue",
+  "individualKey" : false,
+  "maxValue" : 100,
+  "minValue" : 0,
+  "valueDistribution" : "UNIFORM"
+}

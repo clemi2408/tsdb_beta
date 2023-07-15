@@ -164,7 +164,7 @@ from(bucket: "testbucket")
 |> filter(fn: (r) => r["_field"] == "TMG")
 ```
 
-### Count Records in Bucket
+### Count Inserts in Bucket
 
 ```
 from(bucket: "testbucket")

@@ -17,7 +17,7 @@
     } ]
   },
   "benchmarkWorkload" : {
-    "records" : [ {
+    "inserts" : [ {
       "kvPairs" : [ {
         "key" : "7",
         "value" : [ "ey" ]
@@ -64,7 +64,7 @@
         "key" : "staticKeyGaussDoubleValue",
         "value" : [ 12.213935666144607 ]
       } ],
-      "recordId" : "9d6ad555-d250-4b71-a43b-e129890d2823"
+      "id" : "9d6ad555-d250-4b71-a43b-e129890d2823"
     }, {
       "kvPairs" : [ {
         "key" : "8",
@@ -112,7 +112,7 @@
         "key" : "staticKeyGaussDoubleValue",
         "value" : [ 10.641319255778816 ]
       } ],
-      "recordId" : "55acc9c0-4307-4f37-b403-7e5440c6da23"
+      "id" : "55acc9c0-4307-4f37-b403-7e5440c6da23"
     }, {
       "kvPairs" : [ {
         "key" : "L",
@@ -160,7 +160,7 @@
         "key" : "staticKeyGaussDoubleValue",
         "value" : [ 14.371728518589482 ]
       } ],
-      "recordId" : "f1153808-b018-4708-8a7e-aa780c83e833"
+      "id" : "f1153808-b018-4708-8a7e-aa780c83e833"
     }, {
       "kvPairs" : [ {
         "key" : "h",
@@ -208,7 +208,7 @@
         "key" : "staticKeyGaussDoubleValue",
         "value" : [ 9.811638064448427 ]
       } ],
-      "recordId" : "da1474fa-5395-4e92-8adb-95de06c8f3cb"
+      "id" : "da1474fa-5395-4e92-8adb-95de06c8f3cb"
     }, {
       "kvPairs" : [ {
         "key" : "M",
@@ -256,7 +256,7 @@
         "key" : "staticKeyGaussDoubleValue",
         "value" : [ 10.581998869073795 ]
       } ],
-      "recordId" : "39bb6d07-5ab9-40b0-9d32-55db07aec4f5"
+      "id" : "39bb6d07-5ab9-40b0-9d32-55db07aec4f5"
     }, {
       "kvPairs" : [ {
         "key" : "q",
@@ -304,7 +304,7 @@
         "key" : "staticKeyGaussDoubleValue",
         "value" : [ 8.632495554858512 ]
       } ],
-      "recordId" : "41f49743-efce-4e23-926d-02fac8550204"
+      "id" : "41f49743-efce-4e23-926d-02fac8550204"
     }, {
       "kvPairs" : [ {
         "key" : "T",
@@ -352,7 +352,7 @@
         "key" : "staticKeyGaussDoubleValue",
         "value" : [ 9.521925783841947 ]
       } ],
-      "recordId" : "08dea61d-54c7-41f8-a7d0-fc98bcbc33fb"
+      "id" : "08dea61d-54c7-41f8-a7d0-fc98bcbc33fb"
     }, {
       "kvPairs" : [ {
         "key" : "I",
@@ -400,7 +400,7 @@
         "key" : "staticKeyGaussDoubleValue",
         "value" : [ 10.375306011533922 ]
       } ],
-      "recordId" : "3e6d7478-560c-4300-9116-84e33b49e24b"
+      "id" : "3e6d7478-560c-4300-9116-84e33b49e24b"
     }, {
       "kvPairs" : [ {
         "key" : "F",
@@ -448,7 +448,7 @@
         "key" : "staticKeyGaussDoubleValue",
         "value" : [ 11.495144471138781 ]
       } ],
-      "recordId" : "5f13399d-ea0e-4503-90d2-7896ac552dcc"
+      "id" : "5f13399d-ea0e-4503-90d2-7896ac552dcc"
     }, {
       "kvPairs" : [ {
         "key" : "X",
@@ -496,7 +496,7 @@
         "key" : "staticKeyGaussDoubleValue",
         "value" : [ 12.125851588161204 ]
       } ],
-      "recordId" : "697333ee-fb00-42ff-b0ca-32402e678719"
+      "id" : "697333ee-fb00-42ff-b0ca-32402e678719"
     } ]
   },
   "workerLoadCount" : null

@@ -1,7 +1,0 @@
-{
-  "gaussMiddle" : 10,
-  "gaussRange" : 10,
-  "keyValue" : "staticKeyGaussDoubleValue",
-  "valueDistribution" : "GAUSS",
-  "valueType" : "double"
-}

@@ -1,7 +1,7 @@
 package de.cleem.tub.tsdbb.commons.examplejson;
 
 import de.cleem.tub.tsdbb.api.model.*;
-import de.cleem.tub.tsdbb.api.model.Record;
+import de.cleem.tub.tsdbb.api.model.Insert;
 import de.cleem.tub.tsdbb.commons.duration.DurationException;
 
 import java.math.BigDecimal;
@@ -33,18 +33,18 @@ public class ExampleDataGenerator {
 
     }
 
-    public static List<Record> getRecords(final int count){
+    public static List<Insert> getInserts(final int count){
 
-        final List<Record> records = new ArrayList<>();
+        final List<Insert> inserts = new ArrayList<>();
 
         for(int i = 0; i < count; i++){
 
-            records.add(getRecord());
+            inserts.add(getInsert());
 
         }
 
 
-        return records;
+        return inserts;
     }
 
     private static List<KvPair> getKvPairs(){
@@ -56,12 +56,12 @@ public class ExampleDataGenerator {
 
     }
 
-    static Record getRecord(){
-        final Record record = new Record();
-        record.setRecordId(UUID.randomUUID());
-        record.setKvPairs(getKvPairs());
+    static Insert getInsert(){
+        final Insert insert = new Insert();
+        insert.setId(UUID.randomUUID());
+        insert.setKvPairs(getKvPairs());
 
-        return record;
+        return insert;
     }
 
     static TaskResult getTaskResult(){
@@ -170,191 +170,212 @@ public class ExampleDataGenerator {
 
     }
 
-    public static GeneratorRecordConfig dynamicKeyWithDynamicStringValue(){
-
-        final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.STRING);
-        generatorRecordConfig.setMinKeyLength(1);
-        generatorRecordConfig.setMaxKeyLength(1);
-        generatorRecordConfig.setMinStringValueLength(1);
-        generatorRecordConfig.setMaxStringValueLength(3);
-
-        return generatorRecordConfig;
+    public static GeneratorInsertConfig getGeneratorInsertConfig(){
+        final GeneratorInsertConfig generatorInsertConfig = new GeneratorInsertConfig();
+        generatorInsertConfig.setId(UUID.randomUUID().toString());
+        return generatorInsertConfig;
     }
 
-    public static GeneratorRecordConfig staticKeyWithDynamicStringValue(){
+    public static GeneratorInsertConfig dynamicKeyWithDynamicStringValueIndividualKey(){
 
-        final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setKeyValue("staticKeyDynStringValue");
-        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.STRING);
-        generatorRecordConfig.setMinStringValueLength(3);
-        generatorRecordConfig.setMaxStringValueLength(5);
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
 
-        return generatorRecordConfig;
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.STRING);
+        generatorInsertConfig.setMinKeyLength(5);
+        generatorInsertConfig.setMaxKeyLength(5);
+        generatorInsertConfig.setMinStringValueLength(5);
+        generatorInsertConfig.setMaxStringValueLength(5);
+        generatorInsertConfig.setIndividualKey(true);
+
+        return generatorInsertConfig;
+    }
+    public static GeneratorInsertConfig dynamicKeyWithDynamicStringValueSharedKey(){
+
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
+
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.STRING);
+        generatorInsertConfig.setMinKeyLength(5);
+        generatorInsertConfig.setMaxKeyLength(5);
+        generatorInsertConfig.setMinStringValueLength(5);
+        generatorInsertConfig.setMaxStringValueLength(5);
+        generatorInsertConfig.setIndividualKey(false);
+
+        return generatorInsertConfig;
     }
 
-    public static GeneratorRecordConfig dynamicKeyWithDynamicStringEnumCountAndDynamicValue(){
+    public static GeneratorInsertConfig staticKeyWithDynamicStringValue(){
 
-        final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.STRING);
-        generatorRecordConfig.setMinKeyLength(6);
-        generatorRecordConfig.setMaxKeyLength(8);
-        generatorRecordConfig.setMinStringValueLength(1);
-        generatorRecordConfig.setMaxStringValueLength(3);
-        generatorRecordConfig.setMinStringEnumValues(1);
-        generatorRecordConfig.setMaxStringEnumValues(5);
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
+        generatorInsertConfig.setKeyValue("staticKeyDynStringValue");
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.STRING);
+        generatorInsertConfig.setMinStringValueLength(3);
+        generatorInsertConfig.setMaxStringValueLength(5);
 
-        return generatorRecordConfig;
+        return generatorInsertConfig;
     }
 
-    public static GeneratorRecordConfig staticKeyWithDynamicStringEnumCountAndDynamicValue(){
+    public static GeneratorInsertConfig dynamicKeyWithDynamicStringEnumCountAndDynamicValue(){
 
-        final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.STRING);
-        generatorRecordConfig.setKeyValue("staticKeyDynStringEnumDynValue");
-        generatorRecordConfig.setMinStringValueLength(1);
-        generatorRecordConfig.setMaxStringValueLength(3);
-        generatorRecordConfig.setMinStringEnumValues(1);
-        generatorRecordConfig.setMaxStringEnumValues(5);
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.STRING);
+        generatorInsertConfig.setMinKeyLength(6);
+        generatorInsertConfig.setMaxKeyLength(8);
+        generatorInsertConfig.setMinStringValueLength(1);
+        generatorInsertConfig.setMaxStringValueLength(3);
+        generatorInsertConfig.setMinStringEnumValues(1);
+        generatorInsertConfig.setMaxStringEnumValues(5);
 
-        return generatorRecordConfig;
+        return generatorInsertConfig;
     }
 
-    public static GeneratorRecordConfig dynamicKeyWithStaticStringEnumValues(){
+    public static GeneratorInsertConfig staticKeyWithDynamicStringEnumCountAndDynamicValue(){
 
-        final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.STRING);
-        generatorRecordConfig.setMinKeyLength(1);
-        generatorRecordConfig.setMaxKeyLength(1);
-        generatorRecordConfig.setStringEnumValues(List.of("s-val1","s-val2"));
-        return generatorRecordConfig;
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.STRING);
+        generatorInsertConfig.setKeyValue("staticKeyDynStringEnumDynValue");
+        generatorInsertConfig.setMinStringValueLength(1);
+        generatorInsertConfig.setMaxStringValueLength(3);
+        generatorInsertConfig.setMinStringEnumValues(1);
+        generatorInsertConfig.setMaxStringEnumValues(5);
+
+        return generatorInsertConfig;
     }
 
-    public static GeneratorRecordConfig staticKeyWithStaticStringEnumValues(){
+    public static GeneratorInsertConfig dynamicKeyWithStaticStringEnumValues(){
 
-        final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.STRING);
-        generatorRecordConfig.setKeyValue("staticKeyStaticStringEnumValues");
-        generatorRecordConfig.setStringEnumValues(List.of("s-val1","s-val2"));
-        return generatorRecordConfig;
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.STRING);
+        generatorInsertConfig.setMinKeyLength(1);
+        generatorInsertConfig.setMaxKeyLength(1);
+        generatorInsertConfig.setStringEnumValues(List.of("s-val1","s-val2"));
+        return generatorInsertConfig;
     }
 
-    public static GeneratorRecordConfig dynamicKeyWithUniformIntegerValue(){
+    public static GeneratorInsertConfig staticKeyWithStaticStringEnumValues(){
 
-        final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.INTEGER);
-        generatorRecordConfig.minKeyLength(2);
-        generatorRecordConfig.maxKeyLength(5);
-        generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.UNIFORM);
-        generatorRecordConfig.setMinValue(BigDecimal.valueOf(0));
-        generatorRecordConfig.setMaxValue(BigDecimal.valueOf(100));
-
-        return generatorRecordConfig;
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.STRING);
+        generatorInsertConfig.setKeyValue("staticKeyStaticStringEnumValues");
+        generatorInsertConfig.setStringEnumValues(List.of("s-val1","s-val2"));
+        return generatorInsertConfig;
     }
 
-    public static GeneratorRecordConfig staticKeyWithUniformIntegerValue(){
+    public static GeneratorInsertConfig dynamicKeyWithUniformIntegerValue(){
 
-        final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.INTEGER);
-        generatorRecordConfig.setKeyValue("staticKeyUniformIntegerValue");
-        generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.UNIFORM);
-        generatorRecordConfig.setMinValue(BigDecimal.valueOf(0));
-        generatorRecordConfig.setMaxValue(BigDecimal.valueOf(100));
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.INTEGER);
+        generatorInsertConfig.minKeyLength(2);
+        generatorInsertConfig.maxKeyLength(5);
+        generatorInsertConfig.setValueDistribution(GeneratorInsertConfig.ValueDistributionEnum.UNIFORM);
+        generatorInsertConfig.setMinValue(BigDecimal.valueOf(0));
+        generatorInsertConfig.setMaxValue(BigDecimal.valueOf(100));
 
-        return generatorRecordConfig;
+        return generatorInsertConfig;
     }
 
-    public static GeneratorRecordConfig staticKeyWithUniformDoubleValue(){
+    public static GeneratorInsertConfig staticKeyWithUniformIntegerValue(){
 
-        final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.DOUBLE);
-        generatorRecordConfig.setKeyValue("staticKeyUniformDoubleValue");
-        generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.UNIFORM);
-        generatorRecordConfig.setMinValue(BigDecimal.valueOf(5.5d));
-        generatorRecordConfig.setMaxValue(BigDecimal.valueOf(55.3d));
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.INTEGER);
+        generatorInsertConfig.setKeyValue("staticKeyUniformIntegerValue");
+        generatorInsertConfig.setValueDistribution(GeneratorInsertConfig.ValueDistributionEnum.UNIFORM);
+        generatorInsertConfig.setMinValue(BigDecimal.valueOf(0));
+        generatorInsertConfig.setMaxValue(BigDecimal.valueOf(100));
 
-        return generatorRecordConfig;
+        return generatorInsertConfig;
     }
 
-    public static GeneratorRecordConfig dynamicKeyWithTriangleIntegerValue(){
+    public static GeneratorInsertConfig staticKeyWithUniformDoubleValue(){
 
-        final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.INTEGER);
-        generatorRecordConfig.minKeyLength(2);
-        generatorRecordConfig.maxKeyLength(5);
-        generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.TRIANGLE);
-        generatorRecordConfig.setMinValue(BigDecimal.valueOf(0));
-        generatorRecordConfig.setMaxValue(BigDecimal.valueOf(100));
-        generatorRecordConfig.setTriangleSpike(BigDecimal.valueOf(50));
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.DOUBLE);
+        generatorInsertConfig.setKeyValue("staticKeyUniformDoubleValue");
+        generatorInsertConfig.setValueDistribution(GeneratorInsertConfig.ValueDistributionEnum.UNIFORM);
+        generatorInsertConfig.setMinValue(BigDecimal.valueOf(5.5d));
+        generatorInsertConfig.setMaxValue(BigDecimal.valueOf(55.3d));
 
-        return generatorRecordConfig;
+        return generatorInsertConfig;
     }
 
-    public static GeneratorRecordConfig staticKeyWithTriangleIntegerValue(){
+    public static GeneratorInsertConfig dynamicKeyWithTriangleIntegerValue(){
 
-        final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.INTEGER);
-        generatorRecordConfig.setKeyValue("staticKeyTriangleIntegerValue");
-        generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.TRIANGLE);
-        generatorRecordConfig.setMinValue(BigDecimal.valueOf(0));
-        generatorRecordConfig.setMaxValue(BigDecimal.valueOf(100));
-        generatorRecordConfig.setTriangleSpike(BigDecimal.valueOf(50));
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.INTEGER);
+        generatorInsertConfig.minKeyLength(2);
+        generatorInsertConfig.maxKeyLength(5);
+        generatorInsertConfig.setValueDistribution(GeneratorInsertConfig.ValueDistributionEnum.TRIANGLE);
+        generatorInsertConfig.setMinValue(BigDecimal.valueOf(0));
+        generatorInsertConfig.setMaxValue(BigDecimal.valueOf(100));
+        generatorInsertConfig.setTriangleSpike(BigDecimal.valueOf(50));
 
-
-        return generatorRecordConfig;
+        return generatorInsertConfig;
     }
 
-    public static GeneratorRecordConfig staticKeyWithTriangleDoubleValue(){
+    public static GeneratorInsertConfig staticKeyWithTriangleIntegerValue(){
 
-        final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.DOUBLE);
-        generatorRecordConfig.setKeyValue("staticKeyTriangleDoubleValue");
-        generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.TRIANGLE);
-        generatorRecordConfig.setMinValue(BigDecimal.valueOf(5.5d));
-        generatorRecordConfig.setMaxValue(BigDecimal.valueOf(55.3d));
-        generatorRecordConfig.setTriangleSpike(BigDecimal.valueOf(10));
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.INTEGER);
+        generatorInsertConfig.setKeyValue("staticKeyTriangleIntegerValue");
+        generatorInsertConfig.setValueDistribution(GeneratorInsertConfig.ValueDistributionEnum.TRIANGLE);
+        generatorInsertConfig.setMinValue(BigDecimal.valueOf(0));
+        generatorInsertConfig.setMaxValue(BigDecimal.valueOf(100));
+        generatorInsertConfig.setTriangleSpike(BigDecimal.valueOf(50));
 
-        return generatorRecordConfig;
+
+        return generatorInsertConfig;
     }
 
-    public static GeneratorRecordConfig dynamicKeyWithGaussIntegerValue(){
+    public static GeneratorInsertConfig staticKeyWithTriangleDoubleValue(){
 
-        final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.INTEGER);
-        generatorRecordConfig.minKeyLength(2);
-        generatorRecordConfig.maxKeyLength(5);
-        generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.GAUSS);
-        generatorRecordConfig.setGaussMiddle(BigDecimal.valueOf(10));
-        generatorRecordConfig.setGaussRange(BigDecimal.valueOf(10));
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.DOUBLE);
+        generatorInsertConfig.setKeyValue("staticKeyTriangleDoubleValue");
+        generatorInsertConfig.setValueDistribution(GeneratorInsertConfig.ValueDistributionEnum.TRIANGLE);
+        generatorInsertConfig.setMinValue(BigDecimal.valueOf(5.5d));
+        generatorInsertConfig.setMaxValue(BigDecimal.valueOf(55.3d));
+        generatorInsertConfig.setTriangleSpike(BigDecimal.valueOf(10));
 
-
-        return generatorRecordConfig;
+        return generatorInsertConfig;
     }
 
-    public static GeneratorRecordConfig staticKeyWithGaussIntegerValue(){
+    public static GeneratorInsertConfig dynamicKeyWithGaussIntegerValue(){
 
-        final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
-        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.INTEGER);
-        generatorRecordConfig.setKeyValue("staticKeyGaussIntegerValue");
-        generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.GAUSS);
-        generatorRecordConfig.setGaussMiddle(BigDecimal.valueOf(10));
-        generatorRecordConfig.setGaussRange(BigDecimal.valueOf(10));
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.INTEGER);
+        generatorInsertConfig.minKeyLength(2);
+        generatorInsertConfig.maxKeyLength(5);
+        generatorInsertConfig.setValueDistribution(GeneratorInsertConfig.ValueDistributionEnum.GAUSS);
+        generatorInsertConfig.setGaussMiddle(BigDecimal.valueOf(10));
+        generatorInsertConfig.setGaussRange(BigDecimal.valueOf(10));
 
 
-        return generatorRecordConfig;
+        return generatorInsertConfig;
     }
 
-    public static GeneratorRecordConfig staticKeyWithGaussDoubleValue(){
+    public static GeneratorInsertConfig staticKeyWithGaussIntegerValue(){
 
-        final GeneratorRecordConfig generatorRecordConfig = new GeneratorRecordConfig();
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.INTEGER);
+        generatorInsertConfig.setKeyValue("staticKeyGaussIntegerValue");
+        generatorInsertConfig.setValueDistribution(GeneratorInsertConfig.ValueDistributionEnum.GAUSS);
+        generatorInsertConfig.setGaussMiddle(BigDecimal.valueOf(10));
+        generatorInsertConfig.setGaussRange(BigDecimal.valueOf(10));
 
-        generatorRecordConfig.setValueType(GeneratorRecordConfig.ValueTypeEnum.DOUBLE);
-        generatorRecordConfig.setKeyValue("staticKeyGaussDoubleValue");
-        generatorRecordConfig.setValueDistribution(GeneratorRecordConfig.ValueDistributionEnum.GAUSS);
-        generatorRecordConfig.setGaussMiddle(BigDecimal.valueOf(10));
-        generatorRecordConfig.setGaussRange(BigDecimal.valueOf(10));
 
-        return generatorRecordConfig;
+        return generatorInsertConfig;
+    }
+
+    public static GeneratorInsertConfig staticKeyWithGaussDoubleValue(){
+
+        final GeneratorInsertConfig generatorInsertConfig = getGeneratorInsertConfig();
+
+        generatorInsertConfig.setValueType(GeneratorInsertConfig.ValueTypeEnum.DOUBLE);
+        generatorInsertConfig.setKeyValue("staticKeyGaussDoubleValue");
+        generatorInsertConfig.setValueDistribution(GeneratorInsertConfig.ValueDistributionEnum.GAUSS);
+        generatorInsertConfig.setGaussMiddle(BigDecimal.valueOf(10));
+        generatorInsertConfig.setGaussRange(BigDecimal.valueOf(10));
+
+        return generatorInsertConfig;
     }
 
     public static GeneratorGenerateRequest createGenerateRequest(final GeneratorQueryConfig queryConfig){
@@ -362,26 +383,27 @@ public class ExampleDataGenerator {
         final GeneratorGenerateRequest request = new GeneratorGenerateRequest();
         request.setQueryConfig(queryConfig);
 
-        final List<GeneratorRecordConfig> generatorRecordConfigList = new ArrayList<>();
+        final List<GeneratorInsertConfig> generatorInsertConfigList = new ArrayList<>();
 
-        generatorRecordConfigList.add(dynamicKeyWithDynamicStringValue());
-        generatorRecordConfigList.add(staticKeyWithDynamicStringValue());
-        generatorRecordConfigList.add(dynamicKeyWithDynamicStringEnumCountAndDynamicValue());
-        generatorRecordConfigList.add(staticKeyWithDynamicStringEnumCountAndDynamicValue());
-        generatorRecordConfigList.add(dynamicKeyWithStaticStringEnumValues());
-        generatorRecordConfigList.add(staticKeyWithStaticStringEnumValues());
-        generatorRecordConfigList.add(dynamicKeyWithUniformIntegerValue());
-        generatorRecordConfigList.add(staticKeyWithUniformIntegerValue());
-        generatorRecordConfigList.add(staticKeyWithUniformDoubleValue());
-        generatorRecordConfigList.add(dynamicKeyWithTriangleIntegerValue());
-        generatorRecordConfigList.add(staticKeyWithTriangleIntegerValue());
-        generatorRecordConfigList.add(staticKeyWithTriangleDoubleValue());
-        generatorRecordConfigList.add(dynamicKeyWithGaussIntegerValue());
-        generatorRecordConfigList.add(staticKeyWithGaussIntegerValue());
-        generatorRecordConfigList.add(staticKeyWithGaussDoubleValue());
+        generatorInsertConfigList.add(dynamicKeyWithDynamicStringValueIndividualKey());
+        generatorInsertConfigList.add(dynamicKeyWithDynamicStringValueSharedKey());
+        generatorInsertConfigList.add(staticKeyWithDynamicStringValue());
+        generatorInsertConfigList.add(dynamicKeyWithDynamicStringEnumCountAndDynamicValue());
+        generatorInsertConfigList.add(staticKeyWithDynamicStringEnumCountAndDynamicValue());
+        generatorInsertConfigList.add(dynamicKeyWithStaticStringEnumValues());
+        generatorInsertConfigList.add(staticKeyWithStaticStringEnumValues());
+        generatorInsertConfigList.add(dynamicKeyWithUniformIntegerValue());
+        generatorInsertConfigList.add(staticKeyWithUniformIntegerValue());
+        generatorInsertConfigList.add(staticKeyWithUniformDoubleValue());
+        generatorInsertConfigList.add(dynamicKeyWithTriangleIntegerValue());
+        generatorInsertConfigList.add(staticKeyWithTriangleIntegerValue());
+        generatorInsertConfigList.add(staticKeyWithTriangleDoubleValue());
+        generatorInsertConfigList.add(dynamicKeyWithGaussIntegerValue());
+        generatorInsertConfigList.add(staticKeyWithGaussIntegerValue());
+        generatorInsertConfigList.add(staticKeyWithGaussDoubleValue());
 
 
-        request.setRecordConfigs(generatorRecordConfigList);
+        request.setInsertConfigs(generatorInsertConfigList);
 
         return request;
 

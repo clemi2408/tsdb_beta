@@ -2,13 +2,14 @@
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
   "properties" : {
-    "gaussMiddle" : {
-      "type" : "number",
-      "nullable" : true
+    "id" : {
+      "type" : "string",
+      "nullable" : false
     },
-    "gaussRange" : {
-      "type" : "number",
-      "nullable" : true
+    "valueType" : {
+      "type" : "string",
+      "enum" : [ "integer", "double", "string" ],
+      "nullable" : false
     },
     "keyValue" : {
       "type" : "string",
@@ -18,32 +19,21 @@
       "type" : "integer",
       "nullable" : true
     },
-    "maxStringEnumValues" : {
-      "type" : "integer",
-      "nullable" : true
-    },
-    "maxStringValueLength" : {
-      "type" : "integer",
-      "nullable" : true
-    },
-    "maxValue" : {
-      "type" : "number",
-      "nullable" : true
-    },
     "minKeyLength" : {
+      "type" : "integer",
+      "nullable" : true
+    },
+    "individualKey" : {
+      "type" : "boolean",
+      "default": false,
+      "nullable" : true
+    },
+    "maxStringEnumValues" : {
       "type" : "integer",
       "nullable" : true
     },
     "minStringEnumValues" : {
       "type" : "integer",
-      "nullable" : true
-    },
-    "minStringValueLength" : {
-      "type" : "integer",
-      "nullable" : true
-    },
-    "minValue" : {
-      "type" : "number",
       "nullable" : true
     },
     "stringEnumValues" : {
@@ -54,6 +44,30 @@
       },
       "minItems": 1
     },
+    "maxStringValueLength" : {
+      "type" : "integer",
+      "nullable" : true
+    },
+    "minStringValueLength" : {
+      "type" : "integer",
+      "nullable" : true
+    },
+    "maxValue" : {
+      "type" : "number",
+      "nullable" : true
+    },
+    "minValue" : {
+      "type" : "number",
+      "nullable" : true
+    },
+    "gaussMiddle" : {
+      "type" : "number",
+      "nullable" : true
+    },
+    "gaussRange" : {
+      "type" : "number",
+      "nullable" : true
+    },
     "triangleSpike" : {
       "type" : "number",
       "nullable" : true
@@ -62,12 +76,7 @@
       "type" : "string",
       "enum" : [ "UNIFORM", "GAUSS", "TRIANGLE" ],
       "nullable" : true
-    },
-    "valueType" : {
-      "type" : "string",
-      "enum" : [ "integer", "double", "string" ],
-      "nullable" : false
     }
   },
-  "required": [ "valueType" ]
+  "required": [ "id","valueType" ]
 }

@@ -1,0 +1,8 @@
+{
+  "id" : "3bd22795-44de-4c70-bd80-dffba870bea2",
+  "valueType" : "string",
+  "maxKeyLength" : 1,
+  "minKeyLength" : 1,
+  "individualKey" : false,
+  "stringEnumValues" : [ "s-val1", "s-val2" ]
+}

@@ -17,12 +17,12 @@ the TSDB:
 
 - Prepare or connect the client adapter before the benchmark `setup`.
 - creating the storage target `createStorage` (optional).
-- Write a record and measure the latency `write`.
+- Write a insert and measure the latency `write`.
 - Clean up the storage target after running the benchmark `cleanup`.
 - Close the connection to the TSDB `close` (optional).
 
 With the execution of the `write` operation first a start timestamp `startTimestamp` with current date and time is set.
-Then the record is written into the memory of the TSDB.
+Then the insert is written into the memory of the TSDB.
 After the write operation the end timestamp `endTimestamp` is set.
-The record written to the TSDB, start and end timestamp and the latency resulting from the timestamps are stored in the
+The insert written to the TSDB, start and end timestamp and the latency resulting from the timestamps are stored in the
 benchmark result.
