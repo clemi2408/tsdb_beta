@@ -1,6 +1,6 @@
 # Queries 
 
-## Create Data without timestamp
+## Create data without timestamp
 
 ### Victoria
 
@@ -23,7 +23,7 @@ curl -d 'myMeasurement,myLabelKey1=myLabelValue1 myField1=13,myField2=0.23 16731
 ### Influx
 ....
 
-##  Get all Labels
+##  Get all labels
 
 ### Victoria
 ```
@@ -34,15 +34,21 @@ curl -g 'http://localhost:8428/api/v1/labels'
 ### Influx
 ....
 
+## Get single label values
 
-## Victoria: Get single Label values
+### Victoria
 
 ```
 curl -G 'http://localhost:8428/api/v1/label/myLabelKey1/values'
 ```
 ---> returns "myLabelValue1"
 
-## Victoria: Get all Label values field values
+### Influx
+....
+
+## Get all label values field values
+
+### Victoria
 
 ```
 curl -XGET -G 'http://localhost:8428/api/v1/label/__name__/values'
@@ -59,7 +65,12 @@ curl -X GET 'http://localhost:8428/api/v1/label/__name__/values' --data-urlencod
 ```
 ---> returns "myMeasurement_myField1", "myMeasurement_myField2" because name starts with "myMeasurement"
 
-## Victoria: Count Series
+### Influx
+....
+
+## Count series
+
+### Victoria
 
 ```
 curl -s 'http://localhost:8428/api/v1/series/count'
@@ -76,56 +87,89 @@ curl -X GET 'http://localhost:8428/api/v1/series/count' --data-urlencode 'match[
 ```
 ---> returns 2 because of 2 series starting  with "myMeasurement"
 
-## Victoria: Get all Series (one Series per field)
+### Influx
+....
+
+## Get all series (one series per field)
+
+### Victoria
 
 ```
 curl -G 'http://localhost:8428/api/v1/series' -d 'match[]={__name__=~".*"}'
 ```
 --> returns "myMeasurement_myField1" and "myMeasurement_myField2"
 
-## Victoria: Get all Series with prefix "myMeasurement" (one Series per field)
+### Influx
+....
+
+## Get all series with prefix "myMeasurement" (one series per field)
+
+### Victoria
 
 ```
 curl -G 'http://localhost:8428/api/v1/series' -d 'match[]={__name__=~"myMeasurement.*"}'
 ```
 --> returns "myMeasurement_myField1" and "myMeasurement_myField2"
 
-## Victoria: Get a Series
+### Influx
+....
 
+## Get a series
+
+### Victoria
 ```
 curl -G 'http://localhost:8428/api/v1/series?match[]=myMeasurement_myField1'
 ```
 
-## Victoria: Query Series value
+### Influx
+....
 
+## Query series value
+
+### Victoria
 ```
 curl 'http://localhost:8428/api/v1/query' -d 'query=myMeasurement_myField1'
 ```
 
-## Victoria: Export Series values
+### Influx
+....
+
+## Export series values
+
+### Victoria
 
 ```
 curl -X POST 'http://localhost:8428/api/v1/export' -d 'match[]={__name__=~"myMeasurement_myField1"}'
 ```
 
-## Victoria: Delete Series
+### Influx
+....
+
+## Delete series
+
+### Victoria
 
 ```
 curl 'http://localhost:8428/api/v1/admin/tsdb/delete_series?match[]=myMeasurement_myField1'
 ```
 
-## Victoria: Query latest value?
+### Influx
+....
 
+## Query latest value
+
+### Victoria
 ```
 curl 'http://localhost:8428/api/v1/query' -d 'query=myMeasurement_myField1'
 ```
 --> Returns "13" as it was added last
 
-## Queries
+### Influx
+....
 
-### Query: sum_over_time
+## Query sum_over_time
 
-#### Query sum_over_time
+### Victoria
 
 ```
 curl 'http://localhost:8428/api/v1/query' -d 'query=sum_over_time(myMeasurement_myField1)'
@@ -136,14 +180,24 @@ curl 'http://localhost:8428/api/v1/query' -d 'query=sum_over_time(myMeasurement_
 curl 'http://localhost:8428/api/v1/query' -d 'query=sum_over_time(myMeasurement_myField1)' -d 'start=-10m' -d 'step=1s'
 ```
 
-#### Query range: sum_over_time myMeasurement_myField1 for last [10m]
+### Influx
+....
+
+## Query range sum_over_time myMeasurement_myField1 for last [10m]
+
+### Victoria
 
 ```
 curl 'http://localhost:8428/api/v1/query_range' -d 'query=sum_over_time(myMeasurement_myField1[10m])'
 ```
 --> returns sum of values of myMeasurement_myField1 in the last 10m
 
-#### Query range: sum_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
+### Influx
+....
+
+## Query range sum_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
+
+### Victoria
 
 ```
 curl 'http://localhost:8428/api/v1/query_range' -d 'query=sum_over_time(myMeasurement_myField1[10m])' -d 'start=-10m' -d 'step=1m'
@@ -151,113 +205,167 @@ curl 'http://localhost:8428/api/v1/query_range' -d 'query=sum_over_time(myMeasur
 
 --> returns sums of values of myMeasurement_myField1 in the last 10m "plotted" in frame now() -10m to now() in resolution 1m
 
-### Query avg_over_time
+### Influx
+....
 
-#### Query range: avg_over_time myMeasurement_myField1 for last [10m]
+## Query range avg_over_time myMeasurement_myField1 for last [10m]
+
+### Victoria
 
 ```
 curl 'http://localhost:8428/api/v1/query_range' -d 'query=avg_over_time(myMeasurement_myField1[10m])' 
 ```
 
-#### Query range: avg_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
+### Influx
+....
+
+## Query range avg_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
+
+### Victoria
 
 ```
 curl 'http://localhost:8428/api/v1/query_range' -d 'query=avg_over_time(myMeasurement_myField1[10m])' -d 'start=-10m' -d 'step=1m'
 ```
 
+### Influx
+....
 
-### Query min_over_time
+## Query range: min_over_time myMeasurement_myField1 for last [10m]
 
-#### Query range: min_over_time myMeasurement_myField1 for last [10m]
+### Victoria
 
 ```
 curl 'http://localhost:8428/api/v1/query_range' -d 'query=min_over_time(myMeasurement_myField1[10m])' 
 ```
 
-#### Query range: min_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
+### Influx
+....
+
+## Query range min_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
+
+### Victoria
 
 ```
 curl 'http://localhost:8428/api/v1/query_range' -d 'query=min_over_time(myMeasurement_myField1[10m])' -d 'start=-10m' -d 'step=1m'
 ```
 
-### Query max_over_time
+### Influx
+....
 
-#### Query range: max_over_time myMeasurement_myField1 for last [10m]
+## Query range max_over_time myMeasurement_myField1 for last [10m]
+
+### Victoria
 
 ```
 curl 'http://localhost:8428/api/v1/query_range' -d 'query=max_over_time(myMeasurement_myField1[10m])' 
 ```
 
-#### Query range: max_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
+### Influx
+....
+
+## Query range max_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
+
+### Victoria
 
 ```
 curl 'http://localhost:8428/api/v1/query_range' -d 'query=max_over_time(myMeasurement_myField1[10m])' -d 'start=-10m' -d 'step=1m'
 ```
 
-Prio 3:
+### Influx
+....
+
+# WIP
+## Prios
+### Prio 1
+
+Query returns currentValue of a {random|defined} field (based on field key presence):
+
+```json
 {
-"type" : "A",
-"selectCount" : 100,
-//All Labels
+    "type" : "F",
+    "selectCount" : 100,
+    "key": "cpu"
 }
+```
+
+Returns aggregated type value of a {random|defined} field (based on field key presence) from startOffset in resolution.
+Default values if not set:
+
+- StartOffset=1H 
+- Resolution 1Min
+
+```json
 {
-"type" : "B",
-"selectCount" : 100,
-"labelValues": ["Sensor1", "Sensor2"]
-//Specific Label value
+    "type" : "G",
+    "selectCount" : 100,
+    "aggregateType" : "SUM",
+    "key": "cpu",
+    "startOffset": "P1H",
+    "resolution": "P1S"
 }
+```
+
+Return A all labels, B a specific label value or C all field values of records matching the label.
+
+A=All Labels (--> Prio 3)
+B=Specific Label value (--> Prio 3)
+C=All Field Values of Records matching the label (--> Prio 3)
+
+```json
+{
+    "type" : "{A,B,C}", 
+    "minSelectInterval" : "P1H",
+    "maxSelectInterval" : "P8H",
+    "selectCount" : 10,
+    "aggregateType" : "NONE"
+}
+```
+### Prio 2
+
+Returns all fields and their values in a series
+
+```json
+{
+    "type" : "D",
+    "selectCount" : 100
+}
+```
+
+Query returns all fields starting with a prefix
+
+```json
+{
+    "type" : "E",
+    "selectCount" : 100
+}
+```
+
+### Prio 3
+
+Query returns all labels
+
+```json
+{
+    "type" : "A",
+    "selectCount" : 100
+}
+```
+
+Query returns specific label value
+```json
+{
+    "type" : "B",
+    "selectCount" : 100,
+    "labelValues": ["Sensor1", "Sensor2"]
+}
+```
+
+Query returns all field values of records matching the label.
+
+```json
 {
 "type" : "C",
 "selectCount" : 100,
 "labelValues": ["Sensor1", "Sensor2"]
-//All Field Values of Records matching the label.
 }
-
-
-
-Prio 2:
-
-{
-"type" : "D",
-"selectCount" : 100,
-//Returns all Fields and their values in a RUN
-}
-
-{
-"type" : "E",
-"selectCount" : 100,
-//Returns all Fields starting with a Prefix
-}
-
-
-Prio 1: 
-
-{
-"type" : "F",
-"selectCount" : 100,
-"key": "cpu" // or optional
-
-//Returns currentValue of a {random|defined} field
-}
-
-{
-"type" : "G",
-"selectCount" : 100,
-"aggregateType" : "SUM",
-"key": "cpu" // or optional,
-"startOffset": "P1H",
-"resolution": "P1S"
-
-
-//Returns Aggregated Type value of a {random|defined} field from StartOffset in Resuolution.
-// if StartOffset=Default 1H & Resolution=Default 1Min
-}
-
-
-{
-"minSelectInterval" : "P1H",
-"type" : "{A,B,C}", A=LABEL;
-"maxSelectInterval" : "P8H",
-"selectCount" : 10,
-"aggregateType" : "NONE"
-}
+```
