@@ -95,62 +95,13 @@ export INFLUX_ORG_ID=22a4a65dfebd3452
 export INFLUX_BUCKET=testbucket12345
 export INFLUX_BUCKET_ID=b9132e431c712bfa
 
-### Check Health
 
-```
-curl "http://localhost:8086/health"
-```
 
 Response code OK: 200
 Response code ERROR: 503
 
-### Orgs
 
-#### List Orgs
 
-```
-curl "http://localhost:8086/api/v2/orgs" \
---header "Authorization: Token ${INFLUX_TOKEN}"
-```
-
-### Buckets
-
-#### List Buckets
-
-```
-curl "http://localhost:8086/api/v2/buckets" \
---header "Authorization: Token ${INFLUX_TOKEN}"
-```
-
-#### Create Bucket
-
-```
-curl --request POST \
-	"http://localhost:8086/api/v2/buckets" \
-	--header "Authorization: Token ${INFLUX_TOKEN}" \
-  --header "Content-type: application/json" \
-  --data '{
-    "orgID": "'"${INFLUX_ORG_ID}"'",
-    "name": "'"${INFLUX_BUCKET}"'"
-  }'
-```
-
-#### Delete Bucket
-
-```
-curl --request DELETE "http://localhost:8086/api/v2/buckets/${INFLUX_BUCKET_ID}" \
-  --header "Authorization: Token ${INFLUX_TOKEN}" \
-  --header 'Accept: application/json'
-```
-
-### Write Data
-
-```
-curl -v --request POST \
-"http://localhost:8086/api/v2/write?org=${INFLUX_ORG}&bucket=${INFLUX_BUCKET}&precision=s" \
-  --header "Authorization: Token ${INFLUX_TOKEN}" \
-  --data-binary 'testtesttest1,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1673369771'
-```
 
 ## FLUX Query Examples
 
