@@ -3,6 +3,9 @@
 ## Check health
 
 ### Victoria
+
+https://github.com/VictoriaMetrics/VictoriaMetrics/issues/3539
+--> curl -v http://victoria:8428/metrics
 ...
 
 ### Influx
@@ -14,6 +17,7 @@ curl "http://localhost:8086/health"
 ## Structural Queries
 
 ### Victoria
+Not required as concepts like orgs and buckets are not present
 ...
 
 ### Influx
@@ -58,7 +62,10 @@ curl --request DELETE "http://localhost:8086/api/v2/buckets/${INFLUX_BUCKET_ID}"
 ### Victoria
 
 ```
-curl -d "myMeasurement,myLabelKey1=myLabelValue1 myField1=10,myField2=1.23" -X POST "http://localhost:8428/write"
+curl \
+-d "myMeasurement,myLabelKey1=myLabelValue1 myField1=10,myField2=1.23" \
+-X POST \
+"http://localhost:8428/write"
 ```
 
 ### Influx
@@ -349,13 +356,13 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=max_over_time(myMeasur
 
 # WIP
 ## Prios
-### Prio 1
+### Prio 1 
 
 Query returns currentValue of a {random|defined} field (based on field key presence):
-
+Former query F
 ```json
 {
-    "type" : "F",
+    "type" : "CURRENT_FIELD_VALUE",
     "selectCount" : 100,
     "key": "cpu"
 }
@@ -367,9 +374,11 @@ Default values if not set:
 - StartOffset=1H 
 - Resolution 1Min
 
+Former query G
+
 ```json
 {
-    "type" : "G",
+    "type" : "AGGREGATED_FIELD_VALUES",
     "selectCount" : 100,
     "aggregateType" : "SUM",
     "key": "cpu",
@@ -380,64 +389,39 @@ Default values if not set:
 
 Return A all labels, B a specific label value or C all field values of records matching the label.
 
-A=All Labels (--> Prio 3)
-B=Specific Label value (--> Prio 3)
-C=All Field Values of Records matching the label (--> Prio 3)
+A= ALL_LABELS --> All Labels (--> Prio 3)
+B= LABELS_VALUE --> Specific Label value (--> Prio 3)
+C= FIELD_VALUES_MATCHING_LABELS --> All Field Values of Records matching the label (--> Prio 3)
+aggregateType is Optional and defaulted to NONE
 
 ```json
 {
-    "type" : "{A,B,C}", 
+    "type" : "{ALL_LABELS,LABELS_VALUE,FIELD_VALUES_MATCHING_LABELS}", 
     "minSelectInterval" : "P1H",
     "maxSelectInterval" : "P8H",
     "selectCount" : 10,
-    "aggregateType" : "NONE"
+    "aggregateType" : "NONE",
+    "labels": ["label1", "label2"]
 }
 ```
 ### Prio 2
 
 Returns all fields and their values in a series
-
+Former query D
 ```json
 {
-    "type" : "D",
+    "type" : "ALL_FIELDS_WITH_VALUES",
     "selectCount" : 100
 }
 ```
 
 Query returns all fields starting with a prefix
 
+Former query E
+
 ```json
 {
-    "type" : "E",
+    "type" : "ALL_FIELDS_STARTING_WITH_PREFIX",
     "selectCount" : 100
-}
-```
-### Prio 3
-
-Query returns all labels
-
-```json
-{
-    "type" : "A",
-    "selectCount" : 100
-}
-```
-
-Query returns specific label value
-```json
-{
-    "type" : "B",
-    "selectCount" : 100,
-    "labelValues": ["Sensor1", "Sensor2"]
-}
-```
-
-Query returns all field values of records matching the label.
-
-```json
-{
-"type" : "C",
-"selectCount" : 100,
-"labelValues": ["Sensor1", "Sensor2"]
 }
 ```
