@@ -6,13 +6,55 @@ See more: https://docs.influxdata.com/influxdb/v2.6/install/
 
 ## Install Database
 
+### Debian
+
+Update the System:
+
+```
+sudo apt update
+```
+
+Install repository key:
+
+```
+curl -fsSL https://repos.influxdata.com/influxdata-archive_compat.key|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/influxdata.gpg
+```
+
+Create sources list file:
+
+```
+echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata.gpg] https://repos.influxdata.com/debian stable main' | sudo tee /etc/apt/sources.list.d/influxdata.list
+```
+
+Update the System again:
+
+```
+sudo apt update
+```
+
+Install influxdb2 package
+
+```
+sudo apt install influxdb2
+```
+
+the database installation directory is `/usr/bin`
+To run execute:
+
+```
+cd /usr/bin
+./influxd
+```
+
+### MacOS
+
 Install InfluxDB via brew:
 
 ```
 brew install influxdb
 ```
 
-Binaries are installed to: `/usr/local/Cellar/influxdb/2.7.1/bin`
+the database installation directory is: `/usr/local/Cellar/influxdb/2.7.1/bin`
 To run execute:
 
 ```
@@ -24,20 +66,30 @@ Database WebInterface is available via: `http://localhost:8086`
 
 ## Install CLI
 
+### Debian
+
+```
+apt install influxdb-client
+```
+the cli installation directory is `/usr/bin`
+
+### MacOs
+
 Install InfluxDB-CLI
 
 ```
 brew install influxdb-cli
 ```
 
-Binaries are installed to: `/usr/local/Cellar/influxdb-cli/2.7.3/bin`
+the cli installation directory is `/usr/local/Cellar/influxdb-cli/2.7.3/bin`
 
 ## Initial database setup
 
-To configure InfluxDB Daemon change to cli bin folder and execute:
+To configure InfluxDB Daemon must be running.
+Start the application from the database installation directory first.
 
+Switch to the cli installation directory and run:
 ```
-cd /usr/local/Cellar/influxdb-cli/2.7.3/bin
 influx setup
 ```
 
@@ -65,61 +117,25 @@ Setup with these parameters?
  Yes
 ```
 
-## Create Operator Auth Token
+## Create Operator auth token
 
-To create Operator Token run:
+To create operator auth token InfluxDB Daemon must be running.
+Start the application from the database installation directory first.
+
+To create Operator change to cli installation folder:
 
 ```
-cd /usr/local/Cellar/influxdb-cli/2.6.1/bin
 influx auth create \
   --operator
 ```
 
 e.g. `s-kr1M8PTAYyylFNE8KJ2bG2foRf0c2_c9ECxOT1VbMeLK15bBT9xsUCglGKqcVSEZBPqrtKdVR5IpcA1L-aTA==`
-
+e.g. `4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==`
 The response contains the token.
 Example:
 
 ```
 ID			Description	Token					User Name	User ID			Permissions
 0a9308067f303000			YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==	admin		0a8f348ab0c6d000	[read:/authorizations write:/authorizations read:/buckets write:/buckets read:/dashboards write:/dashboards read:/orgs write:/orgs read:/sources write:/sources read:/tasks write:/tasks read:/telegrafs write:/telegrafs read:/users write:/users read:/variables write:/variables read:/scrapers write:/scrapers read:/secrets write:/secrets read:/labels write:/labels read:/views write:/views read:/documents write:/documents read:/notificationRules write:/notificationRules read:/notificationEndpoints write:/notificationEndpoints read:/checks write:/checks read:/dbrp write:/dbrp read:/notebooks write:/notebooks read:/annotations write:/annotations read:/remotes write:/remotes read:/replications write:/replications]
-```
-
-## CURL examples
-
-https://docs.influxdata.com/influxdb/cloud/api/
-
-export INFLUX_TOKEN=YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==
-export INFLUX_ORG=testorg
-export INFLUX_ORG_ID=22a4a65dfebd3452
-export INFLUX_BUCKET=testbucket12345
-export INFLUX_BUCKET_ID=b9132e431c712bfa
-
-
-
-Response code OK: 200
-Response code ERROR: 503
-
-
-
-
-## FLUX Query Examples
-
-https://docs.influxdata.com/influxdb/v2.6/query-data/flux/
-
-### Query Bucket by Field
-
-```
-from(bucket: "testbucket")
-|> range(start: -1h)
-|> filter(fn: (r) => r["_field"] == "TMG")
-```
-
-### Count Inserts in Bucket
-
-```
-from(bucket: "testbucket")
-|> range(start: -1h)
-|> count()
 ```
 

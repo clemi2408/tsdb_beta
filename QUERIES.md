@@ -1,4 +1,25 @@
-# Queries 
+# Queries
+
+the examples for the influxdb make use of environment variables.
+the following variables are set:
+
+```
+#export INFLUX_TOKEN=YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG=testorg
+export INFLUX_BUCKET=bucket
+```
+
+some queries need ids instead of names. 
+Besides the names in `INFLUX_ORG` and `INFLUX_BUCKET` their ids are required in `INFLUX_ORG_ID` in and `INFLUX_BUCKET_ID`.
+Set those variables after initial org and bucket creation:
+
+```
+#export INFLUX_ORG_ID=22a4a65dfebd3452
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+
+export INFLUX_BUCKET_ID=b9132e431c712bfa
+```
 
 ## Check health
 
@@ -6,12 +27,17 @@
 
 https://github.com/VictoriaMetrics/VictoriaMetrics/issues/3539
 --> curl -v http://victoria:8428/metrics
-...
 
 ### Influx
 
 ```
 curl "http://localhost:8086/health"
+```
+
+returns
+
+```
+todo
 ```
 
 ## Structural Queries
@@ -29,6 +55,12 @@ curl "http://localhost:8086/api/v2/orgs" \
 --header "Authorization: Token ${INFLUX_TOKEN}"
 ```
 
+returns
+
+```
+todo
+```
+
 #### List buckets
 
 ```
@@ -36,18 +68,34 @@ curl "http://localhost:8086/api/v2/buckets" \
 --header "Authorization: Token ${INFLUX_TOKEN}"
 ```
 
+returns
+
+```
+todo
+```
+
 #### Create buckets
 
 ```
-curl --request POST \
-	"http://localhost:8086/api/v2/buckets" \
-	--header "Authorization: Token ${INFLUX_TOKEN}" \
-  --header "Content-type: application/json" \
-  --data "{
-    "orgID": """${INFLUX_ORG_ID}""",
-    "name": """${INFLUX_BUCKET}"""
-  }"
+curl -v --request POST \
+	  "http://localhost:8086/api/v2/buckets" \
+      --header "Authorization: Token ${INFLUX_TOKEN}" \
+      --header "Content-type: application/json" \
+      --data "{ \"orgID\": \"$INFLUX_ORG_ID\", \"name\": \"$INFLUX_BUCKET\" }"
 ```
+
+returns
+
+```
+todo
+```
+
+use bucket and org id in response to populate `INFLUX_BUCKET_ID` env variable:
+
+```
+export INFLUX_BUCKET_ID=47aaa4096e1f83ce
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+``
 
 #### Delete bucket
 
@@ -55,6 +103,12 @@ curl --request POST \
 curl --request DELETE "http://localhost:8086/api/v2/buckets/${INFLUX_BUCKET_ID}" \
   --header "Authorization: Token ${INFLUX_TOKEN}" \
   --header "Accept: application/json"
+```
+
+returns 
+
+```
+todo
 ```
 
 ## Create data without timestamp
@@ -68,14 +122,26 @@ curl \
 "http://localhost:8428/write"
 ```
 
+returns 
+
+```
+todo
+```
+
 ### Influx
 
 ```
 curl \
 -d "myMeasurement,myLabelKey1=myLabelValue1 myField1=10,myField2=1.23" \
 -X POST \
--H "Authorization: Token ${INFLUX_TOKEN}"
+-H "Authorization: Token ${INFLUX_TOKEN}" \
 "http://localhost:8086/api/v2/write?org=${INFLUX_ORG}&bucket=${INFLUX_BUCKET}&precision=s"
+```
+
+returns 
+
+```
+todo
 ```
 
 ## Create Data with timestamp
@@ -84,19 +150,31 @@ curl \
 
 ```
 curl \
--d "myMeasurement,myLabelKey1=myLabelValue1 myField1=123,myField2=1.23 1673176214" \
+-d "myMeasurement,myLabelKey1=myLabelValue1 myField1=123,myField2=1.23 1692726276" \
 -X POST \
 "http://localhost:8428/write" 
+```
+
+returns 
+
+```
+todo
 ```
 
 ### Influx
 
 ```
 curl \
--d "myMeasurement,myLabelKey1=myLabelValue1 myField1=10,myField2=1.23 1673176214" \
+-d "myMeasurement,myLabelKey1=myLabelValue1 myField1=10,myField2=1.23 1692726276" \
 -X POST \
 -H "Authorization: Token ${INFLUX_TOKEN}" \
 "http://localhost:8086/api/v2/write?org=${INFLUX_ORG}&bucket=${INFLUX_BUCKET}&precision=s"
+```
+
+returns 
+
+```
+todo
 ```
 
 ##  Get all labels
@@ -106,10 +184,44 @@ curl \
 ```
 curl -g "http://localhost:8428/api/v1/labels"
 ```
----> returns "myLabelKey1"
+returns 
+
+```
+myLabelKey1
+```
 
 ### Influx
-....
+
+> Flux requires a time range when querying time series data. "Unbounded" https://docs.influxdata.com/influxdb/cloud/query-data/get-started/query-influxdb/
+
+```
+curl --request POST \
+"http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+--header "Authorization: Token ${INFLUX_TOKEN}" \
+--header 'Accept: application/csv' \
+--header 'Content-type: application/vnd.flux' \
+--data '
+import "influxdata/influxdb/schema"
+
+schema.tagKeys(
+bucket: "'$INFLUX_BUCKET'",
+predicate: (r) => true,
+start: -1d
+)
+'
+```
+
+returns 
+
+```
+,result,table,_value
+,_result,0,_start
+,_result,0,_stop
+,_result,0,_field
+,_result,0,_measurement
+,_result,0,myLabelKey1
+
+```
 
 ## Get single label values
 
@@ -118,32 +230,76 @@ curl -g "http://localhost:8428/api/v1/labels"
 ```
 curl -G "http://localhost:8428/api/v1/label/myLabelKey1/values"
 ```
----> returns "myLabelValue1"
+
+returns 
+
+```
+myLabelValue1
+```
 
 ### Influx
-....
+
+```
+curl --request POST \
+"http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+--header "Authorization: Token ${INFLUX_TOKEN}" \
+--header 'Accept: application/csv' \
+--header 'Content-type: application/vnd.flux' \
+--data '
+from(bucket: "'$INFLUX_BUCKET'")
+|> range(start: -15)
+|> group(columns: ["myLabelKey1"])
+|> distinct(column: "myLabelKey1")
+|> keep(columns: ["_value"])
+'
+```
+
+returns 
+
+```
+,result,table,_value
+,_result,0,myLabelValue1
+```
 
 ## Get all label values field values
 
 ### Victoria
 
 ```
-curl -XGET -G "http://localhost:8428/api/v1/label/__name__/values"
-```
----> returns "myMeasurement_myField1", "myMeasurement_myField2"
-
-```
 curl -X GET "http://localhost:8428/api/v1/label/__name__/values" --data-urlencode "match[]={__name__=~".+", run="myMeasurement"}"
 ```
----> returns "myMeasurement_myField1", "myMeasurement_myField2" because in run "myMeasurement"
+
+returns
 
 ```
-curl -X GET "http://localhost:8428/api/v1/label/__name__/values" --data-urlencode "match[]={__name__=~"myMeasurement.+"}"
+"myMeasurement_myField1", "myMeasurement_myField2"
 ```
----> returns "myMeasurement_myField1", "myMeasurement_myField2" because name starts with "myMeasurement"
 
 ### Influx
-....
+
+```
+curl --request POST \
+"http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+--header "Authorization: Token ${INFLUX_TOKEN}" \
+--header 'Accept: application/csv' \
+--header 'Content-type: application/vnd.flux' \
+--data '
+from(bucket: "'$INFLUX_BUCKET'")
+|> range(start: -15)
+|> filter(fn: (r) => r["_measurement"] == "myMeasurement")
+|> distinct(column: "_field")
+|> keep(columns: ["_field"])
+'
+```
+
+returns
+
+```
+,result,table,_field
+,_result,0,myField1
+,_result,1,myField2
+
+```
 
 ## Count series
 
@@ -152,20 +308,41 @@ curl -X GET "http://localhost:8428/api/v1/label/__name__/values" --data-urlencod
 ```
 curl -s "http://localhost:8428/api/v1/series/count"
 ```
----> Returns 2 because of "myField1" and "myField2"
+
+returns 
 
 ```
-curl -X GET "http://localhost:8428/api/v1/series/count" --data-urlencode "match[]={__name__=~".+", run="myMeasurement"}"
+2 # "myField1" and "myField2"
 ```
----> returns 2 because of 2 series in run "myMeasurement"
-
-```
-curl -X GET "http://localhost:8428/api/v1/series/count" --data-urlencode "match[]={__name__=~"myMeasurement.+"}"
-```
----> returns 2 because of 2 series starting  with "myMeasurement"
 
 ### Influx
-....
+
+> Series cardinality is the number of unique database, measurement, tag set, and field key combinations in an InfluxDB instance. https://community.influxdata.com/t/influx-query-return-number-of-unique-series-in-measurement/16679/2
+
+```
+curl --request POST \
+"http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+--header "Authorization: Token ${INFLUX_TOKEN}" \
+--header 'Accept: application/csv' \
+--header 'Content-type: application/vnd.flux' \
+--data '
+import "influxdata/influxdb/schema"
+
+schema.fieldKeys(
+bucket: "'$INFLUX_BUCKET'",
+predicate: (r) => true,
+start: -1d
+)
+|> count()
+'
+```
+
+returns
+
+```
+,result,table,_value
+,_result,0,2
+```
 
 ## Get all series (one series per field)
 
@@ -174,10 +351,39 @@ curl -X GET "http://localhost:8428/api/v1/series/count" --data-urlencode "match[
 ```
 curl -G "http://localhost:8428/api/v1/series" -d "match[]={__name__=~".*"}"
 ```
---> returns "myMeasurement_myField1" and "myMeasurement_myField2"
+
+returns 
+
+```
+myMeasurement_myField1, myMeasurement_myField2
+```
 
 ### Influx
-....
+
+```
+curl --request POST \
+"http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+--header "Authorization: Token ${INFLUX_TOKEN}" \
+--header 'Accept: application/csv' \
+--header 'Content-type: application/vnd.flux' \
+--data '
+import "influxdata/influxdb/schema"
+
+schema.fieldKeys(
+bucket: "'$INFLUX_BUCKET'",
+predicate: (r) => true,
+start: -1d
+)
+'
+```
+
+returns 
+
+```
+,result,table,_value
+,_result,0,myField1
+,_result,0,myField2
+```
 
 ## Get all series with prefix "myMeasurement" (one series per field)
 
@@ -186,32 +392,37 @@ curl -G "http://localhost:8428/api/v1/series" -d "match[]={__name__=~".*"}"
 ```
 curl -G "http://localhost:8428/api/v1/series" -d "match[]={__name__=~"myMeasurement.*"}"
 ```
---> returns "myMeasurement_myField1" and "myMeasurement_myField2"
 
-### Influx
-....
-
-## Get a series
-
-### Victoria
+returns 
 
 ```
-curl -G "http://localhost:8428/api/v1/series?match[]=myMeasurement_myField1"
+myMeasurement_myField1, myMeasurement_myField2
 ```
 
 ### Influx
-....
-
-## Query series value
-
-### Victoria
 
 ```
-curl "http://localhost:8428/api/v1/query" -d "query=myMeasurement_myField1"
+curl --request POST \
+"http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+--header "Authorization: Token ${INFLUX_TOKEN}" \
+--header 'Accept: application/csv' \
+--header 'Content-type: application/vnd.flux' \
+--data '
+from(bucket: "'$INFLUX_BUCKET'")
+|> range(start: -15)
+|> filter(fn: (r) => r["_measurement"] == "myMeasurement")
+|> distinct(column: "_field")
+|> keep(columns: ["_field"])
+'
 ```
 
-### Influx
-....
+returns 
+
+```
+,result,table,_value
+,_result,0,myField1
+,_result,0,myField2
+```
 
 ## Export series values
 
@@ -221,8 +432,36 @@ curl "http://localhost:8428/api/v1/query" -d "query=myMeasurement_myField1"
 curl -X POST "http://localhost:8428/api/v1/export" -d "match[]={__name__=~"myMeasurement_myField1"}"
 ```
 
+returns 
+
+```
+todo
+```
+
 ### Influx
-....
+
+```
+curl --request POST \
+"http://localhost:8086/query?db=${INFLUX_BUCKET}"  \
+--header "Authorization: Token ${INFLUX_TOKEN}" \
+--header 'Accept: application/csv' \
+--data-urlencode "q=SELECT time, myField1 FROM myMeasurement"
+```
+
+returns 
+
+```
+name,tags,time,myField1
+myMeasurement,,1692726208000000000,10
+myMeasurement,,1692726216000000000,10
+myMeasurement,,1692726224000000000,10
+myMeasurement,,1692726238000000000,10
+myMeasurement,,1692726239000000000,10
+myMeasurement,,1692726240000000000,10
+myMeasurement,,1692726241000000000,10
+myMeasurement,,1692726276000000000,10
+
+```
 
 ## Delete series
 
@@ -232,8 +471,15 @@ curl -X POST "http://localhost:8428/api/v1/export" -d "match[]={__name__=~"myMea
 curl "http://localhost:8428/api/v1/admin/tsdb/delete_series?match[]=myMeasurement_myField1"
 ```
 
+returns 
+
+```
+todo
+```
+
 ### Influx
-....
+
+> There is no way to delete a "column" (i.e. a field or a tag) from an Influx measurement. https://github.com/influxdata/influxdb/issues/6150
 
 ## Query latest value
 
@@ -242,10 +488,39 @@ curl "http://localhost:8428/api/v1/admin/tsdb/delete_series?match[]=myMeasuremen
 ```
 curl "http://localhost:8428/api/v1/query" -d "query=myMeasurement_myField1"
 ```
---> Returns "13" as it was added last
+
+returns
+ 
+```
+13
+```
+
+as it was added last
 
 ### Influx
-....
+
+```
+curl --request POST \
+"http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+--header "Authorization: Token ${INFLUX_TOKEN}" \
+--header 'Accept: application/csv' \
+--header 'Content-type: application/vnd.flux' \
+--data '
+from(bucket: "'$INFLUX_BUCKET'")
+|> range(start: -180)
+|> filter(fn: (r) => r["_measurement"] == "myMeasurement")
+|> filter(fn: (r) => r["_field"] == "myField1")
+|> last()
+|> keep(columns: ["_value"])
+'
+```
+
+returns
+
+```
+,result,table,_value
+,_result,0,10
+```
 
 ## Query sum_over_time
 
@@ -424,4 +699,27 @@ Former query E
     "type" : "ALL_FIELDS_STARTING_WITH_PREFIX",
     "selectCount" : 100
 }
+```
+
+
+
+# OLD INFLUX PAGE
+
+https://docs.influxdata.com/influxdb/cloud/api/
+https://docs.influxdata.com/influxdb/v2.6/query-data/flux/
+
+### Query Bucket by Field
+
+```
+from(bucket: "testbucket")
+|> range(start: -1h)
+|> filter(fn: (r) => r["_field"] == "TMG")
+```
+
+### Count Inserts in Bucket
+
+```
+from(bucket: "testbucket")
+|> range(start: -1h)
+|> count()
 ```
