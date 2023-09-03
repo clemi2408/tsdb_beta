@@ -9,11 +9,15 @@ The following Guides are available:
 the examples for the influxdb make use of environment variables.
 the following variables are set:
 
+### Org and Bucket
+
 ```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG=testorg
 export INFLUX_BUCKET=bucket
 ```
+
+### OrgID and BucketID
 
 some queries need ids instead of names. 
 Besides the names in `INFLUX_ORG` and `INFLUX_BUCKET` their ids are required in `INFLUX_ORG_ID` in and `INFLUX_BUCKET_ID`.
@@ -22,6 +26,30 @@ Set those variables after initial org and bucket creation:
 ```bash
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET_ID=b9132e431c712bfa
+```
+
+### Measurement, Labels and Label Values
+
+```bash
+export MEASUREMENT_NAME=myMeasurement
+export LABEL1_NAME=myLabelKey1
+export LABEL1_VALUE=myLabelValue1
+```
+
+### Field and Field Values
+
+```bash
+export FIELD1_NAME=myField1
+export FIELD1_VALUE=10
+export FIELD2_NAME=myField2
+export FIELD2_VALUE=1.23
+```
+
+### Time Variables
+
+```bash
+export START_VALUE=-1d
+export STEP_VALUE=1s
 ```
 
 # Queries
@@ -159,11 +187,22 @@ todo
 
 #### Victoria
 
+Variables:
+
+```bash
+export MEASUREMENT_NAME=myMeasurement
+export LABEL1_NAME=myLabelKey1
+export LABEL1_VALUE=myLabelValue1
+export FIELD1_NAME=myField1
+export FIELD1_VALUE=10
+export FIELD2_NAME=myField2
+export FIELD2_VALUE=1.23
+```
 Command:
 
 ```bash
 curl \
--d "myMeasurement,myLabelKey1=myLabelValue1 myField1=10,myField2=1.23" \
+-d "${MEASUREMENT_NAME},${LABEL1_NAME}=${LABEL1_VALUE} ${FIELD1_NAME}=${FIELD1_VALUE},${FIELD2_NAME}=${FIELD2_VALUE}" \
 -X POST \
 "http://localhost:8428/write"
 ```
@@ -182,13 +221,20 @@ Variables:
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG=testorg
 export INFLUX_BUCKET=bucket
+export MEASUREMENT_NAME=myMeasurement
+export LABEL1_NAME=myLabelKey1
+export LABEL1_VALUE=myLabelValue1
+export FIELD1_NAME=myField1
+export FIELD1_VALUE=10
+export FIELD2_NAME=myField2
+export FIELD2_VALUE=1.23
 ```
 
 Command:
 
 ```bash
 curl \
--d "myMeasurement,myLabelKey1=myLabelValue1 myField1=10,myField2=1.23" \
+-d "${MEASUREMENT_NAME},${LABEL1_NAME}=${LABEL1_VALUE} ${FIELD1_NAME}=${FIELD1_VALUE},${FIELD2_NAME}=${FIELD2_VALUE}" \
 -X POST \
 -H "Authorization: Token ${INFLUX_TOKEN}" \
 "http://localhost:8086/api/v2/write?org=${INFLUX_ORG}&bucket=${INFLUX_BUCKET}&precision=s"
@@ -204,11 +250,22 @@ todo
 
 #### Victoria
 
+Variables:
+
+```bash
+export MEASUREMENT_NAME=myMeasurement
+export LABEL1_NAME=myLabelKey1
+export LABEL1_VALUE=myLabelValue1
+export FIELD1_NAME=myField1
+export FIELD1_VALUE=10
+export FIELD2_NAME=myField2
+export FIELD2_VALUE=1.23
+```
 Command:
 
 ```bash
 curl \
--d "myMeasurement,myLabelKey1=myLabelValue1 myField1=123,myField2=1.23 1692726276" \
+-d "${MEASUREMENT_NAME},${LABEL1_NAME}=${LABEL1_VALUE} ${FIELD1_NAME}=${FIELD1_VALUE},${FIELD2_NAME}=${FIELD2_VALUE} 1692726276" \
 -X POST \
 "http://localhost:8428/write" 
 ```
@@ -227,13 +284,20 @@ Variables:
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG=testorg
 export INFLUX_BUCKET=bucket
+export MEASUREMENT_NAME=myMeasurement
+export LABEL1_NAME=myLabelKey1
+export LABEL1_VALUE=myLabelValue1
+export FIELD1_NAME=myField1
+export FIELD1_VALUE=10
+export FIELD2_NAME=myField2
+export FIELD2_VALUE=1.23
 ```
 
 Command:
 
 ```bash
 curl \
--d "myMeasurement,myLabelKey1=myLabelValue1 myField1=10,myField2=1.23 1692726276" \
+-d "${MEASUREMENT_NAME},${LABEL1_NAME}=${LABEL1_VALUE} ${FIELD1_NAME}=${FIELD1_VALUE},${FIELD2_NAME}=${FIELD2_VALUE} 1692726276" \
 -X POST \
 -H "Authorization: Token ${INFLUX_TOKEN}" \
 "http://localhost:8086/api/v2/write?org=${INFLUX_ORG}&bucket=${INFLUX_BUCKET}&precision=s"
@@ -272,6 +336,7 @@ Variables:
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
+export START_VALUE=-1d
 ```
 
 Command:
@@ -287,7 +352,7 @@ import "influxdata/influxdb/schema"
 schema.tagKeys(
 bucket: "'$INFLUX_BUCKET'",
 predicate: (r) => true,
-start: -1d
+start: '$START_VALUE'
 )
 '
 ```
@@ -307,10 +372,16 @@ Returns:
 
 #### Victoria
 
+Variables:
+
+```bash
+export LABEL1_NAME=myLabelKey1
+```
+
 Command:
 
 ```bash
-curl -G "http://localhost:8428/api/v1/label/myLabelKey1/values"
+curl -G "http://localhost:8428/api/v1/label/${LABEL1_NAME}/values"
 ```
 
 Returns:
@@ -327,6 +398,8 @@ Variables:
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
+export START_VALUE=-1d
+export LABEL1_NAME=myLabelKey1
 ```
 
 Command:
@@ -339,9 +412,9 @@ curl --request POST \
 --header 'Content-type: application/vnd.flux' \
 --data '
 from(bucket: "'$INFLUX_BUCKET'")
-|> range(start: -15)
-|> group(columns: ["myLabelKey1"])
-|> distinct(column: "myLabelKey1")
+|> range(start: '$START_VALUE')
+|> group(columns: ["'LABEL1_NAME'"])
+|> distinct(column: "'LABEL1_NAME'")
 |> keep(columns: ["_value"])
 '
 ```
@@ -357,10 +430,15 @@ Returns:
 
 #### Victoria
 
+Variables:
+
+```bash
+export MEASUREMENT_NAME=myMeasurement
+```
 Command:
 
 ```bash
-curl -X GET "http://localhost:8428/api/v1/label/__name__/values" --data-urlencode "match[]={__name__=~".+", run="myMeasurement"}"
+curl -X GET "http://localhost:8428/api/v1/label/__name__/values" --data-urlencode "match[]={__name__=~".+", run="${MEASUREMENT_NAME}"}"
 ```
 
 Returns:
@@ -377,6 +455,8 @@ Variables:
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
+export START_VALUE=-1d
+export MEASUREMENT_NAME=myMeasurement
 ```
 
 Command:
@@ -389,8 +469,8 @@ curl --request POST \
 --header 'Content-type: application/vnd.flux' \
 --data '
 from(bucket: "'$INFLUX_BUCKET'")
-|> range(start: -15)
-|> filter(fn: (r) => r["_measurement"] == "myMeasurement")
+|> range('$START_VALUE'))
+|> filter(fn: (r) => r["_measurement"] == "'$MEASUREMENT_NAME'")
 |> distinct(column: "_field")
 |> keep(columns: ["_field"])
 '
@@ -432,6 +512,7 @@ Variables:
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
+export START_VALUE=-1d
 ```
 
 Command:
@@ -447,7 +528,7 @@ import "influxdata/influxdb/schema"
 schema.fieldKeys(
 bucket: "'$INFLUX_BUCKET'",
 predicate: (r) => true,
-start: -1d
+start: '$START_VALUE'
 )
 |> count()
 '
@@ -484,6 +565,7 @@ Variables:
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
+export START_VALUE=-1d
 ```
 
 Command:
@@ -499,7 +581,7 @@ import "influxdata/influxdb/schema"
 schema.fieldKeys(
 bucket: "'$INFLUX_BUCKET'",
 predicate: (r) => true,
-start: -1d
+start: '$START_VALUE'
 )
 '
 ```
@@ -516,10 +598,15 @@ Returns:
 
 #### Victoria
 
+Variables:
+
+```bash
+export MEASUREMENT_NAME=myMeasurement
+```
 Command:
 
 ```bash
-curl -G "http://localhost:8428/api/v1/series" -d "match[]={__name__=~"myMeasurement.*"}"
+curl -G "http://localhost:8428/api/v1/series" -d "match[]={__name__=~"${MEASUREMENT_NAME}.*"}"
 ```
 
 Returns:
@@ -536,6 +623,8 @@ Variables:
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
+export START_VALUE=-1d
+export MEASUREMENT_NAME=myMeasurement
 ```
 
 Command:
@@ -548,8 +637,8 @@ curl --request POST \
 --header 'Content-type: application/vnd.flux' \
 --data '
 from(bucket: "'$INFLUX_BUCKET'")
-|> range(start: -15)
-|> filter(fn: (r) => r["_measurement"] == "myMeasurement")
+|> range('$START_VALUE'))
+|> filter(fn: (r) => r["_measurement"] == "'$MEASUREMENT_NAME'")
 |> distinct(column: "_field")
 |> keep(columns: ["_field"])
 '
@@ -567,10 +656,16 @@ Returns:
 
 #### Victoria
 
+Variables:
+
+```bash
+export MEASUREMENT_NAME=myMeasurement
+export FIELD1_NAME=myField1
+```
 Command:
 
 ```bash
-curl -X POST "http://localhost:8428/api/v1/export" -d "match[]={__name__=~"myMeasurement_myField1"}"
+curl -X POST "http://localhost:8428/api/v1/export" -d "match[]={__name__=~"${MEASUREMENT_NAME}_${FIELD1_NAME}"}"
 ```
 
 Returns:
@@ -586,6 +681,8 @@ Variables:
 ```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_BUCKET=bucket
+export MEASUREMENT_NAME=myMeasurement
+export FIELD1_NAME=myField1
 ```
 
 Command:
@@ -595,7 +692,7 @@ curl --request POST \
 "http://localhost:8086/query?db=${INFLUX_BUCKET}"  \
 --header "Authorization: Token ${INFLUX_TOKEN}" \
 --header 'Accept: application/csv' \
---data-urlencode "q=SELECT time, myField1 FROM myMeasurement"
+--data-urlencode "q=SELECT time, ${FIELD1_NAME} FROM ${MEASUREMENT_NAME}"
 ```
 
 Returns:
@@ -616,10 +713,17 @@ myMeasurement,,1692726276000000000,10
 
 #### Victoria
 
+Variables:
+
+```bash
+export MEASUREMENT_NAME=myMeasurement
+export FIELD1_NAME=myField1
+```
+
 Command:
 
 ```bash
-curl "http://localhost:8428/api/v1/admin/tsdb/delete_series?match[]=myMeasurement_myField1"
+curl "http://localhost:8428/api/v1/admin/tsdb/delete_series?match[]=${MEASUREMENT_NAME}_${FIELD1_NAME}"
 ```
 
 Returns:
@@ -640,10 +744,17 @@ todo
 
 ##### Victoria
 
+Variables:
+
+```bash
+export MEASUREMENT_NAME=myMeasurement
+export FIELD1_NAME=myField1
+```
 Command:
 
 ```bash
-curl "http://localhost:8428/api/v1/query" -d "query=myMeasurement_myField1"
+curl "http://localhost:8428/api/v1/query" -d "query=${MEASUREMENT_NAME}_${FIELD1_NAME}
+"
 ```
 
 Returns:
@@ -660,6 +771,9 @@ Variables:
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
+export START_VALUE=-1d
+export MEASUREMENT_NAME=myMeasurement
+export FIELD1_NAME=myField1
 ```
 
 Command:
@@ -672,9 +786,9 @@ curl --request POST \
 --header 'Content-type: application/vnd.flux' \
 --data '
 from(bucket: "'$INFLUX_BUCKET'")
-|> range(start: -180)
-|> filter(fn: (r) => r["_measurement"] == "myMeasurement")
-|> filter(fn: (r) => r["_field"] == "myField1")
+|> range('$START_VALUE'))
+|> filter(fn: (r) => r["_measurement"] == "'$MEASUREMENT_NAME'")
+|> filter(fn: (r) => r["_field"] == "'$FIELD1_NAME'")
 |> last()
 |> keep(columns: ["_value"])
 '
@@ -693,10 +807,18 @@ Returns:
 
 ##### Victoria
 
+Variables:
+
+```bash
+export MEASUREMENT_NAME=myMeasurement
+export FIELD1_NAME=myField1
+export START_VALUE=-1d
+export STEP_VALUE=1s
+```
 Command:
 
 ```bash
-curl "http://localhost:8428/api/v1/query" -d "query=sum_over_time(myMeasurement_myField1)" -d "start=-10m" -d "step=1s"
+curl "http://localhost:8428/api/v1/query" -d "query=sum_over_time(${MEASUREMENT_NAME}_${FIELD1_NAME})" -d "start=${START_VALUE}" -d "step=${STEP_VALUE}"
 ```
 
 Returns:
@@ -713,6 +835,10 @@ Variables:
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
+export MEASUREMENT_NAME=myMeasurement
+export FIELD1_NAME=myField1
+export START_VALUE=-1d
+export STEP_VALUE=1s
 ```
 
 Command:
@@ -725,10 +851,10 @@ curl --request POST \
 --header 'Content-type: application/vnd.flux' \
 --data '
 from(bucket: "'$INFLUX_BUCKET'")
-  |> range(start: -180)
-  |> filter(fn: (r) => r["_measurement"] == "myMeasurement")
-  |> filter(fn: (r) => r["_field"] == "myField1")
-  |> aggregateWindow(every: 1s, fn: sum, createEmpty: false)
+  |> range('$START_VALUE'))
+  |> filter(fn: (r) => r["_measurement"] == "'$MEASUREMENT_NAME'")
+  |> filter(fn: (r) => r["_field"] == "'$FIELD1_NAME'")
+  |> aggregateWindow(every: '$STEP_VALUE', fn: sum, createEmpty: false)
   |> yield(name: "sum")
 '
 ```
@@ -746,10 +872,18 @@ Returns:
 
 ##### Victoria
 
+Variables:
+
+```bash
+export MEASUREMENT_NAME=myMeasurement
+export FIELD1_NAME=myField1
+export START_VALUE=-1d
+export STEP_VALUE=1s
+```
 Command:
 
 ```bash
-curl "http://localhost:8428/api/v1/query_range" -d "query=avg_over_time(myMeasurement_myField1[10m])" -d "start=-10m" -d "step=1m"
+curl "http://localhost:8428/api/v1/query_range" -d "query=avg_over_time(${MEASUREMENT_NAME}_${FIELD1_NAME}[10m])" -d "start=${START_VALUE}" -d "step=${STEP_VALUE}"
 ```
 
 Returns:
@@ -766,6 +900,10 @@ Variables:
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
+export MEASUREMENT_NAME=myMeasurement
+export FIELD1_NAME=myField1
+export START_VALUE=-1d
+export STEP_VALUE=1s
 ```
 
 Command:
@@ -778,10 +916,10 @@ curl --request POST \
 --header 'Content-type: application/vnd.flux' \
 --data '
 from(bucket: "'$INFLUX_BUCKET'")
-  |> range(start: -180)
-  |> filter(fn: (r) => r["_measurement"] == "myMeasurement")
-  |> filter(fn: (r) => r["_field"] == "myField1")
-  |> aggregateWindow(every: 1s, fn: mean, createEmpty: false)
+  |> range('$START_VALUE'))
+  |> filter(fn: (r) => r["_measurement"] == "'$MEASUREMENT_NAME'")
+  |> filter(fn: (r) => r["_field"] == "'$FIELD1_NAME'")
+  |> aggregateWindow(every: 'STEP_VALUE', fn: mean, createEmpty: false)
   |> yield(name: "avg")
 '
 ```
@@ -799,10 +937,18 @@ Returns:
 
 ##### Victoria
 
+Variables:
+
+```bash
+export MEASUREMENT_NAME=myMeasurement
+export FIELD1_NAME=myField1
+export START_VALUE=-1d
+export STEP_VALUE=1s
+```
 Command:
 
 ```bash
-curl "http://localhost:8428/api/v1/query_range" -d "query=min_over_time(myMeasurement_myField1[10m])" -d "start=-10m" -d "step=1m"
+curl "http://localhost:8428/api/v1/query_range" -d "query=min_over_time(${MEASUREMENT_NAME}_${FIELD1_NAME}[10m])" -d "start=${START_VALUE}" -d "step=${STEP_VALUE}"
 ```
 
 Returns:
@@ -819,6 +965,10 @@ Variables:
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
+export MEASUREMENT_NAME=myMeasurement
+export FIELD1_NAME=myField1
+export START_VALUE=-1d
+export STEP_VALUE=1s
 ```
 
 Command:
@@ -831,10 +981,10 @@ curl --request POST \
 --header 'Content-type: application/vnd.flux' \
 --data '
 from(bucket: "'$INFLUX_BUCKET'")
-  |> range(start: -180)
-  |> filter(fn: (r) => r["_measurement"] == "myMeasurement")
-  |> filter(fn: (r) => r["_field"] == "myField1")
-  |> aggregateWindow(every: 1s, fn: min, createEmpty: false)
+  |> range('$START_VALUE'))
+  |> filter(fn: (r) => r["_measurement"] == "'$MEASUREMENT_NAME'")
+  |> filter(fn: (r) => r["_field"] == "'$FIELD1_NAME'")
+  |> aggregateWindow(every: '$STEP_VALUE', fn: min, createEmpty: false)
   |> yield(name: "min")
 '
 ```
@@ -852,10 +1002,18 @@ Returns:
 
 ##### Victoria
 
+Variables:
+
+```bash
+export MEASUREMENT_NAME=myMeasurement
+export FIELD1_NAME=myField1
+export START_VALUE=-1d
+export STEP_VALUE=1s
+```
 Command:
 
 ```bash
-curl "http://localhost:8428/api/v1/query_range" -d "query=max_over_time(myMeasurement_myField1[10m])" -d "start=-10m" -d "step=1m"
+curl "http://localhost:8428/api/v1/query_range" -d "query=max_over_time(${MEASUREMENT_NAME}_${FIELD1_NAME}[10m])" -d "start=${START_VALUE}" -d "step=${STEP_VALUE}"
 ```
 
 Returns:
@@ -872,6 +1030,10 @@ Variables:
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
+export MEASUREMENT_NAME=myMeasurement
+export FIELD1_NAME=myField1
+export START_VALUE=-1d
+export STEP_VALUE=1s
 ```
 
 Command:
@@ -884,10 +1046,10 @@ curl --request POST \
 --header 'Content-type: application/vnd.flux' \
 --data '
 from(bucket: "'$INFLUX_BUCKET'")
-  |> range(start: -180)
-  |> filter(fn: (r) => r["_measurement"] == "myMeasurement")
-  |> filter(fn: (r) => r["_field"] == "myField1")
-  |> aggregateWindow(every: 1s, fn: max, createEmpty: false)
+  |> range('$START_VALUE'))
+  |> filter(fn: (r) => r["_measurement"] == "'$MEASUREMENT_NAME'")
+  |> filter(fn: (r) => r["_field"] == "'$FIELD1_NAME'")
+  |> aggregateWindow(every: '$STEP_VALUE', fn: max, createEmpty: false)
   |> yield(name: "max")
 '
 ```
