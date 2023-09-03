@@ -3,7 +3,7 @@
 the examples for the influxdb make use of environment variables.
 the following variables are set:
 
-```
+```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG=testorg
 export INFLUX_BUCKET=bucket
@@ -13,7 +13,7 @@ some queries need ids instead of names.
 Besides the names in `INFLUX_ORG` and `INFLUX_BUCKET` their ids are required in `INFLUX_ORG_ID` in and `INFLUX_BUCKET_ID`.
 Set those variables after initial org and bucket creation:
 
-```
+```bash
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET_ID=b9132e431c712bfa
 ```
@@ -22,14 +22,19 @@ export INFLUX_BUCKET_ID=b9132e431c712bfa
 
 ### Victoria
 
-https://github.com/VictoriaMetrics/VictoriaMetrics/issues/3539
---> curl -v http://victoria:8428/metrics
+> https://github.com/VictoriaMetrics/VictoriaMetrics/issues/3539
+
+Command:
+
+```bash
+curl -v http://victoria:8428/metrics
+```
 
 ### Influx
 
 Command:
 
-```
+```bash
 curl "http://localhost:8086/health"
 ```
 
@@ -51,13 +56,13 @@ Not required as concepts like `orgs` and `buckets are not present
 
 Variables:
 
-```
+```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 ```
 
 Command:
 
-```
+```bash
 curl "http://localhost:8086/api/v2/orgs" \
 --header "Authorization: Token ${INFLUX_TOKEN}"
 ```
@@ -72,13 +77,13 @@ todo
 
 Variables:
 
-```
+```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 ```
 
 Command:
 
-```
+```bash
 curl "http://localhost:8086/api/v2/buckets" \
 --header "Authorization: Token ${INFLUX_TOKEN}"
 ```
@@ -93,7 +98,7 @@ todo
 
 Variables:
 
-```
+```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
@@ -101,7 +106,7 @@ export INFLUX_BUCKET=bucket
 
 Command:
 
-```
+```bash
 curl -v --request POST \
 	  "http://localhost:8086/api/v2/buckets" \
       --header "Authorization: Token ${INFLUX_TOKEN}" \
@@ -121,20 +126,20 @@ use bucket and org id in response to populate `INFLUX_BUCKET_ID` env variable:
 
 Variables:
 
-```
+```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_BUCKET_ID=b9132e431c712bfa
 ```
 
 Command:
 
-```
+```bash
 curl --request DELETE "http://localhost:8086/api/v2/buckets/${INFLUX_BUCKET_ID}" \
   --header "Authorization: Token ${INFLUX_TOKEN}" \
   --header "Accept: application/json"
 ```
 
-Returns: 
+Returns:
 
 ```
 todo
@@ -146,14 +151,14 @@ todo
 
 Command:
 
-```
+```bash
 curl \
 -d "myMeasurement,myLabelKey1=myLabelValue1 myField1=10,myField2=1.23" \
 -X POST \
 "http://localhost:8428/write"
 ```
 
-Returns: 
+Returns:
 
 ```
 todo
@@ -163,7 +168,7 @@ todo
 
 Variables: 
 
-```
+```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG=testorg
 export INFLUX_BUCKET=bucket
@@ -171,7 +176,7 @@ export INFLUX_BUCKET=bucket
 
 Command:
 
-```
+```bash
 curl \
 -d "myMeasurement,myLabelKey1=myLabelValue1 myField1=10,myField2=1.23" \
 -X POST \
@@ -179,7 +184,7 @@ curl \
 "http://localhost:8086/api/v2/write?org=${INFLUX_ORG}&bucket=${INFLUX_BUCKET}&precision=s"
 ```
 
-Returns: 
+Returns:
 
 ```
 todo
@@ -191,14 +196,14 @@ todo
 
 Command:
 
-```
+```bash
 curl \
 -d "myMeasurement,myLabelKey1=myLabelValue1 myField1=123,myField2=1.23 1692726276" \
 -X POST \
 "http://localhost:8428/write" 
 ```
 
-Returns: 
+Returns:
 
 ```
 todo
@@ -208,7 +213,7 @@ todo
 
 Variables:
 
-```
+```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG=testorg
 export INFLUX_BUCKET=bucket
@@ -216,7 +221,7 @@ export INFLUX_BUCKET=bucket
 
 Command:
 
-```
+```bash
 curl \
 -d "myMeasurement,myLabelKey1=myLabelValue1 myField1=10,myField2=1.23 1692726276" \
 -X POST \
@@ -224,7 +229,7 @@ curl \
 "http://localhost:8086/api/v2/write?org=${INFLUX_ORG}&bucket=${INFLUX_BUCKET}&precision=s"
 ```
 
-Returns: 
+Returns:
 
 ```
 todo
@@ -236,10 +241,10 @@ todo
 
 Command:
 
-```
+```bash
 curl -g "http://localhost:8428/api/v1/labels"
 ```
-Returns: 
+Returns:
 
 ```
 myLabelKey1
@@ -251,7 +256,7 @@ myLabelKey1
 
 Variables:
 
-```
+```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
@@ -259,7 +264,7 @@ export INFLUX_BUCKET=bucket
 
 Command:
 
-```
+```bash
 curl --request POST \
 "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
 --header "Authorization: Token ${INFLUX_TOKEN}" \
@@ -267,7 +272,6 @@ curl --request POST \
 --header 'Content-type: application/vnd.flux' \
 --data '
 import "influxdata/influxdb/schema"
-
 schema.tagKeys(
 bucket: "'$INFLUX_BUCKET'",
 predicate: (r) => true,
@@ -276,7 +280,7 @@ start: -1d
 '
 ```
 
-Returns: 
+Returns:
 
 ```
 ,result,table,_value
@@ -285,7 +289,6 @@ Returns:
 ,_result,0,_field
 ,_result,0,_measurement
 ,_result,0,myLabelKey1
-
 ```
 
 ## Get single label values
@@ -294,11 +297,11 @@ Returns:
 
 Command:
 
-```
+```bash
 curl -G "http://localhost:8428/api/v1/label/myLabelKey1/values"
 ```
 
-Returns: 
+Returns:
 
 ```
 myLabelValue1
@@ -308,7 +311,7 @@ myLabelValue1
 
 Variables:
 
-```
+```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
@@ -316,7 +319,7 @@ export INFLUX_BUCKET=bucket
 
 Command:
 
-```
+```bash
 curl --request POST \
 "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
 --header "Authorization: Token ${INFLUX_TOKEN}" \
@@ -331,7 +334,7 @@ from(bucket: "'$INFLUX_BUCKET'")
 '
 ```
 
-Returns: 
+Returns:
 
 ```
 ,result,table,_value
@@ -344,7 +347,7 @@ Returns:
 
 Command:
 
-```
+```bash
 curl -X GET "http://localhost:8428/api/v1/label/__name__/values" --data-urlencode "match[]={__name__=~".+", run="myMeasurement"}"
 ```
 
@@ -358,7 +361,7 @@ Returns:
 
 Variables:
 
-```
+```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
@@ -366,7 +369,7 @@ export INFLUX_BUCKET=bucket
 
 Command:
 
-```
+```bash
 curl --request POST \
 "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
 --header "Authorization: Token ${INFLUX_TOKEN}" \
@@ -387,7 +390,6 @@ Returns:
 ,result,table,_field
 ,_result,0,myField1
 ,_result,1,myField2
-
 ```
 
 ## Count series
@@ -396,11 +398,11 @@ Returns:
 
 Command:
 
-```
+```bash
 curl -s "http://localhost:8428/api/v1/series/count"
 ```
 
-Returns: 
+Returns:
 
 ```
 2 # "myField1" and "myField2"
@@ -412,7 +414,7 @@ Returns:
 
 Variables:
 
-```
+```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
@@ -420,7 +422,7 @@ export INFLUX_BUCKET=bucket
 
 Command:
 
-```
+```bash
 curl --request POST \
 "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
 --header "Authorization: Token ${INFLUX_TOKEN}" \
@@ -428,7 +430,6 @@ curl --request POST \
 --header 'Content-type: application/vnd.flux' \
 --data '
 import "influxdata/influxdb/schema"
-
 schema.fieldKeys(
 bucket: "'$INFLUX_BUCKET'",
 predicate: (r) => true,
@@ -451,11 +452,11 @@ Returns:
 
 Command:
 
-```
+```bash
 curl -G "http://localhost:8428/api/v1/series" -d "match[]={__name__=~".*"}"
 ```
 
-Returns: 
+Returns:
 
 ```
 myMeasurement_myField1, myMeasurement_myField2
@@ -465,7 +466,7 @@ myMeasurement_myField1, myMeasurement_myField2
 
 Variables:
 
-```
+```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
@@ -473,7 +474,7 @@ export INFLUX_BUCKET=bucket
 
 Command:
 
-```
+```bash
 curl --request POST \
 "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
 --header "Authorization: Token ${INFLUX_TOKEN}" \
@@ -481,7 +482,6 @@ curl --request POST \
 --header 'Content-type: application/vnd.flux' \
 --data '
 import "influxdata/influxdb/schema"
-
 schema.fieldKeys(
 bucket: "'$INFLUX_BUCKET'",
 predicate: (r) => true,
@@ -490,7 +490,7 @@ start: -1d
 '
 ```
 
-Returns: 
+Returns:
 
 ```
 ,result,table,_value
@@ -504,11 +504,11 @@ Returns:
 
 Command:
 
-```
+```bash
 curl -G "http://localhost:8428/api/v1/series" -d "match[]={__name__=~"myMeasurement.*"}"
 ```
 
-Returns: 
+Returns:
 
 ```
 myMeasurement_myField1, myMeasurement_myField2
@@ -518,7 +518,7 @@ myMeasurement_myField1, myMeasurement_myField2
 
 Variables:
 
-```
+```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
@@ -526,7 +526,7 @@ export INFLUX_BUCKET=bucket
 
 Command:
 
-```
+```bash
 curl --request POST \
 "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
 --header "Authorization: Token ${INFLUX_TOKEN}" \
@@ -541,7 +541,7 @@ from(bucket: "'$INFLUX_BUCKET'")
 '
 ```
 
-Returns: 
+Returns:
 
 ```
 ,result,table,_value
@@ -555,11 +555,11 @@ Returns:
 
 Command:
 
-```
+```bash
 curl -X POST "http://localhost:8428/api/v1/export" -d "match[]={__name__=~"myMeasurement_myField1"}"
 ```
 
-Returns: 
+Returns:
 
 ```
 todo
@@ -569,14 +569,14 @@ todo
 
 Variables:
 
-```
+```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_BUCKET=bucket
 ```
 
 Command:
 
-```
+```bash
 curl --request POST \
 "http://localhost:8086/query?db=${INFLUX_BUCKET}"  \
 --header "Authorization: Token ${INFLUX_TOKEN}" \
@@ -584,7 +584,7 @@ curl --request POST \
 --data-urlencode "q=SELECT time, myField1 FROM myMeasurement"
 ```
 
-Returns: 
+Returns:
 
 ```
 name,tags,time,myField1
@@ -596,7 +596,6 @@ myMeasurement,,1692726239000000000,10
 myMeasurement,,1692726240000000000,10
 myMeasurement,,1692726241000000000,10
 myMeasurement,,1692726276000000000,10
-
 ```
 
 ## Delete series
@@ -605,11 +604,11 @@ myMeasurement,,1692726276000000000,10
 
 Command:
 
-```
+```bash
 curl "http://localhost:8428/api/v1/admin/tsdb/delete_series?match[]=myMeasurement_myField1"
 ```
 
-Returns: 
+Returns:
 
 ```
 todo
@@ -625,7 +624,7 @@ todo
 
 Command:
 
-```
+```bash
 curl "http://localhost:8428/api/v1/query" -d "query=myMeasurement_myField1"
 ```
 
@@ -635,13 +634,11 @@ Returns:
 13
 ```
 
-as it was added last
-
 ### Influx
 
 Variables:
 
-```
+```bash
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET=bucket
@@ -649,7 +646,7 @@ export INFLUX_BUCKET=bucket
 
 Command:
 
-```
+```bash
 curl --request POST \
 "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
 --header "Authorization: Token ${INFLUX_TOKEN}" \
@@ -676,25 +673,44 @@ Returns:
 
 
 
+
 ## Query sum_over_time
 
 ### Victoria
 
 Command:
 
-```
-curl "http://localhost:8428/api/v1/query" -d "query=sum_over_time(myMeasurement_myField1)"
-```
---> Returns: "13" as it was added last
-
-Command:
-
-```
+```bash
 curl "http://localhost:8428/api/v1/query" -d "query=sum_over_time(myMeasurement_myField1)" -d "start=-10m" -d "step=1s"
 ```
 
+Returns:
+
+```
+todo
+```
+
 ### Influx
-....
+
+Variables:
+
+```bash
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
+
+```bash
+todo
+```
+
+Returns:
+
+```
+todo
+```
 
 ## Query range sum_over_time myMeasurement_myField1 for last [10m]
 
@@ -702,13 +718,37 @@ curl "http://localhost:8428/api/v1/query" -d "query=sum_over_time(myMeasurement_
 
 Command:
 
-```
+```bash
 curl "http://localhost:8428/api/v1/query_range" -d "query=sum_over_time(myMeasurement_myField1[10m])"
 ```
---> Returns: sum of values of myMeasurement_myField1 in the last 10m
+
+Returns:
+
+```
+todo # sum of values of myMeasurement_myField1 in the last 10m
+```
 
 ### Influx
-....
+
+Variables:
+
+```bash
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
+
+```bash
+todo
+```
+
+Returns:
+
+```
+todo
+```
 
 ## Query range sum_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
 
@@ -716,14 +756,37 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=sum_over_time(myMeasur
 
 Command:
 
-```
+```bash
 curl "http://localhost:8428/api/v1/query_range" -d "query=sum_over_time(myMeasurement_myField1[10m])" -d "start=-10m" -d "step=1m"
 ```
 
---> Returns: sums of values of myMeasurement_myField1 in the last 10m "plotted" in frame now() -10m to now() in resolution 1m
+Returns:
+
+```
+todo # sums of values of myMeasurement_myField1 in the last 10m "plotted" in frame now() -10m to now() in resolution 1m
+```
 
 ### Influx
-....
+
+Variables:
+
+```bash
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
+
+```bash
+todo
+```
+
+Returns:
+
+```
+todo
+```
 
 ## Query range avg_over_time myMeasurement_myField1 for last [10m]
 
@@ -731,12 +794,37 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=sum_over_time(myMeasur
 
 Command:
 
-```
+```bash
 curl "http://localhost:8428/api/v1/query_range" -d "query=avg_over_time(myMeasurement_myField1[10m])" 
 ```
 
+Returns:
+
+```
+todo
+```
+
 ### Influx
-....
+
+Variables:
+
+```bash
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
+
+```bash
+todo
+```
+
+Returns:
+
+```
+todo
+```
 
 ## Query range avg_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
 
@@ -744,12 +832,37 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=avg_over_time(myMeasur
 
 Command:
 
-```
+```bash
 curl "http://localhost:8428/api/v1/query_range" -d "query=avg_over_time(myMeasurement_myField1[10m])" -d "start=-10m" -d "step=1m"
 ```
 
+Returns:
+
+```
+todo
+```
+
 ### Influx
-....
+
+Variables:
+
+```bash
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
+
+```bash
+todo
+```
+
+Returns:
+
+```
+todo
+```
 
 ## Query range: min_over_time myMeasurement_myField1 for last [10m]
 
@@ -757,12 +870,37 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=avg_over_time(myMeasur
 
 Command:
 
-```
+```bash
 curl "http://localhost:8428/api/v1/query_range" -d "query=min_over_time(myMeasurement_myField1[10m])" 
 ```
 
+Returns:
+
+```
+todo
+```
+
 ### Influx
-....
+
+Variables:
+
+```bash
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
+
+```bash
+todo
+```
+
+Returns:
+
+```
+todo
+```
 
 ## Query range min_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
 
@@ -770,12 +908,37 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=min_over_time(myMeasur
 
 Command:
 
-```
+```bash
 curl "http://localhost:8428/api/v1/query_range" -d "query=min_over_time(myMeasurement_myField1[10m])" -d "start=-10m" -d "step=1m"
 ```
 
+Returns:
+
+```
+todo
+```
+
 ### Influx
-....
+
+Variables:
+
+```bash
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
+
+```bash
+todo
+```
+
+Returns:
+
+```
+todo
+```
 
 ## Query range max_over_time myMeasurement_myField1 for last [10m]
 
@@ -783,12 +946,37 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=min_over_time(myMeasur
 
 Command:
 
-```
+```bash
 curl "http://localhost:8428/api/v1/query_range" -d "query=max_over_time(myMeasurement_myField1[10m])" 
 ```
 
+Returns:
+
+```
+todo
+```
+
 ### Influx
-....
+
+Variables:
+
+```bash
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
+
+```bash
+todo
+```
+
+Returns:
+
+```
+todo
+```
 
 ## Query range max_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
 
@@ -796,12 +984,55 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=max_over_time(myMeasur
 
 Command:
 
-```
+```bash
 curl "http://localhost:8428/api/v1/query_range" -d "query=max_over_time(myMeasurement_myField1[10m])" -d "start=-10m" -d "step=1m"
 ```
 
+Returns:
+
+```
+todo
+```
+
 ### Influx
-....
+
+Variables:
+
+```bash
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
+
+```bash
+todo
+```
+
+Returns:
+
+```
+todo
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # WIP
 ## Prios
@@ -857,6 +1088,7 @@ aggregateType is Optional and defaulted to NONE
 
 Returns: all fields and their values in a series
 Former query D
+
 ```json
 {
     "type" : "ALL_FIELDS_WITH_VALUES",
@@ -865,7 +1097,6 @@ Former query D
 ```
 
 Query Returns: all fields starting with a prefix
-
 Former query E
 
 ```json
@@ -873,27 +1104,4 @@ Former query E
     "type" : "ALL_FIELDS_STARTING_WITH_PREFIX",
     "selectCount" : 100
 }
-```
-
-
-
-# OLD INFLUX PAGE
-
-https://docs.influxdata.com/influxdb/cloud/api/
-https://docs.influxdata.com/influxdb/v2.6/query-data/flux/
-
-### Query Bucket by Field
-
-```
-from(bucket: "testbucket")
-|> range(start: -1h)
-|> filter(fn: (r) => r["_field"] == "TMG")
-```
-
-### Count Inserts in Bucket
-
-```
-from(bucket: "testbucket")
-|> range(start: -1h)
-|> count()
 ```
