@@ -1,5 +1,11 @@
-# Queries
+# Preconditions
+## Software
+To run a query its required to have the Time Series Databases (TSDB) installed.
+The following Guides are available:
 
+- [InfluxDB](/INSTALL_INFLUX_DB.md)
+- [VictoriaMetrics](/INSTALL_VICTORIAMETRICS.md)
+## Environment Variables
 the examples for the influxdb make use of environment variables.
 the following variables are set:
 
@@ -18,7 +24,9 @@ export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_BUCKET_ID=b9132e431c712bfa
 ```
 
-## Check health
+# Queries
+
+## Health Check
 
 ### Victoria
 
@@ -145,9 +153,11 @@ Returns:
 todo
 ```
 
-## Create data without timestamp
+## Insert Queries
 
-### Victoria
+### Insert data without timestamp
+
+#### Victoria
 
 Command:
 
@@ -164,7 +174,7 @@ Returns:
 todo
 ```
 
-### Influx
+#### Influx
 
 Variables: 
 
@@ -190,9 +200,9 @@ Returns:
 todo
 ```
 
-## Create Data with timestamp
+### Insert Data with timestamp
 
-### Victoria
+#### Victoria
 
 Command:
 
@@ -209,7 +219,7 @@ Returns:
 todo
 ```
 
-### Influx
+#### Influx
 
 Variables:
 
@@ -235,9 +245,11 @@ Returns:
 todo
 ```
 
-##  Get all labels
+## Label Queries
 
-### Victoria
+### Get all labels
+
+#### Victoria
 
 Command:
 
@@ -250,7 +262,7 @@ Returns:
 myLabelKey1
 ```
 
-### Influx
+#### Influx
 
 > Flux requires a time range when querying time series data. "Unbounded" https://docs.influxdata.com/influxdb/cloud/query-data/get-started/query-influxdb/
 
@@ -291,9 +303,9 @@ Returns:
 ,_result,0,myLabelKey1
 ```
 
-## Get single label values
+### Get single label values
 
-### Victoria
+#### Victoria
 
 Command:
 
@@ -307,7 +319,7 @@ Returns:
 myLabelValue1
 ```
 
-### Influx
+#### Influx
 
 Variables:
 
@@ -341,9 +353,9 @@ Returns:
 ,_result,0,myLabelValue1
 ```
 
-## Get all label values field values
+### Get all label values field values
 
-### Victoria
+#### Victoria
 
 Command:
 
@@ -357,7 +369,7 @@ Returns:
 "myMeasurement_myField1", "myMeasurement_myField2"
 ```
 
-### Influx
+#### Influx
 
 Variables:
 
@@ -392,9 +404,11 @@ Returns:
 ,_result,1,myField2
 ```
 
-## Count series
+## Series Queries
 
-### Victoria
+### Count series
+
+#### Victoria
 
 Command:
 
@@ -408,7 +422,7 @@ Returns:
 2 # "myField1" and "myField2"
 ```
 
-### Influx
+#### Influx
 
 > Series cardinality is the number of unique database, measurement, tag set, and field key combinations in an InfluxDB instance. https://community.influxdata.com/t/influx-query-return-number-of-unique-series-in-measurement/16679/2
 
@@ -446,9 +460,9 @@ Returns:
 ,_result,0,2
 ```
 
-## Get all series (one series per field)
+### Get all series (one series per field)
 
-### Victoria
+#### Victoria
 
 Command:
 
@@ -462,7 +476,7 @@ Returns:
 myMeasurement_myField1, myMeasurement_myField2
 ```
 
-### Influx
+#### Influx
 
 Variables:
 
@@ -498,9 +512,9 @@ Returns:
 ,_result,0,myField2
 ```
 
-## Get all series with prefix "myMeasurement" (one series per field)
+### Get all series with prefix "myMeasurement" (one series per field)
 
-### Victoria
+#### Victoria
 
 Command:
 
@@ -514,7 +528,7 @@ Returns:
 myMeasurement_myField1, myMeasurement_myField2
 ```
 
-### Influx
+#### Influx
 
 Variables:
 
@@ -549,9 +563,9 @@ Returns:
 ,_result,0,myField2
 ```
 
-## Export series values
+### Export series values
 
-### Victoria
+#### Victoria
 
 Command:
 
@@ -565,7 +579,7 @@ Returns:
 todo
 ```
 
-### Influx
+#### Influx
 
 Variables:
 
@@ -598,9 +612,9 @@ myMeasurement,,1692726241000000000,10
 myMeasurement,,1692726276000000000,10
 ```
 
-## Delete series
+### Delete series
 
-### Victoria
+#### Victoria
 
 Command:
 
@@ -614,13 +628,17 @@ Returns:
 todo
 ```
 
-### Influx
+#### Influx
 
 > There is no way to delete a "column" (i.e. a field or a tag) from an Influx measurement. https://github.com/influxdata/influxdb/issues/6150
 
-## Query latest value
+## Value Queries
 
-### Victoria
+### Single Value Queries
+
+#### Query latest value
+
+##### Victoria
 
 Command:
 
@@ -634,7 +652,7 @@ Returns:
 13
 ```
 
-### Influx
+##### Influx
 
 Variables:
 
@@ -669,14 +687,11 @@ Returns:
 ,_result,0,10
 ```
 
+### Aggregation Queries
 
+#### SUM Query
 
-
-
-
-## Query sum_over_time
-
-### Victoria
+##### Victoria
 
 Command:
 
@@ -690,7 +705,7 @@ Returns:
 todo
 ```
 
-### Influx
+##### Influx
 
 Variables:
 
@@ -703,132 +718,33 @@ export INFLUX_BUCKET=bucket
 Command:
 
 ```bash
-todo
+curl --request POST \
+"http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+--header "Authorization: Token ${INFLUX_TOKEN}" \
+--header 'Accept: application/csv' \
+--header 'Content-type: application/vnd.flux' \
+--data '
+from(bucket: "'$INFLUX_BUCKET'")
+  |> range(start: -180)
+  |> filter(fn: (r) => r["_measurement"] == "myMeasurement")
+  |> filter(fn: (r) => r["_field"] == "myField1")
+  |> aggregateWindow(every: 1s, fn: sum, createEmpty: false)
+  |> yield(name: "sum")
+'
 ```
 
 Returns:
 
 ```
-todo
+,result,table,_start,_stop,_time,_value,_field,_measurement,myLabelKey1
+,sum,0,1969-12-31T23:57:00Z,2023-09-03T11:11:46.533846003Z,2023-08-22T17:43:29Z,10,myField1,myMeasurement,myLabelValue1
+,sum,0,1969-12-31T23:57:00Z,2023-09-03T11:11:46.533846003Z,2023-08-22T17:43:37Z,10,myField1,myMeasurement,myLabelValue1
+,sum,0,1969-12-31T23:57:00Z,2023-09-03T11:11:46.533846003Z,2023-08-22T17:43:45Z,10,myField1,myMeasurement,myLabelValue1
 ```
 
-## Query range sum_over_time myMeasurement_myField1 for last [10m]
+#### AVG Query
 
-### Victoria
-
-Command:
-
-```bash
-curl "http://localhost:8428/api/v1/query_range" -d "query=sum_over_time(myMeasurement_myField1[10m])"
-```
-
-Returns:
-
-```
-todo # sum of values of myMeasurement_myField1 in the last 10m
-```
-
-### Influx
-
-Variables:
-
-```bash
-export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
-export INFLUX_ORG_ID=07ba829c0ea87d3c
-export INFLUX_BUCKET=bucket
-```
-
-Command:
-
-```bash
-todo
-```
-
-Returns:
-
-```
-todo
-```
-
-## Query range sum_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
-
-### Victoria
-
-Command:
-
-```bash
-curl "http://localhost:8428/api/v1/query_range" -d "query=sum_over_time(myMeasurement_myField1[10m])" -d "start=-10m" -d "step=1m"
-```
-
-Returns:
-
-```
-todo # sums of values of myMeasurement_myField1 in the last 10m "plotted" in frame now() -10m to now() in resolution 1m
-```
-
-### Influx
-
-Variables:
-
-```bash
-export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
-export INFLUX_ORG_ID=07ba829c0ea87d3c
-export INFLUX_BUCKET=bucket
-```
-
-Command:
-
-```bash
-todo
-```
-
-Returns:
-
-```
-todo
-```
-
-## Query range avg_over_time myMeasurement_myField1 for last [10m]
-
-### Victoria
-
-Command:
-
-```bash
-curl "http://localhost:8428/api/v1/query_range" -d "query=avg_over_time(myMeasurement_myField1[10m])" 
-```
-
-Returns:
-
-```
-todo
-```
-
-### Influx
-
-Variables:
-
-```bash
-export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
-export INFLUX_ORG_ID=07ba829c0ea87d3c
-export INFLUX_BUCKET=bucket
-```
-
-Command:
-
-```bash
-todo
-```
-
-Returns:
-
-```
-todo
-```
-
-## Query range avg_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
-
-### Victoria
+##### Victoria
 
 Command:
 
@@ -842,7 +758,7 @@ Returns:
 todo
 ```
 
-### Influx
+##### Influx
 
 Variables:
 
@@ -855,56 +771,33 @@ export INFLUX_BUCKET=bucket
 Command:
 
 ```bash
-todo
+curl --request POST \
+"http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+--header "Authorization: Token ${INFLUX_TOKEN}" \
+--header 'Accept: application/csv' \
+--header 'Content-type: application/vnd.flux' \
+--data '
+from(bucket: "'$INFLUX_BUCKET'")
+  |> range(start: -180)
+  |> filter(fn: (r) => r["_measurement"] == "myMeasurement")
+  |> filter(fn: (r) => r["_field"] == "myField1")
+  |> aggregateWindow(every: 1s, fn: mean, createEmpty: false)
+  |> yield(name: "avg")
+'
 ```
 
 Returns:
 
 ```
-todo
+,result,table,_start,_stop,_time,_value,_field,_measurement,myLabelKey1
+,avg,0,1969-12-31T23:57:00Z,2023-09-03T11:35:12.518463347Z,2023-08-22T17:43:29Z,10,myField1,myMeasurement,myLabelValue1
+,avg,0,1969-12-31T23:57:00Z,2023-09-03T11:35:12.518463347Z,2023-08-22T17:43:37Z,10,myField1,myMeasurement,myLabelValue1
+,avg,0,1969-12-31T23:57:00Z,2023-09-03T11:35:12.518463347Z,2023-08-22T17:43:45Z,10,myField1,myMeasurement,myLabelValue1
 ```
 
-## Query range: min_over_time myMeasurement_myField1 for last [10m]
+#### MIN Query
 
-### Victoria
-
-Command:
-
-```bash
-curl "http://localhost:8428/api/v1/query_range" -d "query=min_over_time(myMeasurement_myField1[10m])" 
-```
-
-Returns:
-
-```
-todo
-```
-
-### Influx
-
-Variables:
-
-```bash
-export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
-export INFLUX_ORG_ID=07ba829c0ea87d3c
-export INFLUX_BUCKET=bucket
-```
-
-Command:
-
-```bash
-todo
-```
-
-Returns:
-
-```
-todo
-```
-
-## Query range min_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
-
-### Victoria
+##### Victoria
 
 Command:
 
@@ -918,7 +811,7 @@ Returns:
 todo
 ```
 
-### Influx
+##### Influx
 
 Variables:
 
@@ -931,56 +824,33 @@ export INFLUX_BUCKET=bucket
 Command:
 
 ```bash
-todo
+curl --request POST \
+"http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+--header "Authorization: Token ${INFLUX_TOKEN}" \
+--header 'Accept: application/csv' \
+--header 'Content-type: application/vnd.flux' \
+--data '
+from(bucket: "'$INFLUX_BUCKET'")
+  |> range(start: -180)
+  |> filter(fn: (r) => r["_measurement"] == "myMeasurement")
+  |> filter(fn: (r) => r["_field"] == "myField1")
+  |> aggregateWindow(every: 1s, fn: min, createEmpty: false)
+  |> yield(name: "min")
+'
 ```
 
 Returns:
 
 ```
-todo
+,result,table,_start,_stop,_time,_value,_field,_measurement,myLabelKey1
+,min,0,1969-12-31T23:57:00Z,2023-09-03T11:41:26.822476847Z,2023-08-22T17:43:29Z,10,myField1,myMeasurement,myLabelValue1
+,min,0,1969-12-31T23:57:00Z,2023-09-03T11:41:26.822476847Z,2023-08-22T17:43:37Z,10,myField1,myMeasurement,myLabelValue1
+,min,0,1969-12-31T23:57:00Z,2023-09-03T11:41:26.822476847Z,2023-08-22T17:43:45Z,10,myField1,myMeasurement,myLabelValue1
 ```
 
-## Query range max_over_time myMeasurement_myField1 for last [10m]
+#### MAX Query
 
-### Victoria
-
-Command:
-
-```bash
-curl "http://localhost:8428/api/v1/query_range" -d "query=max_over_time(myMeasurement_myField1[10m])" 
-```
-
-Returns:
-
-```
-todo
-```
-
-### Influx
-
-Variables:
-
-```bash
-export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
-export INFLUX_ORG_ID=07ba829c0ea87d3c
-export INFLUX_BUCKET=bucket
-```
-
-Command:
-
-```bash
-todo
-```
-
-Returns:
-
-```
-todo
-```
-
-## Query range max_over_time up myMeasurement_myField1 for last [10m] and return values from "-10m" to now in resulution "1m"
-
-### Victoria
+##### Victoria
 
 Command:
 
@@ -994,7 +864,7 @@ Returns:
 todo
 ```
 
-### Influx
+##### Influx
 
 Variables:
 
@@ -1007,34 +877,31 @@ export INFLUX_BUCKET=bucket
 Command:
 
 ```bash
-todo
+curl --request POST \
+"http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+--header "Authorization: Token ${INFLUX_TOKEN}" \
+--header 'Accept: application/csv' \
+--header 'Content-type: application/vnd.flux' \
+--data '
+from(bucket: "'$INFLUX_BUCKET'")
+  |> range(start: -180)
+  |> filter(fn: (r) => r["_measurement"] == "myMeasurement")
+  |> filter(fn: (r) => r["_field"] == "myField1")
+  |> aggregateWindow(every: 1s, fn: max, createEmpty: false)
+  |> yield(name: "max")
+'
 ```
 
 Returns:
 
 ```
-todo
+,result,table,_start,_stop,_time,_value,_field,_measurement,myLabelKey1
+,min,0,1969-12-31T23:57:00Z,2023-09-03T11:41:26.822476847Z,2023-08-22T17:43:29Z,10,myField1,myMeasurement,myLabelValue1
+,min,0,1969-12-31T23:57:00Z,2023-09-03T11:41:26.822476847Z,2023-08-22T17:43:37Z,10,myField1,myMeasurement,myLabelValue1
+,min,0,1969-12-31T23:57:00Z,2023-09-03T11:41:26.822476847Z,2023-08-22T17:43:45Z,10,myField1,myMeasurement,myLabelValue1
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# WIP
+# Work in Progress
 ## Prios
 ### Prio 1 
 

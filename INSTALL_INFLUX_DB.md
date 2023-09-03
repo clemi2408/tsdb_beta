@@ -46,6 +46,16 @@ cd /usr/bin
 ./influxd
 ```
 
+or use ubuntu services:
+
+```
+systemctl start influxdb
+systemctl stop influxdb
+
+systemctl enable influxdb
+systemctl disable influxdb
+```
+
 ### MacOS
 
 Install InfluxDB via brew:
