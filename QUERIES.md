@@ -4,7 +4,6 @@ the examples for the influxdb make use of environment variables.
 the following variables are set:
 
 ```
-#export INFLUX_TOKEN=YcqeMSEqzrvDsPevnsPA9fuES38RU-R9_y9UZ2gefEYaNJfVdUOVdj5NvrPpwNnmVuGoZSsqZ_jxnKx9dhdHYw==
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_ORG=testorg
 export INFLUX_BUCKET=bucket
@@ -15,9 +14,7 @@ Besides the names in `INFLUX_ORG` and `INFLUX_BUCKET` their ids are required in 
 Set those variables after initial org and bucket creation:
 
 ```
-#export INFLUX_ORG_ID=22a4a65dfebd3452
 export INFLUX_ORG_ID=07ba829c0ea87d3c
-
 export INFLUX_BUCKET_ID=b9132e431c712bfa
 ```
 
@@ -30,11 +27,13 @@ https://github.com/VictoriaMetrics/VictoriaMetrics/issues/3539
 
 ### Influx
 
+Command:
+
 ```
 curl "http://localhost:8086/health"
 ```
 
-returns
+Returns:
 
 ```
 todo
@@ -43,19 +42,27 @@ todo
 ## Structural Queries
 
 ### Victoria
-Not required as concepts like orgs and buckets are not present
+Not required as concepts like `orgs` and `buckets are not present
 ...
 
 ### Influx
 
 #### List organisations
 
+Variables:
+
+```
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+```
+
+Command:
+
 ```
 curl "http://localhost:8086/api/v2/orgs" \
 --header "Authorization: Token ${INFLUX_TOKEN}"
 ```
 
-returns
+Returns:
 
 ```
 todo
@@ -63,18 +70,36 @@ todo
 
 #### List buckets
 
+Variables:
+
+```
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+```
+
+Command:
+
 ```
 curl "http://localhost:8086/api/v2/buckets" \
 --header "Authorization: Token ${INFLUX_TOKEN}"
 ```
 
-returns
+Returns:
 
 ```
 todo
 ```
 
 #### Create buckets
+
+Variables:
+
+```
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
 
 ```
 curl -v --request POST \
@@ -84,7 +109,7 @@ curl -v --request POST \
       --data "{ \"orgID\": \"$INFLUX_ORG_ID\", \"name\": \"$INFLUX_BUCKET\" }"
 ```
 
-returns
+Returns:
 
 ```
 todo
@@ -92,12 +117,16 @@ todo
 
 use bucket and org id in response to populate `INFLUX_BUCKET_ID` env variable:
 
-```
-export INFLUX_BUCKET_ID=47aaa4096e1f83ce
-export INFLUX_ORG_ID=07ba829c0ea87d3c
-``
-
 #### Delete bucket
+
+Variables:
+
+```
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_BUCKET_ID=b9132e431c712bfa
+```
+
+Command:
 
 ```
 curl --request DELETE "http://localhost:8086/api/v2/buckets/${INFLUX_BUCKET_ID}" \
@@ -105,7 +134,7 @@ curl --request DELETE "http://localhost:8086/api/v2/buckets/${INFLUX_BUCKET_ID}"
   --header "Accept: application/json"
 ```
 
-returns 
+Returns: 
 
 ```
 todo
@@ -115,6 +144,8 @@ todo
 
 ### Victoria
 
+Command:
+
 ```
 curl \
 -d "myMeasurement,myLabelKey1=myLabelValue1 myField1=10,myField2=1.23" \
@@ -122,13 +153,23 @@ curl \
 "http://localhost:8428/write"
 ```
 
-returns 
+Returns: 
 
 ```
 todo
 ```
 
 ### Influx
+
+Variables: 
+
+```
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG=testorg
+export INFLUX_BUCKET=bucket
+```
+
+Command:
 
 ```
 curl \
@@ -138,7 +179,7 @@ curl \
 "http://localhost:8086/api/v2/write?org=${INFLUX_ORG}&bucket=${INFLUX_BUCKET}&precision=s"
 ```
 
-returns 
+Returns: 
 
 ```
 todo
@@ -148,6 +189,8 @@ todo
 
 ### Victoria
 
+Command:
+
 ```
 curl \
 -d "myMeasurement,myLabelKey1=myLabelValue1 myField1=123,myField2=1.23 1692726276" \
@@ -155,13 +198,23 @@ curl \
 "http://localhost:8428/write" 
 ```
 
-returns 
+Returns: 
 
 ```
 todo
 ```
 
 ### Influx
+
+Variables:
+
+```
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG=testorg
+export INFLUX_BUCKET=bucket
+```
+
+Command:
 
 ```
 curl \
@@ -171,7 +224,7 @@ curl \
 "http://localhost:8086/api/v2/write?org=${INFLUX_ORG}&bucket=${INFLUX_BUCKET}&precision=s"
 ```
 
-returns 
+Returns: 
 
 ```
 todo
@@ -181,10 +234,12 @@ todo
 
 ### Victoria
 
+Command:
+
 ```
 curl -g "http://localhost:8428/api/v1/labels"
 ```
-returns 
+Returns: 
 
 ```
 myLabelKey1
@@ -193,6 +248,16 @@ myLabelKey1
 ### Influx
 
 > Flux requires a time range when querying time series data. "Unbounded" https://docs.influxdata.com/influxdb/cloud/query-data/get-started/query-influxdb/
+
+Variables:
+
+```
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
 
 ```
 curl --request POST \
@@ -211,7 +276,7 @@ start: -1d
 '
 ```
 
-returns 
+Returns: 
 
 ```
 ,result,table,_value
@@ -227,17 +292,29 @@ returns
 
 ### Victoria
 
+Command:
+
 ```
 curl -G "http://localhost:8428/api/v1/label/myLabelKey1/values"
 ```
 
-returns 
+Returns: 
 
 ```
 myLabelValue1
 ```
 
 ### Influx
+
+Variables:
+
+```
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
 
 ```
 curl --request POST \
@@ -254,7 +331,7 @@ from(bucket: "'$INFLUX_BUCKET'")
 '
 ```
 
-returns 
+Returns: 
 
 ```
 ,result,table,_value
@@ -265,17 +342,29 @@ returns
 
 ### Victoria
 
+Command:
+
 ```
 curl -X GET "http://localhost:8428/api/v1/label/__name__/values" --data-urlencode "match[]={__name__=~".+", run="myMeasurement"}"
 ```
 
-returns
+Returns:
 
 ```
 "myMeasurement_myField1", "myMeasurement_myField2"
 ```
 
 ### Influx
+
+Variables:
+
+```
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
 
 ```
 curl --request POST \
@@ -292,7 +381,7 @@ from(bucket: "'$INFLUX_BUCKET'")
 '
 ```
 
-returns
+Returns:
 
 ```
 ,result,table,_field
@@ -305,11 +394,13 @@ returns
 
 ### Victoria
 
+Command:
+
 ```
 curl -s "http://localhost:8428/api/v1/series/count"
 ```
 
-returns 
+Returns: 
 
 ```
 2 # "myField1" and "myField2"
@@ -318,6 +409,16 @@ returns
 ### Influx
 
 > Series cardinality is the number of unique database, measurement, tag set, and field key combinations in an InfluxDB instance. https://community.influxdata.com/t/influx-query-return-number-of-unique-series-in-measurement/16679/2
+
+Variables:
+
+```
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
 
 ```
 curl --request POST \
@@ -337,7 +438,7 @@ start: -1d
 '
 ```
 
-returns
+Returns:
 
 ```
 ,result,table,_value
@@ -348,17 +449,29 @@ returns
 
 ### Victoria
 
+Command:
+
 ```
 curl -G "http://localhost:8428/api/v1/series" -d "match[]={__name__=~".*"}"
 ```
 
-returns 
+Returns: 
 
 ```
 myMeasurement_myField1, myMeasurement_myField2
 ```
 
 ### Influx
+
+Variables:
+
+```
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
 
 ```
 curl --request POST \
@@ -377,7 +490,7 @@ start: -1d
 '
 ```
 
-returns 
+Returns: 
 
 ```
 ,result,table,_value
@@ -389,17 +502,29 @@ returns
 
 ### Victoria
 
+Command:
+
 ```
 curl -G "http://localhost:8428/api/v1/series" -d "match[]={__name__=~"myMeasurement.*"}"
 ```
 
-returns 
+Returns: 
 
 ```
 myMeasurement_myField1, myMeasurement_myField2
 ```
 
 ### Influx
+
+Variables:
+
+```
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
 
 ```
 curl --request POST \
@@ -416,7 +541,7 @@ from(bucket: "'$INFLUX_BUCKET'")
 '
 ```
 
-returns 
+Returns: 
 
 ```
 ,result,table,_value
@@ -428,17 +553,28 @@ returns
 
 ### Victoria
 
+Command:
+
 ```
 curl -X POST "http://localhost:8428/api/v1/export" -d "match[]={__name__=~"myMeasurement_myField1"}"
 ```
 
-returns 
+Returns: 
 
 ```
 todo
 ```
 
 ### Influx
+
+Variables:
+
+```
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_BUCKET=bucket
+```
+
+Command:
 
 ```
 curl --request POST \
@@ -448,7 +584,7 @@ curl --request POST \
 --data-urlencode "q=SELECT time, myField1 FROM myMeasurement"
 ```
 
-returns 
+Returns: 
 
 ```
 name,tags,time,myField1
@@ -467,11 +603,13 @@ myMeasurement,,1692726276000000000,10
 
 ### Victoria
 
+Command:
+
 ```
 curl "http://localhost:8428/api/v1/admin/tsdb/delete_series?match[]=myMeasurement_myField1"
 ```
 
-returns 
+Returns: 
 
 ```
 todo
@@ -485,11 +623,13 @@ todo
 
 ### Victoria
 
+Command:
+
 ```
 curl "http://localhost:8428/api/v1/query" -d "query=myMeasurement_myField1"
 ```
 
-returns
+Returns:
  
 ```
 13
@@ -498,6 +638,16 @@ returns
 as it was added last
 
 ### Influx
+
+Variables:
+
+```
+export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
+export INFLUX_ORG_ID=07ba829c0ea87d3c
+export INFLUX_BUCKET=bucket
+```
+
+Command:
 
 ```
 curl --request POST \
@@ -515,21 +665,29 @@ from(bucket: "'$INFLUX_BUCKET'")
 '
 ```
 
-returns
+Returns:
 
 ```
 ,result,table,_value
 ,_result,0,10
 ```
 
+
+
+
+
 ## Query sum_over_time
 
 ### Victoria
 
+Command:
+
 ```
 curl "http://localhost:8428/api/v1/query" -d "query=sum_over_time(myMeasurement_myField1)"
 ```
---> Returns "13" as it was added last
+--> Returns: "13" as it was added last
+
+Command:
 
 ```
 curl "http://localhost:8428/api/v1/query" -d "query=sum_over_time(myMeasurement_myField1)" -d "start=-10m" -d "step=1s"
@@ -542,10 +700,12 @@ curl "http://localhost:8428/api/v1/query" -d "query=sum_over_time(myMeasurement_
 
 ### Victoria
 
+Command:
+
 ```
 curl "http://localhost:8428/api/v1/query_range" -d "query=sum_over_time(myMeasurement_myField1[10m])"
 ```
---> returns sum of values of myMeasurement_myField1 in the last 10m
+--> Returns: sum of values of myMeasurement_myField1 in the last 10m
 
 ### Influx
 ....
@@ -554,11 +714,13 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=sum_over_time(myMeasur
 
 ### Victoria
 
+Command:
+
 ```
 curl "http://localhost:8428/api/v1/query_range" -d "query=sum_over_time(myMeasurement_myField1[10m])" -d "start=-10m" -d "step=1m"
 ```
 
---> returns sums of values of myMeasurement_myField1 in the last 10m "plotted" in frame now() -10m to now() in resolution 1m
+--> Returns: sums of values of myMeasurement_myField1 in the last 10m "plotted" in frame now() -10m to now() in resolution 1m
 
 ### Influx
 ....
@@ -566,6 +728,8 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=sum_over_time(myMeasur
 ## Query range avg_over_time myMeasurement_myField1 for last [10m]
 
 ### Victoria
+
+Command:
 
 ```
 curl "http://localhost:8428/api/v1/query_range" -d "query=avg_over_time(myMeasurement_myField1[10m])" 
@@ -578,6 +742,8 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=avg_over_time(myMeasur
 
 ### Victoria
 
+Command:
+
 ```
 curl "http://localhost:8428/api/v1/query_range" -d "query=avg_over_time(myMeasurement_myField1[10m])" -d "start=-10m" -d "step=1m"
 ```
@@ -588,6 +754,8 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=avg_over_time(myMeasur
 ## Query range: min_over_time myMeasurement_myField1 for last [10m]
 
 ### Victoria
+
+Command:
 
 ```
 curl "http://localhost:8428/api/v1/query_range" -d "query=min_over_time(myMeasurement_myField1[10m])" 
@@ -600,6 +768,8 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=min_over_time(myMeasur
 
 ### Victoria
 
+Command:
+
 ```
 curl "http://localhost:8428/api/v1/query_range" -d "query=min_over_time(myMeasurement_myField1[10m])" -d "start=-10m" -d "step=1m"
 ```
@@ -610,6 +780,8 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=min_over_time(myMeasur
 ## Query range max_over_time myMeasurement_myField1 for last [10m]
 
 ### Victoria
+
+Command:
 
 ```
 curl "http://localhost:8428/api/v1/query_range" -d "query=max_over_time(myMeasurement_myField1[10m])" 
@@ -622,6 +794,8 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=max_over_time(myMeasur
 
 ### Victoria
 
+Command:
+
 ```
 curl "http://localhost:8428/api/v1/query_range" -d "query=max_over_time(myMeasurement_myField1[10m])" -d "start=-10m" -d "step=1m"
 ```
@@ -633,7 +807,7 @@ curl "http://localhost:8428/api/v1/query_range" -d "query=max_over_time(myMeasur
 ## Prios
 ### Prio 1 
 
-Query returns currentValue of a {random|defined} field (based on field key presence):
+Query Returns: currentValue of a {random|defined} field (based on field key presence):
 Former query F
 ```json
 {
@@ -643,7 +817,7 @@ Former query F
 }
 ```
 
-Returns aggregated type value of a {random|defined} field (based on field key presence) from startOffset in resolution.
+Returns: aggregated type value of a {random|defined} field (based on field key presence) from startOffset in resolution.
 Default values if not set:
 
 - StartOffset=1H 
@@ -681,7 +855,7 @@ aggregateType is Optional and defaulted to NONE
 ```
 ### Prio 2
 
-Returns all fields and their values in a series
+Returns: all fields and their values in a series
 Former query D
 ```json
 {
@@ -690,7 +864,7 @@ Former query D
 }
 ```
 
-Query returns all fields starting with a prefix
+Query Returns: all fields starting with a prefix
 
 Former query E
 
