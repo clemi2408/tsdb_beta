@@ -1,10 +1,9 @@
 package de.cleem.tub.tsdbb.apps.worker.adapters.victoriametrics;
 
 
-import de.cleem.tub.tsdbb.api.model.Insert;
-import de.cleem.tub.tsdbb.api.model.WorkerGeneralProperties;
-import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
-import de.cleem.tub.tsdbb.api.model.WorkerTsdbEndpoint;
+import de.cleem.tub.tsdbb.api.model.*;
+import de.cleem.tub.tsdbb.apps.worker.adapters.InsertResponse;
+import de.cleem.tub.tsdbb.apps.worker.adapters.SelectResponse;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterIF;
 import de.cleem.tub.tsdbb.apps.worker.formats.LineProtocolFormat;
@@ -32,6 +31,9 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     private static final String LABEL_ENDPOINT = "/api/v1/label/__name__/values";
     private static final String DELETE_ENDPOINT = "/api/v1/admin/tsdb/delete_series?match[]=%s";
     private static final int PRE_CLEANUP_SLEEP_IN_MS = 2000;
+
+    // health==metrics? https://github.com/VictoriaMetrics/VictoriaMetrics/issues/3539
+    private static final String HEALTH_ENDPOINT = "/metrics";
     private HttpClient httpClient;
     private LineProtocolFormat lineProtocolFormat;
     private WorkerGeneralProperties.TsdbTypeEnum tsdbType;
@@ -49,6 +51,14 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         httpClient = HttpClient.newHttpClient();
 
+        for(WorkerTsdbEndpoint endpoint : workerSetupRequest.getWorkerConfiguration().getTsdbEndpoints()) {
+
+            healthCheck(endpoint);
+
+        }
+
+        httpClient = HttpClient.newHttpClient();
+
         lineProtocolFormat = LineProtocolFormat.builder()
                 .measurementName(tsdbType.getValue()+MEASUREMENT_SUFFIX_STRING)
                 .labelKey(RUN_LABEL_KEY)
@@ -56,6 +66,23 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
                 .build();
 
     }
+
+    @Override
+    public void healthCheck(WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+        // HEALTH
+        // curl "http://localhost:8428/metrics"
+        try {
+
+            final URI healthUri = URI.create(endpoint.getTsdbUrl() + HEALTH_ENDPOINT);
+
+            HttpHelper.executeGet(httpClient, healthUri, null, null, 200);
+        } catch (HttpException e) {
+            throw new TSDBAdapterException(e);
+        }
+
+    }
+
     @Override
     public void createStorage(final WorkerTsdbEndpoint endpoint) {
 
@@ -89,7 +116,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
     }
     @Override
-    public int write(final Insert insert, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    public InsertResponse write(final Insert insert, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         final String metricLine = lineProtocolFormat.getLine(insert);
         log.info("Created metricLine: "+metricLine);
@@ -108,13 +135,18 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
             log.debug("Wrote Line: " + metricLine + " to: " + writeUri);
 
-            return metricLine.length();
+            return InsertResponse.builder().requestLength(metricLine.length()).insert(insert).build();
 
         } catch (HttpException e) {
             throw new TSDBAdapterException(e);
         }
 
 
+
+    }
+
+    @Override
+    public SelectResponse read(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
     }
 

@@ -1,9 +1,8 @@
 package de.cleem.tub.tsdbb.apps.worker.adapters.influxdb;
 
-import de.cleem.tub.tsdbb.api.model.Insert;
-import de.cleem.tub.tsdbb.api.model.WorkerGeneralProperties;
-import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
-import de.cleem.tub.tsdbb.api.model.WorkerTsdbEndpoint;
+import de.cleem.tub.tsdbb.api.model.*;
+import de.cleem.tub.tsdbb.apps.worker.adapters.InsertResponse;
+import de.cleem.tub.tsdbb.apps.worker.adapters.SelectResponse;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterIF;
 import de.cleem.tub.tsdbb.apps.worker.formats.LineProtocolFormat;
@@ -119,7 +118,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
     }
     @Override
-    public int write(final Insert insert,final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    public InsertResponse write(final Insert insert, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         if (bucketId == null) {
             throw new TSDBAdapterException("Can not write to Storage - bucketId is NULL");
@@ -143,13 +142,19 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
             log.debug("Wrote Line: " + metricLine);
 
-            return metricLine.length();
+            return InsertResponse.builder().requestLength(metricLine.length()).insert(insert).build();
 
         } catch (HttpException e) {
             throw new TSDBAdapterException(e);
         }
 
     }
+
+    @Override
+    public SelectResponse read(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+    }
+
     @Override
     public void cleanup(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
@@ -188,8 +193,8 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
     }
 
-    ////
-    private void healthCheck(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    @Override
+    public void healthCheck(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         // HEALTH
         // curl "http://localhost:8086/health"
@@ -203,6 +208,9 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         }
 
     }
+
+    ////
+
     private String buildCreateBucketJson(final String orgId, final String bucketName) {
 
         //  {

@@ -3,6 +3,7 @@ package de.cleem.tub.tsdbb.apps.worker.executor;
 import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.api.model.Insert;
 import de.cleem.tub.tsdbb.apps.worker.adapters.BaseConnector;
+import de.cleem.tub.tsdbb.apps.worker.adapters.InsertResponse;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterIF;
 import de.cleem.tub.tsdbb.commons.date.DateHelper;
 import de.cleem.tub.tsdbb.commons.factories.sourceInformation.SourceInformationFactory;
@@ -41,7 +42,7 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
         final TimeFrame timeFrame = TimeFrameFactory.getTimeFrame();
 
 
-        final int sizeInBytes = tsdbInterface.write(insert,endpoint);
+        final InsertResponse insertResponse = tsdbInterface.write(insert,endpoint);
 
         timeFrame.setEndTimestamp(OffsetDateTime.now());
 
@@ -54,7 +55,7 @@ public class TaskRequest extends BaseConnector implements Callable<TaskResult> {
         taskResult.setSourceInformation(SourceInformationFactory.getSourceInformation(workerSetupRequest.getWorkerConfiguration().getWorkerUrl()));
         taskResult.setThreadName(Thread.currentThread().getName());
         taskResult.setTimeFrame(timeFrame);
-        taskResult.setRequestSizeInBytes(BigDecimal.valueOf(sizeInBytes));
+        taskResult.setRequestSizeInBytes(BigDecimal.valueOf(insertResponse.getRequestLength()));
         taskResult.setDurationInMs(BigDecimal.valueOf(duration));
 
         return taskResult;
