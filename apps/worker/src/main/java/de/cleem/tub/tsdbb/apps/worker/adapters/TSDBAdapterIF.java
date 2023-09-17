@@ -22,4 +22,13 @@ public interface TSDBAdapterIF {
 
     void healthCheck(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
 
+
+    ///
+
+    SelectResponse getAllLabels(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
+
+    SelectResponse getSingleLabelValue(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
+
+    SelectResponse getMeasurementLabels(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
+
 }

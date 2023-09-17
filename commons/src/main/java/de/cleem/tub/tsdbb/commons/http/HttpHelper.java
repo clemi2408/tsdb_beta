@@ -17,6 +17,7 @@ public class HttpHelper extends BaseClass {
     public static final String HEADER_KEY_CONTENT_TYPE = "Content-type";
     public static final String HEADER_KEY_CONTENT_TYPE_VALUE_FORM_URLENCODED = "application/x-www-form-urlencoded";
     public static final String HEADER_KEY_CONTENT_TYPE_VALUE_JSON = "application/json";
+    private static final String HEADER_KEY_ACCEPT = "Accept";
 
     public static String executePost(final HttpClient httpClient,
                                      final URI uri,
@@ -134,6 +135,17 @@ public class HttpHelper extends BaseClass {
 
         final HashMap<String, String> headerMap = new HashMap<>();
         headerMap.put(HEADER_KEY_AUTHORIZATION, HEADER_KEY_AUTHORIZATION_VALUE_PREFIX_TOKEN + token);
+
+        return headerMap;
+    }
+
+
+    public static HashMap<String, String> getAcceptContentTypeTokenHeaderMap(final String token, final String accept, final String contentType) {
+
+        final HashMap<String, String> headerMap = getTokenAuthHeaderMap(token);
+
+        headerMap.put(HEADER_KEY_ACCEPT, accept);
+        headerMap.put(HEADER_KEY_CONTENT_TYPE, contentType);
 
         return headerMap;
     }

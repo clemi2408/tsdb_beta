@@ -11,6 +11,18 @@
       "type": "string",
       "format": "date-time",
       "nullable": true
+    },
+    "startValue": {
+      "type": "string",
+      "nullable": true
+    },
+    "labelName": {
+      "type": "string",
+      "nullable": true
+    },
+    "measurementName": {
+      "type": "string",
+      "nullable": true
     }
   },
   "required": [ "id" ]

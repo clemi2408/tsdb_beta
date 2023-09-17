@@ -29,11 +29,13 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     private static final String RUN_LABEL_KEY = "run";
     private static final String WRITE_ENDPOINT = "/write";
     private static final String LABEL_ENDPOINT = "/api/v1/label/__name__/values";
+    private static final String LABELS_ENDPOINT ="/api/v1/labels";
     private static final String DELETE_ENDPOINT = "/api/v1/admin/tsdb/delete_series?match[]=%s";
     private static final int PRE_CLEANUP_SLEEP_IN_MS = 2000;
 
     // health==metrics? https://github.com/VictoriaMetrics/VictoriaMetrics/issues/3539
     private static final String HEALTH_ENDPOINT = "/metrics";
+    private static final String LABEL_VALUE_ENDPOINT = "/api/v1/label/%s/values";
     private HttpClient httpClient;
     private LineProtocolFormat lineProtocolFormat;
     private WorkerGeneralProperties.TsdbTypeEnum tsdbType;
@@ -74,9 +76,10 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
         // curl "http://localhost:8428/metrics"
         try {
 
-            final URI healthUri = URI.create(endpoint.getTsdbUrl() + HEALTH_ENDPOINT);
+            final URI uri = URI.create(endpoint.getTsdbUrl() + HEALTH_ENDPOINT);
 
-            HttpHelper.executeGet(httpClient, healthUri, null, null, 200);
+            HttpHelper.executeGet(httpClient, uri, null, null, 200);
+
         } catch (HttpException e) {
             throw new TSDBAdapterException(e);
         }
@@ -129,11 +132,11 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         try {
 
-            final URI writeUri = URI.create(endpoint.getTsdbUrl() + WRITE_ENDPOINT);
+            final URI uri = URI.create(endpoint.getTsdbUrl() + WRITE_ENDPOINT);
 
-            HttpHelper.executePost(httpClient, writeUri, metricLine, new HashMap<>(), 204);
+            HttpHelper.executePost(httpClient, uri, metricLine, new HashMap<>(), 204);
 
-            log.debug("Wrote Line: " + metricLine + " to: " + writeUri);
+            log.debug("Wrote Line: " + metricLine + " to: " + uri);
 
             return InsertResponse.builder().requestLength(metricLine.length()).insert(insert).build();
 
@@ -144,16 +147,67 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
 
     }
-
     @Override
     public SelectResponse read(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
+        return null;
     }
+    @Override
+    public SelectResponse getAllLabels(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
+        // curl -g "http://localhost:8428/api/v1/labels"
+
+        try {
+
+            final URI uri = URI.create(endpoint.getTsdbUrl() + LABELS_ENDPOINT);
+
+            final String responseBody = HttpHelper.executeGet(httpClient, uri, null, new HashMap<>(), 200);
+
+            log.debug("Queried " + uri);
+
+            return SelectResponse.builder().requestLength(0).responseLength(responseBody.length()).select(select).build();
+
+        } catch (HttpException e) {
+            throw new TSDBAdapterException(e);
+        }
+
+
+    }
+    @Override
+    public SelectResponse getSingleLabelValue(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException{
+
+        // curl -G "http://localhost:8428/api/v1/label/${LABEL1_NAME}/values"
+
+        try {
+
+            final URI uri = URI.create(endpoint.getTsdbUrl() + String.format(LABEL_VALUE_ENDPOINT, select.getLabelName()));
+
+            final String responseBody = HttpHelper.executeGet(httpClient, uri, null, new HashMap<>(), 200);
+
+            log.debug("Queried " + uri);
+
+            return SelectResponse.builder().requestLength(0).responseLength(responseBody.length()).select(select).build();
+
+        } catch (HttpException e) {
+            throw new TSDBAdapterException(e);
+        }
+
+    }
+    @Override
+    public SelectResponse getMeasurementLabels(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException{
+
+        // curl -X GET "http://localhost:8428/api/v1/label/__name__/values" \
+        // --data-urlencode "match[]={__name__=~".+", run="${MEASUREMENT_NAME}"}"
+
+        final String responseBody = getSeriesByLabelKVString(endpoint,select.getMeasurementName());
+
+        return SelectResponse.builder().requestLength(0).responseLength(responseBody.length()).select(select).build();
+
+    }
     ////
-    private String[] getSeriesByLabelKV(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    private String getSeriesByLabelKVString(final WorkerTsdbEndpoint endpoint, final String measurement) throws TSDBAdapterException {
 
-        final String requestBody = "match[]={__name__=~\".+\", " + RUN_LABEL_KEY + "=\"" + tsdbType.getValue() + "\"}";
+        final String requestBody = "match[]={__name__=~\".+\", " + RUN_LABEL_KEY + "=\"" + measurement + "\"}";
 
         final String encodedRequestBody = URLEncoder.encode(requestBody, StandardCharsets.UTF_8);
 
@@ -162,17 +216,21 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
         final HashMap<String, String> headers = new HashMap<>();
         headers.put(HttpHelper.HEADER_KEY_CONTENT_TYPE, HttpHelper.HEADER_KEY_CONTENT_TYPE_VALUE_FORM_URLENCODED);
 
-        final URI labelUri = URI.create(endpoint.getTsdbUrl() + LABEL_ENDPOINT);
-
-        final String response;
+        final URI uri = URI.create(endpoint.getTsdbUrl() + LABEL_ENDPOINT);
 
         try {
 
-            response = HttpHelper.executeGet(httpClient, labelUri, encodedRequestBody, headers, 200);
+            return HttpHelper.executeGet(httpClient, uri, encodedRequestBody, headers, 200);
 
         } catch (HttpException e) {
             throw new TSDBAdapterException(e);
         }
+
+
+    }
+    private String[] getSeriesByLabelKV(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+        final String response = getSeriesByLabelKVString(endpoint, tsdbType.getValue());
 
         final JSONObject jObject = new JSONObject(response);
 
@@ -191,13 +249,13 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     }
     private void deleteSeries(final String seriesName, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
-        final URI deleteUri = URI.create(endpoint.getTsdbUrl() + String.format(DELETE_ENDPOINT, seriesName));
+        final URI uri = URI.create(endpoint.getTsdbUrl() + String.format(DELETE_ENDPOINT, seriesName));
 
         // curl 'http://localhost:8428/api/v1/admin/tsdb/delete_series?match[]=victoria_measurement_PEp'
 
         try {
 
-            HttpHelper.executeGet(httpClient, deleteUri, null, null, 204);
+            HttpHelper.executeGet(httpClient, uri, null, null, 204);
             log.info("Deleted series: " + seriesName);
 
         } catch (HttpException e) {
