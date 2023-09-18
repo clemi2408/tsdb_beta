@@ -11,10 +11,12 @@ import de.cleem.tub.tsdbb.commons.http.HttpHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.http.HttpMethod;
 
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
-import java.time.Instant;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 @Slf4j
@@ -28,17 +30,16 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
     private static final String NAME_STRING = "name";
     private static final String ID_STRING = "id";
     private static final String MEASUREMENT_SUFFIX_STRING = "_measurement";
-    private static final String ORGS_ENDPOINT = "/api/v2/orgs";
-    private static final String BUCKETS_ENDPOINT = "/api/v2/buckets";
-    private static final String HEALTH_ENDPOINT = "/health";
-    private static final String WRITE_ENDPOINT = "/api/v2/write?org=%s&bucket=%s&precision=%s";
-
-    private static final String QUERY_ENDPOINT = "/api/v2/query?orgID=%s";
     private static final String WRITE_PRECISION = "ms";
     private static final String RUN_LABEL_KEY = "run";
     private static final String MIME_CSV = "application/csv";
     private static final String MIME_FLUX = "application/vnd.flux";
-
+    private static final String ORGS_ENDPOINT_V2 = "/api/v2/orgs";
+    private static final String BUCKETS_ENDPOINT_V2 = "/api/v2/buckets";
+    private static final String HEALTH_ENDPOINT = "/health";
+    private static final String WRITE_ENDPOINT_V2 = "/api/v2/write?org=%s&bucket=%s&precision=%s";
+    private static final String QUERY_ENDPOINT_V2 = "/api/v2/query?orgID=%s";
+    private static final String QUERY_ENDPOINT = "/query?db=%s";
     private HttpClient httpClient;
     private LineProtocolFormat lineProtocolFormat;
 
@@ -93,16 +94,9 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
     @Override
     public void healthCheck(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
-        // HEALTH
         // curl "http://localhost:8086/health"
-        try {
 
-            final URI uri = URI.create(endpoint.getTsdbUrl() + HEALTH_ENDPOINT);
-
-            HttpHelper.executeGet(httpClient, uri, null, null, 200);
-        } catch (HttpException e) {
-            throw new TSDBAdapterException(e);
-        }
+        callHttp(endpoint,HEALTH_ENDPOINT,new HashMap<>(),null,HttpMethod.GET);
 
     }
     @Override
@@ -124,7 +118,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
         final String createBucketRequestBody = buildCreateBucketJson(orgId, bucketName);
 
-        final URI uri = URI.create(endpoint.getTsdbUrl() + BUCKETS_ENDPOINT);
+        final URI uri = URI.create(endpoint.getTsdbUrl() + BUCKETS_ENDPOINT_V2);
 
         try {
             HttpHelper.executePost(httpClient, uri, createBucketRequestBody, headerMap, 201);
@@ -157,7 +151,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         //  --header 'Accept: application/json'
 
 
-        final URI uri = URI.create(endpoint.getTsdbUrl() + BUCKETS_ENDPOINT + "/" + bucketId);
+        final URI uri = URI.create(endpoint.getTsdbUrl() + BUCKETS_ENDPOINT_V2 + "/" + bucketId);
 
         final HashMap<String, String> headerMap = HttpHelper.getTokenAuthHeaderMap(endpoint.getTsdbToken());
         headerMap.put(HttpHelper.HEADER_KEY_CONTENT_TYPE, HttpHelper.HEADER_KEY_CONTENT_TYPE_VALUE_JSON);
@@ -188,7 +182,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         //  --header "Authorization: Token ${INFLUX_TOKEN}" \
         //  --data-binary 'testtesttest1,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 1673369771'
 
-        final URI uri = URI.create(endpoint.getTsdbUrl() + String.format(WRITE_ENDPOINT, orgName, bucketName, WRITE_PRECISION));
+        final URI uri = URI.create(endpoint.getTsdbUrl() + String.format(WRITE_ENDPOINT_V2, orgName, bucketName, WRITE_PRECISION));
 
         final HashMap<String, String> headers = HttpHelper.getTokenAuthHeaderMap(endpoint.getTsdbToken());
 
@@ -213,14 +207,6 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
     @Override
     public SelectResponse getAllLabels(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
-        if (bucketName == null) {
-            throw new TSDBAdapterException("Can not get all labels - bucketName is NULL");
-        }
-
-        if (orgId == null) {
-            throw new TSDBAdapterException("Can not get all labels - orgId is NULL");
-        }
-
         /*
         curl --request POST \
         "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
@@ -237,45 +223,28 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         '
         */
 
-        final URI uri = URI.create(endpoint.getTsdbUrl() + String.format(QUERY_ENDPOINT, orgId));
-
-        final HashMap<String, String> headers = HttpHelper.getAcceptContentTypeTokenHeaderMap(endpoint.getTsdbToken(),MIME_CSV,MIME_FLUX);
-
-        String requestBody = "import \"influxdata/influxdb/schema\"\n" +
-                "        schema.tagKeys(\n" +
-                "                bucket: \"'"+bucketName+"'\",\n" +
-                "                predicate: (r) => true,\n" +
-                "                start: '"+select.getStartValue()+"'\n" +
-                "        )";
-
-        try {
-
-            String responseBody = HttpHelper.executePost(httpClient, uri, requestBody, headers, 200);
-
-            log.debug("Queried: " + requestBody);
-
-            return SelectResponse.builder()
-                    .requestLength(requestBody.length())
-                    .responseLength(responseBody.length())
-                    .select(select)
-                    .build();
-
-        } catch (HttpException e) {
-            throw new TSDBAdapterException(e);
+        if (bucketName == null) {
+            throw new TSDBAdapterException("Can not get AllLabels - bucketName is NULL");
         }
+
+        if (select == null || select.getStartValue()==null) {
+            throw new TSDBAdapterException("Can not get AllLabels - select is INVALID");
+        }
+
+        String fluxQuery =    "import \"influxdata/influxdb/schema\"\n" +
+                "schema.tagKeys(\n" +
+                "bucket: \"'"+bucketName+"'\",\n" +
+                "predicate: (r) => true,\n" +
+                "start: '"+select.getStartValue()+"'\n" +
+                ")";
+
+
+        return doQuery(endpoint,select,fluxQuery);
+
 
     }
     @Override
     public SelectResponse getSingleLabelValue(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException{
-
-
-        if (bucketName == null) {
-            throw new TSDBAdapterException("Can not get single label value - bucketName is NULL");
-        }
-
-        if (orgId == null) {
-            throw new TSDBAdapterException("Can not get single label value - orgId is NULL");
-        }
 
         /*
             curl --request POST \
@@ -292,42 +261,27 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             '
         */
 
-        final URI uri = URI.create(endpoint.getTsdbUrl() + String.format(QUERY_ENDPOINT, orgId));
+        if (bucketName == null) {
+            throw new TSDBAdapterException("Can not get SingleLabelValue - bucketName is NULL");
+        }
 
-        final HashMap<String, String> headers = HttpHelper.getAcceptContentTypeTokenHeaderMap(endpoint.getTsdbToken(),MIME_CSV,MIME_FLUX);
+        if (select == null || select.getStartValue()==null || select.getLabelName()==null) {
+            throw new TSDBAdapterException("Can not get SingleLabelValue - select is INVALID");
+        }
 
-        String requestBody = "from(bucket: \"'"+bucketName+"'\")\n" +
+        String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
                 "|> range(start: '"+select.getStartValue()+"')\n" +
                 "|> group(columns: [\"'"+select.getLabelName()+"'\"])\n" +
                 "|> distinct(column: \"'"+select.getLabelName()+"'\")\n" +
                 "|> keep(columns: [\"_value\"])";
 
-        try {
 
-            String responseBody = HttpHelper.executePost(httpClient, uri, requestBody, headers, 200);
+        return doQuery(endpoint,select,fluxQuery);
 
-            log.debug("Queried: " + requestBody);
-
-            return SelectResponse.builder()
-                    .requestLength(requestBody.length())
-                    .responseLength(responseBody.length())
-                    .select(select)
-                    .build();
-
-        } catch (HttpException e) {
-            throw new TSDBAdapterException(e);
-        }
 
     }
     @Override
     public SelectResponse getMeasurementLabels(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException{
-        if (bucketName == null) {
-            throw new TSDBAdapterException("Can not get measurement labels - bucketName is NULL");
-        }
-
-        if (orgId == null) {
-            throw new TSDBAdapterException("Can not get measurement labels - orgId is NULL");
-        }
 
         /*
             curl --request POST \
@@ -344,45 +298,209 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             '
         */
 
-        final URI uri = URI.create(endpoint.getTsdbUrl() + String.format(QUERY_ENDPOINT, orgId));
+        if (bucketName == null) {
+            throw new TSDBAdapterException("Can not get MeasurementLabels - bucketName is NULL");
+        }
 
-        final HashMap<String, String> headers = HttpHelper.getAcceptContentTypeTokenHeaderMap(endpoint.getTsdbToken(),MIME_CSV,MIME_FLUX);
+        if (select == null || select.getStartValue()==null) {
+            throw new TSDBAdapterException("Can not get MeasurementLabels - select is INVALID");
+        }
 
-        String requestBody = "from(bucket: \"'"+bucketName+"'\")\n" +
+        String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
                 "|> range(start: '"+select.getStartValue()+"')\n" +
                 "|> filter(fn: (r) => r[\"_measurement\"] == \"'"+select.getMeasurementName()+"'\")\n" +
                 "|> distinct(column: \"_field\")\n" +
                 "|> keep(columns: [\"_field\"])";
 
+        return doQuery(endpoint,select,fluxQuery);
+
+    }
+    @Override
+    public SelectResponse countSeries(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+        /*
+            curl --request POST \
+            "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+            --header "Authorization: Token ${INFLUX_TOKEN}" \
+            --header 'Accept: application/csv' \
+            --header 'Content-type: application/vnd.flux' \
+            --data '
+            import "influxdata/influxdb/schema"
+            schema.fieldKeys(
+            bucket: "'$INFLUX_BUCKET'",
+            predicate: (r) => true,
+            start: '$START_VALUE'
+            )
+            |> count()
+            '
+        */
+
+        if (bucketName == null) {
+            throw new TSDBAdapterException("Can not countSeries - bucketName is NULL");
+        }
+
+        if (select == null || select.getStartValue()==null) {
+            throw new TSDBAdapterException("Can not countSeries - select is INVALID");
+        }
+
+        String fluxQuery = "import \"influxdata/influxdb/schema\"\n" +
+                "schema.fieldKeys(\n" +
+                "bucket: \"'"+bucketName+"'\",\n" +
+                "predicate: (r) => true,\n" +
+                "start: '"+select.getStartValue()+"'\n" +
+                ")\n" +
+                "|> count()";
+
+       return doQuery(endpoint,select,fluxQuery);
+    }
+    @Override
+    public SelectResponse getAllSeries(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+        /*
+            curl --request POST \
+            "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+            --header "Authorization: Token ${INFLUX_TOKEN}" \
+            --header 'Accept: application/csv' \
+            --header 'Content-type: application/vnd.flux' \
+            --data '
+            import "influxdata/influxdb/schema"
+            schema.fieldKeys(
+            bucket: "'$INFLUX_BUCKET'",
+            predicate: (r) => true,
+            start: '$START_VALUE'
+            )
+            '
+        */
+
+        if (bucketName == null) {
+            throw new TSDBAdapterException("Can not countSeries - bucketName is NULL");
+        }
+
+        if (select == null || select.getStartValue()==null) {
+            throw new TSDBAdapterException("Can not countSeries - select is INVALID");
+        }
+
+        String fluxQuery = "import \"influxdata/influxdb/schema\"\n" +
+                "schema.fieldKeys(\n" +
+                "bucket: \"'"+bucketName+"'\",\n" +
+                "predicate: (r) => true,\n" +
+                "start: '"+select.getStartValue()+"'\n" +
+                ")";
+
+        return doQuery(endpoint,select,fluxQuery);
+
+    }
+    @Override
+    public SelectResponse getMeasurementSeries(Select select, WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+        /*
+            curl --request POST \
+            "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+            --header "Authorization: Token ${INFLUX_TOKEN}" \
+            --header 'Accept: application/csv' \
+            --header 'Content-type: application/vnd.flux' \
+            --data '
+            from(bucket: "'$INFLUX_BUCKET'")
+            |> range('$START_VALUE'))
+            |> filter(fn: (r) => r["_measurement"] == "'$MEASUREMENT_NAME'")
+            |> distinct(column: "_field")
+            |> keep(columns: ["_field"])
+            '
+        */
+
+        if (bucketName == null) {
+            throw new TSDBAdapterException("Can not get MeasurementSeries - bucketName is NULL");
+        }
+
+        if (select == null || select.getStartValue()==null || select.getMeasurementName()==null) {
+            throw new TSDBAdapterException("Can not get MeasurementSeries - select is INVALID");
+        }
+
+        String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
+                "|> range('"+select.getStartValue()+"'))\n" +
+                "|> filter(fn: (r) => r[\"_measurement\"] == \"'"+select.getMeasurementName()+"'\")\n" +
+                "|> distinct(column: \"_field\")\n" +
+                "|> keep(columns: [\"_field\"])";
+
+        return doQuery(endpoint,select,fluxQuery);
+    }
+    @Override
+    public SelectResponse exportSeries(Select select, WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+          /*
+            curl --request POST \
+            "http://localhost:8086/query?db=${INFLUX_BUCKET}"  \
+            --header "Authorization: Token ${INFLUX_TOKEN}" \
+            --header 'Accept: application/csv' \
+            --data-urlencode "q=SELECT time, ${FIELD1_NAME} FROM ${MEASUREMENT_NAME}"
+        */
+
+        if (bucketName == null) {
+            throw new TSDBAdapterException("Can not exportSeries - bucketName is NULL");
+        }
+
+        if (select == null || select.getFieldName()==null || select.getMeasurementName()==null) {
+            throw new TSDBAdapterException("Can not exportSeries - select is INVALID");
+        }
+
+        String query = "q=SELECT time, "+select.getFieldName()+" FROM "+select.getMeasurementName();
+        String queryEncoded = URLEncoder.encode(query, StandardCharsets.UTF_8);
+
+        final HashMap<String, String> headers = HttpHelper.getAcceptContentTypeTokenHeaderMap(endpoint.getTsdbToken(),MIME_CSV,null);
+        headers.put(HttpHelper.HEADER_KEY_CONTENT_TYPE, HttpHelper.HEADER_KEY_CONTENT_TYPE_VALUE_FORM_URLENCODED);
+
+        final String responseBody = callHttp(endpoint, String.format(QUERY_ENDPOINT, bucketName),headers,queryEncoded,HttpMethod.POST);
+
+        return SelectResponse.builder()
+                .requestLength(query.length())
+                .responseLength(responseBody.length())
+                .select(select)
+                .build();
+
+    }
+
+    ////
+    private String callHttp(final WorkerTsdbEndpoint endpoint, final String path, final HashMap<String, String> headers, final String requestBody, final HttpMethod method) throws TSDBAdapterException {
+
+        if (orgId == null) {
+            throw new TSDBAdapterException("Can not do query - orgId is NULL");
+        }
+        if(endpoint==null){
+            throw new TSDBAdapterException("Can not do query - endpoint is NULL");
+        }
+
+        final URI uri = URI.create(endpoint.getTsdbUrl() + path);
+
         try {
-
-            String responseBody = HttpHelper.executePost(httpClient, uri, requestBody, headers, 200);
-
             log.debug("Queried: " + requestBody);
 
-            return SelectResponse.builder()
-                    .requestLength(requestBody.length())
-                    .responseLength(responseBody.length())
-                    .select(select)
-                    .build();
+            if(method==HttpMethod.POST){
+                return HttpHelper.executePost(httpClient, uri, requestBody, headers, 200);
+            }
+            else if(method==HttpMethod.GET){
+                return HttpHelper.executeGet(httpClient,uri,requestBody,headers,200);
+            }
+            else{
+                throw new TSDBAdapterException("Invalid HTTP Method");
+            }
 
         } catch (HttpException e) {
             throw new TSDBAdapterException(e);
         }
+
     }
-    ////
-    private String buildCreateBucketJson(final String orgId, final String bucketName) {
+    private SelectResponse doQuery(final WorkerTsdbEndpoint endpoint, final Select select, final String fluxQueryString) throws TSDBAdapterException {
 
-        //  {
-        //    "orgID": "'"${INFLUX_ORG_ID}"'",
-        //    "name": "'"${INFLUX_BUCKET}"'"
-        //  }
+        final HashMap<String, String> headers = HttpHelper.getAcceptContentTypeTokenHeaderMap(endpoint.getTsdbToken(),MIME_CSV,MIME_FLUX);
 
-        final JSONObject createBucketJson = new JSONObject();
-        createBucketJson.put(ORGID_STRING, orgId);
-        createBucketJson.put(NAME_STRING, bucketName);
+        final String responseBody = callHttp(endpoint, QUERY_ENDPOINT_V2,headers, fluxQueryString,HttpMethod.POST);
 
-        return createBucketJson.toString();
+            return SelectResponse.builder()
+                    .requestLength(fluxQueryString.length())
+                    .responseLength(responseBody.length())
+                    .select(select)
+                    .build();
+
 
     }
     private String listBuckets(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
@@ -390,15 +508,9 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         // LIST BUCKETS
         // curl "http://localhost:8086/api/v2/buckets" \
         // --header "Authorization: Token ${INFLUX_TOKEN}"
-        final HashMap<String, String> headerMap = HttpHelper.getTokenAuthHeaderMap(endpoint.getTsdbToken());
+        final HashMap<String, String> headers = HttpHelper.getTokenAuthHeaderMap(endpoint.getTsdbToken());
 
-        final URI uri = URI.create(endpoint.getTsdbUrl() + BUCKETS_ENDPOINT);
-
-        try {
-            return HttpHelper.executeGet(httpClient, uri, null, headerMap, 200);
-        } catch (HttpException e) {
-            throw new TSDBAdapterException(e);
-        }
+        return callHttp(endpoint, BUCKETS_ENDPOINT_V2,headers,null,HttpMethod.GET);
 
     }
     private String listOrganisations(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
@@ -410,15 +522,12 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
         final HashMap<String, String> headers = HttpHelper.getTokenAuthHeaderMap(endpoint.getTsdbToken());
 
-        final URI uri = URI.create(endpoint.getTsdbUrl() + ORGS_ENDPOINT);
+        return callHttp(endpoint, ORGS_ENDPOINT_V2,headers,null,HttpMethod.GET);
 
-        try {
-            return HttpHelper.executeGet(httpClient, uri, null, headers, 200);
-        } catch (HttpException e) {
-            throw new TSDBAdapterException(e);
-        }
 
     }
+
+    /////
     private String lookupId(final String type, final String name, final String response) throws TSDBAdapterException {
 
         final JSONObject orgList = new JSONObject(response);
@@ -440,5 +549,20 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         throw new TSDBAdapterException(type + " ID not found for: " + name);
 
     }
+    private String buildCreateBucketJson(final String orgId, final String bucketName) {
+
+        //  {
+        //    "orgID": "'"${INFLUX_ORG_ID}"'",
+        //    "name": "'"${INFLUX_BUCKET}"'"
+        //  }
+
+        final JSONObject createBucketJson = new JSONObject();
+        createBucketJson.put(ORGID_STRING, orgId);
+        createBucketJson.put(NAME_STRING, bucketName);
+
+        return createBucketJson.toString();
+
+    }
+
 
 }

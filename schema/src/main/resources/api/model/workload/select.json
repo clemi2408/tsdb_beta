@@ -23,6 +23,10 @@
     "measurementName": {
       "type": "string",
       "nullable": true
+    },
+    "fieldName": {
+      "type": "string",
+      "nullable": true
     }
   },
   "required": [ "id" ]

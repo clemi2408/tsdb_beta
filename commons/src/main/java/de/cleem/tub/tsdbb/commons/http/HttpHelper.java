@@ -144,8 +144,12 @@ public class HttpHelper extends BaseClass {
 
         final HashMap<String, String> headerMap = getTokenAuthHeaderMap(token);
 
-        headerMap.put(HEADER_KEY_ACCEPT, accept);
-        headerMap.put(HEADER_KEY_CONTENT_TYPE, contentType);
+        if(accept!=null){
+            headerMap.put(HEADER_KEY_ACCEPT, accept);
+        }
+        if(contentType!=null){
+            headerMap.put(HEADER_KEY_CONTENT_TYPE, contentType);
+        }
 
         return headerMap;
     }
