@@ -39,7 +39,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
     private static final String HEALTH_ENDPOINT = "/health";
     private static final String WRITE_ENDPOINT_V2 = "/api/v2/write?org=%s&bucket=%s&precision=%s";
     private static final String QUERY_ENDPOINT_V2 = "/api/v2/query?orgID=%s";
-    private static final String QUERY_ENDPOINT = "/query?db=%s";
+    private static final String QUERY_ENDPOINT_V1 = "/query?db=%s";
     private HttpClient httpClient;
     private LineProtocolFormat lineProtocolFormat;
 
@@ -226,12 +226,14 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         if (bucketName == null) {
             throw new TSDBAdapterException("Can not get AllLabels - bucketName is NULL");
         }
-
-        if (select == null || select.getStartValue()==null) {
-            throw new TSDBAdapterException("Can not get AllLabels - select is INVALID");
+        if (select == null) {
+            throw new TSDBAdapterException("Can not get AllLabels - select is NULL");
+        }
+        if (select.getStartValue()==null ) {
+            throw new TSDBAdapterException("Can not get AllLabels - select.getStartValue is NULL");
         }
 
-        String fluxQuery =    "import \"influxdata/influxdb/schema\"\n" +
+        final String fluxQuery =    "import \"influxdata/influxdb/schema\"\n" +
                 "schema.tagKeys(\n" +
                 "bucket: \"'"+bucketName+"'\",\n" +
                 "predicate: (r) => true,\n" +
@@ -264,12 +266,17 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         if (bucketName == null) {
             throw new TSDBAdapterException("Can not get SingleLabelValue - bucketName is NULL");
         }
-
-        if (select == null || select.getStartValue()==null || select.getLabelName()==null) {
-            throw new TSDBAdapterException("Can not get SingleLabelValue - select is INVALID");
+        if (select == null) {
+            throw new TSDBAdapterException("Can not get SingleLabelValue - select is NULL");
+        }
+        if (select.getStartValue()==null ) {
+            throw new TSDBAdapterException("Can not get SingleLabelValue - select.getStartValue is NULL");
+        }
+        if (select.getLabelName()==null ) {
+            throw new TSDBAdapterException("Can not get SingleLabelValue - select.getLabelName is NULL");
         }
 
-        String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
+        final String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
                 "|> range(start: '"+select.getStartValue()+"')\n" +
                 "|> group(columns: [\"'"+select.getLabelName()+"'\"])\n" +
                 "|> distinct(column: \"'"+select.getLabelName()+"'\")\n" +
@@ -301,12 +308,14 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         if (bucketName == null) {
             throw new TSDBAdapterException("Can not get MeasurementLabels - bucketName is NULL");
         }
-
-        if (select == null || select.getStartValue()==null) {
-            throw new TSDBAdapterException("Can not get MeasurementLabels - select is INVALID");
+        if (select == null) {
+            throw new TSDBAdapterException("Can not get MeasurementLabels - select is NULL");
+        }
+        if (select.getStartValue()==null ) {
+            throw new TSDBAdapterException("Can not get MeasurementLabels - select.getStartValue is NULL");
         }
 
-        String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
+        final String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
                 "|> range(start: '"+select.getStartValue()+"')\n" +
                 "|> filter(fn: (r) => r[\"_measurement\"] == \"'"+select.getMeasurementName()+"'\")\n" +
                 "|> distinct(column: \"_field\")\n" +
@@ -338,12 +347,14 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         if (bucketName == null) {
             throw new TSDBAdapterException("Can not countSeries - bucketName is NULL");
         }
-
-        if (select == null || select.getStartValue()==null) {
-            throw new TSDBAdapterException("Can not countSeries - select is INVALID");
+        if (select == null) {
+            throw new TSDBAdapterException("Can not countSeries - select is NULL");
+        }
+        if (select.getStartValue()==null ) {
+            throw new TSDBAdapterException("Can not countSeries - select.getStartValue is NULL");
         }
 
-        String fluxQuery = "import \"influxdata/influxdb/schema\"\n" +
+        final String fluxQuery = "import \"influxdata/influxdb/schema\"\n" +
                 "schema.fieldKeys(\n" +
                 "bucket: \"'"+bucketName+"'\",\n" +
                 "predicate: (r) => true,\n" +
@@ -373,14 +384,16 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         */
 
         if (bucketName == null) {
-            throw new TSDBAdapterException("Can not countSeries - bucketName is NULL");
+            throw new TSDBAdapterException("Can not get AllSeries - bucketName is NULL");
+        }
+        if (select == null) {
+            throw new TSDBAdapterException("Can not get AllSeries - select is NULL");
+        }
+        if (select.getStartValue()==null ) {
+            throw new TSDBAdapterException("Can not get AllSeries - select.getStartValue is NULL");
         }
 
-        if (select == null || select.getStartValue()==null) {
-            throw new TSDBAdapterException("Can not countSeries - select is INVALID");
-        }
-
-        String fluxQuery = "import \"influxdata/influxdb/schema\"\n" +
+        final String fluxQuery = "import \"influxdata/influxdb/schema\"\n" +
                 "schema.fieldKeys(\n" +
                 "bucket: \"'"+bucketName+"'\",\n" +
                 "predicate: (r) => true,\n" +
@@ -411,9 +424,14 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         if (bucketName == null) {
             throw new TSDBAdapterException("Can not get MeasurementSeries - bucketName is NULL");
         }
-
-        if (select == null || select.getStartValue()==null || select.getMeasurementName()==null) {
-            throw new TSDBAdapterException("Can not get MeasurementSeries - select is INVALID");
+        if (select == null) {
+            throw new TSDBAdapterException("Can not get MeasurementSeries - select is NULL");
+        }
+        if (select.getStartValue()==null ) {
+            throw new TSDBAdapterException("Can not get MeasurementSeries - select.getStartValue is NULL");
+        }
+        if (select.getMeasurementName()==null) {
+            throw new TSDBAdapterException("Can not get MeasurementSeries - select.getMeasurementName is NULL");
         }
 
         String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
@@ -427,7 +445,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
     @Override
     public SelectResponse exportSeries(Select select, WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
-          /*
+        /*
             curl --request POST \
             "http://localhost:8086/query?db=${INFLUX_BUCKET}"  \
             --header "Authorization: Token ${INFLUX_TOKEN}" \
@@ -438,9 +456,14 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         if (bucketName == null) {
             throw new TSDBAdapterException("Can not exportSeries - bucketName is NULL");
         }
-
-        if (select == null || select.getFieldName()==null || select.getMeasurementName()==null) {
-            throw new TSDBAdapterException("Can not exportSeries - select is INVALID");
+        if (select == null) {
+            throw new TSDBAdapterException("Can not exportSeries - select is NULL");
+        }
+        if (select.getFieldName()==null ) {
+            throw new TSDBAdapterException("Can not exportSeries - select.getFieldName is NULL");
+        }
+        if (select.getMeasurementName()==null) {
+            throw new TSDBAdapterException("Can not exportSeries - select.getMeasurementName is NULL");
         }
 
         String query = "q=SELECT time, "+select.getFieldName()+" FROM "+select.getMeasurementName();
@@ -449,7 +472,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         final HashMap<String, String> headers = HttpHelper.getAcceptContentTypeTokenHeaderMap(endpoint.getTsdbToken(),MIME_CSV,null);
         headers.put(HttpHelper.HEADER_KEY_CONTENT_TYPE, HttpHelper.HEADER_KEY_CONTENT_TYPE_VALUE_FORM_URLENCODED);
 
-        final String responseBody = callHttp(endpoint, String.format(QUERY_ENDPOINT, bucketName),headers,queryEncoded,HttpMethod.POST);
+        final String responseBody = callHttp(endpoint, String.format(QUERY_ENDPOINT_V1, bucketName),headers,queryEncoded,HttpMethod.POST);
 
         return SelectResponse.builder()
                 .requestLength(query.length())
@@ -457,6 +480,50 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
                 .select(select)
                 .build();
 
+    }
+    @Override
+    public SelectResponse getValue(Select select, WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+        /*
+            curl --request POST \
+            "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+            --header "Authorization: Token ${INFLUX_TOKEN}" \
+            --header 'Accept: application/csv' \
+            --header 'Content-type: application/vnd.flux' \
+            --data '
+            from(bucket: "'$INFLUX_BUCKET'")
+            |> range('$START_VALUE'))
+            |> filter(fn: (r) => r["_measurement"] == "'$MEASUREMENT_NAME'")
+            |> filter(fn: (r) => r["_field"] == "'$FIELD1_NAME'")
+            |> last()
+            |> keep(columns: ["_value"])
+            '
+        */
+
+        if (bucketName == null) {
+            throw new TSDBAdapterException("Can not get Value - bucketName is NULL");
+        }
+        if (select == null) {
+            throw new TSDBAdapterException("Can not get Value - select is NULL");
+        }
+        if (select.getStartValue()==null ) {
+            throw new TSDBAdapterException("Can not get Value - select.getStartValue is NULL");
+        }
+        if (select.getMeasurementName()==null) {
+            throw new TSDBAdapterException("Can not get Value - select.getMeasurementName is NULL");
+        }
+        if (select.getFieldName()==null) {
+            throw new TSDBAdapterException("Can not get Value - select.getFieldName is NULL");
+        }
+
+        final String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
+                "|> range('"+select.getStartValue()+"'))\n" +
+                "|> filter(fn: (r) => r[\"_measurement\"] == \"'"+select.getMeasurementName()+"'\")\n" +
+                "|> filter(fn: (r) => r[\"_field\"] == \"'"+select.getFieldName()+"'\")\n" +
+                "|> last()\n" +
+                "|> keep(columns: [\"_value\"])";
+
+        return doQuery(endpoint,select,fluxQuery);
     }
 
     ////

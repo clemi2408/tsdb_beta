@@ -26,18 +26,18 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
     private static final String MEASUREMENT_SUFFIX_STRING = "_measurement";
     private static final String RUN_LABEL_KEY = "run";
-    private static final String WRITE_ENDPOINT = "/write";
-    private static final String LABEL_ENDPOINT = "/api/v1/label/__name__/values";
-    private static final String LABELS_ENDPOINT ="/api/v1/labels";
-    private static final String DELETE_ENDPOINT = "/api/v1/admin/tsdb/delete_series?match[]=%s";
     private static final int PRE_CLEANUP_SLEEP_IN_MS = 2000;
-
+    private static final String WRITE_ENDPOINT = "/write";
+    private static final String LABEL_VALUE_ENDPOINT = "/api/v1/label/%s/values";
+    private static final String SERIES_ENDPOINT = "/api/v1/series";
+    private static final String SERIES_COUNT_ENDPOINT = "/api/v1/label/series/count";
+    private static final String LABELS_ENDPOINT ="/api/v1/labels";
+    private static final String LABEL_ENDPOINT = "/api/v1/label/__name__/values";
+    private static final String DELETE_ENDPOINT = "/api/v1/admin/tsdb/delete_series?match[]=%s";
     // health==metrics? https://github.com/VictoriaMetrics/VictoriaMetrics/issues/3539
     private static final String HEALTH_ENDPOINT = "/metrics";
-    private static final String LABEL_VALUE_ENDPOINT = "/api/v1/label/%s/values";
-    private static final String SERIES_COUNT_ENDPOINT = "/api/v1/label/series/count";
-    private static final String SERIES_ENDPOINT = "/api/v1/series";
     private static final String EXPORT_ENDPOINT = "/api/v1/export";
+    private static final String QUERY_ENDPOINT = "/api/v1/query";
 
     private HttpClient httpClient;
     private LineProtocolFormat lineProtocolFormat;
@@ -115,13 +115,17 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     @Override
     public InsertResponse write(final Insert insert, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
-        final String metricLine = lineProtocolFormat.getLine(insert);
-        log.info("Created metricLine: "+metricLine);
-
         // WRITE
         // curl -X POST \
         //'http://localhost:8428/write' \
         //-d 'census,location=klamath,scientist=anderson bees=23 1673176214'
+
+        if(insert==null){
+            throw new TSDBAdapterException("Can not write - insert is NULL");
+        }
+
+        final String metricLine = lineProtocolFormat.getLine(insert);
+        log.info("Created metricLine: "+metricLine);
 
         try {
 
@@ -149,6 +153,10 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     public SelectResponse getAllLabels(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         // curl -g "http://localhost:8428/api/v1/labels"
+
+        if(select==null){
+            throw new TSDBAdapterException("Can not get AllLabels - select is NULL");
+        }
 
         return doQuery(endpoint,select, LABELS_ENDPOINT,null, HttpMethod.GET);
 
@@ -192,6 +200,10 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         // curl -s "http://localhost:8428/api/v1/series/count"
 
+        if(select==null){
+            throw new TSDBAdapterException("Can not countSeries - select is NULL");
+        }
+
         return doQuery(endpoint,select,SERIES_COUNT_ENDPOINT,null,HttpMethod.GET);
 
     }
@@ -199,6 +211,10 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     public SelectResponse getAllSeries(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         // curl -G "http://localhost:8428/api/v1/series" -d "match[]={__name__=~".*"}"
+
+        if(select==null){
+            throw new TSDBAdapterException("Can not get AllSeries - select is NULL");
+        }
 
         final String requestBody = "match[]={__name__=~\".*\"}";
 
@@ -230,13 +246,35 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
         if(select==null){
             throw new TSDBAdapterException("Can not exportSeries - select is NULL");
         }
-        if(select.getMeasurementName()==null || select.getFieldName()==null){
+        if(select.getMeasurementName()==null){
             throw new TSDBAdapterException("Can not exportSeries - select.getMeasurementName is NULL");
+        }
+        if(select.getFieldName()==null){
+            throw new TSDBAdapterException("Can not exportSeries - select.getFieldName is NULL");
         }
 
         final String requestBody = "match[]={__name__=~\""+select.getMeasurementName()+"_"+select.getFieldName()+"\"}";
 
         return doQuery(endpoint,select,EXPORT_ENDPOINT,requestBody, HttpMethod.POST);
+    }
+    @Override
+    public SelectResponse getValue(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+        // curl -G "http://localhost:8428/api/v1/series" -d "match[]={__name__=~".*"}"
+
+        if(select==null){
+            throw new TSDBAdapterException("Can not get value - select is NULL");
+        }
+        if(select.getMeasurementName()==null){
+            throw new TSDBAdapterException("Can not get value - select.getMeasurementName is NULL");
+        }
+        if(select.getFieldName()==null){
+            throw new TSDBAdapterException("Can not get value - select.getFieldName is NULL");
+        }
+
+        final String requestBody = "query="+select.getMeasurementName()+"_"+select.getFieldName();
+
+        return doQuery(endpoint,select,QUERY_ENDPOINT,requestBody,HttpMethod.GET);
+
     }
 
     ////
