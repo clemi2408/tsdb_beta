@@ -37,5 +37,14 @@ public interface TSDBAdapterIF {
 
     SelectResponse exportSeries(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
 
-    SelectResponse getValue(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
+    SelectResponse getFieldValue(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
+
+    SelectResponse getFieldValueSum(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
+
+    SelectResponse getFieldValueAvg(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
+
+    SelectResponse getFieldValueMin(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
+
+    SelectResponse getFieldValueMax(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
+
 }

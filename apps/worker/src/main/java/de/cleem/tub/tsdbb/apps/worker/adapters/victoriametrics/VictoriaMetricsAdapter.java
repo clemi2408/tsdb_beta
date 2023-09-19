@@ -37,7 +37,9 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     // health==metrics? https://github.com/VictoriaMetrics/VictoriaMetrics/issues/3539
     private static final String HEALTH_ENDPOINT = "/metrics";
     private static final String EXPORT_ENDPOINT = "/api/v1/export";
-    private static final String QUERY_ENDPOINT = "/api/v1/query";
+    private static final String QUERY_ENDPOINT_INSTANT = "/api/v1/query";
+
+    private static final String QUERY_ENDPOINT_RANGE = "/api/v1/query_range";
 
     private HttpClient httpClient;
     private LineProtocolFormat lineProtocolFormat;
@@ -72,7 +74,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
     }
     @Override
-    public void healthCheck(WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    public void healthCheck(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         // HEALTH
         // curl "http://localhost:8428/metrics"
@@ -258,7 +260,8 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
         return doQuery(endpoint,select,EXPORT_ENDPOINT,requestBody, HttpMethod.POST);
     }
     @Override
-    public SelectResponse getValue(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    public SelectResponse getFieldValue(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
         // curl -G "http://localhost:8428/api/v1/series" -d "match[]={__name__=~".*"}"
 
         if(select==null){
@@ -273,7 +276,118 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         final String requestBody = "query="+select.getMeasurementName()+"_"+select.getFieldName();
 
-        return doQuery(endpoint,select,QUERY_ENDPOINT,requestBody,HttpMethod.GET);
+        return doQuery(endpoint,select, QUERY_ENDPOINT_INSTANT,requestBody,HttpMethod.GET);
+
+    }
+    @Override
+    public SelectResponse getFieldValueSum(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+        // curl "http://localhost:8428/api/v1/query_range" -d "query=sum_over_time(${MEASUREMENT_NAME}_${FIELD1_NAME})" -d "start=${START_VALUE}" -d "step=${STEP_VALUE}"
+
+        if(select==null){
+            throw new TSDBAdapterException("Can not get FieldValueSum - select is NULL");
+        }
+        if(select.getStartValue()==null){
+            throw new TSDBAdapterException("Can not get FieldValueSum - select.getStartValue is NULL");
+        }
+        if(select.getStepValue()==null){
+            throw new TSDBAdapterException("Can not get FieldValueSum - select.getStepValue is NULL");
+        }
+        if(select.getMeasurementName()==null){
+            throw new TSDBAdapterException("Can not get FieldValueSum - select.getMeasurementName is NULL");
+        }
+        if(select.getFieldName()==null){
+            throw new TSDBAdapterException("Can not get FieldValueSum - select.getFieldName is NULL");
+        }
+
+        final String requestBody = "query=sum_over_time("+select.getMeasurementName()+"_"+select.getFieldName()+")" +
+                "&start="+select.getStartValue()+
+                "&step="+select.getStepValue();
+
+        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,HttpMethod.GET);
+
+    }
+    @Override
+    public SelectResponse getFieldValueAvg(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+        // curl "http://localhost:8428/api/v1/query_range" -d "query=avg_over_time(${MEASUREMENT_NAME}_${FIELD1_NAME})" -d "start=${START_VALUE}" -d "step=${STEP_VALUE}"
+
+        if(select==null){
+            throw new TSDBAdapterException("Can not get FieldValueAvg - select is NULL");
+        }
+        if(select.getStartValue()==null){
+            throw new TSDBAdapterException("Can not get FieldValueAvg - select.getStartValue is NULL");
+        }
+        if(select.getStepValue()==null){
+            throw new TSDBAdapterException("Can not get FieldValueAvg - select.getStepValue is NULL");
+        }
+        if(select.getMeasurementName()==null){
+            throw new TSDBAdapterException("Can not get FieldValueAvg - select.getMeasurementName is NULL");
+        }
+        if(select.getFieldName()==null){
+            throw new TSDBAdapterException("Can not get FieldValueAvg - select.getFieldName is NULL");
+        }
+
+        final String requestBody = "query=avg_over_time("+select.getMeasurementName()+"_"+select.getFieldName()+")" +
+                "&start="+select.getStartValue()+
+                "&step="+select.getStepValue();
+
+        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,HttpMethod.GET);
+    }
+    @Override
+    public SelectResponse getFieldValueMin(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+        // curl "http://localhost:8428/api/v1/query_range" -d "query=min_over_time(${MEASUREMENT_NAME}_${FIELD1_NAME})" -d "start=${START_VALUE}" -d "step=${STEP_VALUE}"
+
+        if(select==null){
+            throw new TSDBAdapterException("Can not get FieldValueMin - select is NULL");
+        }
+        if(select.getStartValue()==null){
+            throw new TSDBAdapterException("Can not get FieldValueMin - select.getStartValue is NULL");
+        }
+        if(select.getStepValue()==null){
+            throw new TSDBAdapterException("Can not get FieldValueMin - select.getStepValue is NULL");
+        }
+        if(select.getMeasurementName()==null){
+            throw new TSDBAdapterException("Can not get FieldValueMin - select.getMeasurementName is NULL");
+        }
+        if(select.getFieldName()==null){
+            throw new TSDBAdapterException("Can not get FieldValueMin - select.getFieldName is NULL");
+        }
+
+        final String requestBody = "query=min_over_time("+select.getMeasurementName()+"_"+select.getFieldName()+")" +
+                "&start="+select.getStartValue()+
+                "&step="+select.getStepValue();
+
+        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,HttpMethod.GET);
+
+    }
+    @Override
+    public SelectResponse getFieldValueMax(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+        // curl "http://localhost:8428/api/v1/query_range" -d "query=max_over_time(${MEASUREMENT_NAME}_${FIELD1_NAME})" -d "start=${START_VALUE}" -d "step=${STEP_VALUE}"
+
+        if(select==null){
+            throw new TSDBAdapterException("Can not get FieldValueMax - select is NULL");
+        }
+        if(select.getStartValue()==null){
+            throw new TSDBAdapterException("Can not get FieldValueMax - select.getStartValue is NULL");
+        }
+        if(select.getStepValue()==null){
+            throw new TSDBAdapterException("Can not get FieldValueMax - select.getStepValue is NULL");
+        }
+        if(select.getMeasurementName()==null){
+            throw new TSDBAdapterException("Can not get FieldValueMax - select.getMeasurementName is NULL");
+        }
+        if(select.getFieldName()==null){
+            throw new TSDBAdapterException("Can not get FieldValueMax - select.getFieldName is NULL");
+        }
+
+        final String requestBody = "query=max_over_time("+select.getMeasurementName()+"_"+select.getFieldName()+")" +
+                "&start="+select.getStartValue()+
+                "&step="+select.getStepValue();
+
+        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,HttpMethod.GET);
 
     }
 

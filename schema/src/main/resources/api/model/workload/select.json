@@ -16,6 +16,10 @@
       "type": "string",
       "nullable": true
     },
+    "stepValue": {
+      "type": "string",
+      "nullable": true
+    },
     "labelName": {
       "type": "string",
       "nullable": true

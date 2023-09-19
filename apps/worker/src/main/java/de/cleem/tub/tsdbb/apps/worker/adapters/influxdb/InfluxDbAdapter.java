@@ -404,7 +404,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
     }
     @Override
-    public SelectResponse getMeasurementSeries(Select select, WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    public SelectResponse getMeasurementSeries(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         /*
             curl --request POST \
@@ -443,7 +443,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         return doQuery(endpoint,select,fluxQuery);
     }
     @Override
-    public SelectResponse exportSeries(Select select, WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    public SelectResponse exportSeries(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         /*
             curl --request POST \
@@ -482,7 +482,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
     }
     @Override
-    public SelectResponse getValue(Select select, WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    public SelectResponse getFieldValue(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         /*
             curl --request POST \
@@ -525,6 +525,195 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
         return doQuery(endpoint,select,fluxQuery);
     }
+    @Override
+    public SelectResponse getFieldValueSum(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+        /*
+            curl --request POST \
+            "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+            --header "Authorization: Token ${INFLUX_TOKEN}" \
+            --header 'Accept: application/csv' \
+            --header 'Content-type: application/vnd.flux' \
+            --data '
+            from(bucket: "'$INFLUX_BUCKET'")
+              |> range('$START_VALUE'))
+              |> filter(fn: (r) => r["_measurement"] == "'$MEASUREMENT_NAME'")
+              |> filter(fn: (r) => r["_field"] == "'$FIELD1_NAME'")
+              |> aggregateWindow(every: '$STEP_VALUE', fn: sum, createEmpty: false)
+              |> yield(name: "sum")
+            '
+        */
+
+        if (bucketName == null) {
+            throw new TSDBAdapterException("Can not get FieldValueSum - bucketName is NULL");
+        }
+        if (select == null) {
+            throw new TSDBAdapterException("Can not get FieldValueSum - select is NULL");
+        }
+        if (select.getStartValue()==null ) {
+            throw new TSDBAdapterException("Can not get FieldValueSum - select.getStartValue is NULL");
+        }
+        if (select.getStepValue()==null ) {
+            throw new TSDBAdapterException("Can not get FieldValueSum - select.getStepValue is NULL");
+        }
+        if (select.getMeasurementName()==null) {
+            throw new TSDBAdapterException("Can not get FieldValueSum - select.getMeasurementName is NULL");
+        }
+        if (select.getFieldName()==null) {
+            throw new TSDBAdapterException("Can not get FieldValueSum - select.getFieldName is NULL");
+        }
+
+        final String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
+                "|> range('"+select.getStartValue()+"'))\n" +
+                "|> filter(fn: (r) => r[\"_measurement\"] == \"'"+select.getMeasurementName()+"'\")\n" +
+                "|> filter(fn: (r) => r[\"_field\"] == \"'"+select.getFieldName()+"'\")\n" +
+                "|> aggregateWindow(every: '"+select.getStepValue()+"', fn: sum, createEmpty: false)\n" +
+                "|> yield(name: \"sum\")";
+
+
+        return doQuery(endpoint,select,fluxQuery);
+
+    }
+    @Override
+    public SelectResponse getFieldValueAvg(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+        /*
+            curl --request POST \
+            "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+            --header "Authorization: Token ${INFLUX_TOKEN}" \
+            --header 'Accept: application/csv' \
+            --header 'Content-type: application/vnd.flux' \
+            --data '
+            from(bucket: "'$INFLUX_BUCKET'")
+              |> range('$START_VALUE'))
+              |> filter(fn: (r) => r["_measurement"] == "'$MEASUREMENT_NAME'")
+              |> filter(fn: (r) => r["_field"] == "'$FIELD1_NAME'")
+              |> aggregateWindow(every: '$STEP_VALUE', fn: mean, createEmpty: false)
+              |> yield(name: "avg")
+            '
+        */
+
+        if (bucketName == null) {
+            throw new TSDBAdapterException("Can not get FieldValueAvg - bucketName is NULL");
+        }
+        if (select == null) {
+            throw new TSDBAdapterException("Can not get FieldValueAvg - select is NULL");
+        }
+        if (select.getStartValue()==null ) {
+            throw new TSDBAdapterException("Can not get FieldValueAvg - select.getStartValue is NULL");
+        }
+        if (select.getStepValue()==null ) {
+            throw new TSDBAdapterException("Can not get FieldValueAvg - select.getStepValue is NULL");
+        }
+        if (select.getMeasurementName()==null) {
+            throw new TSDBAdapterException("Can not get FieldValueAvg - select.getMeasurementName is NULL");
+        }
+        if (select.getFieldName()==null) {
+            throw new TSDBAdapterException("Can not get FieldValueAvg - select.getFieldName is NULL");
+        }
+
+        final String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
+                "|> range('"+select.getStartValue()+"'))\n" +
+                "|> filter(fn: (r) => r[\"_measurement\"] == \"'"+select.getMeasurementName()+"'\")\n" +
+                "|> filter(fn: (r) => r[\"_field\"] == \"'"+select.getFieldName()+"'\")\n" +
+                "|> aggregateWindow(every: '"+select.getStepValue()+"', fn: mean, createEmpty: false)\n" +
+                "|> yield(name: \"avg\")";
+
+        return doQuery(endpoint,select,fluxQuery);
+
+    }
+    @Override
+    public SelectResponse getFieldValueMin(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+        /*
+            curl --request POST \
+            "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+            --header "Authorization: Token ${INFLUX_TOKEN}" \
+            --header 'Accept: application/csv' \
+            --header 'Content-type: application/vnd.flux' \
+            --data '
+            from(bucket: "'$INFLUX_BUCKET'")
+              |> range('$START_VALUE'))
+              |> filter(fn: (r) => r["_measurement"] == "'$MEASUREMENT_NAME'")
+              |> filter(fn: (r) => r["_field"] == "'$FIELD1_NAME'")
+              |> aggregateWindow(every: '$STEP_VALUE', fn: min, createEmpty: false)
+              |> yield(name: "min")
+            '
+        */
+
+        if (bucketName == null) {
+            throw new TSDBAdapterException("Can not get FieldValueMin - bucketName is NULL");
+        }
+        if (select == null) {
+            throw new TSDBAdapterException("Can not get FieldValueMin - select is NULL");
+        }
+        if (select.getStartValue()==null ) {
+            throw new TSDBAdapterException("Can not get FieldValueMin - select.getStartValue is NULL");
+        }
+        if (select.getStepValue()==null ) {
+            throw new TSDBAdapterException("Can not get FieldValueMin - select.getStepValue is NULL");
+        }
+        if (select.getMeasurementName()==null) {
+            throw new TSDBAdapterException("Can not get FieldValueMin - select.getMeasurementName is NULL");
+        }
+        if (select.getFieldName()==null) {
+            throw new TSDBAdapterException("Can not get FieldValueMin - select.getFieldName is NULL");
+        }
+
+        final String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
+                "|> range('"+select.getStartValue()+"'))\n" +
+                "|> filter(fn: (r) => r[\"_measurement\"] == \"'"+select.getMeasurementName()+"'\")\n" +
+                "|> filter(fn: (r) => r[\"_field\"] == \"'"+select.getFieldName()+"'\")\n" +
+                "|> aggregateWindow(every: '"+select.getStepValue()+"', fn: min, createEmpty: false)\n" +
+                "|> yield(name: \"min\")";
+
+        return doQuery(endpoint,select,fluxQuery);    }
+    @Override
+    public SelectResponse getFieldValueMax(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+
+        /*
+            curl --request POST \
+            "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+            --header "Authorization: Token ${INFLUX_TOKEN}" \
+            --header 'Accept: application/csv' \
+            --header 'Content-type: application/vnd.flux' \
+            --data '
+            from(bucket: "'$INFLUX_BUCKET'")
+              |> range('$START_VALUE'))
+              |> filter(fn: (r) => r["_measurement"] == "'$MEASUREMENT_NAME'")
+              |> filter(fn: (r) => r["_field"] == "'$FIELD1_NAME'")
+              |> aggregateWindow(every: '$STEP_VALUE', fn: max, createEmpty: false)
+              |> yield(name: "max")
+            '
+        */
+
+        if (bucketName == null) {
+            throw new TSDBAdapterException("Can not get FieldValueMax - bucketName is NULL");
+        }
+        if (select == null) {
+            throw new TSDBAdapterException("Can not get FieldValueMax - select is NULL");
+        }
+        if (select.getStartValue()==null ) {
+            throw new TSDBAdapterException("Can not get FieldValueMax - select.getStartValue is NULL");
+        }
+        if (select.getStepValue()==null ) {
+            throw new TSDBAdapterException("Can not get FieldValueMax - select.getStepValue is NULL");
+        }
+        if (select.getMeasurementName()==null) {
+            throw new TSDBAdapterException("Can not get FieldValueMax - select.getMeasurementName is NULL");
+        }
+        if (select.getFieldName()==null) {
+            throw new TSDBAdapterException("Can not get FieldValueMax - select.getFieldName is NULL");
+        }
+
+        final String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
+                "|> range('"+select.getStartValue()+"'))\n" +
+                "|> filter(fn: (r) => r[\"_measurement\"] == \"'"+select.getMeasurementName()+"'\")\n" +
+                "|> filter(fn: (r) => r[\"_field\"] == \"'"+select.getFieldName()+"'\")\n" +
+                "|> aggregateWindow(every: '"+select.getStepValue()+"', fn: max, createEmpty: false)\n" +
+                "|> yield(name: \"max\")";
+
+        return doQuery(endpoint,select,fluxQuery);    }
 
     ////
     private String callHttp(final WorkerTsdbEndpoint endpoint, final String path, final HashMap<String, String> headers, final String requestBody, final HttpMethod method) throws TSDBAdapterException {
