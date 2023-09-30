@@ -22,11 +22,11 @@ public class ExampleDataGenerator {
 
     }
 
-    public static KvPair getKvPair(){
+    public static KvPair getKvPair(final int id){
 
         final KvPair kvPair = new KvPair();
-        kvPair.setKey("key");
-        kvPair.setValue(List.of("value"));
+        kvPair.setKey(String.format("key-%s", id));
+        kvPair.setValue(List.of(10));
 
         return kvPair;
 
@@ -50,13 +50,13 @@ public class ExampleDataGenerator {
     private static List<KvPair> getKvPairs(){
 
         final List<KvPair> kvPairs = new ArrayList<>();
-        kvPairs.add(getKvPair());
-        kvPairs.add(getKvPair());
+        kvPairs.add(getKvPair(1));
+        kvPairs.add(getKvPair(2));
         return kvPairs;
 
     }
 
-    static Insert getInsert(){
+    public static Insert getInsert(){
         final Insert insert = new Insert();
         insert.setId(UUID.randomUUID());
         insert.setKvPairs(getKvPairs());

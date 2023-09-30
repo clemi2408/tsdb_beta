@@ -1,6 +1,7 @@
 package de.cleem.tub.tsdbb.commons.http;
 
 import de.cleem.tub.tsdbb.commons.base.clazz.BaseClass;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.URI;
@@ -9,6 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
+@Slf4j
 
 public class HttpHelper extends BaseClass {
 
@@ -27,7 +29,7 @@ public class HttpHelper extends BaseClass {
 
         final HttpRequest request = createRequest(uri, "POST", body, headers);
 
-        return sendRequest(httpClient, request, expectedHttpCode);
+        return sendRequest(httpClient, request, expectedHttpCode,body);
 
     }
 
@@ -39,7 +41,7 @@ public class HttpHelper extends BaseClass {
 
         final HttpRequest request = createRequest(uri, "GET", body, headers);
 
-        return sendRequest(httpClient, request, expectedHttpCode);
+        return sendRequest(httpClient, request, expectedHttpCode,body);
 
     }
 
@@ -52,7 +54,7 @@ public class HttpHelper extends BaseClass {
 
         final HttpRequest request = createRequest(uri, "DELETE", body, headers);
 
-        return sendRequest(httpClient, request, expectedHttpCode);
+        return sendRequest(httpClient, request, expectedHttpCode,body);
 
     }
 
@@ -94,7 +96,7 @@ public class HttpHelper extends BaseClass {
 
     }
 
-    private static String sendRequest(final HttpClient httpClient, final HttpRequest request, final int expectedHttpCode) throws HttpException {
+    private static String sendRequest(final HttpClient httpClient, final HttpRequest request, final int expectedHttpCode, final String requestBody) throws HttpException {
 
         if (httpClient == null) {
             throw new HttpException("Can not execute http " + request.method() + "Request to " + request.uri() + " - client is NULL");
@@ -105,9 +107,11 @@ public class HttpHelper extends BaseClass {
 
         try {
 
+            log.debug("Http {} call to {} with body {}",request.method(),request.uri(),requestBody);
+
             final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            checkResponse(response, expectedHttpCode);
+            checkResponse(response, expectedHttpCode,requestBody);
 
             return response.body();
 
@@ -118,14 +122,14 @@ public class HttpHelper extends BaseClass {
 
     }
 
-    private static <T> void checkResponse(final HttpResponse<T> response, final int expectedHttpCode) throws HttpException {
+    private static <T> void checkResponse(final HttpResponse<T> response, final int expectedHttpCode, final String requestBody) throws HttpException {
 
         if (response == null) {
             throw new HttpException("Can not check http response - response is NULL");
         }
 
         if (response.statusCode() != expectedHttpCode) {
-            throw new HttpException("Error requesting: " + response.uri() + " - " + response.statusCode() + " - expected " + expectedHttpCode + " - body " + response.body());
+            throw new HttpException("Error requesting: " + response.uri() + " - " + response.statusCode() + " - expected " + expectedHttpCode + " - response " + response.body()+" - "+requestBody);
         }
 
     }

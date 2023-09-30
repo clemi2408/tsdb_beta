@@ -164,7 +164,7 @@ public class ExampleJsonGenerator {
         write(ExampleDataGenerator.staticKeyWithGaussIntegerValue(),14);
         write(ExampleDataGenerator.staticKeyWithGaussDoubleValue(),15);
 
-        write(ExampleDataGenerator.getKvPair(),1);
+        write(ExampleDataGenerator.getKvPair(1),1);
 
         write(ExampleDataGenerator.getInsert(),1);
 

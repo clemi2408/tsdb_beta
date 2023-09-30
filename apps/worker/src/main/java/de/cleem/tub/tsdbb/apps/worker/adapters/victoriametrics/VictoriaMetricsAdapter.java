@@ -46,7 +46,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     private WorkerGeneralProperties.TsdbTypeEnum tsdbType;
 
     @Override
-    public void setup(final WorkerSetupRequest workerSetupRequest) throws TSDBAdapterException {
+    public boolean setup(final WorkerSetupRequest workerSetupRequest) throws TSDBAdapterException {
 
         tsdbType = workerSetupRequest.getWorkerGeneralProperties().getTsdbType();
 
@@ -72,30 +72,34 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
                 .labelValue(tsdbType.getValue())
                 .build();
 
+        return true;
+
     }
     @Override
-    public void healthCheck(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    public boolean healthCheck(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         // HEALTH
         // curl "http://localhost:8428/metrics"
 
         callHttp(endpoint,HEALTH_ENDPOINT,new HashMap<>(),null,HttpMethod.GET,200);
-
+        return true;
     }
     @Override
-    public void createStorage(final WorkerTsdbEndpoint endpoint) {
+    public boolean createStorage(final WorkerTsdbEndpoint endpoint) {
 
         // NOT IMPLEMENTED
+        return true;
 
     }
     @Override
-    public void close() {
+    public boolean close() {
 
         httpClient = null;
+        return true;
 
     }
     @Override
-    public void cleanup(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    public boolean cleanup(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         try {
             // :(
@@ -112,6 +116,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
             deleteSeries(series, endpoint);
 
         }
+        return true;
 
     }
     @Override

@@ -51,7 +51,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
     private WorkerGeneralProperties.TsdbTypeEnum tsdbType;
 
     @Override
-    public void setup(final WorkerSetupRequest workerSetupRequest) throws TSDBAdapterException {
+    public boolean setup(final WorkerSetupRequest workerSetupRequest) throws TSDBAdapterException {
 
         tsdbType = workerSetupRequest.getWorkerGeneralProperties().getTsdbType();
 
@@ -90,17 +90,20 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
         orgId = lookupId(ORGS_STRING, orgName,listOrganisations(workerSetupRequest.getWorkerConfiguration().getTsdbEndpoints().get(0)));
 
+        return true;
+
     }
     @Override
-    public void healthCheck(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    public boolean healthCheck(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         // curl "http://localhost:8086/health"
 
         callHttp(endpoint,HEALTH_ENDPOINT,new HashMap<>(),null,HttpMethod.GET);
+        return true;
 
     }
     @Override
-    public void createStorage(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    public boolean createStorage(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         // CREATE BUCKET
         // curl --request POST \
@@ -128,16 +131,18 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
         bucketId = lookupId(BUCKETS_STRING, bucketName, listBuckets(endpoint));
 
+        return true;
 
     }
     @Override
-    public void close() {
+    public boolean close() {
 
         httpClient = null;
+        return true;
 
     }
     @Override
-    public void cleanup(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
+    public boolean cleanup(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
         if (bucketId == null) {
 
@@ -163,8 +168,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException(e);
         }
 
-
-
+        return true;
 
     }
     @Override
@@ -235,9 +239,9 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
         final String fluxQuery =    "import \"influxdata/influxdb/schema\"\n" +
                 "schema.tagKeys(\n" +
-                "bucket: \"'"+bucketName+"'\",\n" +
+                "bucket: \""+bucketName+"\",\n" +
                 "predicate: (r) => true,\n" +
-                "start: '"+select.getStartValue()+"'\n" +
+                "start: "+select.getStartValue()+"\n" +
                 ")";
 
 
@@ -276,10 +280,10 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get SingleLabelValue - select.getLabelName is NULL");
         }
 
-        final String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
-                "|> range(start: '"+select.getStartValue()+"')\n" +
-                "|> group(columns: [\"'"+select.getLabelName()+"'\"])\n" +
-                "|> distinct(column: \"'"+select.getLabelName()+"'\")\n" +
+        final String fluxQuery = "from(bucket: \""+bucketName+"\")\n" +
+                "|> range(start: "+select.getStartValue()+")\n" +
+                "|> group(columns: [\""+select.getLabelName()+"\"])\n" +
+                "|> distinct(column: \""+select.getLabelName()+"\")\n" +
                 "|> keep(columns: [\"_value\"])";
 
 
@@ -315,9 +319,9 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get MeasurementLabels - select.getStartValue is NULL");
         }
 
-        final String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
-                "|> range(start: '"+select.getStartValue()+"')\n" +
-                "|> filter(fn: (r) => r[\"_measurement\"] == \"'"+select.getMeasurementName()+"'\")\n" +
+        final String fluxQuery = "from(bucket: \""+bucketName+"\")\n" +
+                "|> range(start: "+select.getStartValue()+")\n" +
+                "|> filter(fn: (r) => r[\"_measurement\"] == \""+select.getMeasurementName()+"\")\n" +
                 "|> distinct(column: \"_field\")\n" +
                 "|> keep(columns: [\"_field\"])";
 
@@ -718,17 +722,17 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
     ////
     private String callHttp(final WorkerTsdbEndpoint endpoint, final String path, final HashMap<String, String> headers, final String requestBody, final HttpMethod method) throws TSDBAdapterException {
 
-        if (orgId == null) {
-            throw new TSDBAdapterException("Can not do query - orgId is NULL");
-        }
         if(endpoint==null){
             throw new TSDBAdapterException("Can not do query - endpoint is NULL");
+        }
+
+        if(endpoint.getTsdbUrl()==null){
+            throw new TSDBAdapterException("Can not do query - tsdbUrl is NULL");
         }
 
         final URI uri = URI.create(endpoint.getTsdbUrl() + path);
 
         try {
-            log.debug("Queried: " + requestBody);
 
             if(method==HttpMethod.POST){
                 return HttpHelper.executePost(httpClient, uri, requestBody, headers, 200);
@@ -749,7 +753,9 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
         final HashMap<String, String> headers = HttpHelper.getAcceptContentTypeTokenHeaderMap(endpoint.getTsdbToken(),MIME_CSV,MIME_FLUX);
 
-        final String responseBody = callHttp(endpoint, QUERY_ENDPOINT_V2,headers, fluxQueryString,HttpMethod.POST);
+        final String responseBody = callHttp(endpoint, String.format(QUERY_ENDPOINT_V2, orgId),headers, fluxQueryString,HttpMethod.POST);
+
+        log.debug("Response {}",responseBody);
 
             return SelectResponse.builder()
                     .requestLength(fluxQueryString.length())

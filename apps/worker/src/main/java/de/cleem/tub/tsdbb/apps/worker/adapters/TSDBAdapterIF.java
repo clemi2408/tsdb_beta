@@ -8,19 +8,19 @@ import de.cleem.tub.tsdbb.api.model.WorkerTsdbEndpoint;
 
 public interface TSDBAdapterIF {
 
-    void setup(final WorkerSetupRequest workerSetupRequest) throws TSDBAdapterException;
+    boolean setup(final WorkerSetupRequest workerSetupRequest) throws TSDBAdapterException;
 
-    void createStorage(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
+    boolean createStorage(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
 
     InsertResponse write(final Insert insert, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
 
     SelectResponse read(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
 
-    void cleanup(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
+    boolean cleanup(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
 
-    void close();
+    boolean close();
 
-    void healthCheck(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
+    boolean healthCheck(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
 
     ///
     SelectResponse getAllLabels(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException;
