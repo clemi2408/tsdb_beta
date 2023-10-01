@@ -1,37 +1,55 @@
 package de.cleem.tub.tsdbb.apps.worker.adapters.influxdb;
 
 import de.cleem.tub.tsdbb.api.model.Insert;
-import de.cleem.tub.tsdbb.api.model.Select;
 import de.cleem.tub.tsdbb.apps.worker.adapters.InsertResponse;
-import de.cleem.tub.tsdbb.apps.worker.adapters.SelectResponse;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
-import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.base.adapter.influx.BaseInfluxTsdbAdapterTest;
+import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.testutil.base.BaseContainerTest;
+import de.cleem.tub.tsdbb.apps.worker.adapters.victoriametrics.VictoriaMetricsAdapter;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InfluxDbAdapterTest extends BaseInfluxTsdbAdapterTest {
+class TsdbAdapterTest extends BaseContainerTest {
 
-    @Test
-    void setup() throws TSDBAdapterException {
-
-        assertTrue(tsdbAdapter.setup(workerSetupRequest));
-
+    @AfterEach
+    void tearDown(){
+        endTest();
     }
 
-    @Test
-    void healthCheck() throws TSDBAdapterException {
+    @ParameterizedTest
+    @ValueSource(classes = { VictoriaMetricsAdapter.class, InfluxDbAdapter.class })
+    void healthCheck(final Class adapterClass) throws TSDBAdapterException {
+
+        startTest(adapterClass);
 
         assertTrue(tsdbAdapter.healthCheck(tsdbEndpoint));
 
     }
 
-    @Test
-    void createStorage_error() {
-        // Setup-Method in parent class creates all required buckets.
-        // calling createStorage again will cause exception.
-        // Thats why the test is inverted
+    @ParameterizedTest
+    @ValueSource(classes = { VictoriaMetricsAdapter.class, InfluxDbAdapter.class })
+    void setup(final Class adapterClass) throws TSDBAdapterException {
+
+        startTest(adapterClass);
+
+        assertTrue(tsdbAdapter.setup(workerSetupRequest));
+
+    }
+
+    @ParameterizedTest
+    @ValueSource(classes = { InfluxDbAdapter.class })
+    void createStorage(final Class adapterClass) {
+
+        startTest(adapterClass);
+
+        // Test is only used for InfluxDbAdapter
+        //
+        // Setup-Method in parent class already creates all required buckets.
+        // Calling createStorage again will cause exception.
+        // That's why the test is inverted.
         // This test recreates the bucket and error is expected.
 
         final TSDBAdapterException exception = Assertions.assertThrows(TSDBAdapterException.class, () -> {
@@ -39,24 +57,32 @@ class InfluxDbAdapterTest extends BaseInfluxTsdbAdapterTest {
         });
 
         assertTrue(exception.getMessage().contains("bucket with name testbucket already exists"));
-
     }
 
-    @Test
-    void close() {
+    @ParameterizedTest
+    @ValueSource(classes = { VictoriaMetricsAdapter.class, InfluxDbAdapter.class })
+    void close(final Class adapterClass) {
+
+        startTest(adapterClass);
 
         assertTrue(tsdbAdapter.close());
     }
 
-    @Test
-    void cleanup() throws TSDBAdapterException {
+    @ParameterizedTest
+    @ValueSource(classes = { VictoriaMetricsAdapter.class, InfluxDbAdapter.class })
+    void cleanup(final Class adapterClass) throws TSDBAdapterException {
+
+        startTest(adapterClass);
 
         assertTrue(tsdbAdapter.cleanup(tsdbEndpoint));
 
     }
 
-    @Test
-    void write() throws TSDBAdapterException {
+    @ParameterizedTest
+    @ValueSource(classes = { VictoriaMetricsAdapter.class, InfluxDbAdapter.class })
+    void write(final Class adapterClass) throws TSDBAdapterException {
+
+        startTest(adapterClass);
 
         final Insert insert = getInsert();
 
@@ -66,6 +92,8 @@ class InfluxDbAdapterTest extends BaseInfluxTsdbAdapterTest {
         assertEquals(insert.getId(), insertResponse.getInsert().getId());
 
     }
+
+    /*
 
     //@Test
     void read() throws TSDBAdapterException {
@@ -144,5 +172,5 @@ class InfluxDbAdapterTest extends BaseInfluxTsdbAdapterTest {
 
     //@Test
     void getFieldValueMax() {
-    }
+    }*/
 }

@@ -1,53 +1,58 @@
-package de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.base.adapter;
+package de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.testutil.base;
 
 import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.apps.worker.adapters.InsertResponse;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterIF;
-import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.base.container.BaseContainerTest;
+import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.InfluxDbAdapter;
+import de.cleem.tub.tsdbb.apps.worker.adapters.victoriametrics.VictoriaMetricsAdapter;
 import de.cleem.tub.tsdbb.commons.examplejson.ExampleDataGenerator;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class BaseTsdbAdapterTest extends BaseContainerTest {
+@Slf4j
+public class BaseAdapterTest {
 
     private static final String URL_PATTERN = "http://localhost:%s";
-    private final HashMap<String, String> customProperties;
-    private final WorkerGeneralProperties.TsdbTypeEnum tsdbType;
-    private final String token;
-    private final Long postInsertSleep;
+    //private final HashMap<String, String> customProperties;
     protected TSDBAdapterIF tsdbAdapter;
     protected WorkerSetupRequest workerSetupRequest;
     protected WorkerTsdbEndpoint tsdbEndpoint;
+    public void setUpAdapter(final Class adapterClass,final int containerPort, final String token, final HashMap<String,String> customProperties) {
 
-    public BaseTsdbAdapterTest(final String dockerImage, final HashMap<String, String> dockerEnvVars, final int dockerPort, final WorkerGeneralProperties.TsdbTypeEnum tsdbType, final String token, final HashMap<String, String> customProperties, final Long postInsertSleep) {
-        super(dockerImage, dockerPort, dockerEnvVars);
-        this.customProperties = customProperties;
-        this.tsdbType = tsdbType;
-        this.token = token;
-        this.postInsertSleep = postInsertSleep;
+        try {
+            log.info("Setting up Adapter: "+adapterClass);
+            this.tsdbAdapter = (TSDBAdapterIF) adapterClass.getDeclaredConstructor().newInstance();
+
+            WorkerGeneralProperties.TsdbTypeEnum type = null;
+            if(adapterClass == InfluxDbAdapter.class){
+                type= WorkerGeneralProperties.TsdbTypeEnum.INFLUX;
+
+            }
+            else if(adapterClass == VictoriaMetricsAdapter.class){
+                type= WorkerGeneralProperties.TsdbTypeEnum.VICTORIA;
+            }
+
+            this.workerSetupRequest = getWorkerSetupRequest(containerPort,token,type,customProperties);
+            this.tsdbEndpoint = getWorkerTsdbEndpoint(containerPort,token);
+
+            tsdbAdapter.setup(workerSetupRequest);
+            tsdbAdapter.createStorage(tsdbEndpoint);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
-
-
-    protected void setupAdapter(final TSDBAdapterIF tsdbAdapter) throws TSDBAdapterException {
-        this.workerSetupRequest = getWorkerSetupRequest();
-        this.tsdbEndpoint = getWorkerTsdbEndpoint();
-        this.tsdbAdapter = tsdbAdapter;
-
-        tsdbAdapter.setup(workerSetupRequest);
-        tsdbAdapter.createStorage(tsdbEndpoint);
-    }
-
     protected void tearDownAdapter() {
         tsdbAdapter = null;
     }
-
-    public WorkerTsdbEndpoint getWorkerTsdbEndpoint() {
+    private WorkerTsdbEndpoint getWorkerTsdbEndpoint(final int containerPort, final String token) {
         final WorkerTsdbEndpoint workerTsdbEndpoint = new WorkerTsdbEndpoint();
-        workerTsdbEndpoint.setTsdbUrl(URI.create(String.format(URL_PATTERN, container.getFirstMappedPort())));
+        workerTsdbEndpoint.setTsdbUrl(URI.create(String.format(URL_PATTERN, containerPort)));
 
         if (token != null) {
             workerTsdbEndpoint.setTsdbToken(token);
@@ -55,16 +60,14 @@ public class BaseTsdbAdapterTest extends BaseContainerTest {
 
         return workerTsdbEndpoint;
     }
-
-    public WorkerSetupRequest getWorkerSetupRequest() {
-
+    private WorkerSetupRequest getWorkerSetupRequest(final int containerPort, final String token, final WorkerGeneralProperties.TsdbTypeEnum tsdbType, final HashMap<String,String> customProperties) {
 
         final WorkerSetupRequest workerSetupRequest = new WorkerSetupRequest();
 
         final WorkerConfiguration workerConfiguration = new WorkerConfiguration();
         workerSetupRequest.setWorkerConfiguration(workerConfiguration);
 
-        workerConfiguration.setTsdbEndpoints(List.of(getWorkerTsdbEndpoint()));
+        workerConfiguration.setTsdbEndpoints(List.of(getWorkerTsdbEndpoint(containerPort,token)));
 
         final WorkerGeneralProperties workerGeneralProperties = new WorkerGeneralProperties();
         workerGeneralProperties.setTsdbType(tsdbType);
@@ -76,12 +79,11 @@ public class BaseTsdbAdapterTest extends BaseContainerTest {
         return workerSetupRequest;
 
     }
-
-    public List<InsertResponse> writeInserts(final int count) throws TSDBAdapterException {
+    public List<InsertResponse> writeInserts(final int containerPort, final int count, final Long postInsertSleep, final String token) throws TSDBAdapterException {
 
         final List<InsertResponse> responses = new ArrayList<>();
 
-        final WorkerTsdbEndpoint workerTsdbEndpoint = getWorkerTsdbEndpoint();
+        final WorkerTsdbEndpoint workerTsdbEndpoint = getWorkerTsdbEndpoint(containerPort,token);
 
         for (int i = 0; i < count; i++) {
 
@@ -100,11 +102,9 @@ public class BaseTsdbAdapterTest extends BaseContainerTest {
         return responses;
 
     }
-
     public Insert getInsert() {
         return ExampleDataGenerator.getInsert();
     }
-
     public Select getSelect() {
         final Select select = new Select();
         select.setStartValue("-1d");
