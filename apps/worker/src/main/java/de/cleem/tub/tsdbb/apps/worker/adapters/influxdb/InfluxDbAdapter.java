@@ -57,7 +57,7 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
         if (!(tsdbType.equals(WorkerGeneralProperties.TsdbTypeEnum.INFLUX))) {
 
-            throw new TSDBAdapterException("Setup error - workerTsdbConnection is of type "+ WorkerGeneralProperties.TsdbTypeEnum.INFLUX);
+            throw new TSDBAdapterException("Setup error - workerTsdbConnection is not of type "+ WorkerGeneralProperties.TsdbTypeEnum.INFLUX);
 
         }
 
@@ -754,8 +754,6 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         final HashMap<String, String> headers = HttpHelper.getAcceptContentTypeTokenHeaderMap(endpoint.getTsdbToken(),MIME_CSV,MIME_FLUX);
 
         final String responseBody = callHttp(endpoint, String.format(QUERY_ENDPOINT_V2, orgId),headers, fluxQueryString,HttpMethod.POST);
-
-        log.debug("Response {}",responseBody);
 
             return SelectResponse.builder()
                     .requestLength(fluxQueryString.length())

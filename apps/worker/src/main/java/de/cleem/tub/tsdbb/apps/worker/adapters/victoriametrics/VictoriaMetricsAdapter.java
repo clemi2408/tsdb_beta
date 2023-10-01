@@ -52,7 +52,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         if (!(tsdbType.equals(WorkerGeneralProperties.TsdbTypeEnum.VICTORIA))) {
 
-            throw new TSDBAdapterException("Setup error - workerTsdbConnection is of type "+ WorkerGeneralProperties.TsdbTypeEnum.VICTORIA);
+            throw new TSDBAdapterException("Setup error - workerTsdbConnection is not of type "+ WorkerGeneralProperties.TsdbTypeEnum.VICTORIA);
 
         }
 

@@ -5,13 +5,14 @@ import de.cleem.tub.tsdbb.api.model.Select;
 import de.cleem.tub.tsdbb.apps.worker.adapters.InsertResponse;
 import de.cleem.tub.tsdbb.apps.worker.adapters.SelectResponse;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
-import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.base.adapter.influx.BaseInfluxTsdbAdapterTest;
+import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.base.adapter.victoria.BaseVictoriaTsdbAdapterTest;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InfluxDbAdapterTest extends BaseInfluxTsdbAdapterTest {
+class VictoriaMetricsAdapterTest extends BaseVictoriaTsdbAdapterTest {
 
     @Test
     void setup() throws TSDBAdapterException {
@@ -27,18 +28,10 @@ class InfluxDbAdapterTest extends BaseInfluxTsdbAdapterTest {
 
     }
 
-    @Test
-    void createStorage_error() {
-        // Setup-Method in parent class creates all required buckets.
-        // calling createStorage again will cause exception.
-        // Thats why the test is inverted
-        // This test recreates the bucket and error is expected.
+    @Disabled
+    void createStorage() {
 
-        final TSDBAdapterException exception = Assertions.assertThrows(TSDBAdapterException.class, () -> {
-            tsdbAdapter.createStorage(tsdbEndpoint);
-        });
-
-        assertTrue(exception.getMessage().contains("bucket with name testbucket already exists"));
+        // tsdbAdapter.createStorage(tsdbEndpoint) not implemented for victoria
 
     }
 
@@ -74,15 +67,18 @@ class InfluxDbAdapterTest extends BaseInfluxTsdbAdapterTest {
     }
 
     @Test
-    void getAllLabels() throws TSDBAdapterException {
+    void getAllLabels() throws TSDBAdapterException, InterruptedException {
 
         writeInserts(10);
+
+
 
         Select select = new Select();
         select.setStartValue("-1d");
 
         SelectResponse selectResponse = tsdbAdapter.getAllLabels(select, tsdbEndpoint);
         assertNotEquals(0, selectResponse.getResponseLength());
+
 
     }
 

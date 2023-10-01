@@ -107,13 +107,17 @@ public class HttpHelper extends BaseClass {
 
         try {
 
-            log.debug("Http {} call to {} with body {}",request.method(),request.uri(),requestBody);
+            log.debug("OUT: Http {} {} requestBody:\n{}\n",request.method(),request.uri(),requestBody);
 
             final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
+            final String responseString = response.body();
+
+            log.debug("IN: Http {} {} requestBody:\n{}\nresponseBody:\n{}\n\n",request.method(),request.uri(),requestBody,responseString);
+
             checkResponse(response, expectedHttpCode,requestBody);
 
-            return response.body();
+            return responseString;
 
         } catch (IOException | InterruptedException e) {
             throw new HttpException(e);
