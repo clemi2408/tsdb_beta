@@ -10,16 +10,20 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
+
 @Slf4j
 
 public class HttpHelper extends BaseClass {
 
     private static final String HEADER_KEY_AUTHORIZATION = "Authorization";
     private static final String HEADER_KEY_AUTHORIZATION_VALUE_PREFIX_TOKEN = "Token ";
-    public static final String HEADER_KEY_CONTENT_TYPE = "Content-type";
+    public static final String HEADER_KEY_CONTENT_TYPE = "Content-Type";
+    public static final String HEADER_KEY_CONTENT_TYPE_CSV = "application/csv";
+
     public static final String HEADER_KEY_CONTENT_TYPE_VALUE_FORM_URLENCODED = "application/x-www-form-urlencoded";
     public static final String HEADER_KEY_CONTENT_TYPE_VALUE_JSON = "application/json";
-    private static final String HEADER_KEY_ACCEPT = "Accept";
+    public static final String HEADER_KEY_ACCEPT = "Accept";
+    private static final boolean DEBUG_HTTP = true;
 
     public static String executePost(final HttpClient httpClient,
                                      final URI uri,
@@ -29,7 +33,7 @@ public class HttpHelper extends BaseClass {
 
         final HttpRequest request = createRequest(uri, "POST", body, headers);
 
-        return sendRequest(httpClient, request, expectedHttpCode,body);
+        return sendRequest(httpClient, request, expectedHttpCode, body);
 
     }
 
@@ -41,7 +45,7 @@ public class HttpHelper extends BaseClass {
 
         final HttpRequest request = createRequest(uri, "GET", body, headers);
 
-        return sendRequest(httpClient, request, expectedHttpCode,body);
+        return sendRequest(httpClient, request, expectedHttpCode, body);
 
     }
 
@@ -54,7 +58,7 @@ public class HttpHelper extends BaseClass {
 
         final HttpRequest request = createRequest(uri, "DELETE", body, headers);
 
-        return sendRequest(httpClient, request, expectedHttpCode,body);
+        return sendRequest(httpClient, request, expectedHttpCode, body);
 
     }
 
@@ -107,23 +111,78 @@ public class HttpHelper extends BaseClass {
 
         try {
 
-            log.debug("OUT: Http {} {} requestBody:\n{}\n",request.method(),request.uri(),requestBody);
+            logHttp(request, requestBody, null);
 
             final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            final String responseString = response.body();
+            final String responseBody = response.body();
 
-            log.debug("IN: Http {} {} requestBody:\n{}\nresponseBody:\n{}\n\n",request.method(),request.uri(),requestBody,responseString);
+            logHttp(request, requestBody, response);
 
-            checkResponse(response, expectedHttpCode,requestBody);
+            checkResponse(response, expectedHttpCode, requestBody);
 
-            return responseString;
+            return responseBody;
 
         } catch (IOException | InterruptedException e) {
             throw new HttpException(e);
         }
 
 
+    }
+
+    private static void logHttp(final HttpRequest request, final String requestBody, final HttpResponse<String> response) {
+
+        if (DEBUG_HTTP == true) {
+
+            final StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("HTTP ");
+            if (response != null) {
+                stringBuilder.append("IN");
+            } else {
+                stringBuilder.append("OUT");
+            }
+
+
+
+
+            stringBuilder.append("\n");
+            stringBuilder.append("method:");
+            stringBuilder.append(" ");
+            stringBuilder.append(request.method());
+
+            stringBuilder.append("\n");
+            stringBuilder.append("uri:");
+            stringBuilder.append(" ");
+            stringBuilder.append(request.uri());
+
+
+            if (requestBody != null) {
+                stringBuilder.append("\n");
+                stringBuilder.append("requestBody:");
+                stringBuilder.append(" ");
+                stringBuilder.append(requestBody);
+            }
+
+            if (response!=null) {
+                stringBuilder.append("\n");
+                stringBuilder.append("responseStatus:");
+                stringBuilder.append(" ");
+                stringBuilder.append(response.statusCode());
+
+                if (response.body() != null && response.body().length()>0) {
+                    stringBuilder.append("\n");
+                    stringBuilder.append("responseBody:");
+                    stringBuilder.append(" ");
+                    stringBuilder.append(response.body());
+                }
+
+            }
+
+            stringBuilder.append("\n");
+
+            log.debug(stringBuilder.toString());
+
+        }
     }
 
     private static <T> void checkResponse(final HttpResponse<T> response, final int expectedHttpCode, final String requestBody) throws HttpException {
@@ -133,7 +192,7 @@ public class HttpHelper extends BaseClass {
         }
 
         if (response.statusCode() != expectedHttpCode) {
-            throw new HttpException("Error requesting: " + response.uri() + " - " + response.statusCode() + " - expected " + expectedHttpCode + " - response " + response.body()+" - "+requestBody);
+            throw new HttpException("Error requesting: " + response.uri() + " - " + response.statusCode() + " - expected " + expectedHttpCode + " - response " + response.body() + " - " + requestBody);
         }
 
     }
@@ -152,16 +211,15 @@ public class HttpHelper extends BaseClass {
 
         final HashMap<String, String> headerMap = getTokenAuthHeaderMap(token);
 
-        if(accept!=null){
+        if (accept != null) {
             headerMap.put(HEADER_KEY_ACCEPT, accept);
         }
-        if(contentType!=null){
+        if (contentType != null) {
             headerMap.put(HEADER_KEY_CONTENT_TYPE, contentType);
         }
 
         return headerMap;
     }
-
 
 
 }

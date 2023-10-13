@@ -1,11 +1,12 @@
 package de.cleem.tub.tsdbb.apps.worker.adapters.influxdb;
 
 import de.cleem.tub.tsdbb.api.model.Insert;
+import de.cleem.tub.tsdbb.api.model.Select;
 import de.cleem.tub.tsdbb.apps.worker.adapters.InsertResponse;
+import de.cleem.tub.tsdbb.apps.worker.adapters.SelectResponse;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.testutil.base.BaseContainerTest;
 import de.cleem.tub.tsdbb.apps.worker.adapters.victoriametrics.VictoriaMetricsAdapter;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -14,36 +15,31 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TsdbAdapterTest extends BaseContainerTest {
 
-    @AfterEach
-    void tearDown(){
-        endTest();
-    }
-
     @ParameterizedTest
-    @ValueSource(classes = { VictoriaMetricsAdapter.class, InfluxDbAdapter.class })
-    void healthCheck(final Class adapterClass) throws TSDBAdapterException {
+    @ValueSource(classes = {VictoriaMetricsAdapter.class, InfluxDbAdapter.class})
+    void test_healthCheck_ok(final Class<?> adapterClass) throws TSDBAdapterException {
 
-        startTest(adapterClass);
+        initialize(adapterClass);
 
-        assertTrue(tsdbAdapter.healthCheck(tsdbEndpoint));
+        assertTrue(adapter.healthCheck(endpoint));
 
     }
 
     @ParameterizedTest
-    @ValueSource(classes = { VictoriaMetricsAdapter.class, InfluxDbAdapter.class })
-    void setup(final Class adapterClass) throws TSDBAdapterException {
+    @ValueSource(classes = {VictoriaMetricsAdapter.class, InfluxDbAdapter.class})
+    void test_setup_ok(final Class<?> adapterClass) throws TSDBAdapterException {
 
-        startTest(adapterClass);
+        initialize(adapterClass);
 
-        assertTrue(tsdbAdapter.setup(workerSetupRequest));
+        assertTrue(adapter.setup(workerSetupRequest));
 
     }
 
     @ParameterizedTest
-    @ValueSource(classes = { InfluxDbAdapter.class })
-    void createStorage(final Class adapterClass) {
+    @ValueSource(classes = {InfluxDbAdapter.class})
+    void test_createStorage_error(final Class<?> adapterClass) {
 
-        startTest(adapterClass);
+        initialize(adapterClass);
 
         // Test is only used for InfluxDbAdapter
         //
@@ -53,40 +49,41 @@ class TsdbAdapterTest extends BaseContainerTest {
         // This test recreates the bucket and error is expected.
 
         final TSDBAdapterException exception = Assertions.assertThrows(TSDBAdapterException.class, () -> {
-            tsdbAdapter.createStorage(tsdbEndpoint);
+            adapter.createStorage(endpoint);
         });
 
         assertTrue(exception.getMessage().contains("bucket with name testbucket already exists"));
-    }
-
-    @ParameterizedTest
-    @ValueSource(classes = { VictoriaMetricsAdapter.class, InfluxDbAdapter.class })
-    void close(final Class adapterClass) {
-
-        startTest(adapterClass);
-
-        assertTrue(tsdbAdapter.close());
-    }
-
-    @ParameterizedTest
-    @ValueSource(classes = { VictoriaMetricsAdapter.class, InfluxDbAdapter.class })
-    void cleanup(final Class adapterClass) throws TSDBAdapterException {
-
-        startTest(adapterClass);
-
-        assertTrue(tsdbAdapter.cleanup(tsdbEndpoint));
 
     }
 
     @ParameterizedTest
-    @ValueSource(classes = { VictoriaMetricsAdapter.class, InfluxDbAdapter.class })
-    void write(final Class adapterClass) throws TSDBAdapterException {
+    @ValueSource(classes = {VictoriaMetricsAdapter.class, InfluxDbAdapter.class})
+    void test_close_ok(final Class<?> adapterClass) {
 
-        startTest(adapterClass);
+        initialize(adapterClass);
+
+        assertTrue(adapter.close());
+    }
+
+    @ParameterizedTest
+    @ValueSource(classes = {VictoriaMetricsAdapter.class, InfluxDbAdapter.class})
+    void test_cleanup_ok(final Class<?> adapterClass) throws TSDBAdapterException {
+
+        initialize(adapterClass);
+
+        assertTrue(adapter.cleanup(endpoint));
+
+    }
+
+    @ParameterizedTest
+    @ValueSource(classes = {VictoriaMetricsAdapter.class, InfluxDbAdapter.class})
+    void test_write_ok(final Class<?> adapterClass) throws TSDBAdapterException {
+
+        initialize(adapterClass);
 
         final Insert insert = getInsert();
 
-        final InsertResponse insertResponse = tsdbAdapter.write(insert, tsdbEndpoint);
+        final InsertResponse insertResponse = adapter.write(insert, endpoint);
 
         assertNotEquals(0, insertResponse.getRequestLength());
         assertEquals(insert.getId(), insertResponse.getInsert().getId());
@@ -94,83 +91,131 @@ class TsdbAdapterTest extends BaseContainerTest {
     }
 
     /*
-
     //@Test
-    void read() throws TSDBAdapterException {
-
+    void test_read_ok(final Class<?> adapterClass) throws TSDBAdapterException {
 
     }
+    */
 
-    @Test
-    void getAllLabels() throws TSDBAdapterException {
+    @ParameterizedTest
+    @ValueSource(classes = {VictoriaMetricsAdapter.class, InfluxDbAdapter.class})
+    void test_getAllLabels_ok(final Class<?> adapterClass) throws TSDBAdapterException {
 
-        writeInserts(10);
+        initialize(adapterClass);
+        insert();
 
-        Select select = new Select();
-        select.setStartValue("-1d");
+        final Select select = getSelect();
 
-        SelectResponse selectResponse = tsdbAdapter.getAllLabels(select, tsdbEndpoint);
+        SelectResponse selectResponse = adapter.getAllLabels(select, endpoint);
         assertNotEquals(0, selectResponse.getResponseLength());
 
     }
 
-    @Test
-    void getSingleLabelValue() throws TSDBAdapterException {
+    @ParameterizedTest
+    @ValueSource(classes = {VictoriaMetricsAdapter.class, InfluxDbAdapter.class})
+    void test_getSingleLabelValue_ok(final Class<?> adapterClass) throws TSDBAdapterException {
 
-        writeInserts(10);
+        initialize(adapterClass);
+        insert();
+
+        final Select select = getSelect();
+        select.setLabelName(DEFAULT_LABEL_NAME);
+
+        adapter.getSingleLabelValue(select, endpoint);
+
+    }
+
+    @ParameterizedTest
+    @ValueSource(classes = {VictoriaMetricsAdapter.class, InfluxDbAdapter.class})
+    void test_getMeasurementLabels_ok(final Class<?> adapterClass) throws TSDBAdapterException {
+
+        initialize(adapterClass);
+        insert();
+
+        final Select select = getSelect();
+        select.setMeasurementName(getMeasurementName());
+
+        adapter.getMeasurementLabels(select, endpoint);
+
+    }
+
+    @ParameterizedTest
+    @ValueSource(classes = {VictoriaMetricsAdapter.class, InfluxDbAdapter.class})
+    void test_countSeries_ok(final Class<?> adapterClass) throws TSDBAdapterException {
+
+        initialize(adapterClass);
+        insert();
 
         final Select select = getSelect();
 
-        tsdbAdapter.getSingleLabelValue(select, tsdbEndpoint);
+        adapter.countSeries(select,endpoint);
 
     }
 
-    @Test
-    void getMeasurementLabels() throws TSDBAdapterException {
+    @ParameterizedTest
+    @ValueSource(classes = {VictoriaMetricsAdapter.class, InfluxDbAdapter.class})
+    void test_getAllSeries_ok(final Class<?> adapterClass) throws TSDBAdapterException {
 
-        writeInserts(10);
+        initialize(adapterClass);
+        insert();
 
-        final Select select = new Select();
-        select.setStartValue("-1d");
-        select.setMeasurementName("INFLUX_measurement");
+        final Select select = getSelect();
 
-        tsdbAdapter.getMeasurementLabels(select, tsdbEndpoint);
+        adapter.getAllSeries(select,endpoint);
 
+    }
+
+    @ParameterizedTest
+    @ValueSource(classes = {VictoriaMetricsAdapter.class, InfluxDbAdapter.class})
+    void test_getMeasurementSeries_ok(final Class<?> adapterClass) throws TSDBAdapterException {
+
+        initialize(adapterClass);
+        insert();
+
+        final Select select = getSelect();
+        select.setMeasurementName(getMeasurementName());
+
+        adapter.getMeasurementSeries(select,endpoint);
+
+    }
+
+    @ParameterizedTest
+    @ValueSource(classes = {VictoriaMetricsAdapter.class, InfluxDbAdapter.class})
+    void test_exportSeries_ok(final Class<?> adapterClass) throws TSDBAdapterException {
+
+        initialize(adapterClass);
+        insert();
+
+        final Select select = getSelect();
+        select.setMeasurementName(getMeasurementName());
+        select.setFieldName(DEFAULT_FIELD_NAME);
+
+        /// TODO: AHHH INFLUX WTF
+
+        adapter.exportSeries(select,endpoint);
+
+    }
+
+
+    /*
+
+    //@Test
+    void test_getFieldValue_ok() {
     }
 
     //@Test
-    void countSeries() {
+    void test_getFieldValueSum_ok() {
     }
 
     //@Test
-    void getAllSeries() {
+    void test_getFieldValueAvg_ok() {
     }
 
     //@Test
-    void getMeasurementSeries() {
+    void test_getFieldValueMin_ok() {
     }
 
     //@Test
-    void exportSeries() {
-    }
-
-    //@Test
-    void getFieldValue() {
-    }
-
-    //@Test
-    void getFieldValueSum() {
-    }
-
-    //@Test
-    void getFieldValueAvg() {
-    }
-
-    //@Test
-    void getFieldValueMin() {
-    }
-
-    //@Test
-    void getFieldValueMax() {
+    void test_getFieldValueMax_ok() {
     }*/
 }

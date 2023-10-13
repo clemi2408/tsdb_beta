@@ -25,7 +25,7 @@ public class ExampleDataGenerator {
     public static KvPair getKvPair(final int id){
 
         final KvPair kvPair = new KvPair();
-        kvPair.setKey(String.format("key-%s", id));
+        kvPair.setKey(String.format("field%s", id));
         kvPair.setValue(List.of(10));
 
         return kvPair;

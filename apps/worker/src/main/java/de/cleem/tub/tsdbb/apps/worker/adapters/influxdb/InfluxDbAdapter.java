@@ -360,9 +360,9 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
         final String fluxQuery = "import \"influxdata/influxdb/schema\"\n" +
                 "schema.fieldKeys(\n" +
-                "bucket: \"'"+bucketName+"'\",\n" +
+                "bucket: \""+bucketName+"\",\n" +
                 "predicate: (r) => true,\n" +
-                "start: '"+select.getStartValue()+"'\n" +
+                "start: "+select.getStartValue()+"\n" +
                 ")\n" +
                 "|> count()";
 
@@ -399,9 +399,9 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
         final String fluxQuery = "import \"influxdata/influxdb/schema\"\n" +
                 "schema.fieldKeys(\n" +
-                "bucket: \"'"+bucketName+"'\",\n" +
+                "bucket: \""+bucketName+"\",\n" +
                 "predicate: (r) => true,\n" +
-                "start: '"+select.getStartValue()+"'\n" +
+                "start: "+select.getStartValue()+"\n" +
                 ")";
 
         return doQuery(endpoint,select,fluxQuery);
@@ -438,9 +438,9 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get MeasurementSeries - select.getMeasurementName is NULL");
         }
 
-        String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
-                "|> range('"+select.getStartValue()+"'))\n" +
-                "|> filter(fn: (r) => r[\"_measurement\"] == \"'"+select.getMeasurementName()+"'\")\n" +
+        final String fluxQuery = "from(bucket: \""+bucketName+"\")\n" +
+                "|> range(start: "+select.getStartValue()+")\n" +
+                "|> filter(fn: (r) => r[\"_measurement\"] == \""+select.getMeasurementName()+"\")\n" +
                 "|> distinct(column: \"_field\")\n" +
                 "|> keep(columns: [\"_field\"])";
 
@@ -470,13 +470,14 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not exportSeries - select.getMeasurementName is NULL");
         }
 
-        String query = "q=SELECT time, "+select.getFieldName()+" FROM "+select.getMeasurementName();
-        String queryEncoded = URLEncoder.encode(query, StandardCharsets.UTF_8);
+        final String query = "q=SELECT time, "+select.getFieldName()+" FROM "+select.getMeasurementName();
+        //final String requestBody = URLEncoder.encode(query, StandardCharsets.UTF_8);
 
         final HashMap<String, String> headers = HttpHelper.getAcceptContentTypeTokenHeaderMap(endpoint.getTsdbToken(),MIME_CSV,null);
         headers.put(HttpHelper.HEADER_KEY_CONTENT_TYPE, HttpHelper.HEADER_KEY_CONTENT_TYPE_VALUE_FORM_URLENCODED);
+        headers.put(HttpHelper.HEADER_KEY_ACCEPT, HttpHelper.HEADER_KEY_CONTENT_TYPE_CSV);
 
-        final String responseBody = callHttp(endpoint, String.format(QUERY_ENDPOINT_V1, bucketName),headers,queryEncoded,HttpMethod.POST);
+        final String responseBody = callHttp(endpoint, String.format(QUERY_ENDPOINT_V1, bucketName),headers,query,HttpMethod.POST);
 
         return SelectResponse.builder()
                 .requestLength(query.length())
@@ -823,6 +824,4 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
         return createBucketJson.toString();
 
     }
-
-
 }

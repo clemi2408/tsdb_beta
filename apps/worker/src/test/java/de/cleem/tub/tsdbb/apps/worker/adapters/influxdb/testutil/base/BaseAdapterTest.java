@@ -18,17 +18,30 @@ import java.util.List;
 public class BaseAdapterTest {
 
     private static final String URL_PATTERN = "http://localhost:%s";
-    //private final HashMap<String, String> customProperties;
-    protected TSDBAdapterIF tsdbAdapter;
+    protected static final long DEFAULT_POST_INSERT_SLEEP_MS = 1000;
+    protected static final int DEFAULT_INSERT_COUNT = 100;
+    protected static final String DEFAULT_START_VALUE="-1d";
+    protected static final String DEFAULT_LABEL_NAME="run";
+    private static final String DEFAULT_MEASUREMENT_SUFFIX = "_measurement";
+
+    protected static final String DEFAULT_FIELD_NAME = "field1";
+
+    protected TSDBAdapterIF adapter;
+    protected Class<?> adapterClass = null;
+    protected WorkerGeneralProperties.TsdbTypeEnum type;
     protected WorkerSetupRequest workerSetupRequest;
-    protected WorkerTsdbEndpoint tsdbEndpoint;
-    public void setUpAdapter(final Class adapterClass,final int containerPort, final String token, final HashMap<String,String> customProperties) {
+    protected WorkerTsdbEndpoint endpoint;
+    protected String token = null;
+    protected int databasePort;
+    protected HashMap<String,String> customDatabaseProperties = null;
+
+    public void setUpAdapter() {
 
         try {
-            log.info("Setting up Adapter: "+adapterClass);
-            this.tsdbAdapter = (TSDBAdapterIF) adapterClass.getDeclaredConstructor().newInstance();
 
-            WorkerGeneralProperties.TsdbTypeEnum type = null;
+            log.info("Setting up Adapter: "+adapterClass);
+            adapter = (TSDBAdapterIF) adapterClass.getDeclaredConstructor().newInstance();
+
             if(adapterClass == InfluxDbAdapter.class){
                 type= WorkerGeneralProperties.TsdbTypeEnum.INFLUX;
 
@@ -37,18 +50,19 @@ public class BaseAdapterTest {
                 type= WorkerGeneralProperties.TsdbTypeEnum.VICTORIA;
             }
 
-            this.workerSetupRequest = getWorkerSetupRequest(containerPort,token,type,customProperties);
-            this.tsdbEndpoint = getWorkerTsdbEndpoint(containerPort,token);
+            this.workerSetupRequest = getWorkerSetupRequest(databasePort,token,type, customDatabaseProperties);
+            this.endpoint = getWorkerTsdbEndpoint(databasePort,token);
 
-            tsdbAdapter.setup(workerSetupRequest);
-            tsdbAdapter.createStorage(tsdbEndpoint);
+            adapter.setup(workerSetupRequest);
+            adapter.createStorage(endpoint);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
     protected void tearDownAdapter() {
-        tsdbAdapter = null;
+        log.info("Tearing down Adapter: "+adapterClass);
+        adapter = null;
     }
     private WorkerTsdbEndpoint getWorkerTsdbEndpoint(final int containerPort, final String token) {
         final WorkerTsdbEndpoint workerTsdbEndpoint = new WorkerTsdbEndpoint();
@@ -57,6 +71,8 @@ public class BaseAdapterTest {
         if (token != null) {
             workerTsdbEndpoint.setTsdbToken(token);
         }
+
+        log.info("Using Worker endpoint: "+workerTsdbEndpoint.getTsdbUrl());
 
         return workerTsdbEndpoint;
     }
@@ -79,21 +95,24 @@ public class BaseAdapterTest {
         return workerSetupRequest;
 
     }
-    public List<InsertResponse> writeInserts(final int containerPort, final int count, final Long postInsertSleep, final String token) throws TSDBAdapterException {
+    public List<InsertResponse> insert() throws TSDBAdapterException {
+        return insert(DEFAULT_INSERT_COUNT,DEFAULT_POST_INSERT_SLEEP_MS);
+    }
+    public List<InsertResponse> insert(final int count, final Long postInsertSleepMs) throws TSDBAdapterException {
 
         final List<InsertResponse> responses = new ArrayList<>();
 
-        final WorkerTsdbEndpoint workerTsdbEndpoint = getWorkerTsdbEndpoint(containerPort,token);
+        final WorkerTsdbEndpoint workerTsdbEndpoint = getWorkerTsdbEndpoint(databasePort,token);
 
         for (int i = 0; i < count; i++) {
 
-            responses.add(tsdbAdapter.write(getInsert(), workerTsdbEndpoint));
+            responses.add(adapter.write(getInsert(), workerTsdbEndpoint));
 
         }
 
-        if (postInsertSleep != null) {
+        if (postInsertSleepMs != null) {
             try {
-                Thread.sleep(postInsertSleep);
+                Thread.sleep(postInsertSleepMs);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -105,11 +124,15 @@ public class BaseAdapterTest {
     public Insert getInsert() {
         return ExampleDataGenerator.getInsert();
     }
-    public Select getSelect() {
-        final Select select = new Select();
-        select.setStartValue("-1d");
-        select.setLabelName("run");
-        return select;
+
+    public Select getSelect(){
+        return new Select().startValue(DEFAULT_START_VALUE);
+    }
+
+    public String getMeasurementName(){
+
+        return type.getValue().concat(DEFAULT_MEASUREMENT_SUFFIX);
+
     }
 
 

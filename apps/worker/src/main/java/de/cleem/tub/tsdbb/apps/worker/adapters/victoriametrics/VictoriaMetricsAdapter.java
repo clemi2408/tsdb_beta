@@ -30,7 +30,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     private static final String WRITE_ENDPOINT = "/write";
     private static final String LABEL_VALUE_ENDPOINT = "/api/v1/label/%s/values";
     private static final String SERIES_ENDPOINT = "/api/v1/series";
-    private static final String SERIES_COUNT_ENDPOINT = "/api/v1/label/series/count";
+    private static final String SERIES_COUNT_ENDPOINT = "/api/v1/series/count";
     private static final String LABELS_ENDPOINT ="/api/v1/labels";
     private static final String LABEL_ENDPOINT = "/api/v1/label/__name__/values";
     private static final String DELETE_ENDPOINT = "/api/v1/admin/tsdb/delete_series?match[]=%s";
@@ -81,7 +81,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
         // HEALTH
         // curl "http://localhost:8428/metrics"
 
-        callHttp(endpoint,HEALTH_ENDPOINT,new HashMap<>(),null,HttpMethod.GET,200);
+        callHttp(endpoint,HEALTH_ENDPOINT,new HashMap<>(),null,false,HttpMethod.GET,200);
         return true;
     }
     @Override
@@ -165,7 +165,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get AllLabels - select is NULL");
         }
 
-        return doQuery(endpoint,select, LABELS_ENDPOINT,null, HttpMethod.GET);
+        return doQuery(endpoint,select, LABELS_ENDPOINT,null,false, HttpMethod.GET);
 
     }
     @Override
@@ -180,7 +180,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get SingleLabelValue - select.getLabelName is NULL");
         }
 
-        return doQuery(endpoint,select, String.format(LABEL_VALUE_ENDPOINT, select.getLabelName()),null, HttpMethod.GET);
+        return doQuery(endpoint,select, String.format(LABEL_VALUE_ENDPOINT, select.getLabelName()),null, false, HttpMethod.GET);
 
 
     }
@@ -199,7 +199,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         final String requestBody = "match[]={__name__=~\".+\", " + RUN_LABEL_KEY + "=\"" + select.getMeasurementName() + "\"}";
 
-        return doQuery(endpoint,select,LABEL_ENDPOINT,requestBody,HttpMethod.GET);
+        return doQuery(endpoint,select,LABEL_ENDPOINT,requestBody,true,HttpMethod.GET);
 
     }
     @Override
@@ -211,7 +211,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not countSeries - select is NULL");
         }
 
-        return doQuery(endpoint,select,SERIES_COUNT_ENDPOINT,null,HttpMethod.GET);
+        return doQuery(endpoint,select,SERIES_COUNT_ENDPOINT,null,false,HttpMethod.GET);
 
     }
     @Override
@@ -225,7 +225,8 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         final String requestBody = "match[]={__name__=~\".*\"}";
 
-        return doQuery(endpoint,select,SERIES_ENDPOINT,requestBody,HttpMethod.GET);
+
+        return doQuery(endpoint,select,SERIES_ENDPOINT,requestBody,false,HttpMethod.POST);
 
     }
     @Override
@@ -242,7 +243,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         final String requestBody = "match[]={__name__=~\""+select.getMeasurementName()+".*\"}";
 
-        return doQuery(endpoint,select,SERIES_ENDPOINT,requestBody, HttpMethod.GET);
+        return doQuery(endpoint,select,SERIES_ENDPOINT,requestBody, false,HttpMethod.POST);
 
     }
     @Override
@@ -262,7 +263,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         final String requestBody = "match[]={__name__=~\""+select.getMeasurementName()+"_"+select.getFieldName()+"\"}";
 
-        return doQuery(endpoint,select,EXPORT_ENDPOINT,requestBody, HttpMethod.POST);
+        return doQuery(endpoint,select,EXPORT_ENDPOINT,requestBody, false,HttpMethod.POST);
     }
     @Override
     public SelectResponse getFieldValue(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
@@ -281,7 +282,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         final String requestBody = "query="+select.getMeasurementName()+"_"+select.getFieldName();
 
-        return doQuery(endpoint,select, QUERY_ENDPOINT_INSTANT,requestBody,HttpMethod.GET);
+        return doQuery(endpoint,select, QUERY_ENDPOINT_INSTANT,requestBody,true,HttpMethod.GET);
 
     }
     @Override
@@ -309,7 +310,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
                 "&start="+select.getStartValue()+
                 "&step="+select.getStepValue();
 
-        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,HttpMethod.GET);
+        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,true,HttpMethod.GET);
 
     }
     @Override
@@ -337,7 +338,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
                 "&start="+select.getStartValue()+
                 "&step="+select.getStepValue();
 
-        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,HttpMethod.GET);
+        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,true,HttpMethod.GET);
     }
     @Override
     public SelectResponse getFieldValueMin(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
@@ -364,7 +365,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
                 "&start="+select.getStartValue()+
                 "&step="+select.getStepValue();
 
-        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,HttpMethod.GET);
+        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,true,HttpMethod.GET);
 
     }
     @Override
@@ -392,12 +393,12 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
                 "&start="+select.getStartValue()+
                 "&step="+select.getStepValue();
 
-        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,HttpMethod.GET);
+        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,true,HttpMethod.GET);
 
     }
 
     ////
-    private String callHttp(final WorkerTsdbEndpoint endpoint, final String path, final HashMap<String, String> headers, final String requestBody, final HttpMethod method, int expectedCode) throws TSDBAdapterException {
+    private String callHttp(final WorkerTsdbEndpoint endpoint, final String path, final HashMap<String, String> headers, final String requestBody, final boolean encodeBody, final HttpMethod method, int expectedCode) throws TSDBAdapterException {
 
         if(endpoint==null){
             throw new TSDBAdapterException("Can not callHttp - endpoint is NULL");
@@ -406,29 +407,41 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not callHttp - path is NULL");
         }
         if(headers==null){
-
             throw new TSDBAdapterException("Can not callHttp - headers is NULL");
+        }
+
+        String body = null;
+
+
+        if(requestBody!=null){
+
+            if(encodeBody){
+                body = URLEncoder.encode(requestBody, StandardCharsets.UTF_8);
+
+            }
+            else{
+                body=requestBody;
+            }
 
         }
 
-        String encodedRequestBody = null;
+        headers.put(HttpHelper.HEADER_KEY_CONTENT_TYPE, HttpHelper.HEADER_KEY_CONTENT_TYPE_VALUE_FORM_URLENCODED);
 
-        if(requestBody!=null) {
-            encodedRequestBody = URLEncoder.encode(requestBody, StandardCharsets.UTF_8);
-            headers.put(HttpHelper.HEADER_KEY_CONTENT_TYPE, HttpHelper.HEADER_KEY_CONTENT_TYPE_VALUE_FORM_URLENCODED);
-        }
+
+
+
 
         final URI uri = URI.create(endpoint.getTsdbUrl() + path);
 
         try {
 
             if(method==HttpMethod.GET){
-                return HttpHelper.executeGet(httpClient, uri, encodedRequestBody, headers, expectedCode);
+                return HttpHelper.executeGet(httpClient, uri, body, headers, expectedCode);
 
             }
             else if(method==HttpMethod.POST){
 
-                return HttpHelper.executePost(httpClient,uri,encodedRequestBody,headers,expectedCode);
+                return HttpHelper.executePost(httpClient,uri,body,headers,expectedCode);
 
             }
             else {
@@ -441,7 +454,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
         }
 
     }
-    private SelectResponse doQuery(final WorkerTsdbEndpoint endpoint, final Select select, final String path, final String requestBody, final HttpMethod method) throws TSDBAdapterException {
+    private SelectResponse doQuery(final WorkerTsdbEndpoint endpoint, final Select select, final String path, final String requestBody, final boolean encodeBody, final HttpMethod method) throws TSDBAdapterException {
 
         // curl -XGET 'http://localhost:8428/$PATH' --data-urlencode '$REQUEST_BODY'
 
@@ -451,7 +464,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         }
 
-        String responseBody =  callHttp(endpoint,path,new HashMap<>(), requestBody,method,200);
+        final String responseBody =  callHttp(endpoint,path,new HashMap<>(), requestBody,encodeBody,method,200);
 
         return SelectResponse.builder()
                 .requestLength(requestBody!=null?requestBody.length():0)
@@ -472,7 +485,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         final String requestBody = "match[]={__name__=~\".+\", " + RUN_LABEL_KEY + "=\"" + measurement + "\"}";
 
-        return callHttp(endpoint,LABEL_ENDPOINT,new HashMap<>(),requestBody,HttpMethod.GET,200);
+        return callHttp(endpoint,LABEL_ENDPOINT,new HashMap<>(),requestBody,true,HttpMethod.GET,200);
 
     }
     private String[] getSeriesByLabelKV(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
@@ -504,7 +517,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         }
 
-        callHttp(endpoint,String.format(DELETE_ENDPOINT, seriesName),new HashMap<>(),null,HttpMethod.GET,204);
+        callHttp(endpoint,String.format(DELETE_ENDPOINT, seriesName),new HashMap<>(),null,false,HttpMethod.GET,204);
         log.info("Deleted series: " + seriesName);
 
     }

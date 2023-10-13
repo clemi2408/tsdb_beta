@@ -6,6 +6,7 @@ import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.testutil.container.Influ
 import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.testutil.container.VictoriaContainerFactory;
 import de.cleem.tub.tsdbb.apps.worker.adapters.victoriametrics.VictoriaMetricsAdapter;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
 import org.testcontainers.containers.GenericContainer;
 
 import java.util.HashMap;
@@ -14,36 +15,30 @@ import java.util.HashMap;
 public class BaseContainerTest extends BaseAdapterTest {
 
     protected WorkerGeneralProperties.TsdbTypeEnum tsdbTypeEnum;
-    protected GenericContainer container;
-    protected int containerPort;
-    private HashMap<String,String> customProperties = null;
-    private String token = null;
-    private String orgName = null;
+    protected GenericContainer<?> container;
 
-    public void startTest(final Class adapterClass) {
+    public void initialize(final Class<?> adapterClass) {
 
-        if(adapterClass==InfluxDbAdapter.class){
+        this.adapterClass = adapterClass;
 
-            token = "s-kr1M8PTAYyylFNE8KJ2bG2foRf0c2_c9ECxOT1VbMeLK15bBT9xsUCglGKqcVSEZBPqrtKdVR5IpcA1L-aTA==";
-            orgName = "testorg";
-
-            customProperties = new HashMap<>();
-            customProperties.put("organisationName", orgName);
-            customProperties.put("bucketName", "testbucket");
-
-        }
-
-        setUpContainer(adapterClass, token);
+        setUpContainer();
         startContainer();
-        setUpAdapter(adapterClass,containerPort,token, customProperties);
-
+        setUpAdapter();
 
     }
-    private void setUpContainer(final Class adapterClass, final String token) {
+    private void setUpContainer() {
 
-        log.info("Setting up Container: "+adapterClass);
+        log.info("Setting up Container: "+this.adapterClass);
 
         if(adapterClass == InfluxDbAdapter.class){
+
+            token = "s-kr1M8PTAYyylFNE8KJ2bG2foRf0c2_c9ECxOT1VbMeLK15bBT9xsUCglGKqcVSEZBPqrtKdVR5IpcA1L-aTA==";
+            final String orgName = "testorg";
+
+            customDatabaseProperties = new HashMap<>();
+            customDatabaseProperties.put("organisationName", orgName);
+            customDatabaseProperties.put("bucketName", "testbucket");
+
             tsdbTypeEnum= WorkerGeneralProperties.TsdbTypeEnum.INFLUX;
             container= InfluxContainer.getContainer(token,orgName);
 
@@ -58,13 +53,16 @@ public class BaseContainerTest extends BaseAdapterTest {
     private void startContainer() {
         log.info("Starting container");
         container.start();
-        containerPort=container.getFirstMappedPort();
+        databasePort =container.getFirstMappedPort();
     }
     private void stopContainer() {
         log.info("Stopping container");
         container.stop();
     }
-    public void endTest(){
+
+    @AfterEach
+    public void finishTest(){
+        log.info("Finishing test");
         tearDownAdapter();
         stopContainer();
     }
