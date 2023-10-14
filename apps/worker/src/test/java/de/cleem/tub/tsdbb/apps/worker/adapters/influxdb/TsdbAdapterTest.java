@@ -339,7 +339,6 @@ class TsdbAdapterTest extends BaseContainerTest {
                 );
     }
 
-
     @ParameterizedTest
     @ValueSource(classes = {VictoriaMetricsAdapter.class, InfluxDbAdapter.class})
     void test_getFieldValueMin_ok(final Class<?> adapterClass) throws TSDBAdapterException {
