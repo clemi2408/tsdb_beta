@@ -1,7 +1,7 @@
 package de.cleem.tub.tsdbb.apps.worker.formats;
 
-import de.cleem.tub.tsdbb.api.model.KvPair;
 import de.cleem.tub.tsdbb.api.model.Insert;
+import de.cleem.tub.tsdbb.api.model.KvPair;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;

@@ -12,5 +12,6 @@ public class SelectResponse {
     private Select select;
     private int requestLength;
     private int responseLength;
+    private String responseBody;
 
 }

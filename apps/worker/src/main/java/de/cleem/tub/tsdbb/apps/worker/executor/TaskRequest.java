@@ -1,7 +1,6 @@
 package de.cleem.tub.tsdbb.apps.worker.executor;
 
 import de.cleem.tub.tsdbb.api.model.*;
-import de.cleem.tub.tsdbb.api.model.Insert;
 import de.cleem.tub.tsdbb.apps.worker.adapters.BaseConnector;
 import de.cleem.tub.tsdbb.apps.worker.adapters.InsertResponse;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterIF;
@@ -11,7 +10,6 @@ import de.cleem.tub.tsdbb.commons.factories.timeFrame.TimeFrameFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
-import java.net.URI;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.Callable;

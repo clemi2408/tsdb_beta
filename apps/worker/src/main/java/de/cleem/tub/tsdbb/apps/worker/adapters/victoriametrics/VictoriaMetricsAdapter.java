@@ -27,19 +27,18 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
     private static final String MEASUREMENT_SUFFIX_STRING = "_measurement";
     private static final String RUN_LABEL_KEY = "run";
     private static final int PRE_CLEANUP_SLEEP_IN_MS = 2000;
-    private static final String WRITE_ENDPOINT = "/write";
-    private static final String LABEL_VALUE_ENDPOINT = "/api/v1/label/%s/values";
-    private static final String SERIES_ENDPOINT = "/api/v1/series";
-    private static final String SERIES_COUNT_ENDPOINT = "/api/v1/series/count";
-    private static final String LABELS_ENDPOINT ="/api/v1/labels";
-    private static final String LABEL_ENDPOINT = "/api/v1/label/__name__/values";
-    private static final String DELETE_ENDPOINT = "/api/v1/admin/tsdb/delete_series?match[]=%s";
+    private static final String PATH_WRITE = "/write";
+    private static final String PATH_LABEL_VALUE = "/api/v1/label/%s/values";
+    private static final String PATH_SERIES = "/api/v1/series";
+    private static final String PATH_SERIES_COUNT = "/api/v1/series/count";
+    private static final String PATH_LABELS ="/api/v1/labels";
+    private static final String PATH_LABEL = "/api/v1/label/__name__/values";
+    private static final String PATH_PATTERN_DELETE = "/api/v1/admin/tsdb/delete_series?match[]=%s";
     // health==metrics? https://github.com/VictoriaMetrics/VictoriaMetrics/issues/3539
-    private static final String HEALTH_ENDPOINT = "/metrics";
-    private static final String EXPORT_ENDPOINT = "/api/v1/export";
-    private static final String QUERY_ENDPOINT_INSTANT = "/api/v1/query";
-
-    private static final String QUERY_ENDPOINT_RANGE = "/api/v1/query_range";
+    private static final String PATH_HEALTH = "/api/v1/status/tsdb";
+    private static final String PATH_EXPORT = "/api/v1/export";
+    private static final String PATH_QUERY_FIELD_PATTERN = "/api/v1/query?query=%s_%s";
+    private static final String PATH_QUERY_RANGE_PATTERN = "/api/v1/query_range?%s";
 
     private HttpClient httpClient;
     private LineProtocolFormat lineProtocolFormat;
@@ -81,7 +80,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
         // HEALTH
         // curl "http://localhost:8428/metrics"
 
-        callHttp(endpoint,HEALTH_ENDPOINT,new HashMap<>(),null,false,HttpMethod.GET,200);
+        callHttp(endpoint, PATH_HEALTH,new HashMap<>(),null,false,HttpMethod.GET,200);
         return true;
     }
     @Override
@@ -136,7 +135,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         try {
 
-            final URI uri = URI.create(endpoint.getTsdbUrl() + WRITE_ENDPOINT);
+            final URI uri = URI.create(endpoint.getTsdbUrl() + PATH_WRITE);
 
             HttpHelper.executePost(httpClient, uri, metricLine, new HashMap<>(), 204);
 
@@ -165,7 +164,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get AllLabels - select is NULL");
         }
 
-        return doQuery(endpoint,select, LABELS_ENDPOINT,null,false, HttpMethod.GET);
+        return doQuery(endpoint,select, PATH_LABELS,null,false, HttpMethod.GET);
 
     }
     @Override
@@ -180,7 +179,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get SingleLabelValue - select.getLabelName is NULL");
         }
 
-        return doQuery(endpoint,select, String.format(LABEL_VALUE_ENDPOINT, select.getLabelName()),null, false, HttpMethod.GET);
+        return doQuery(endpoint,select, String.format(PATH_LABEL_VALUE, select.getLabelName()),null, false, HttpMethod.GET);
 
 
     }
@@ -199,7 +198,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         final String requestBody = "match[]={__name__=~\".+\", " + RUN_LABEL_KEY + "=\"" + select.getMeasurementName() + "\"}";
 
-        return doQuery(endpoint,select,LABEL_ENDPOINT,requestBody,true,HttpMethod.GET);
+        return doQuery(endpoint,select, PATH_LABEL,requestBody,true,HttpMethod.GET);
 
     }
     @Override
@@ -211,7 +210,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not countSeries - select is NULL");
         }
 
-        return doQuery(endpoint,select,SERIES_COUNT_ENDPOINT,null,false,HttpMethod.GET);
+        return doQuery(endpoint,select, PATH_SERIES_COUNT,null,false,HttpMethod.GET);
 
     }
     @Override
@@ -226,7 +225,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
         final String requestBody = "match[]={__name__=~\".*\"}";
 
 
-        return doQuery(endpoint,select,SERIES_ENDPOINT,requestBody,false,HttpMethod.POST);
+        return doQuery(endpoint,select, PATH_SERIES,requestBody,false,HttpMethod.POST);
 
     }
     @Override
@@ -243,7 +242,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         final String requestBody = "match[]={__name__=~\""+select.getMeasurementName()+".*\"}";
 
-        return doQuery(endpoint,select,SERIES_ENDPOINT,requestBody, false,HttpMethod.POST);
+        return doQuery(endpoint,select, PATH_SERIES,requestBody, false,HttpMethod.POST);
 
     }
     @Override
@@ -263,12 +262,12 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         final String requestBody = "match[]={__name__=~\""+select.getMeasurementName()+"_"+select.getFieldName()+"\"}";
 
-        return doQuery(endpoint,select,EXPORT_ENDPOINT,requestBody, false,HttpMethod.POST);
+        return doQuery(endpoint,select, PATH_EXPORT,requestBody, false,HttpMethod.POST);
     }
     @Override
     public SelectResponse getFieldValue(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
 
-        // curl -G "http://localhost:8428/api/v1/series" -d "match[]={__name__=~".*"}"
+        // curl -G "http://localhost:8428/api/v1/query?query=%measurement_%field1
 
         if(select==null){
             throw new TSDBAdapterException("Can not get value - select is NULL");
@@ -280,9 +279,9 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get value - select.getFieldName is NULL");
         }
 
-        final String requestBody = "query="+select.getMeasurementName()+"_"+select.getFieldName();
+        final String path = String.format(PATH_QUERY_FIELD_PATTERN, select.getMeasurementName(),select.getFieldName());
 
-        return doQuery(endpoint,select, QUERY_ENDPOINT_INSTANT,requestBody,true,HttpMethod.GET);
+        return doQuery(endpoint,select, path,null,false,HttpMethod.GET);
 
     }
     @Override
@@ -306,11 +305,13 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get FieldValueSum - select.getFieldName is NULL");
         }
 
-        final String requestBody = "query=sum_over_time("+select.getMeasurementName()+"_"+select.getFieldName()+")" +
+        final String qParams = "query=sum_over_time("+select.getMeasurementName()+"_"+select.getFieldName()+")" +
                 "&start="+select.getStartValue()+
                 "&step="+select.getStepValue();
 
-        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,true,HttpMethod.GET);
+        final String qPath = String.format(PATH_QUERY_RANGE_PATTERN, qParams);
+
+        return doQuery(endpoint,select, qPath,null,false,HttpMethod.GET);
 
     }
     @Override
@@ -334,11 +335,14 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get FieldValueAvg - select.getFieldName is NULL");
         }
 
-        final String requestBody = "query=avg_over_time("+select.getMeasurementName()+"_"+select.getFieldName()+")" +
+        final String qParams = "query=avg_over_time("+select.getMeasurementName()+"_"+select.getFieldName()+")" +
                 "&start="+select.getStartValue()+
                 "&step="+select.getStepValue();
 
-        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,true,HttpMethod.GET);
+        final String qPath = String.format(PATH_QUERY_RANGE_PATTERN, qParams);
+
+        return doQuery(endpoint,select, qPath,null,false,HttpMethod.GET);
+
     }
     @Override
     public SelectResponse getFieldValueMin(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
@@ -361,12 +365,13 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get FieldValueMin - select.getFieldName is NULL");
         }
 
-        final String requestBody = "query=min_over_time("+select.getMeasurementName()+"_"+select.getFieldName()+")" +
+        final String qParams = "query=min_over_time("+select.getMeasurementName()+"_"+select.getFieldName()+")" +
                 "&start="+select.getStartValue()+
                 "&step="+select.getStepValue();
 
-        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,true,HttpMethod.GET);
+        final String qPath = String.format(PATH_QUERY_RANGE_PATTERN, qParams);
 
+        return doQuery(endpoint,select, qPath,null,false,HttpMethod.GET);
     }
     @Override
     public SelectResponse getFieldValueMax(final Select select, final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
@@ -389,12 +394,13 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get FieldValueMax - select.getFieldName is NULL");
         }
 
-        final String requestBody = "query=max_over_time("+select.getMeasurementName()+"_"+select.getFieldName()+")" +
+        final String qParams = "query=max_over_time("+select.getMeasurementName()+"_"+select.getFieldName()+")" +
                 "&start="+select.getStartValue()+
                 "&step="+select.getStepValue();
 
-        return doQuery(endpoint,select, QUERY_ENDPOINT_RANGE,requestBody,true,HttpMethod.GET);
+        final String qPath = String.format(PATH_QUERY_RANGE_PATTERN, qParams);
 
+        return doQuery(endpoint,select, qPath,null,false,HttpMethod.GET);
     }
 
     ////
@@ -426,9 +432,6 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
         }
 
         headers.put(HttpHelper.HEADER_KEY_CONTENT_TYPE, HttpHelper.HEADER_KEY_CONTENT_TYPE_VALUE_FORM_URLENCODED);
-
-
-
 
 
         final URI uri = URI.create(endpoint.getTsdbUrl() + path);
@@ -469,6 +472,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
         return SelectResponse.builder()
                 .requestLength(requestBody!=null?requestBody.length():0)
                 .responseLength(responseBody.length())
+                .responseBody(responseBody)
                 .select(select)
                 .build();
 
@@ -485,7 +489,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         final String requestBody = "match[]={__name__=~\".+\", " + RUN_LABEL_KEY + "=\"" + measurement + "\"}";
 
-        return callHttp(endpoint,LABEL_ENDPOINT,new HashMap<>(),requestBody,true,HttpMethod.GET,200);
+        return callHttp(endpoint, PATH_LABEL,new HashMap<>(),requestBody,true,HttpMethod.GET,200);
 
     }
     private String[] getSeriesByLabelKV(final WorkerTsdbEndpoint endpoint) throws TSDBAdapterException {
@@ -517,7 +521,7 @@ public class VictoriaMetricsAdapter implements TSDBAdapterIF {
 
         }
 
-        callHttp(endpoint,String.format(DELETE_ENDPOINT, seriesName),new HashMap<>(),null,false,HttpMethod.GET,204);
+        callHttp(endpoint,String.format(PATH_PATTERN_DELETE, seriesName),new HashMap<>(),null,false,HttpMethod.GET,204);
         log.info("Deleted series: " + seriesName);
 
     }

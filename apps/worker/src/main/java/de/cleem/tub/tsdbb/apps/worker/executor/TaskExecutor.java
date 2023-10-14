@@ -1,8 +1,10 @@
 package de.cleem.tub.tsdbb.apps.worker.executor;
 
 
-import de.cleem.tub.tsdbb.api.model.*;
 import de.cleem.tub.tsdbb.api.model.Insert;
+import de.cleem.tub.tsdbb.api.model.TaskResult;
+import de.cleem.tub.tsdbb.api.model.WorkerSetupRequest;
+import de.cleem.tub.tsdbb.api.model.WorkerTsdbEndpoint;
 import de.cleem.tub.tsdbb.apps.worker.adapters.BaseConnector;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
 import de.cleem.tub.tsdbb.commons.api.ClientApiFacadeException;

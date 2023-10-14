@@ -679,8 +679,10 @@ todo
 Variables:
 
 ```bash
+export INFLUX_ORG_ID=07ba829c0ea87d3c
 export INFLUX_TOKEN=4E0csSz-_v96RE0ijgUlx2aU5aZ3psvTtXfmTUrTGZxFLKpEkG5eYq9xJW7L2tb79d7Luqk69yJsEWdsb5wmKg==
 export INFLUX_BUCKET=bucket
+export START_VALUE=-1d
 export MEASUREMENT_NAME=myMeasurement
 export FIELD1_NAME=myField1
 ```
@@ -689,24 +691,23 @@ Command:
 
 ```bash
 curl --request POST \
-"http://localhost:8086/query?db=${INFLUX_BUCKET}"  \
+"http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
 --header "Authorization: Token ${INFLUX_TOKEN}" \
 --header 'Accept: application/csv' \
---data-urlencode "q=SELECT time, ${FIELD1_NAME} FROM ${MEASUREMENT_NAME}"
+--header 'Content-type: application/vnd.flux' \
+--data '
+from(bucket: "'$INFLUX_BUCKET'")
+|> range('$START_VALUE'))
+|> filter(fn: (r) => r["_measurement"] == "'$MEASUREMENT_NAME'")
+|> filter(fn: (r) => r["_field"] == "'$FIELD1_NAME'")
+|> keep(columns: ["_time", "_value"])
+'
 ```
 
 Returns:
 
 ```
-name,tags,time,myField1
-myMeasurement,,1692726208000000000,10
-myMeasurement,,1692726216000000000,10
-myMeasurement,,1692726224000000000,10
-myMeasurement,,1692726238000000000,10
-myMeasurement,,1692726239000000000,10
-myMeasurement,,1692726240000000000,10
-myMeasurement,,1692726241000000000,10
-myMeasurement,,1692726276000000000,10
+tbd
 ```
 
 ### Delete series
@@ -753,8 +754,7 @@ export FIELD1_NAME=myField1
 Command:
 
 ```bash
-curl "http://localhost:8428/api/v1/query" -d "query=${MEASUREMENT_NAME}_${FIELD1_NAME}
-"
+curl "http://localhost:8428/api/v1/query?query=${MEASUREMENT_NAME}_${FIELD1_NAME}"
 ```
 
 Returns:

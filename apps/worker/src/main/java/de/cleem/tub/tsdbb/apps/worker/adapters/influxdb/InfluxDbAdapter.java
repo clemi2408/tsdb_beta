@@ -14,9 +14,7 @@ import org.json.JSONObject;
 import org.springframework.http.HttpMethod;
 
 import java.net.URI;
-import java.net.URLEncoder;
 import java.net.http.HttpClient;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 @Slf4j
@@ -39,7 +37,13 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
     private static final String HEALTH_ENDPOINT = "/health";
     private static final String WRITE_ENDPOINT_V2 = "/api/v2/write?org=%s&bucket=%s&precision=%s";
     private static final String QUERY_ENDPOINT_V2 = "/api/v2/query?orgID=%s";
-    private static final String QUERY_ENDPOINT_V1 = "/query?db=%s";
+    private static final String QUERY_EXPORT_ENDPOINT_V1 = "/query";
+
+    private static final String EXPORT_PARAMETER_DB_PATTERN = "db=%s";
+    private static final String EXPORT_PARAMETER_Q_PATTERN = "q=%s";
+    private static final String EXPORT_QUERY="SELECT time, %s FROM %s";
+
+
     private HttpClient httpClient;
     private LineProtocolFormat lineProtocolFormat;
 
@@ -451,10 +455,17 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
 
         /*
             curl --request POST \
-            "http://localhost:8086/query?db=${INFLUX_BUCKET}"  \
-            --header "Authorization: Token ${INFLUX_TOKEN}" \
-            --header 'Accept: application/csv' \
-            --data-urlencode "q=SELECT time, ${FIELD1_NAME} FROM ${MEASUREMENT_NAME}"
+                "http://localhost:8086/api/v2/query?orgID=${INFLUX_ORG_ID}"  \
+                --header "Authorization: Token ${INFLUX_TOKEN}" \
+                --header 'Accept: application/csv' \
+                --header 'Content-type: application/vnd.flux' \
+                --data '
+                from(bucket: "'$INFLUX_BUCKET'")
+                |> range('$START_VALUE'))
+                |> filter(fn: (r) => r["_measurement"] == "'$MEASUREMENT_NAME'")
+                |> filter(fn: (r) => r["_field"] == "'$FIELD1_NAME'")
+                |> keep(columns: ["_time", "_value"])
+                '
         */
 
         if (bucketName == null) {
@@ -470,20 +481,13 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not exportSeries - select.getMeasurementName is NULL");
         }
 
-        final String query = "q=SELECT time, "+select.getFieldName()+" FROM "+select.getMeasurementName();
-        //final String requestBody = URLEncoder.encode(query, StandardCharsets.UTF_8);
+        final String fluxQuery = "from(bucket: \""+bucketName+"\")\n" +
+                "|> range(start: "+select.getStartValue()+")\n" +
+                "|> filter(fn: (r) => r[\"_measurement\"] == \""+select.getMeasurementName()+"\")\n" +
+                "|> filter(fn: (r) => r[\"_field\"] == \""+select.getFieldName()+"\")\n"+
+                "|> keep(columns: [\"_time\", \"_value\"])";
 
-        final HashMap<String, String> headers = HttpHelper.getAcceptContentTypeTokenHeaderMap(endpoint.getTsdbToken(),MIME_CSV,null);
-        headers.put(HttpHelper.HEADER_KEY_CONTENT_TYPE, HttpHelper.HEADER_KEY_CONTENT_TYPE_VALUE_FORM_URLENCODED);
-        headers.put(HttpHelper.HEADER_KEY_ACCEPT, HttpHelper.HEADER_KEY_CONTENT_TYPE_CSV);
-
-        final String responseBody = callHttp(endpoint, String.format(QUERY_ENDPOINT_V1, bucketName),headers,query,HttpMethod.POST);
-
-        return SelectResponse.builder()
-                .requestLength(query.length())
-                .responseLength(responseBody.length())
-                .select(select)
-                .build();
+        return doQuery(endpoint,select,fluxQuery);
 
     }
     @Override
@@ -521,10 +525,10 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get Value - select.getFieldName is NULL");
         }
 
-        final String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
-                "|> range('"+select.getStartValue()+"'))\n" +
-                "|> filter(fn: (r) => r[\"_measurement\"] == \"'"+select.getMeasurementName()+"'\")\n" +
-                "|> filter(fn: (r) => r[\"_field\"] == \"'"+select.getFieldName()+"'\")\n" +
+        final String fluxQuery = "from(bucket: \""+bucketName+"\")\n" +
+                "|> range(start: "+select.getStartValue()+")\n" +
+                "|> filter(fn: (r) => r[\"_measurement\"] == \""+select.getMeasurementName()+"\")\n" +
+                "|> filter(fn: (r) => r[\"_field\"] == \""+select.getFieldName()+"\")\n" +
                 "|> last()\n" +
                 "|> keep(columns: [\"_value\"])";
 
@@ -568,11 +572,11 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get FieldValueSum - select.getFieldName is NULL");
         }
 
-        final String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
-                "|> range('"+select.getStartValue()+"'))\n" +
-                "|> filter(fn: (r) => r[\"_measurement\"] == \"'"+select.getMeasurementName()+"'\")\n" +
-                "|> filter(fn: (r) => r[\"_field\"] == \"'"+select.getFieldName()+"'\")\n" +
-                "|> aggregateWindow(every: '"+select.getStepValue()+"', fn: sum, createEmpty: false)\n" +
+        final String fluxQuery = "from(bucket: \""+bucketName+"\")\n" +
+                "|> range(start: "+select.getStartValue()+")\n" +
+                "|> filter(fn: (r) => r[\"_measurement\"] == \""+select.getMeasurementName()+"\")\n" +
+                "|> filter(fn: (r) => r[\"_field\"] == \""+select.getFieldName()+"\")\n" +
+                "|> aggregateWindow(every: "+select.getStepValue()+", fn: sum, createEmpty: false)\n" +
                 "|> yield(name: \"sum\")";
 
 
@@ -617,11 +621,11 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get FieldValueAvg - select.getFieldName is NULL");
         }
 
-        final String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
-                "|> range('"+select.getStartValue()+"'))\n" +
-                "|> filter(fn: (r) => r[\"_measurement\"] == \"'"+select.getMeasurementName()+"'\")\n" +
-                "|> filter(fn: (r) => r[\"_field\"] == \"'"+select.getFieldName()+"'\")\n" +
-                "|> aggregateWindow(every: '"+select.getStepValue()+"', fn: mean, createEmpty: false)\n" +
+        final String fluxQuery = "from(bucket: \""+bucketName+"\")\n" +
+                "|> range(start: "+select.getStartValue()+")\n" +
+                "|> filter(fn: (r) => r[\"_measurement\"] == \""+select.getMeasurementName()+"\")\n" +
+                "|> filter(fn: (r) => r[\"_field\"] == \""+select.getFieldName()+"\")\n" +
+                "|> aggregateWindow(every: "+select.getStepValue()+", fn: mean, createEmpty: false)\n" +
                 "|> yield(name: \"avg\")";
 
         return doQuery(endpoint,select,fluxQuery);
@@ -665,11 +669,11 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get FieldValueMin - select.getFieldName is NULL");
         }
 
-        final String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
-                "|> range('"+select.getStartValue()+"'))\n" +
-                "|> filter(fn: (r) => r[\"_measurement\"] == \"'"+select.getMeasurementName()+"'\")\n" +
-                "|> filter(fn: (r) => r[\"_field\"] == \"'"+select.getFieldName()+"'\")\n" +
-                "|> aggregateWindow(every: '"+select.getStepValue()+"', fn: min, createEmpty: false)\n" +
+        final String fluxQuery = "from(bucket: \""+bucketName+"\")\n" +
+                "|> range(start: "+select.getStartValue()+")\n" +
+                "|> filter(fn: (r) => r[\"_measurement\"] == \""+select.getMeasurementName()+"\")\n" +
+                "|> filter(fn: (r) => r[\"_field\"] == \""+select.getFieldName()+"\")\n" +
+                "|> aggregateWindow(every: "+select.getStepValue()+", fn: min, createEmpty: false)\n" +
                 "|> yield(name: \"min\")";
 
         return doQuery(endpoint,select,fluxQuery);    }
@@ -711,11 +715,11 @@ public class InfluxDbAdapter implements TSDBAdapterIF {
             throw new TSDBAdapterException("Can not get FieldValueMax - select.getFieldName is NULL");
         }
 
-        final String fluxQuery = "from(bucket: \"'"+bucketName+"'\")\n" +
-                "|> range('"+select.getStartValue()+"'))\n" +
-                "|> filter(fn: (r) => r[\"_measurement\"] == \"'"+select.getMeasurementName()+"'\")\n" +
-                "|> filter(fn: (r) => r[\"_field\"] == \"'"+select.getFieldName()+"'\")\n" +
-                "|> aggregateWindow(every: '"+select.getStepValue()+"', fn: max, createEmpty: false)\n" +
+        final String fluxQuery = "from(bucket: \""+bucketName+"\")\n" +
+                "|> range(start: "+select.getStartValue()+")\n" +
+                "|> filter(fn: (r) => r[\"_measurement\"] == \""+select.getMeasurementName()+"\")\n" +
+                "|> filter(fn: (r) => r[\"_field\"] == \""+select.getFieldName()+"\")\n" +
+                "|> aggregateWindow(every: "+select.getStepValue()+", fn: max, createEmpty: false)\n" +
                 "|> yield(name: \"max\")";
 
         return doQuery(endpoint,select,fluxQuery);    }

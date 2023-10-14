@@ -1,7 +1,6 @@
 package de.cleem.tub.tsdbb.commons.examplejson;
 
 import de.cleem.tub.tsdbb.api.model.*;
-import de.cleem.tub.tsdbb.api.model.Insert;
 import de.cleem.tub.tsdbb.commons.duration.DurationException;
 
 import java.math.BigDecimal;
