@@ -1,13 +1,11 @@
-package de.cleem.tub.tsdbb.apps.worker.adapters.influxdb;
+package de.cleem.tub.tsdbb.apps.worker.adapters;
 
 import de.cleem.tub.tsdbb.api.model.Insert;
 import de.cleem.tub.tsdbb.api.model.Select;
-import de.cleem.tub.tsdbb.apps.worker.adapters.InsertResponse;
-import de.cleem.tub.tsdbb.apps.worker.adapters.SelectResponse;
-import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;
-import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.testutil.base.BaseContainerTest;
-import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.testutil.base.RepeatedSelect;
-import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.testutil.base.RepeatedSelect.SelectCall;
+import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.InfluxDbAdapter;
+import de.cleem.tub.tsdbb.apps.worker.adapters.testutil.base.BaseContainerTest;
+import de.cleem.tub.tsdbb.apps.worker.adapters.testutil.base.RepeatedSelect;
+import de.cleem.tub.tsdbb.apps.worker.adapters.testutil.base.RepeatedSelect.SelectCall;
 import de.cleem.tub.tsdbb.apps.worker.adapters.victoriametrics.VictoriaMetricsAdapter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;

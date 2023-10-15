@@ -1,6 +1,6 @@
-package de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.testutil.container;
+package de.cleem.tub.tsdbb.apps.worker.adapters.testutil.container;
 
-import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.testutil.base.BaseContainerFactory;
+import de.cleem.tub.tsdbb.apps.worker.adapters.testutil.base.BaseContainerFactory;
 import org.testcontainers.containers.GenericContainer;
 
 public class VictoriaContainerFactory extends BaseContainerFactory {

@@ -1,4 +1,4 @@
-package de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.testutil.base;
+package de.cleem.tub.tsdbb.apps.worker.adapters.testutil.base;
 
 import de.cleem.tub.tsdbb.apps.worker.adapters.SelectResponse;
 import de.cleem.tub.tsdbb.apps.worker.adapters.TSDBAdapterException;

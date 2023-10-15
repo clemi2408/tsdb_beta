@@ -1,9 +1,9 @@
-package de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.testutil.base;
+package de.cleem.tub.tsdbb.apps.worker.adapters.testutil.base;
 
 import de.cleem.tub.tsdbb.api.model.WorkerGeneralProperties;
 import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.InfluxDbAdapter;
-import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.testutil.container.InfluxContainer;
-import de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.testutil.container.VictoriaContainerFactory;
+import de.cleem.tub.tsdbb.apps.worker.adapters.testutil.container.InfluxContainer;
+import de.cleem.tub.tsdbb.apps.worker.adapters.testutil.container.VictoriaContainerFactory;
 import de.cleem.tub.tsdbb.apps.worker.adapters.victoriametrics.VictoriaMetricsAdapter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;

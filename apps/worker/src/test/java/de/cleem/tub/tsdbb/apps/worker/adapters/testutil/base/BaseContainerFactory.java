@@ -1,4 +1,4 @@
-package de.cleem.tub.tsdbb.apps.worker.adapters.influxdb.testutil.base;
+package de.cleem.tub.tsdbb.apps.worker.adapters.testutil.base;
 
 import lombok.extern.slf4j.Slf4j;
 import org.testcontainers.containers.GenericContainer;
